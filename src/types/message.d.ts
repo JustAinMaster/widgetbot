@@ -1,4 +1,4 @@
-export interface Message {
+interface Message {
   id: string
   author: {
     name: string
@@ -66,3 +66,5 @@ interface Reaction {
   name: string
   count: number
 }
+
+export default Message

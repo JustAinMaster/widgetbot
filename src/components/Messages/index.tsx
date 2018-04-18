@@ -1,14 +1,24 @@
 import * as React from 'react'
-import { Message } from '../../types/message'
+import message from '../../types/message'
+
+import Message from '../Message'
+import { Root } from './elements'
 
 interface Props {
-  data: Message[]
+  messages: message[]
 }
 
 class Messages extends React.PureComponent<Props, any> {
   render() {
-    console.log(this.props.data)
-    return <span>MESSAGES</span>
+    const { messages } = this.props
+
+    return (
+      <Root>
+        {messages.map(message => (
+          <Message message={message} key={message.id} />
+        ))}
+      </Root>
+    )
   }
 }
 

@@ -12,7 +12,7 @@ class Test extends React.Component {
   render() {
     return (
       <Container>
-        <Messages data={mockData as any} />
+        <Messages messages={mockData as any} />
       </Container>
     )
   }
