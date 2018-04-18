@@ -1,7 +1,9 @@
-import styled, { injectGlobal } from 'react-emotion'
+import styled, { injectGlobal } from './util/emotion'
 
 export const Container = styled('div')`
-  /* background: #333; */
+  & * {
+    color: ${({ theme }) => (theme.light ? '#2f3136' : '#fff')};
+  }
 `
 
 injectGlobal`

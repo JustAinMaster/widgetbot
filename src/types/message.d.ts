@@ -1,14 +1,6 @@
 interface Message {
   id: string
-  author: {
-    name: string
-    discriminator: string
-    bot: boolean
-    avatar: string | null
-    id: string
-    color: string
-    roles: Role[] | null
-  }
+  author: Author
   timestamp: number
   content: string | null
   embeds: Embed[]
@@ -40,13 +32,23 @@ interface Message {
   }
 }
 
-interface Role {
+export interface Author {
+  name: string
+  discriminator: string
+  bot: boolean
+  avatar: string | null
+  id: string
+  color: string
+  roles: Role[] | null
+}
+
+export interface Role {
   color: string
   position: number
   name: string
 }
 
-interface Embed {
+export interface Embed {
   fields: {}[]
   footer: {}
   thumbnail: {}
@@ -58,7 +60,7 @@ interface Embed {
   message: {}
 }
 
-interface Reaction {
+export interface Reaction {
   message: {
     id: string
   }
