@@ -6,7 +6,7 @@ export const Root = styled('div')`
 
 // Group
 export const Group = styled('div')`
-  border-bottom: 1px solid #eceeef;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
   box-sizing: border-box;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -44,6 +44,18 @@ export const Content = styled('div')`
   margin-right: 20px;
 `
 
-// Text
-export const Text = styled('div')`
+// Markup
+const color = ({ theme }) =>
+  theme.light ? `#737f8d` : `hsla(0, 0%, 100%, 0.7)`
+export const Markup = styled('div')`
+  font-size: 0.9375rem;
+  line-height: 1.1em;
+  margin-top: 6px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: ${color};
+  & strong {
+    font-weight: 700;
+    color: ${color};
+  }
 `

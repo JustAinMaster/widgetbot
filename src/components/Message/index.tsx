@@ -1,7 +1,8 @@
 import * as React from 'react'
+import { toHTML as markdown } from 'discord-markdown'
 import message from '../../types/message'
 
-import { Group, Avatar, Content, Text } from './elements'
+import { Group, Avatar, Content, Markup } from './elements'
 import Author from './Author'
 
 interface Props {
@@ -17,8 +18,10 @@ class Message extends React.PureComponent<Props, any> {
       <Group>
         <Avatar url={message.author.avatar} />
         <Content>
-          <Author author={message.author} />
-          <Text>{message.content}</Text>
+          <Author author={message.author} time={message.timestamp} />
+          <Markup
+            dangerouslySetInnerHTML={{ __html: markdown(message.content) }}
+          />
         </Content>
       </Group>
     )
