@@ -70,3 +70,4 @@ export interface Reaction {
 }
 
 export default Message
+export type messages = Message[][]

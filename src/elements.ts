@@ -1,12 +1,49 @@
-import styled, { injectGlobal } from './util/emotion'
+import { Scrollbars } from 'react-custom-scrollbars'
+import styled, { css, injectGlobal } from './controllers/emotion'
 
-export const Container = styled('div')`
+const scrollbar = css`
+  background-color: #2f3136;
+  border-radius: 50px !important;
+  border: 3px solid #36393e;
+  & > div {
+    cursor: default !important;
+    background-color: #1e2124 !important;
+    border-radius: 50px !important;
+    border: 3px solid #36393e;
+  }
+`
+
+export const Wrapper = styled(Scrollbars)`
+  display: flex;
+  height: 100%;
+  width: 100%;
+  /* & > div:nth-child(2) {
+    ${scrollbar};
+    height: 14px !important;
+    & > div {
+      height: 14px !important;
+      margin-top: -3px !important;
+    }
+  } */
+  & > div:nth-child(3) {
+    ${scrollbar};
+    width: 14px !important;
+    & > div {
+      width: 14px !important;
+      margin-left: -3px !important;
+    }
+  }
   & * {
     color: ${({ theme }) => (theme.light ? '#2f3136' : '#fff')};
   }
 `
 
 injectGlobal`
+  html, body, #root {
+    width: 100%;
+    height: 100%;
+  }
+
   * {
     font-family: Whitney, Helvetica Neue, Helvetica, Arial, Lucida Grande,
       sans-serif;

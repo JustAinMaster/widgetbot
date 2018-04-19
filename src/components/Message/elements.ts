@@ -1,4 +1,4 @@
-import styled, { css } from '../../util/emotion'
+import styled, { css } from '../../controllers/emotion'
 
 export const Root = styled('div')`
   /* background: #333; */
@@ -13,7 +13,7 @@ export const Group = styled('div')`
   display: flex;
   margin-left: 20px;
   margin-right: 6px;
-  padding: 20px 0;
+  padding: 20px 0 13px;
   user-select: text;
   word-wrap: break-word;
 `
@@ -24,6 +24,7 @@ interface AvatarProps {
 }
 
 export const Avatar = styled<AvatarProps, 'div'>('div')`
+  cursor: pointer;
   background-image: url('${props => props.url}');
   border-radius: 50%;
   ${({ theme }) =>
@@ -45,17 +46,21 @@ export const Content = styled('div')`
 `
 
 // Markup
-const color = ({ theme }) =>
-  theme.light ? `#737f8d` : `hsla(0, 0%, 100%, 0.7)`
 export const Markup = styled('div')`
   font-size: 0.9375rem;
   line-height: 1.1em;
   margin-top: 6px;
   white-space: pre-wrap;
   word-wrap: break-word;
-  color: ${color};
+  color: ${({ theme }) => (theme.light ? `#737f8d` : `hsla(0, 0%, 100%, 0.7)`)};
   & strong {
     font-weight: 700;
-    color: ${color};
+    color: inherit;
   }
+`
+
+// Text
+export const Text = styled('div')`
+  color: inherit;
+  margin-bottom: 7px;
 `

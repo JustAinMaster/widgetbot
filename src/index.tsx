@@ -1,33 +1,52 @@
-declare const module: any
-
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { ThemeProvider } from 'emotion-theming'
+
+// Cerebral
+import { Container } from '@cerebral/react'
+import controller from './controllers/cerebral'
+
+// Apollo
+import { ApolloProvider } from 'react-apollo'
+import client from './controllers/apollo'
+
+import { Wrapper } from './elements'
+import Messages from './components/Messages'
 import registerServiceWorker from './registerServiceWorker'
 
-import { Container } from './elements'
-import mockData from './mockData'
-import Messages from './components/Messages'
-
-class Test extends React.Component {
+class App extends React.PureComponent {
   theme = () => ({
+    light: false,
     compact: false
   })
+
+  scroll(api) {
+    api.scrollToBottom()
+  }
 
   render() {
     return (
       <ThemeProvider theme={this.theme}>
-        <Container>
-          <Messages messages={mockData as any} />
-        </Container>
+        <Wrapper innerRef={this.scroll}>
+          <Messages />
+        </Wrapper>
       </ThemeProvider>
     )
   }
 }
 
-ReactDOM.render(<Test />, document.getElementById('root') as HTMLElement)
+ReactDOM.render(
+  <Container controller={controller}>
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </Container>,
+  document.getElementById('root')
+)
 registerServiceWorker()
 
+// webpack hot reloading
+declare const module: any
 if (module.hot) {
   module.hot.accept()
 }

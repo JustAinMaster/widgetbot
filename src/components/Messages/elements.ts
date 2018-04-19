@@ -1,5 +1,6 @@
 import styled from 'react-emotion'
 
 export const Root = styled('div')`
-  /* background: #333; */
+  width: 100%;
+  height: 100%;
 `
