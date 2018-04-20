@@ -37,7 +37,7 @@
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
-    "pull": "git stash && git pull && yarn build",
+    "pull": "git stash && git pull && yarn && yarn build",
     "precommit": "pretty-quick --staged"
   },
   "devDependencies": {
