@@ -1,9 +1,12 @@
+import { Link } from 'react-router-dom'
 import styled from 'typed-emotion'
 
 interface Props {
-  active: boolean
+  selected: boolean
+  to: string
 }
-export const Root = styled<Props, 'div'>('div')`
+export const Root = styled<Props, 'div'>(Link)`
+  text-decoration: none;
   user-select: none;
   cursor: pointer;
   display: flex;
@@ -15,8 +18,9 @@ export const Root = styled<Props, 'div'>('div')`
   overflow: hidden;
   margin: 2px 8px;
   padding: 0 8px;
-  background-color: ${({ active }) => (active ? '#42464D' : null)} !important;
-  color: ${({ active }) => (active ? '#f6f6f7 !important' : '#72767d')};
+  background-color: ${({ selected }) =>
+    selected ? '#42464D' : null} !important;
+  color: ${({ selected }) => (selected ? '#f6f6f7 !important' : '#72767d')};
   &:hover {
     background-color: #36393f;
     color: #b9bbbe;

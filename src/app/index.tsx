@@ -15,11 +15,22 @@ export default connect()
     props =>
       class App extends React.PureComponent<typeof props> {
         state = {
-          loading: true
+          loading: true,
+          fetched: false
+        }
+
+        fetch(data: { server: string; channel: string }) {
+          const { fetch } = this.props
+
+          if (!this.state.fetched) {
+            fetch(data)
+            this.setState({
+              fetched: true
+            })
+          }
         }
 
         render() {
-          const { fetch } = this.props
           return (
             <Root>
               <Channels />
@@ -29,14 +40,14 @@ export default connect()
                 <Route
                   path={`/channels/:server/:channel`}
                   component={({ match }) => {
-                    fetch(match.params)
+                    this.fetch(match.params)
                     return null
                   }}
                 />
                 <Route
                   path={`/channels/:server`}
                   render={({ match }) => {
-                    fetch(match.params)
+                    this.fetch(match.params)
                     return <h3>Please select a topic.</h3>
                   }}
                 />

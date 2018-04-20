@@ -9,13 +9,13 @@ export const fetchServer = sequenceWithProps<{
     cached: s => s,
     uncached: s =>
       s
-        // .action(actions.loading(true))
+        .action(actions.loading)
         .branch(actions.GraphQL.fetchServer)
         .paths({
           success: s => s.action(actions.GraphQL.store),
           error: s => s
         })
-        // .action(actions.loading(false))
+        .action(actions.loaded)
   })
 )
 
@@ -26,13 +26,13 @@ export const switchChannel = sequenceWithProps<{
     cached: s => s,
     uncached: s =>
       s
-        // .action(actions.loading(true))
+        .action(actions.loading)
         .branch(actions.GraphQL.fetchChannel)
         .paths({
           success: s => s.action(actions.GraphQL.updateChannel),
           error: s => s
         })
-        // .action(actions.loading(false))
+        .action(actions.loaded)
   })
 )
 

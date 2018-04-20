@@ -50,9 +50,12 @@ export function select({
   return cached ? path.cached(true) : path.uncached(true)
 }
 
-export function loading({ state, props }: Context<{ loading: boolean }>) {
-  console.warn(props)
-  // state.loading = props.loading
+export function loading({ state, props }: Context) {
+  state.loading = true
+}
+
+export function loaded({ state, props }: Context) {
+  state.loading = false
 }
 
 // export function increment({ state, props }: Context<{ title: string }>) {

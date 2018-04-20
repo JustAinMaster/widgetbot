@@ -3,6 +3,7 @@
   "main": "src/index.tsx",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/channels/",
   "proxy": {
     "/api": {
       "target": "http://localhost:7000",

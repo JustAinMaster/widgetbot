@@ -17,12 +17,13 @@ export default connect<Props>()
     const { name, id, switchChannel, active } = props
     return (
       <Root
-        active={active}
-        onClick={() =>
+        selected={active}
+        to={id}
+        onClick={() => {
           switchChannel({
             channel: id
           })
-        }
+        }}
       >
         <Hashtag />
         <Name>{name}</Name>
