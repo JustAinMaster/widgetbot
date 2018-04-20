@@ -1,4 +1,4 @@
-import styled, { css } from '../../controllers/emotion'
+import styled, { css } from 'typed-emotion'
 
 export const Root = styled('div')`
   /* background: #333; */

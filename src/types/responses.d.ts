@@ -1,8 +1,15 @@
 import { messages } from './message'
 
-interface Channel {
+type Channels = {
   name: string
   id: string
+}[]
+
+export interface Channel {
+  name: string
+  topic?: string
+  id?: string
+  messages?: messages
 }
 
 export interface ServerResponse {
@@ -10,11 +17,13 @@ export interface ServerResponse {
     name: string
     memberCount: number
     icon: string
-    channels: Channel[]
-    channel?: {
-      name: string
-      topic: string
-      messages: messages
-    }
+    channels: Channels
+    channel?: Channel
+  }
+}
+
+export interface ChannelResponse {
+  server: {
+    channel: Channel
   }
 }

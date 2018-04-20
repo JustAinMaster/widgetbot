@@ -12,7 +12,9 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "logger": ["src/util/logger.ts"],
+      "logger": ["src/modules/logger.ts"],
+      "styled-elements": ["src/modules/styled-elements.ts"],
+      "typed-emotion": ["src/controllers/emotion/index.ts"],
       "queries": ["src/store/actions/graphql/queries.ts"],
       "fluent": ["src/controllers/cerebral/fluent.ts"]
     }

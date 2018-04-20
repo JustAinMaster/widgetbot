@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { toHTML as markdown } from 'discord-markdown'
-import message from '../../types/message'
+import message from '../../../types/message'
 
 import { Group, Avatar, Content, Markup, Text } from './elements'
 import Author from './Author'

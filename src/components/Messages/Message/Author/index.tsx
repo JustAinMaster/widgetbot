@@ -2,7 +2,7 @@ import * as React from 'react'
 import { ago as timeAgo } from 'time-ago'
 
 import { Root, Name, Tag, Time } from './elements'
-import { Author } from '../../../types/message'
+import { Author } from '../../../../types/message'
 
 interface Props {
   author: Author

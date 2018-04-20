@@ -1,4 +1,4 @@
-import styled, { css } from '../../../controllers/emotion'
+import styled, { css } from 'typed-emotion'
 
 // Root
 export const Root = styled('span')``

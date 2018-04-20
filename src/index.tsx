@@ -14,7 +14,7 @@ import { ApolloProvider } from 'react-apollo'
 import client from './controllers/apollo'
 
 import registerServiceWorker from './registerServiceWorker'
-import App from './App'
+import App from './app'
 
 // Theme context
 const theme = () => ({

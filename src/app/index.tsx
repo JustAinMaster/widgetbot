@@ -2,12 +2,14 @@ import * as React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'fluent'
 
-import { Wrapper } from './elements'
-import Messages from './components/Messages'
+import { Root } from './elements'
+import Channels from '../components/Channels'
+import Messages from '../components/Messages'
+import Members from '../components/Members'
 
 export default connect()
   .with(({ state, signals, props }) => ({
-    fetch: signals.fetchMessages
+    fetch: signals.fetchServer
   }))
   .toClass(
     props =>
@@ -16,25 +18,19 @@ export default connect()
           loading: true
         }
 
-        scroll(api) {
-          if (api) {
-            api.scrollToBottom()
-          }
-        }
-
         render() {
           const { fetch } = this.props
           return (
-            <React.Fragment>
-              <Wrapper innerRef={this.scroll}>
-                <Messages />
-              </Wrapper>
+            <Root>
+              <Channels />
+              <Messages />
+              {/* <Members /> */}
               <Switch>
                 <Route
                   path={`/channels/:server/:channel`}
                   component={({ match }) => {
                     fetch(match.params)
-                    return <span>good</span>
+                    return null
                   }}
                 />
                 <Route
@@ -53,7 +49,7 @@ export default connect()
                   }}
                 />
               </Switch>
-            </React.Fragment>
+            </Root>
           )
         }
       }

@@ -1,18 +1,39 @@
 import { sequence, sequenceWithProps } from 'fluent'
 import * as actions from '../actions'
 
-export const fetchMessages = sequenceWithProps<{
+export const fetchServer = sequenceWithProps<{
   server: string
   channel?: string
 }>(s =>
-  s
-    .action(actions.select)
-    .branch(actions.GraphQL.fetch)
-    .paths({
-      success: s => s.action(actions.GraphQL.store),
-      error: s => s
-    })
-    // .action(actions.loading)
+  s.branch(actions.select).paths({
+    cached: s => s,
+    uncached: s =>
+      s
+        // .action(actions.loading(true))
+        .branch(actions.GraphQL.fetchServer)
+        .paths({
+          success: s => s.action(actions.GraphQL.store),
+          error: s => s
+        })
+        // .action(actions.loading(false))
+  })
+)
+
+export const switchChannel = sequenceWithProps<{
+  channel: string
+}>(s =>
+  s.branch(actions.select).paths({
+    cached: s => s,
+    uncached: s =>
+      s
+        // .action(actions.loading(true))
+        .branch(actions.GraphQL.fetchChannel)
+        .paths({
+          success: s => s.action(actions.GraphQL.updateChannel),
+          error: s => s
+        })
+        // .action(actions.loading(false))
+  })
 )
 
 // export const increment = sequenceWithProps<{ title: string }>((s) =>

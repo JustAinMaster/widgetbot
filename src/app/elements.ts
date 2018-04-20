@@ -1,47 +1,20 @@
-import { Scrollbars } from 'react-custom-scrollbars'
-import styled, { css, injectGlobal } from './controllers/emotion'
+import styled, { css, injectGlobal } from 'typed-emotion'
 
-const scrollbar = css`
-  background-color: #2f3136;
-  border-radius: 50px !important;
-  border: 3px solid #36393e;
-  & > div {
-    cursor: default !important;
-    background-color: #1e2124 !important;
-    border-radius: 50px !important;
-    border: 3px solid #36393e;
-  }
-`
-
-export const Wrapper = styled(Scrollbars)`
+export const Root = styled('main')`
   display: flex;
-  height: 100%;
   width: 100%;
-  /* & > div:nth-child(2) {
-    ${scrollbar};
-    height: 14px !important;
-    & > div {
-      height: 14px !important;
-      margin-top: -3px !important;
-    }
-  } */
-  & > div:nth-child(3) {
-    ${scrollbar};
-    width: 14px !important;
-    & > div {
-      width: 14px !important;
-      margin-left: -3px !important;
-    }
-  }
-  & * {
-    color: ${({ theme }) => (theme.light ? '#2f3136' : '#fff')};
-  }
+  height: 100%;
 `
 
 injectGlobal`
   html, body, #root {
     width: 100%;
     height: 100%;
+  }
+
+  #root {
+    opacity: 1 !important;
+    transform: initial !important;
   }
 
   * {

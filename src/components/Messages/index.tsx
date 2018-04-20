@@ -1,29 +1,36 @@
 import * as React from 'react'
-import { messages } from '../../types/message'
-
-import Message from '../Message'
-import { Root } from './elements'
 import { connect } from 'fluent'
+import { Scrollable } from 'styled-elements'
+
+import { Root } from './elements'
+import Message from './Message'
 
 export default connect()
   .with(({ state, signals, props }) => ({
-    server: state.server,
+    // Observe values
+    observe: [state.channels, state.activeChannel, state.loading],
     channel: state.channel
   }))
   .toClass(
     props =>
       class Messages extends React.PureComponent<typeof props> {
+        scroll(api) {
+          if (api) {
+            api.scrollToBottom()
+          }
+        }
+
         render() {
           const channel = this.props.channel.get()
 
-          if (channel) {
-            const { messages } = channel
-
+          if (channel && channel.messages) {
             return (
               <Root>
-                {messages.map(group => (
-                  <Message messages={group} key={group[0].id} />
-                ))}
+                <Scrollable innerRef={this.scroll}>
+                  {channel.messages.map(group => (
+                    <Message messages={group} key={group[0].id} />
+                  ))}
+                </Scrollable>
               </Root>
             )
           }
