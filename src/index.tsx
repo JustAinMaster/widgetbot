@@ -2,6 +2,9 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { ThemeProvider } from 'emotion-theming'
 
+// Router
+import { BrowserRouter as Router } from 'react-router-dom'
+
 // Cerebral
 import { Container } from '@cerebral/react'
 import controller from './controllers/cerebral'
@@ -10,42 +13,32 @@ import controller from './controllers/cerebral'
 import { ApolloProvider } from 'react-apollo'
 import client from './controllers/apollo'
 
-import { Wrapper } from './elements'
-import Messages from './components/Messages'
 import registerServiceWorker from './registerServiceWorker'
+import App from './App'
 
-class App extends React.PureComponent {
-  theme = () => ({
-    light: false,
-    compact: false
-  })
+// Theme context
+const theme = () => ({
+  light: false,
+  compact: false
+})
 
-  scroll(api) {
-    api.scrollToBottom()
-  }
-
-  render() {
-    return (
-      <ThemeProvider theme={this.theme}>
-        <Wrapper innerRef={this.scroll}>
-          <Messages />
-        </Wrapper>
-      </ThemeProvider>
-    )
-  }
-}
-
+// Render App
 ReactDOM.render(
   <Container controller={controller}>
     <ApolloProvider client={client}>
-      <App />
+      <ThemeProvider theme={theme}>
+        <Router>
+          <App />
+        </Router>
+      </ThemeProvider>
     </ApolloProvider>
   </Container>,
   document.getElementById('root')
 )
+
 registerServiceWorker()
 
-// webpack hot reloading
+// Hot reloading
 declare const module: any
 if (module.hot) {
   module.hot.accept()

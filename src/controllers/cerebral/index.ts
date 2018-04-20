@@ -1,7 +1,9 @@
-import { Controller } from 'cerebral'
+import { Controller } from '@cerebral/fluent'
 import Devtools from 'cerebral/devtools'
-import app from './app'
+import * as app from '../../store'
 
-export default Controller(app, {
-  devtools: Devtools({ host: 'localhost:8585' })
+const controller = Controller(app.module, {
+  devtools: Devtools({ host: 'localhost:9000' })
 })
+
+export default controller

@@ -9,7 +9,13 @@
     "jsx": "react",
     "moduleResolution": "node",
     "rootDir": "src",
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "logger": ["src/util/logger.ts"],
+      "queries": ["src/store/actions/graphql/queries.ts"],
+      "fluent": ["src/controllers/cerebral/fluent.ts"]
+    }
   },
   "exclude": [
     "node_modules",

@@ -1,41 +1,34 @@
 import * as React from 'react'
-import { graphql, DataValue } from 'react-apollo'
-import gql from 'graphql-tag'
 import { messages } from '../../types/message'
 
 import Message from '../Message'
 import { Root } from './elements'
+import { connect } from 'fluent'
 
-interface Props {
-  data: DataValue<{ messages: messages }>
-}
+export default connect()
+  .with(({ state, signals, props }) => ({
+    server: state.server,
+    channel: state.channel
+  }))
+  .toClass(
+    props =>
+      class Messages extends React.PureComponent<typeof props> {
+        render() {
+          const channel = this.props.channel.get()
 
-class Messages extends React.PureComponent<Props, any> {
-  render() {
-    const { messages } = this.props.data
+          if (channel) {
+            const { messages } = channel
 
-    return messages ? (
-      <Root>
-        {messages.map(group => <Message messages={group} key={group[0].id} />)}
-      </Root>
-    ) : (
-      <span>LOADING</span>
-    )
-  }
-}
+            return (
+              <Root>
+                {messages.map(group => (
+                  <Message messages={group} key={group[0].id} />
+                ))}
+              </Root>
+            )
+          }
 
-export default graphql(gql`
-  query MessageQuery {
-    messages {
-      timestamp
-      id
-      content
-      author {
-        name
-        avatar
-        bot
-        color
+          return <span>LOADING</span>
+        }
       }
-    }
-  }
-`)(Messages)
+  )
