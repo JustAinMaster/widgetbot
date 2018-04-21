@@ -17,10 +17,12 @@ injectGlobal`
     transform: initial !important;
   }
 
+  /* Resets */
   * {
     font-family: Whitney, Helvetica Neue, Helvetica, Arial, Lucida Grande,
       sans-serif;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
   }
 
   @font-face {

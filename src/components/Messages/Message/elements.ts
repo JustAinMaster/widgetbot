@@ -24,6 +24,7 @@ interface AvatarProps {
 }
 
 export const Avatar = styled<AvatarProps, 'div'>('div')`
+  flex-shrink: 0;
   cursor: pointer;
   background-image: url('${props => props.url}');
   border-radius: 50%;

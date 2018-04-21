@@ -20,10 +20,11 @@ export default connect()
             return (
               <Root>
                 <OverlayedScroll>
-                  {channels.map(({ name, id }) => (
+                  {channels.map(({ name, id }, i) => (
                     <Channel
                       name={name}
                       id={id}
+                      i={i}
                       active={id === activeChannel}
                       key={id}
                     />
@@ -33,7 +34,7 @@ export default connect()
             )
           }
 
-          return <span>LOADING</span>
+          return <Root />
         }
       }
   )

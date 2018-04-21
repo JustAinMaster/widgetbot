@@ -30,6 +30,7 @@
     "react-emotion": "^9.1.2",
     "react-router-dom": "^4.2.2",
     "react-scripts-ts": "2.15.1",
+    "react-transition-group": "^2.3.1",
     "time-ago": "^0.2.1"
   },
   "scripts": {

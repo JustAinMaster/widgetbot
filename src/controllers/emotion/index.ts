@@ -7,4 +7,4 @@ type Theme = {
 
 export default styled as ThemedReactEmotionInterface<Theme>
 
-export { css, injectGlobal } from 'react-emotion'
+export * from 'react-emotion'
