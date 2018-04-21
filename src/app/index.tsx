@@ -14,22 +14,6 @@ export default connect()
   .toClass(
     props =>
       class App extends React.PureComponent<typeof props> {
-        state = {
-          loading: true,
-          fetched: false
-        }
-
-        fetch(data: { server: string; channel: string }) {
-          const { fetch } = this.props
-
-          if (!this.state.fetched) {
-            fetch(data)
-            this.setState({
-              fetched: true
-            })
-          }
-        }
-
         render() {
           return (
             <Root>
@@ -62,6 +46,33 @@ export default connect()
               </Switch>
             </Root>
           )
+        }
+
+        state = {
+          loading: true,
+          fetched: false
+        }
+
+        fetch(data: { server: string; channel: string }) {
+          const { fetch } = this.props
+
+          if (!this.state.fetched) {
+            fetch(data)
+            this.setState({ fetched: true })
+          }
+        }
+
+        update = () => {
+          this.setState({ fetched: false })
+          this.forceUpdate()
+        }
+
+        componentDidMount() {
+          window.addEventListener('popstate', this.update)
+        }
+
+        componentWillUnmount() {
+          window.removeEventListener('popstate', this.update)
         }
       }
   )

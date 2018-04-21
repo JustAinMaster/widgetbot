@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled, { keyframes } from 'typed-emotion'
+import { Hash } from 'styled-elements'
 
 const fade = i => keyframes`
   from {
@@ -53,12 +54,8 @@ export const Name = styled('div')`
   overflow: hidden;
 `
 
-export const Hashtag = styled('div')`
+export const Hashtag = styled(Hash)`
   height: 100%;
   width: 16px;
-  background-position: 50%;
-  background-repeat: no-repeat;
   margin-right: 7px;
-  opacity: 0.6;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3e%3cpath fill='%23b9bbbe' d='M3.6 14l.5-2.7H1.4l.2-1.3h2.7L5 6H2.4l.2-1.3h2.7L5.7 2h1.4l-.5 2.7h4L11 2h1.3l-.5 2.7h2.7L14.4 6h-2.7l-.7 4h2.6l-.2 1.3h-2.7l-.4 2.7H8.9l.5-2.7h-4L5 14H3.6zm2.8-8l-.8 4h4l.8-4h-4z'/%3e%3c/svg%3e");
 `

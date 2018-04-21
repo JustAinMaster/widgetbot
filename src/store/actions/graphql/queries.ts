@@ -25,7 +25,6 @@ export const messages = gql`
         id
       }
       channel(id: $channel) {
-        name
         topic
         messages {
           timestamp

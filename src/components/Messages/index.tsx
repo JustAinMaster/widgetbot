@@ -2,7 +2,7 @@ import * as React from 'react'
 import { connect } from 'fluent'
 import { Scrollable } from 'styled-elements'
 
-import { Root } from './elements'
+import { Root, Header, Name, Topic } from './elements'
 import Message from './Message'
 import Loading from '../Loading'
 
@@ -17,14 +17,47 @@ export default connect()
   .toClass(
     props =>
       class Messages extends React.PureComponent<typeof props> {
-        positions = new Map() as Map<string, number>
-        position = -1
-        scrollable
+        content = () => {
+          const { loading } = this.props
+          const channel = this.props.channel.get()
+
+          if (loading) return <Loading />
+
+          if (channel && channel.messages) {
+            return (
+              <React.Fragment>
+                <Header>
+                  <Name>{channel.name}</Name>
+                  <Topic>{channel.topic}</Topic>
+                </Header>
+                <Scrollable innerRef={this.scroll.bind(this)}>
+                  {channel.messages.map(group => (
+                    <Message messages={group} key={group[0].id} />
+                  ))}
+                </Scrollable>
+              </React.Fragment>
+            )
+          }
+
+          return <div>Something went wrong</div>
+        }
+
+        render() {
+          return (
+            <Root>
+              <this.content />
+            </Root>
+          )
+        }
 
         /**
          * Captures scroll positions from channels, so when
          * you switch channels, your position is retained
          */
+        positions = new Map() as Map<string, number>
+        position = -1
+        scrollable
+
         componentWillReceiveProps(nextProps: typeof props) {
           const { activeChannel } = this.props
           const nextChannel = nextProps.activeChannel
@@ -55,33 +88,6 @@ export default connect()
               this.scrollable.scrollTop(this.position)
             }
           }
-        }
-
-        render() {
-          const { loading } = this.props
-          const channel = this.props.channel.get()
-
-          if (loading) {
-            return (
-              <Root>
-                <Loading />
-              </Root>
-            )
-          }
-
-          if (channel && channel.messages) {
-            return (
-              <Root>
-                <Scrollable innerRef={this.scroll.bind(this)}>
-                  {channel.messages.map(group => (
-                    <Message messages={group} key={group[0].id} />
-                  ))}
-                </Scrollable>
-              </Root>
-            )
-          }
-
-          return <Loading />
         }
       }
   )
