@@ -13,20 +13,15 @@ import controller from './controllers/cerebral'
 import { ApolloProvider } from 'react-apollo'
 import client from './controllers/apollo'
 
-import registerServiceWorker from './registerServiceWorker'
 import App from './app'
-
-// Theme context
-const theme = () => ({
-  light: false,
-  compact: false
-})
+import { defaultTheme } from 'typed-emotion'
+import registerServiceWorker from './registerServiceWorker'
 
 // Render App
 ReactDOM.render(
   <Container controller={controller}>
     <ApolloProvider client={client}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={defaultTheme}>
         <Router>
           <App />
         </Router>

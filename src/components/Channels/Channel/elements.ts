@@ -32,12 +32,12 @@ export const Root = styled<Props, 'div'>(Link)`
   margin: 2px 8px;
   padding: 0 8px;
   background-color: ${({ selected }) =>
-    selected ? '#42464D' : null} !important;
+    selected ? 'rgba(255, 255, 255, 0.1)' : null} !important;
   color: ${({ selected }) => (selected ? '#f6f6f7 !important' : '#72767d')};
   animation: ${({ i }) => fade(i)} 0.5s ease;
 
   &:hover {
-    background-color: #36393f;
+    background-color: rgba(255, 255, 255, 0.04);
     color: #b9bbbe;
   }
   &:nth-child(1) {
@@ -55,6 +55,7 @@ export const Name = styled('div')`
 `
 
 export const Hashtag = styled(Hash)`
+  opacity: 0.6;
   height: 100%;
   width: 16px;
   margin-right: 7px;

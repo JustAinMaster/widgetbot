@@ -4507,6 +4507,10 @@ klaw@^1.0.0:
   optionalDependencies:
     graceful-fs "^4.1.9"
 
+kolor@^1.1.9:
+  version "1.1.9"
+  resolved "https://registry.yarnpkg.com/kolor/-/kolor-1.1.9.tgz#bf7678f1848a3dcb5a947d41f626db59163385b6"
+
 latest-version@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/latest-version/-/latest-version-3.1.0.tgz#a205383fea322b33b5ae3b18abee0dc2f356ee15"

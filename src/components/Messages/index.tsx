@@ -5,6 +5,7 @@ import { Scrollable } from 'styled-elements'
 import { Root, Header, Name, Topic } from './elements'
 import Message from './Message'
 import Loading from '../Loading'
+import Group from './group'
 
 export default connect()
   .with(({ state, signals, props }) => ({
@@ -24,6 +25,8 @@ export default connect()
           if (loading) return <Loading />
 
           if (channel && channel.messages) {
+            const messages = Group(channel.messages)
+
             return (
               <React.Fragment>
                 <Header>
@@ -31,7 +34,7 @@ export default connect()
                   <Topic>{channel.topic}</Topic>
                 </Header>
                 <Scrollable innerRef={this.scroll.bind(this)}>
-                  {channel.messages.map(group => (
+                  {messages.map(group => (
                     <Message messages={group} key={group[0].id} />
                   ))}
                 </Scrollable>

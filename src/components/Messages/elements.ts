@@ -1,6 +1,8 @@
 import styled from 'typed-emotion'
 import { Hash } from 'styled-elements'
+import * as Color from 'kolor'
 
+console.log(Color)
 export const Root = styled('div')`
   display: flex;
   flex-direction: column;
@@ -17,20 +19,18 @@ export const Header = styled('header')`
 `
 
 export const Name = styled(Hash)`
-  color: #fff;
   font-size: 18px;
   font-weight: 600;
   height: 25px;
   margin: 0 15px;
 
-  opacity: 1;
   background-position: 0 50%;
   padding-left: 25px;
   padding-right: 15px;
-  border-right: 1px solid hsla(240, 6%, 97%, 0.1);
+  border-right: 1px solid ${({ theme }) => Color(theme.styles.color).fadeOut(0.9).toString()};
 `
 export const Topic = styled('div')`
   font-size: 14px;
   font-weight: 500;
-  color: hsla(240, 6%, 97%, 0.6);
+  color: ${({ theme }) => Color(theme.styles.color).fadeOut(0.4).toString()};
 `

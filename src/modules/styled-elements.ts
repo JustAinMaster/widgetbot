@@ -1,5 +1,6 @@
 import { Scrollbars } from 'react-custom-scrollbars'
 import styled, { css } from 'typed-emotion'
+import Color from 'kolor'
 
 const ScrollableCSS = css`
   background-color: rgba(0, 0, 0, 0.15);
@@ -8,7 +9,6 @@ const ScrollableCSS = css`
     cursor: default !important;
     background-color: rgba(0, 0, 0, 0.3) !important;
     border-radius: 50px !important;
-    border: 3px solid #36393e;
   }
 `
 
@@ -22,10 +22,8 @@ export const Scrollable = styled(Scrollbars)`
     & > div {
       width: 14px !important;
       margin-left: -3px !important;
+      border: 3px solid ${({ theme }) => theme.styles.background};
     }
-  }
-  & * {
-    color: ${({ theme }) => (theme.light ? '#2f3136' : '#fff')};
   }
 `
 
@@ -51,9 +49,9 @@ export const OverlayedScroll = styled(Scrollbars)`
   }
 `
 
+// prettier-ignore
 export const Hash = styled('div')`
   background-position: 50%;
   background-repeat: no-repeat;
-  opacity: 0.6;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3e%3cpath fill='%23b9bbbe' d='M3.6 14l.5-2.7H1.4l.2-1.3h2.7L5 6H2.4l.2-1.3h2.7L5.7 2h1.4l-.5 2.7h4L11 2h1.3l-.5 2.7h2.7L14.4 6h-2.7l-.7 4h2.6l-.2 1.3h-2.7l-.4 2.7H8.9l.5-2.7h-4L5 14H3.6zm2.8-8l-.8 4h4l.8-4h-4z'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3e%3cpath fill='${({ theme }) => encodeURIComponent(Color(theme.styles.color).fadeOut(0.6).toString())}' d='M3.6 14l.5-2.7H1.4l.2-1.3h2.7L5 6H2.4l.2-1.3h2.7L5.7 2h1.4l-.5 2.7h4L11 2h1.3l-.5 2.7h2.7L14.4 6h-2.7l-.7 4h2.6l-.2 1.3h-2.7l-.4 2.7H8.9l.5-2.7h-4L5 14H3.6zm2.8-8l-.8 4h4l.8-4h-4z'/%3e%3c/svg%3e");
 `

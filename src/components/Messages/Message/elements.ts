@@ -1,12 +1,11 @@
 import styled, { css } from 'typed-emotion'
+import Color from 'kolor'
 
-export const Root = styled('div')`
-  /* background: #333; */
-`
+export const Root = styled('div')``
 
 // Group
 export const Group = styled('div')`
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid ${({ theme }) => Color(theme.styles.color).fadeOut(0.96).toString()};
   box-sizing: border-box;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -53,7 +52,10 @@ export const Markup = styled('div')`
   margin-top: 6px;
   white-space: pre-wrap;
   word-wrap: break-word;
-  color: ${({ theme }) => (theme.light ? `#737f8d` : `hsla(0, 0%, 100%, 0.7)`)};
+  color: ${({ theme }) =>
+    Color(theme.styles.color)
+      .fadeOut(0.3)
+      .toString()};
   & strong {
     font-weight: 700;
     color: inherit;
