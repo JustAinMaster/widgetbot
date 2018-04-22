@@ -39,7 +39,7 @@ namespace GraphQL {
       ...(loadMessages ? [`with messages on channel`, state.activeChannel] : [])
     )
 
-    return request('/api', query, variables)
+    return request('/api/graphql', query, variables)
       .then((response: ServerResponse) => path.success(response))
       .catch(() => path.error({}))
   }
@@ -69,7 +69,7 @@ namespace GraphQL {
     }
 
     // Uncached
-    return request('/api', queries.channel, {
+    return request('/api/graphql', queries.channel, {
       server: state.server.id,
       channel: state.activeChannel
     })

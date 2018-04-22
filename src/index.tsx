@@ -9,9 +9,9 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { Container } from '@cerebral/react'
 import controller from './controllers/cerebral'
 
-// Apollo
-import { ApolloProvider } from 'react-apollo'
-import client from './controllers/apollo'
+// SocketIO
+import { io } from './controllers/socket-io'
+console.log(io)
 
 import App from './app'
 import { defaultTheme } from 'typed-emotion'
@@ -20,13 +20,11 @@ import registerServiceWorker from './registerServiceWorker'
 // Render App
 ReactDOM.render(
   <Container controller={controller}>
-    <ApolloProvider client={client}>
-      <ThemeProvider theme={defaultTheme}>
-        <Router>
-          <App />
-        </Router>
-      </ThemeProvider>
-    </ApolloProvider>
+    <ThemeProvider theme={defaultTheme}>
+      <Router>
+        <App />
+      </Router>
+    </ThemeProvider>
   </Container>,
   document.getElementById('root')
 )
