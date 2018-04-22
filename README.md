@@ -1,6 +1,6 @@
 # Discord embed
 
-![Screenshot](https://i.imgur.com/Qladf0t.png)
+![Screenshot](https://i.imgur.com/eGKcLlN.png)
 
 ## Introduction
 
