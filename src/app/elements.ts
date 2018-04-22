@@ -12,7 +12,8 @@ function globals(theme: Theme) {
     html, body, #root {
       width: 100%;
       height: 100%;
-      background-color: ${theme.styles.background};
+      background-color: ${theme.colors.background};
+      overflow: hidden;
     }
 
     #root {
@@ -22,7 +23,7 @@ function globals(theme: Theme) {
 
     /* Resets */
     * {
-      color: ${theme.styles.color};
+      color: ${theme.colors.primary};
       font-family: Whitney, Helvetica Neue, Helvetica, Arial, Lucida Grande,
         sans-serif;
       box-sizing: border-box;

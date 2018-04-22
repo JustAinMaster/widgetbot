@@ -11,6 +11,9 @@ const state: State = {
     id: null,
     memberCount: null
   },
+  visible: {
+    channels: window.innerWidth > 520
+  },
   channels: null,
   activeChannel: null,
   channel: Computed(computed.activeChannel)

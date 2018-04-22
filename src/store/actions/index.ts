@@ -1,6 +1,7 @@
 import { Context, BranchContext } from 'fluent'
 import { Channel } from '../../types/responses'
-import Log from 'logger';
+import Log from 'logger'
+import { Toggles } from '../types'
 
 export { default as GraphQL } from './graphql'
 
@@ -50,36 +51,18 @@ export function select({
   return cached ? path.cached(true) : path.uncached(true)
 }
 
-export function loading({ state, props }: Context) {
-  state.loading = true
+export function closeDrawerOnMobile({ state, props }: Context) {
+  if (window.innerWidth < 520) {
+    state.visible.channels = false
+  }
 }
 
-export function loaded({ state, props }: Context) {
-  state.loading = false
+export function loading(status: boolean) {
+  return ({ state, props }: Context) => {
+    state.loading = status
+  }
 }
 
-// export function increment({ state, props }: Context<{ title: string }>) {
-//   state.count++
-// }
-
-// export function changeNewTodoTitle({
-//   state,
-//   props,
-// }: Context<{ title: string }>) {
-//   state.newTodoTitle = props.title
-// }
-
-// export function removeTodo({ state, props }: Context<{ uid: string }>) {
-//   state.todos.delete(props.uid)
-// }
-
-// export function toggleAllChecked({ state }: Context) {
-//   const isAllChecked = state.isAllChecked.get()
-//   state.visibleTodosUids.get().forEach((uid) => {
-//     const todo = state.todos.get(uid)
-
-//     if (todo) {
-//       todo.completed = !isAllChecked
-//     }
-//   })
-// }
+export function toggle({ state, props }: Context<{ component: Toggles }>) {
+  state.visible[props.component] = !state.visible[props.component]
+}

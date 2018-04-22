@@ -1,25 +1,29 @@
 import * as React from 'react'
 import { connect } from 'fluent'
 import { Scrollable } from 'styled-elements'
+import Group from './group'
 
-import { Root, Header, Name, Topic } from './elements'
+import { Root } from './elements'
 import Message from './Message'
 import Loading from '../Loading'
-import Group from './group'
+import Header from './Header'
 
 export default connect()
   .with(({ state, signals, props }) => ({
     // Observe values
     observe: [state.channels],
+
     loading: state.loading,
     activeChannel: state.activeChannel,
-    channel: state.channel
+    channel: state.channel,
+    squashed: state.visible.channels,
+    toggle: () => signals.toggle({ component: 'channels' })
   }))
   .toClass(
     props =>
       class Messages extends React.PureComponent<typeof props> {
         content = () => {
-          const { loading } = this.props
+          const { loading, toggle, squashed } = this.props
           const channel = this.props.channel.get()
 
           if (loading) return <Loading />
@@ -29,10 +33,7 @@ export default connect()
 
             return (
               <React.Fragment>
-                <Header>
-                  <Name>{channel.name}</Name>
-                  <Topic>{channel.topic}</Topic>
-                </Header>
+                <Header toggle={toggle} open={squashed} channel={channel} />
                 <Scrollable innerRef={this.scroll.bind(this)}>
                   {messages.map(group => (
                     <Message messages={group} key={group[0].id} />
@@ -46,11 +47,20 @@ export default connect()
         }
 
         render() {
+          const { squashed } = this.props
+
           return (
-            <Root>
+            <Root squashed={squashed} onClick={this.handleClick.bind(this)}>
               <this.content />
             </Root>
           )
+        }
+
+        handleClick = () => {
+          const { squashed, toggle } = this.props
+          if (squashed && window.innerWidth < 520) {
+            toggle()
+          }
         }
 
         /**

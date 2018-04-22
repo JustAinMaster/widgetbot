@@ -29,7 +29,7 @@ export const Spinner = styled('div')`
   &::after,
   &::before {
     content: '';
-    background-color: #7289DA;
+    background-color: ${({ theme }) => theme.colors.accent};
     width: 15px;
     height: 15px;
     position: absolute;

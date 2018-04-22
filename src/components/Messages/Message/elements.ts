@@ -5,7 +5,7 @@ export const Root = styled('div')``
 
 // Group
 export const Group = styled('div')`
-  border-bottom: 1px solid ${({ theme }) => Color(theme.styles.color).fadeOut(0.96).toString()};
+  border-bottom: 1px solid ${({ theme }) => Color(theme.colors.primary).fadeOut(0.96).toString()};
   box-sizing: border-box;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -53,7 +53,7 @@ export const Markup = styled('div')`
   white-space: pre-wrap;
   word-wrap: break-word;
   color: ${({ theme }) =>
-    Color(theme.styles.color)
+    Color(theme.colors.primary)
       .fadeOut(0.3)
       .toString()};
   & strong {

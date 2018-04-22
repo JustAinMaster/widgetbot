@@ -1,36 +1,40 @@
-import styled from 'typed-emotion'
-import { Hash } from 'styled-elements'
-import * as Color from 'kolor'
+import styled, { css } from 'typed-emotion'
 
-console.log(Color)
-export const Root = styled('div')`
+interface Props {
+  squashed: boolean
+}
+
+// prettier-ignore
+export const Root = styled<Props, 'div'>('div')`
   display: flex;
   flex-direction: column;
-  width: 100%;
   height: 100%;
-`
+  width: 100%;
+  transition: margin 0.3s ease, width 0.3s ease, box-shadow 0.2s ease;
 
-export const Header = styled('header')`
-  display: flex;
-  height: 47px;
-  line-height: 25px;
-  padding: 10px 0;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 2px 0 rgba(0, 0, 0, 0.06);
-`
+  &::after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 8;
+    pointer-events: none;
+    transition: background-color 0.5s ease;
+  }
 
-export const Name = styled(Hash)`
-  font-size: 18px;
-  font-weight: 600;
-  height: 25px;
-  margin: 0 15px;
-
-  background-position: 0 50%;
-  padding-left: 25px;
-  padding-right: 15px;
-  border-right: 1px solid ${({ theme }) => Color(theme.styles.color).fadeOut(0.9).toString()};
-`
-export const Topic = styled('div')`
-  font-size: 14px;
-  font-weight: 500;
-  color: ${({ theme }) => Color(theme.styles.color).fadeOut(0.4).toString()};
+  ${({ squashed }) => squashed ? css`
+    @media (min-width: 520px) {
+      margin-left: 200px;
+      width: calc(100% - 200px);
+    }
+    @media (max-width: 520px) {
+      &::after {
+        pointer-events: initial;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      * {
+        pointer-events: none !important;
+      }
+    }
+  ` : null};
 `

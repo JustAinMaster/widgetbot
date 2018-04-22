@@ -22,7 +22,7 @@ export const Name = styled<NameProps, 'strong'>('strong')`
 // Bot tag
 export const Tag = styled('span')`
   user-select: none;
-  background: #7289da;
+  background: ${({ theme }) => theme.colors.accent};
   color: #fff;
   border-radius: 3px;
   line-height: 21px;

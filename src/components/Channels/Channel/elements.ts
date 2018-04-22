@@ -40,9 +40,6 @@ export const Root = styled<Props, 'div'>(Link)`
     background-color: rgba(255, 255, 255, 0.04);
     color: #b9bbbe;
   }
-  &:nth-child(1) {
-    margin-top: 20px;
-  }
 `
 
 export const Name = styled('div')`

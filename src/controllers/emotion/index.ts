@@ -3,8 +3,9 @@ export default styled as ThemedReactEmotionInterface<Theme>
 export * from 'react-emotion'
 
 export type Theme = {
-  styles: {
-    color: string
+  colors: {
+    primary: string
+    accent: string
     background: string
   }
   compact: boolean
@@ -12,9 +13,10 @@ export type Theme = {
 }
 
 export const defaultTheme = (): Theme => ({
-  styles: {
-    color: '#fff',
-    background: '#36393E' // 36393E
+  colors: {
+    primary: '#fff',
+    accent: '#7289da',
+    background: '#36393E'
   },
   light: false,
   compact: false

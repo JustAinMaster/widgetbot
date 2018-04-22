@@ -9,6 +9,8 @@ interface Channel {
   messages?: messages
 }
 
+export type Toggles = 'channels'
+
 export interface State {
   // Message loading state
   loading: boolean
@@ -25,6 +27,11 @@ export interface State {
   activeChannel: string
   // Returns the active channel object
   channel: ComputedValue<Channel>
+
+  // Visible UI components
+  visible: {
+    [key in Toggles]: boolean
+  }
   // stringDictionary: Dictionary<string>
   // isAwesome: ComputedValue<boolean>
   // upperFoo: string
