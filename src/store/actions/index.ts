@@ -2,6 +2,7 @@ import { Context, BranchContext } from 'fluent'
 import { Channel } from '../../types/responses'
 import Log from 'logger'
 import { Toggles } from '../types'
+import { message } from '../../types/socket'
 
 export { default as GraphQL } from './graphql'
 
@@ -49,6 +50,16 @@ export function select({
 
   Log('warn', `Selected`, props, cached ? `from cache` : `from network`)
   return cached ? path.cached(true) : path.uncached(true)
+}
+
+export function insertMessage({ state, props }: Context<message>) {
+  if (state.channels) {
+    state.channels.map((channel, i) => {
+      if (channel.id === props.channel && channel.messages) {
+        state.channels[i].messages.push(props.message)
+      }
+    })
+  }
 }
 
 export function closeDrawerOnMobile({ state, props }: Context) {

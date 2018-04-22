@@ -9,10 +9,6 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { Container } from '@cerebral/react'
 import controller from './controllers/cerebral'
 
-// SocketIO
-import { io } from './controllers/socket-io'
-console.log(io)
-
 import App from './app'
 import { defaultTheme } from 'typed-emotion'
 import registerServiceWorker from './registerServiceWorker'

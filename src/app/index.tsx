@@ -8,6 +8,9 @@ import Channels from '../components/Channels'
 import Messages from '../components/Messages'
 import Members from '../components/Members'
 
+// SocketIO
+import Initiate from '../controllers/socket-io'
+
 export default connect()
   .with(({ state, signals, props }) => ({
     fetch: signals.fetchServer
@@ -18,6 +21,7 @@ export default connect()
         render() {
           return (
             <Root>
+              <Initiate />
               <Channels />
               <Switch>
                 <Route

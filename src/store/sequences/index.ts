@@ -1,6 +1,7 @@
 import { sequence, sequenceWithProps } from 'fluent'
 import * as actions from '../actions'
 import { Toggles } from '../types'
+import { message } from '../../types/socket'
 
 export const fetchServer = sequenceWithProps<{
   server: string
@@ -18,6 +19,10 @@ export const fetchServer = sequenceWithProps<{
         })
         .action(actions.loading(false))
   })
+)
+
+export const insertMessage = sequenceWithProps<message>(s =>
+  s.action(actions.insertMessage)
 )
 
 export const switchChannel = sequenceWithProps<{
