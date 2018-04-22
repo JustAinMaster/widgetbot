@@ -18,13 +18,25 @@ export default connect<Props>()
   .toClass(
     props =>
       class Channel extends React.PureComponent<typeof props> {
+        getURL = () => {
+          const { id } = this.props
+          const path = location.pathname.split('/')
+
+
+          if (path.length > 4) {
+            return id
+          }
+
+          return `/channels/${path[2]}/${id}`
+        }
+
         render() {
           const { name, i, id, switchChannel, active } = this.props
 
           return (
             <Root
               selected={active}
-              to={id}
+              to={this.getURL()}
               i={i}
               onClick={() => {
                 switchChannel({

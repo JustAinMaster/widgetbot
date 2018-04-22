@@ -1,11 +1,5 @@
 import styled, { keyframes } from 'typed-emotion'
 
-export const Root = styled('div')`
-  position: relative;
-  width: 100%;
-  height: 100%;
-`
-
 const cube = keyframes`
   25% {
     transform: translateX(42px) rotate(-90deg) scale(0.5);
@@ -21,11 +15,6 @@ const cube = keyframes`
 `
 
 export const Spinner = styled('div')`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-
   &::after,
   &::before {
     content: '';

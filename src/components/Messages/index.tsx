@@ -5,8 +5,10 @@ import Group from './group'
 
 import { Root } from './elements'
 import Message from './Message'
-import Loading from '../Loading'
-import Header from './Header'
+import { Loading } from '../Overlays'
+import Header, { Name, Topic } from '../Header'
+import Wrapper from '../Wrapper'
+import ErrorAhoy from '../Overlays/ErrorAhoy'
 
 export default connect()
   .with(({ state, signals, props }) => ({
@@ -15,52 +17,52 @@ export default connect()
 
     loading: state.loading,
     activeChannel: state.activeChannel,
-    channel: state.channel,
-    squashed: state.visible.channels,
-    toggle: () => signals.toggle({ component: 'channels' })
+    channel: state.channel
   }))
   .toClass(
     props =>
       class Messages extends React.PureComponent<typeof props> {
-        content = () => {
-          const { loading, toggle, squashed } = this.props
+        getContent = () => {
+          const { loading } = this.props
           const channel = this.props.channel.get()
 
-          if (loading) return <Loading />
+          if (loading) {
+            return <Loading />
+          }
 
           if (channel && channel.messages) {
             const messages = Group(channel.messages)
-
             return (
-              <React.Fragment>
-                <Header toggle={toggle} open={squashed} channel={channel} />
-                <Scrollable innerRef={this.scroll.bind(this)}>
-                  {messages.map(group => (
-                    <Message messages={group} key={group[0].id} />
-                  ))}
-                </Scrollable>
-              </React.Fragment>
+              <Scrollable innerRef={this.scroll.bind(this)}>
+                {messages.map(group => (
+                  <Message messages={group} key={group[0].id} />
+                ))}
+              </Scrollable>
             )
           }
 
-          return <div>Something went wrong</div>
+          return null
         }
 
         render() {
-          const { squashed } = this.props
+          const channel = this.props.channel.get()
 
-          return (
-            <Root squashed={squashed} onClick={this.handleClick.bind(this)}>
-              <this.content />
-            </Root>
+          const header = channel && (
+            <Header>
+              <Name>{channel.name}</Name>
+              {channel.topic && <Topic>{channel.topic}</Topic>}
+            </Header>
           )
-        }
+          const content = this.getContent()
 
-        handleClick = () => {
-          const { squashed, toggle } = this.props
-          if (squashed && window.innerWidth < 520) {
-            toggle()
-          }
+          return content ? (
+            <Wrapper>
+              {header}
+              {content}
+            </Wrapper>
+          ) : (
+            <ErrorAhoy />
+          )
         }
 
         /**

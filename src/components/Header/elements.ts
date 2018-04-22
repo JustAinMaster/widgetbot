@@ -1,4 +1,4 @@
-import styled, { css } from 'typed-emotion'
+import styled from 'typed-emotion'
 import { Hash } from 'styled-elements'
 import * as Color from 'kolor'
 

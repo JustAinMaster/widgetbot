@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'fluent'
 
+import ChooseChannel from '../components/Overlays/ChooseChannel'
 import { Root } from './elements'
 import Channels from '../components/Channels'
 import Messages from '../components/Messages'
@@ -18,21 +19,19 @@ export default connect()
           return (
             <Root>
               <Channels />
-              <Messages />
-              {/* <Members /> */}
               <Switch>
                 <Route
                   path={`/channels/:server/:channel`}
                   component={({ match }) => {
                     this.fetch(match.params)
-                    return null
+                    return <Messages />
                   }}
                 />
                 <Route
                   path={`/channels/:server`}
                   render={({ match }) => {
                     this.fetch(match.params)
-                    return <h3>Please select a topic.</h3>
+                    return <ChooseChannel />
                   }}
                 />
                 <Route
