@@ -16,6 +16,7 @@
       "styled-elements": ["src/modules/styled-elements.ts"],
       "typed-emotion": ["src/controllers/emotion/index.ts"],
       "queries": ["src/store/actions/graphql/queries.ts"],
+      "socket-io": ["src/controllers/socket-io"],
       "fluent": ["src/controllers/cerebral/fluent.ts"]
     }
   },

@@ -1,4 +1,20 @@
 import styled, { css, injectGlobal, Theme } from 'typed-emotion'
+import Color from 'kolor'
+
+export const Notifications = styled('div')`
+  .notification {
+    background-color: ${({ theme }) =>
+      Color(theme.colors.background)
+        .lighten(0.1)
+        .toString()} !important;
+  }
+  .notification-dismiss {
+    background-color: ${({ theme }) =>
+      Color(theme.colors.background)
+        .lighten(0.4)
+        .toString()} !important;
+  }
+`
 
 export const Root = styled('main')`
   width: 100%;

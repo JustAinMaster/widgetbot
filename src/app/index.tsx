@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'fluent'
+import * as Notify from 'react-notification-system'
 
 import ChooseChannel from '../components/Overlays/ChooseChannel'
-import { Root } from './elements'
+import { Root, Notifications } from './elements'
 import Channels from '../components/Channels'
 import Messages from '../components/Messages'
 import Members from '../components/Members'
@@ -21,7 +22,11 @@ export default connect()
         render() {
           return (
             <Root>
-              <Initiate />
+              <Initiate addNotification={this.addNotification.bind(this)} />
+              <Notifications>
+                <Notify ref={ref => (this.notifications = ref)} />
+              </Notifications>
+
               <Channels />
               <Switch>
                 <Route
@@ -54,6 +59,16 @@ export default connect()
         state = {
           loading: true,
           fetched: false
+        }
+        notifications: Notify.System
+
+        addNotification(notification) {
+          if (this.notifications) {
+            this.notifications.addNotification({
+              position: 'br',
+              ...notification
+            })
+          }
         }
 
         fetch(data: { server: string; channel: string }) {

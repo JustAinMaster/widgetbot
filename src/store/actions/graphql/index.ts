@@ -1,6 +1,7 @@
 import { Context, BranchContext } from 'fluent'
 import { request } from 'graphql-request'
 
+import { subscribe } from 'socket-io'
 import * as queries from 'queries'
 import Log from 'logger'
 
@@ -40,7 +41,16 @@ namespace GraphQL {
     )
 
     return request('/api/graphql', query, variables)
-      .then((response: ServerResponse) => path.success(response))
+      .then((response: ServerResponse) => {
+        if (loadMessages) {
+          subscribe({
+            server: state.server.id,
+            channel: state.activeChannel
+          })
+        }
+
+        return path.success(response)
+      })
       .catch(() => path.error({}))
   }
 
@@ -64,6 +74,10 @@ namespace GraphQL {
     })
 
     if (typeof cached === 'number') {
+      subscribe({
+        server: state.server.id,
+        channel: state.activeChannel
+      })
       // Cached
       return path.success({ channel: state.channels[cached] })
     }
@@ -73,14 +87,19 @@ namespace GraphQL {
       server: state.server.id,
       channel: state.activeChannel
     })
-      .then((response: ChannelResponse) =>
-        path.success({
+      .then((response: ChannelResponse) => {
+        subscribe({
+          server: state.server.id,
+          channel: state.activeChannel
+        })
+
+        return path.success({
           channel: {
             id: state.activeChannel,
             ...response.server.channel
           }
         })
-      )
+      })
       .catch(() => path.error({}))
   }
 

@@ -1,10 +1,9 @@
 import { Context, BranchContext } from 'fluent'
-import { Channel } from '../../types/responses'
 import Log from 'logger'
+
+import { Channel } from '../../types/responses'
 import { Toggles } from '../types'
 import { message } from '../../types/socket'
-
-export { default as GraphQL } from './graphql'
 
 /**
  * Selects a server (and or) channel and returns a branch
@@ -77,3 +76,5 @@ export function loading(status: boolean) {
 export function toggle({ state, props }: Context<{ component: Toggles }>) {
   state.visible[props.component] = !state.visible[props.component]
 }
+
+export { default as GraphQL } from './graphql'
