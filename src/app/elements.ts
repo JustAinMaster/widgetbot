@@ -1,4 +1,5 @@
-import styled, { css, injectGlobal, Theme } from 'typed-emotion'
+import styled, { css, injectGlobal } from 'typed-emotion'
+import { Theme } from '../store/types'
 import Color from 'kolor'
 
 export const Notifications = styled('div')`

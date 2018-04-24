@@ -27,16 +27,6 @@ export default connect<Props>()
     // Connect the websocket
     socket.connect()
 
-    socket.on('connect', () => {
-      props.addNotification({
-        debug: true,
-        type: 'success',
-        title: 'Connected to upstream',
-        message: 'Successfully connected to Socket.IO server',
-        level: 'success'
-      })
-    })
-
     socket.on('message', (data: message) => {
       props.insertMessage(data)
     })

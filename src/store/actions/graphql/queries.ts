@@ -10,6 +10,13 @@ export const server = gql`
         name
         id
       }
+      theme {
+        colors {
+          primary
+          accent
+          background
+        }
+      }
     }
   }
 `
@@ -36,6 +43,13 @@ export const messages = gql`
             bot
             color
           }
+        }
+      }
+      theme {
+        colors {
+          primary
+          accent
+          background
         }
       }
     }

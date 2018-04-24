@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import styled, { keyframes } from 'typed-emotion'
 import { Hash } from 'styled-elements'
+import Color from 'kolor'
 
 const fade = i => keyframes`
   from {
@@ -21,7 +22,7 @@ interface Props {
 export const Root = styled<Props, 'div'>(Link)`
   text-decoration: none;
   user-select: none;
-  cursor: pointer;
+  cursor: ${({ selected }) => (selected ? 'default' : 'pointer')};
   display: flex;
   border-radius: 3px;
   flex-direction: row;
@@ -31,14 +32,29 @@ export const Root = styled<Props, 'div'>(Link)`
   overflow: hidden;
   margin: 2px 8px;
   padding: 0 8px;
-  background-color: ${({ selected }) =>
-    selected ? 'rgba(255, 255, 255, 0.1)' : null} !important;
-  color: ${({ selected }) => (selected ? '#f6f6f7 !important' : '#72767d')};
+  background-color: ${({ selected, theme }) =>
+    selected
+      ? `${Color(theme.colors.primary).fadeOut(0.9)} !important`
+      : 'transparent'};
+  color: ${({ selected, theme }) =>
+    selected
+      ? `${Color(theme.colors.primary)
+          .fadeOut(0.1)
+          .toString()} !important`
+      : Color(theme.colors.primary)
+          .fadeOut(0.7)
+          .toString()};
   animation: ${({ i }) => fade(i)} 0.5s ease;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.04);
-    color: #b9bbbe;
+    background-color: ${({ theme }) =>
+      Color(theme.colors.primary)
+        .fadeOut(0.96)
+        .toString()};
+    color: ${({ theme }) =>
+      Color(theme.colors.primary)
+        .fadeOut(0.3)
+        .toString()};
   }
 `
 

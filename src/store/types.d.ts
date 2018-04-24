@@ -11,6 +11,16 @@ interface Channel {
 
 export type Toggles = 'channels'
 
+export interface Theme {
+  colors: {
+    primary: string
+    accent: string
+    background: string
+  }
+  compact: boolean
+  light: boolean
+}
+
 export interface State {
   // Message loading state
   loading: boolean
@@ -29,9 +39,10 @@ export interface State {
   channel: ComputedValue<Channel>
 
   // Visible UI components
-  visible: {
-    [key in Toggles]: boolean
-  }
+  visible: { [key in Toggles]: boolean }
+  // Theme
+  theme: Theme
+
   // stringDictionary: Dictionary<string>
   // isAwesome: ComputedValue<boolean>
   // upperFoo: string

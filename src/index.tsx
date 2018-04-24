@@ -1,6 +1,5 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { ThemeProvider } from 'emotion-theming'
 
 // Router
 import { BrowserRouter as Router } from 'react-router-dom'
@@ -9,18 +8,18 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { Container } from '@cerebral/react'
 import controller from './controllers/cerebral'
 
+import ThemeProvider from './app/ThemeProvider'
 import App from './app'
-import { defaultTheme } from 'typed-emotion'
 import registerServiceWorker from './registerServiceWorker'
 
 // Render App
 ReactDOM.render(
   <Container controller={controller}>
-    <ThemeProvider theme={defaultTheme}>
-      <Router>
+    <Router>
+      <ThemeProvider>
         <App />
-      </Router>
-    </ThemeProvider>
+      </ThemeProvider>
+    </Router>
   </Container>,
   document.getElementById('root')
 )

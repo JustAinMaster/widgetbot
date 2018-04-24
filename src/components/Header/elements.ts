@@ -29,11 +29,6 @@ export const Name = styled(Hash)`
 
   background-position: 0 50%;
   padding-left: 25px;
-  padding-right: 15px;
-  border-right: 1px solid ${({ theme }) =>
-      Color(theme.colors.primary)
-        .fadeOut(0.9)
-        .toString()};
 
   @media (max-width: 350px) {
     background: none;
@@ -46,6 +41,12 @@ export const Topic = styled('div')`
   white-space: nowrap;
   font-size: 14px;
   font-weight: 500;
+  padding-left: 15px;
+  border-left: 1px solid
+    ${({ theme }) =>
+      Color(theme.colors.primary)
+        .fadeOut(0.9)
+        .toString()};
   color: ${({ theme }) =>
     Color(theme.colors.primary)
       .fadeOut(0.4)

@@ -16,7 +16,16 @@ const state: State = {
   },
   channels: null,
   activeChannel: null,
-  channel: Computed(computed.activeChannel)
+  channel: Computed(computed.activeChannel),
+  theme: {
+    colors: {
+      primary: '#fff',
+      accent: '#7289da',
+      background: '#36393E'
+    },
+    light: false,
+    compact: false
+  }
 }
 
 export const module = Module({

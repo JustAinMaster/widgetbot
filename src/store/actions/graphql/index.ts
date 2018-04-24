@@ -129,7 +129,7 @@ namespace GraphQL {
   export function store({ state, props }: Context<ServerResponse>) {
     const { server } = props
 
-    if (server.name)
+    if (server.name) {
       // Merge the server info
       state.server = {
         ...state.server,
@@ -137,6 +137,14 @@ namespace GraphQL {
         icon: server.icon,
         memberCount: server.memberCount
       }
+    }
+
+    if (server.theme) {
+      state.theme = {
+        ...state.theme,
+        ...server.theme
+      }
+    }
 
     // Map the channels and merge the messages
     state.channels = server.channels.map((channel, i) => {

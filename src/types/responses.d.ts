@@ -1,4 +1,5 @@
 import { messages } from './message'
+import { Theme } from '../store/types'
 
 type Channels = {
   name: string
@@ -17,6 +18,7 @@ export interface ServerResponse {
     name: string
     memberCount: number
     icon: string
+    theme: Theme
     channels: Channels
     channel?: Channel
   }
