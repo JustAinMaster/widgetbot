@@ -17,7 +17,6 @@
     "@types/socket.io-client": "^1.4.32",
     "babel-plugin-emotion": "^9.1.2",
     "cerebral": "^4.2.2",
-    "discord-markdown": "^1.0.0",
     "emotion": "^9.1.2",
     "emotion-theming": "^9.1.2",
     "graphql": "^0.13.2",
