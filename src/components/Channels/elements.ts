@@ -8,11 +8,20 @@ interface Props {
 export const Root = styled<Props, 'div'>('div')`
   position: absolute;
   z-index: 9;
-  background-color: ${({ theme }) => Color(theme.colors.background).darken(0.036).toString()};
+  background-color: ${({ theme }) =>
+    Color(theme.colors.background)
+      .darken(0.036)
+      .toString()};
   width: 200px;
   height: 100%;
   flex-shrink: 0;
   transition: margin 0.3s ease;
+  display: flex;
+  flex-direction: column;
+
+  & > div > div:nth-child(1) {
+    padding: 10px 0;
+  }
 
   ${({ visible }) =>
     visible

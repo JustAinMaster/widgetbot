@@ -41,7 +41,7 @@ export const Topic = styled('div')`
   white-space: nowrap;
   font-size: 14px;
   font-weight: 500;
-  padding-left: 15px;
+  padding: 0 15px;
   border-left: 1px solid
     ${({ theme }) =>
       Color(theme.colors.primary)

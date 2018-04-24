@@ -8,7 +8,6 @@ export const Root = styled('header')`
   height: 47px;
   line-height: 28px;
   padding: 10px 11px;
-  margin-bottom: 7px;
   border-right: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 2px 0 rgba(0, 0, 0, 0.06);
 `
@@ -31,6 +30,7 @@ export const Name = styled('h1')`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  flex-grow: 1;
 `
 
 export const Count = styled('div')`
@@ -45,4 +45,6 @@ export const Count = styled('div')`
   border-radius: 50px;
   font-weight: 500;
   user-select: none;
+  min-width: 25px;
+  text-align: center;
 `
