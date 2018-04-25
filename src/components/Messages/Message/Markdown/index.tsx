@@ -18,11 +18,23 @@ export function parseText(msg: message) {
       }
 
       mentions.members.forEach((member, i) => {
+        const roles = member.roles.sort(
+          (a, b) => (a.position < b.position ? 1 : -1)
+        )
+        let color
+        for (let role of roles) {
+          if (role.color !== '#000000') {
+            color = role.color
+            break
+          }
+        }
+
         e = replace(
           e,
           new RegExp(`<@!*${member.id}>`, 'g'),
           <Mention
             key={Math.random() * i}
+            color={color}
             // onClick={() => props.setUserPopup(member)}
           >
             {`@${member.name}`}
@@ -34,7 +46,9 @@ export function parseText(msg: message) {
         e = replace(
           e,
           `<#${channel.id}>`,
-          <Channel key={i}>#{channel.name}</Channel>
+          <Channel key={i} id={channel.id}>
+            #{channel.name}
+          </Channel>
         )
       })
 
@@ -42,7 +56,7 @@ export function parseText(msg: message) {
         e = replace(
           e,
           `<@&${role.id}>`,
-          <Role role={role} key={i}>{`@${role.name}`}</Role>
+          <Role role={role} key={i} color={role.color}>{`@${role.name}`}</Role>
         )
       })
 

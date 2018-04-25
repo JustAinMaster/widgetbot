@@ -71,4 +71,12 @@ export const Text = styled('div')`
   & * {
     color: inherit;
   }
+
+  & a {
+    color: #0096cf;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `

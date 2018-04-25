@@ -13,7 +13,7 @@
     "baseUrl": ".",
     "paths": {
       "logger": ["src/modules/logger.ts"],
-      "styled-elements": ["src/modules/styled-elements.ts"],
+      "styled-elements": ["src/modules/styled-elements.tsx"],
       "typed-emotion": ["src/controllers/emotion/index.ts"],
       "queries": ["src/store/actions/graphql/queries.ts"],
       "socket-io": ["src/controllers/socket-io"],

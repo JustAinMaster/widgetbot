@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled, { keyframes } from 'typed-emotion'
-import { Hash } from 'styled-elements'
+import { Hash, Channel } from 'styled-elements'
 import Color from 'kolor'
 
 const fade = i => keyframes`
@@ -19,7 +19,7 @@ interface Props {
   to: string
   i: number
 }
-export const Root = styled<Props, 'div'>(Link)`
+export const Root = styled<Props, any>(Channel)`
   text-decoration: none;
   user-select: none;
   cursor: ${({ selected }) => (selected ? 'default' : 'pointer')};
