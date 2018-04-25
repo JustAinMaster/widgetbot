@@ -3,10 +3,10 @@ import SimpleMarkdown from 'simple-markdown'
 import * as hljs from 'highlight.js'
 
 import message from '../../../../types/message'
-import { Mention, Role, Channel, Emoji, Image } from './elements'
+import { Mention, Role, Channel, Twemoji, Emoji, Image, Code } from './elements'
 import Embed from '../Embed'
 
-import { Twemoji } from 'react-emoji-render'
+import { EmojiParser } from 'react-emoji-render'
 // import Emoji from "./emoji"
 const $Emoji = { people: [{ names: ['disabled'], surrogates: '😀' }] }
 
@@ -119,7 +119,7 @@ export function parseText(msg: message) {
   function emoji(input) {
     return input.map((part, i) => {
       if (typeof part === 'string') {
-        return <Twemoji svg onlyEmojiClassName="jumboable" text={part} />
+        return <Twemoji svg onlyEmojiClassName="enlarged" text={part} />
       }
       return part
     })
@@ -221,26 +221,6 @@ function recurse(node, recurseOutput, state) {
   return recurseOutput(node.content, state)
 }
 
-function makeClassName(...parameters) {
-  const result = []
-
-  for (const parameter of parameters) {
-    if (parameter) {
-      if (typeof parameter === 'string' || typeof parameter === 'number') {
-        result.push(parameter)
-      } else if (typeof parameter === 'object') {
-        for (const key in parameter) {
-          if (parameter.hasOwnProperty(key) && parameter[key]) {
-            result.push(key)
-          }
-        }
-      }
-    }
-  }
-
-  return result.join(' ')
-}
-
 function parserFor(rules, returnAst?) {
   const parser = SimpleMarkdown.parserFor(rules)
   const renderer = SimpleMarkdown.reactFor(
@@ -288,7 +268,7 @@ function getEmojiURL(surrogate) {
   try {
     // we could link to discord's cdn, but there's a lot of these
     // and i'd like to minimize the amount of data we need directly from them
-    return `https://twemoji.maxcdn.com/2/svg/${Twemoji.convert.toCodePoint(
+    return `https://twemoji.maxcdn.com/2/svg/${EmojiParser.convert.toCodePoint(
       surrogate
     )}.svg`
   } catch (error) {
@@ -419,9 +399,9 @@ const baseRules = {
       return node.src
         ? createReactElement(Emoji, {
             draggable: false,
-            className: makeClassName('emoji', { jumboable: node.jumboable }),
+            enlarged: node.jumboable,
             alt: node.surrogate,
-            'data-tip': node.name,
+            // 'data-tip': node.name,
             src: node.src,
             ...emojiTipOptions
           })
@@ -448,11 +428,11 @@ const baseRules = {
       }
     },
     react(node) {
-      return createReactElement('img', {
+      return createReactElement(Emoji, {
         draggable: false,
-        className: makeClassName('emoji', { jumboable: node.jumboable }),
+        enlarged: node.jumboable,
         alt: `<:${node.name}:${node.emojiId}>`,
-        'data-tip': `:${node.name}:`,
+        // 'data-tip': `:${node.name}:`,
         src: node.src,
         ...emojiTipOptions
       })
@@ -555,9 +535,9 @@ function createRules(r) {
       ...inlineCode,
       react(node, recurseOutput, state) {
         return createReactElement(
-          'code',
+          Code,
           {
-            className: 'inline'
+            inline: true
           },
           state.key,
           recurse(node, recurseOutput, state)
@@ -570,30 +550,22 @@ function createRules(r) {
         if (node.lang && hljs.getLanguage(node.lang) != null) {
           const highlightedBlock = hljs.highlight(node.lang, node.content, true)
           return createReactElement(
-            'pre',
-            {},
-            state.key,
-            createReactElement('code', {
-              className: 'hljs ' + highlightedBlock.language,
+            Code,
+            {
+              language: highlightedBlock.language,
               dangerouslySetInnerHTML: {
                 __html: highlightedBlock.value
               }
-            })
+            },
+            state.key
           )
         }
 
         return createReactElement(
-          'pre',
+          Code,
           {},
-          state.key,
-          createReactElement(
-            'code',
-            {
-              className: 'hljs'
-            },
-            undefined,
-            recurse(node, recurseOutput, state)
-          )
+          undefined,
+          recurse(node, recurseOutput, state)
         )
       }
     }
