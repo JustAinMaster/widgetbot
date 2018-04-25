@@ -15,9 +15,10 @@ export const Root = styled<Props, 'div'>('div')`
   width: 200px;
   height: 100%;
   flex-shrink: 0;
-  transition: margin 0.3s ease;
+  transition: transform 0.3s ease;
   display: flex;
   flex-direction: column;
+  will-change: transform;
 
   & > div > div:nth-child(1) {
     padding: 10px 0;
@@ -33,6 +34,6 @@ export const Root = styled<Props, 'div'>('div')`
           }
         `
       : css`
-          margin-left: -250px;
+          transform: translateX(-250px);
         `};
 `

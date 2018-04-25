@@ -41,27 +41,29 @@ export const Ham = styled<Props, 'button'>('button')`
     }
   }
 
-  ${({ open }) => open ? css`
-    transform: rotate(-180deg);
-    &::before {
-      top: -7px;
-      left: -9px;
-    }
-    div {
+  @media (min-width: 520px) {
+    ${({ open }) => open ? css`
+      transform: rotate(-180deg);
       &::before {
-        top: -4.8px;
-        width: 15px;
-        transform: rotate(45deg);
-        right: -3px;
+        top: -7px;
+        left: -9px;
       }
-      &::after {
-        top: 4.8px;
-        width: 15px;
-        transform: rotate(-45deg);
-        right: -3px;
+      div {
+        &::before {
+          top: -4.8px;
+          width: 15px;
+          transform: rotate(45deg);
+          right: -3px;
+        }
+        &::after {
+          top: 4.8px;
+          width: 15px;
+          transform: rotate(-45deg);
+          right: -3px;
+        }
       }
-    }
-  ` : null}
+    ` : null}
+  }
 `
 
 export const Burger = styled('div')`

@@ -20,7 +20,10 @@ export const Wrapper = styled<Props, 'div'>('div')`
     width: 100%;
     z-index: 8;
     pointer-events: none;
-    transition: background-color 0.5s ease;
+    transition: opacity 0.5s ease;
+    will-change: opacity;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
   }
 
   ${({ squashed }) => squashed ? css`
@@ -31,7 +34,7 @@ export const Wrapper = styled<Props, 'div'>('div')`
     @media (max-width: 520px) {
       &::after {
         pointer-events: initial;
-        background-color: rgba(0, 0, 0, 0.5);
+        opacity: 1;
       }
       * {
         pointer-events: none !important;

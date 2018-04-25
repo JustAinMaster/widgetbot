@@ -4,6 +4,7 @@ import Color from 'kolor'
 export const Root = styled('div')``
 
 // Group
+// prettier-ignore
 export const Group = styled('div')`
   border-bottom: 1px solid ${({ theme }) => Color(theme.colors.primary).fadeOut(0.96).toString()};
   box-sizing: border-box;
