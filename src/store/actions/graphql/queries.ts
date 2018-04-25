@@ -32,6 +32,7 @@ export const messages = gql`
         id
       }
       channel(id: $channel) {
+        name
         topic
         messages {
           timestamp
@@ -42,6 +43,78 @@ export const messages = gql`
             avatar
             bot
             color
+          }
+          reactions {
+            id
+            name
+            count
+          }
+          mentions {
+            channels {
+              name
+              id
+            }
+            members {
+              name
+              id
+              roles {
+                color
+                position
+                name
+              }
+            }
+            roles {
+              name
+              color
+              id
+            }
+            everyone
+          }
+          type
+          editedAt
+          attachment {
+            url
+            height
+            width
+          }
+          embeds {
+            color
+            title
+            type
+            description
+            url
+            timestamp
+            fields {
+              value
+              name
+              inline
+            }
+            footer {
+              iconURL
+              proxyIconUrl
+              text
+            }
+            thumbnail {
+              height
+              width
+              proxyURL
+              url
+            }
+            image {
+              height
+              width
+              proxyURL
+              url
+            }
+            provider {
+              name
+              url
+            }
+            video {
+              height
+              width
+              url
+            }
           }
         }
       }
@@ -60,6 +133,7 @@ export const channel = gql`
   query Messages($server: String!, $channel: String!) {
     server(id: $server) {
       channel(id: $channel) {
+        name
         topic
         messages {
           timestamp
@@ -71,6 +145,85 @@ export const channel = gql`
             bot
             color
           }
+          reactions {
+            id
+            name
+            count
+          }
+          mentions {
+            channels {
+              name
+              id
+            }
+            members {
+              name
+              id
+              roles {
+                color
+                position
+                name
+              }
+            }
+            roles {
+              name
+              color
+              id
+            }
+            everyone
+          }
+          type
+          editedAt
+          attachment {
+            url
+            height
+            width
+          }
+          embeds {
+            color
+            title
+            type
+            description
+            url
+            timestamp
+            fields {
+              value
+              name
+              inline
+            }
+            footer {
+              iconURL
+              proxyIconUrl
+              text
+            }
+            thumbnail {
+              height
+              width
+              proxyURL
+              url
+            }
+            image {
+              height
+              width
+              proxyURL
+              url
+            }
+            provider {
+              name
+              url
+            }
+            video {
+              height
+              width
+              url
+            }
+          }
+        }
+      }
+      theme {
+        colors {
+          primary
+          accent
+          background
         }
       }
     }

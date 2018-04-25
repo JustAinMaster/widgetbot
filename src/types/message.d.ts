@@ -49,15 +49,56 @@ export interface Role {
 }
 
 export interface Embed {
-  fields: {}[]
-  footer: {}
-  thumbnail: {}
-  author: {}
-  image: {}
-  provider: {}
-  video: {}
-  embed: {}
-  message: {}
+  color: number
+  fields: [EmbedField]
+  footer: EmbedFooter
+  thumbnail: EmbedThumbnail
+  author: Author
+  image: EmbedImage
+  provider: EmbedProvider
+  video: EmbedVideo
+  title: string
+  type: string
+  description: string
+  url: string
+  timestamp: number
+}
+
+export interface EmbedField {
+  value: string
+  name: string
+  inline: Boolean
+}
+
+export interface EmbedFooter {
+  iconURL: string
+  proxyIconUrl: string
+  text: string
+}
+
+export interface EmbedThumbnail {
+  height: number
+  width: number
+  proxyURL: string
+  url: string
+}
+
+export interface EmbedImage {
+  height: number
+  width: number
+  proxyURL: string
+  url: string
+}
+
+export interface EmbedProvider {
+  name: string
+  url: string
+}
+
+export interface EmbedVideo {
+  height: number
+  width: number
+  url: string
 }
 
 export interface Reaction {
