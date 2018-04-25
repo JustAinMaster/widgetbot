@@ -67,4 +67,8 @@ export const Markup = styled('div')`
 export const Text = styled('div')`
   color: inherit;
   margin-bottom: 7px;
+
+  & * {
+    color: inherit;
+  }
 `

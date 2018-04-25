@@ -24,7 +24,7 @@ DEALINGS IN THE SOFTWARE.
 
 import * as React from 'react'
 import * as Moment from 'moment'
-import { parseAllowLinks, parseEmbedTitle } from '../markdown'
+import { parseAllowLinks, parseEmbedTitle } from '../Markdown'
 import { Twemoji } from 'react-emoji-render'
 
 function parseEmojis(text) {
@@ -35,14 +35,11 @@ function parseEmojis(text) {
       return text.map((part, i) => {
         if (typeof part === 'string')
           return <Twemoji className="emoji" svg key={i} text={part} />
-        else return part
+        return part
       })
-    } else {
-      return text
     }
-  } else {
-    return text
   }
+  return text
 }
 
 const Link = ({ children, ...props }) => {

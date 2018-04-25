@@ -1,27 +1,16 @@
 import * as React from 'react'
-import Embed from './Embed'
-import message from '../../../types/message'
+import SimpleMarkdown from 'simple-markdown'
+import * as hljs from 'highlight.js'
+
+import message from '../../../../types/message'
+import { Mention, Role, Channel, Emoji, Image } from './elements'
+import Embed from '../Embed'
+
+import { Twemoji } from 'react-emoji-render'
+// import Emoji from "./emoji"
+const $Emoji = { people: [{ names: ['disabled'], surrogates: '😀' }] }
 
 export function parseText(msg: message) {
-  function hexToRgb(hex: string): { r: string; g: string; b: string } {
-    let result: any = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-    result = result
-      ? {
-          r: parseInt(result[1], 16),
-          g: parseInt(result[2], 16),
-          b: parseInt(result[3], 16)
-        }
-      : {}
-    // Default role color #000000
-    if (!result.r && !result.g && !result.b)
-      result = {
-        r: 185,
-        g: 187,
-        b: 190
-      }
-    return result
-  }
-
   function mentions(array: [string | string[]], mentions) {
     return array.map(e => {
       if (typeof e !== 'string') {
@@ -32,13 +21,12 @@ export function parseText(msg: message) {
         e = replace(
           e,
           new RegExp(`<@!*${member.id}>`, 'g'),
-          <span
+          <Mention
             key={Math.random() * i}
             // onClick={() => props.setUserPopup(member)}
-            className="memberMention"
           >
-            @{member.name}
-          </span>
+            {`@${member.name}`}
+          </Mention>
         )
       })
 
@@ -46,33 +34,24 @@ export function parseText(msg: message) {
         e = replace(
           e,
           `<#${channel.id}>`,
-          <span key={Math.random() * i} className="memberMention">
-            #{channel.name}
-          </span>
+          <Channel key={i}>#{channel.name}</Channel>
         )
       })
 
       mentions.roles.forEach((role, i) => {
-        let color = hexToRgb(role.color)
         e = replace(
           e,
           `<@&${role.id}>`,
-          <span
-            key={Math.random() * i}
-            style={{ backgroundColor: `${color.r}, ${color.g}, ${color.b}` }}
-          >
-            <span className="roleMention">@{role.name}</span>
-          </span>
+          <Role role={role} key={i}>{`@${role.name}`}</Role>
         )
       })
 
       let _e: string[] | string = e as string[] | string
       if (_e instanceof Array) {
         _e.map(a => {
-          if (typeof a !== 'string') {
-            return a
-          }
-          return a.replace(/<@&[0-9]{18}>/g, '@deleted-role')
+          return typeof a === 'string'
+            ? a.replace(/<@&[0-9]{18}>/g, '@deleted-role')
+            : a
         })
       } else {
         e = e.replace(/<@&[0-9]{18}>/g, '@deleted-role')
@@ -82,16 +61,16 @@ export function parseText(msg: message) {
         e = replace(
           e,
           '@everyone',
-          <span key={Math.random()} className="everyoneMention">
-            @everyone
-          </span>
+          <Role key={Math.random()} everyone>
+            {`@everyone`}
+          </Role>
         )
         e = replace(
           e,
           '@here',
-          <span key={Math.random()} className="everyoneMention">
-            @here
-          </span>
+          <Role key={Math.random()} everyone>
+            {`@here`}
+          </Role>
         )
       }
 
@@ -103,116 +82,57 @@ export function parseText(msg: message) {
     if (string instanceof Array) {
       return string.map(e => replace(e, regex, element))
     } else if (typeof string === 'string') {
-      var parts = string.split(regex)
+      const parts = string.split(regex)
 
       for (var i = 1; i < parts.length; i += 2) {
         parts.splice(i, 0, element)
       }
 
       return parts
-    } else {
-      return string
     }
+    return string
   }
 
   function attachment(msg, setPopup?) {
     if (msg.attachment.url)
-      return (
-        <span
-          onClick={() => {
-            // setPopup(msg.attachment.url)
-          }}
-        >
-          <img
-            className="msg-img"
-            src={msg.attachment.url}
-            height={msg.attachment.height}
-          />
-        </span>
-      )
-    else return null
+      return <Image src={msg.attachment.url} height={msg.attachment.height} />
+    return null
   }
 
   function embed(msg: message) {
-    if (msg.embeds.length === 0) {
-      return null
-    }
+    if (msg.embeds.length === 0) return null
 
     return msg.embeds.map((embed, i) => {
       if (embed.type === 'gifv') {
         return (
-          <img
-            className="msg-img"
+          <Image
             src={embed.video.url.replace('.mp4', '.gif')}
             height={embed.video.height}
             key={i}
-            onClick={() => {
-              // props.setPopup(embed.video.url.replace('.mp4', '.gif'))
-            }}
           />
         )
-      } else {
-        return <Embed key={i} {...embed} />
       }
+      return <Embed key={i} {...embed} />
     })
   }
 
   function emoji(input) {
     return input.map((part, i) => {
       if (typeof part === 'string') {
-        return (
-          <Twemoji
-            svg
-            onlyEmojiClassName="jumboable"
-            className="emoji"
-            text={part}
-          />
-        )
-      } else {
-        return part
+        return <Twemoji svg onlyEmojiClassName="jumboable" text={part} />
       }
+      return part
     })
   }
 
   return (
-    <div>
+    <React.Fragment>
       {msg.content ? emoji(mentions(parse(msg.content), msg.mentions)) : null}
       {attachment(msg)}
       {embed(msg)}
-    </div>
+    </React.Fragment>
   )
 }
-
-/*
-The MIT License (MIT)
-
-Copyright (c) 2017 leovoel
-
-Permission is hereby granted, free of charge, to any person obtaining a
-copy of this software and associated documentation files (the "Software"),
-to deal in the Software without restriction, including without limitation
-the rights to use, copy, modify, merge, publish, distribute, sublicense,
-and/or sell copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-DEALINGS IN THE SOFTWARE.
-*/
-
-import SimpleMarkdown from 'simple-markdown'
-import * as hljs from 'highlight.js'
-import { Twemoji } from 'react-emoji-render'
-// import Emoji from "./emoji"
-var Emoji = { people: [{ names: ['disabled'], surrogates: '😀' }] }
-
 // this is mostly translated from discord's client,
 // although it's not 1:1 since the client js is minified
 // and also is transformed into some tricky code
@@ -382,8 +302,8 @@ const DIVERSITY_SURROGATES = ['🏻', '🏼', '🏽', '🏾', '🏿']
 const NAME_TO_EMOJI = {}
 const EMOJI_TO_NAME = {}
 
-Object.keys(Emoji).forEach(category => {
-  Emoji[category].forEach(emoji => {
+Object.keys($Emoji).forEach(category => {
+  $Emoji[category].forEach(emoji => {
     EMOJI_TO_NAME[emoji.surrogates] = emoji.names[0] || ''
 
     emoji.names.forEach(name => {
@@ -497,17 +417,14 @@ const baseRules = {
     },
     react(node, recurseOutput, state) {
       return node.src
-        ? createReactElement(
-            'img',
-            {
-              draggable: false,
-              className: makeClassName('emoji', { jumboable: node.jumboable }),
-              alt: node.surrogate,
-              'data-tip': node.name,
-              src: node.src,
-              ...emojiTipOptions
-            }
-          )
+        ? createReactElement(Emoji, {
+            draggable: false,
+            className: makeClassName('emoji', { jumboable: node.jumboable }),
+            alt: node.surrogate,
+            'data-tip': node.name,
+            src: node.src,
+            ...emojiTipOptions
+          })
         : createReactElement('span', {}, state.key, node.surrogate)
     }
   },
@@ -531,17 +448,14 @@ const baseRules = {
       }
     },
     react(node) {
-      return createReactElement(
-        'img',
-        {
-          draggable: false,
-          className: makeClassName('emoji', { jumboable: node.jumboable }),
-          alt: `<:${node.name}:${node.emojiId}>`,
-          'data-tip': `:${node.name}:`,
-          src: node.src,
-          ...emojiTipOptions
-        }
-      )
+      return createReactElement('img', {
+        draggable: false,
+        className: makeClassName('emoji', { jumboable: node.jumboable }),
+        alt: `<:${node.name}:${node.emojiId}>`,
+        'data-tip': `:${node.name}:`,
+        src: node.src,
+        ...emojiTipOptions
+      })
     }
   },
   text: {
@@ -659,15 +573,12 @@ function createRules(r) {
             'pre',
             {},
             state.key,
-            createReactElement(
-              'code',
-              {
-                className: 'hljs ' + highlightedBlock.language,
-                dangerouslySetInnerHTML: {
-                  __html: highlightedBlock.value
-                }
+            createReactElement('code', {
+              className: 'hljs ' + highlightedBlock.language,
+              dangerouslySetInnerHTML: {
+                __html: highlightedBlock.value
               }
-            )
+            })
           )
         }
 
@@ -759,3 +670,5 @@ function jumboify(ast) {
 }
 
 export { parse, parseAllowLinks, parseEmbedTitle, jumboify }
+
+export default parseText
