@@ -42,8 +42,16 @@ export const Image = styled<ImageProps, 'img'>('img')`
   border-radius: 3px;
   ${scale};
 
-  @media (max-width: 600px) {
-    width: calc(80%);
+  @media (max-width: 700px) {
+    width: 65%;
     height: auto;
+  }
+
+  @media (max-width: 650px) {
+    width: 70%;
+  }
+
+  @media (max-width: 600px) {
+    width: 80%;
   }
 `

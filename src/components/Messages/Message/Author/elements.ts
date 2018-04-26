@@ -19,22 +19,6 @@ export const Name = styled<NameProps, 'strong'>('strong')`
   }
 `
 
-// Bot tag
-export const Tag = styled('span')`
-  user-select: none;
-  background: ${({ theme }) => theme.colors.accent};
-  color: #fff;
-  border-radius: 3px;
-  line-height: 21px;
-  flex-shrink: 0;
-  font-size: 10px;
-  font-weight: 500;
-  margin-left: 6px;
-  padding: 1px 2px;
-  text-transform: uppercase;
-  vertical-align: top;
-`
-
 // Timestamp
 export const Time = styled('span')`
   line-height: 21px;

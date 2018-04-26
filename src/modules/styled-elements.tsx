@@ -22,6 +22,14 @@ export const Scrollable = styled(Scrollbars)`
     &:nth-child(1) {
       overflow-x: hidden !important;
       overflow-y: scroll !important;
+      & > div {
+        &:nth-child(1) {
+          margin-top: 15px;
+        }
+        &:last-child {
+          margin-bottom: 15px;
+        }
+      }
     }
     &:nth-child(3) {
       ${ScrollableCSS};

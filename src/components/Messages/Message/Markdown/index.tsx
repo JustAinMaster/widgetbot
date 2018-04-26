@@ -33,7 +33,7 @@ export function parseText(msg: message) {
           e,
           new RegExp(`<@!*${member.id}>`, 'g'),
           <Mention
-            key={Math.random() * i}
+            key={member.id}
             color={color}
             // onClick={() => props.setUserPopup(member)}
           >
@@ -46,7 +46,7 @@ export function parseText(msg: message) {
         e = replace(
           e,
           `<#${channel.id}>`,
-          <Channel key={i} id={channel.id}>
+          <Channel key={channel.id} id={channel.id}>
             #{channel.name}
           </Channel>
         )
@@ -56,7 +56,7 @@ export function parseText(msg: message) {
         e = replace(
           e,
           `<@&${role.id}>`,
-          <Role role={role} key={i} color={role.color}>{`@${role.name}`}</Role>
+          <Role role={role} key={role.id} color={role.color}>{`@${role.name}`}</Role>
         )
       })
 
@@ -140,7 +140,7 @@ export function parseText(msg: message) {
   function emoji(input) {
     return input.map((part, i) => {
       if (typeof part === 'string') {
-        return <Twemoji svg onlyEmojiClassName="enlarged" text={part} key={i} />
+        return <Twemoji svg onlyEmojiClassName="enlarged" text={part} key={i * Math.random()} />
       }
       return part
     })

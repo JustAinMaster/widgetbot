@@ -27,10 +27,17 @@ namespace GraphQL {
 
     // If a channel is selected, load it's messages
     // else just load the server info
-    const query = loadMessages ? queries.messages : queries.server
     const variables = {
       server: state.server.id,
-      ...(loadMessages ? { channel: state.activeChannel } : {})
+      ...(loadMessages
+        ? {
+            channel: state.activeChannel,
+            withChannel: true
+          }
+        : {
+            channel: null,
+            withChannel: false
+          })
     }
 
     Log(
@@ -40,7 +47,7 @@ namespace GraphQL {
       ...(loadMessages ? [`with messages on channel`, state.activeChannel] : [])
     )
 
-    return request('/api/graphql', query, variables)
+    return request('/api/graphql', queries.server, variables)
       .then((response: ServerResponse) => {
         if (loadMessages) {
           subscribe({
