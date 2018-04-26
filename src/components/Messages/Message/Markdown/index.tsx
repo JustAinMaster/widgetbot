@@ -109,7 +109,13 @@ export function parseText(msg: message) {
 
   function attachment(msg, setPopup?) {
     if (msg.attachment.url)
-      return <Image src={msg.attachment.url} height={msg.attachment.height} />
+      return (
+        <Image
+          src={msg.attachment.url}
+          height={+msg.attachment.height}
+          width={+msg.attachment.width}
+        />
+      )
     return null
   }
 
@@ -121,7 +127,8 @@ export function parseText(msg: message) {
         return (
           <Image
             src={embed.video.url.replace('.mp4', '.gif')}
-            height={embed.video.height}
+            width={+embed.video.width}
+            height={+embed.video.height}
             key={i}
           />
         )
@@ -133,7 +140,7 @@ export function parseText(msg: message) {
   function emoji(input) {
     return input.map((part, i) => {
       if (typeof part === 'string') {
-        return <Twemoji svg onlyEmojiClassName="enlarged" text={part} />
+        return <Twemoji svg onlyEmojiClassName="enlarged" text={part} key={i} />
       }
       return part
     })
@@ -271,8 +278,7 @@ function omit(object, excluded) {
 
 // emoji stuff
 
-const getEmoteURL = emote =>
-  `${location.protocol}//cdn.discordapp.com/emojis/${emote.id}.png`
+const getEmoteURL = emote => `https://cdn.discordapp.com/emojis/${emote.id}.png`
 
 function getEmojiURL(surrogate) {
   if (['™', '©', '®'].indexOf(surrogate) > -1) {

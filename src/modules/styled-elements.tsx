@@ -18,13 +18,19 @@ export const Scrollable = styled(Scrollbars)`
   display: flex;
   height: 100%;
   width: 100%;
-  & > div:nth-child(3) {
-    ${ScrollableCSS};
-    width: 8px !important;
-    & > div {
-      width: 14px !important;
-      margin-left: -3px !important;
-      border: 3px solid ${({ theme }) => theme.colors.background};
+  & > div {
+    &:nth-child(1) {
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+    &:nth-child(3) {
+      ${ScrollableCSS};
+      width: 8px !important;
+      & > div {
+        width: 14px !important;
+        margin-left: -3px !important;
+        border: 3px solid ${({ theme }) => theme.colors.background};
+      }
     }
   }
 `
@@ -60,7 +66,9 @@ export const Hash = styled('div')`
 
 interface ChannelProps {
   id: string
+  className?: string
 }
+
 export const Channel = connect<ChannelProps>()
   .with(({ state, signals, props }) => ({
     switchChannel: signals.switchChannel
@@ -96,7 +104,10 @@ export const Channel = connect<ChannelProps>()
           return (
             <a
               href={this.url}
-              {...this.props}
+              {...{
+                className: this.props.className,
+                children: this.props.children
+              }}
               onClick={this.handleClick.bind(this)}
             />
           )

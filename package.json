@@ -38,8 +38,7 @@
     "react-scripts-ts": "2.15.1",
     "react-transition-group": "^2.3.1",
     "simple-markdown": "^0.3.3",
-    "socket.io-client": "^2.1.0",
-    "time-ago": "^0.2.1"
+    "socket.io-client": "^2.1.0"
   },
   "scripts": {
     "start": "react-scripts-ts start",

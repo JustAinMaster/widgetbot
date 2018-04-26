@@ -44,6 +44,7 @@ function globals(theme: Theme) {
         sans-serif;
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
+      word-break: break-all;
     }
 
     @font-face {

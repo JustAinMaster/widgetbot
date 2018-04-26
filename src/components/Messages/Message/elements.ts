@@ -11,8 +11,9 @@ export const Group = styled('div')`
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  width: calc(100% - 10px - 20px);
   margin-left: 20px;
-  margin-right: 6px;
+  margin-right: 10px;
   padding: 20px 0 13px;
   user-select: text;
   word-wrap: break-word;
