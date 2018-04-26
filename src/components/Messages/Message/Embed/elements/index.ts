@@ -6,6 +6,7 @@ export const Root = styled('div')`
   max-width: 520px;
   display: flex;
   color: hsla(0, 0%, 100%, 0.7);
+  overflow: hidden;
 `
 
 export const Wrapper = styled('div')`
