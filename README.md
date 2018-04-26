@@ -25,3 +25,9 @@ yarn start
 ```
 
 Once you've done that, open up [`localhost:3000/channels/299881420891881473/355719584830980096`](http://localhost:3000/channels/299881420891881473/355719584830980096) in your browser. All server requests will be proxied to `localhost:7000`, so make sure the server is running on that port.
+
+## Testing
+
+Cross-browser testing proudly sponsered by [BrowserStack](https://browserstack.com)
+
+[![BrowserStack Logo](https://d98b8t1nnulk5.cloudfront.net/production/images/layout/logo-header.png?1469004780)](https://browserstack.com)
