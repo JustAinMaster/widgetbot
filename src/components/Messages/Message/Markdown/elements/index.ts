@@ -1,5 +1,4 @@
 import styled, { css } from 'typed-emotion'
-import Color from 'kolor'
 
 export { Twemoji, Emoji } from './emoji'
 export { Code } from './code'

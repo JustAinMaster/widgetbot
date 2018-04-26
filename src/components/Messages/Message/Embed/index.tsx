@@ -1,8 +1,23 @@
 import * as React from 'react'
 import * as Moment from 'moment'
 import { parseAllowLinks, parseEmbedTitle } from '../Markdown'
-import { Twemoji } from 'react-emoji-render'
-import { Image } from '../Markdown/elements'
+import { Image, Twemoji } from '../Markdown/elements'
+import {
+  Root,
+  ColorPill,
+  Wrapper,
+  Content,
+  Fields,
+  FieldName,
+  FieldValue,
+  Field,
+  FooterIcon,
+  Footer,
+  Title,
+  AuthorName,
+  AuthorIcon,
+  Author
+} from './elements'
 
 function parseEmojis(text) {
   if (text) {
@@ -11,7 +26,7 @@ function parseEmojis(text) {
     } else if (text instanceof Array) {
       return text.map((part, i) => {
         return part === 'string' ? (
-          <Twemoji className="emoji" svg key={i + part} text={part} />
+          <Twemoji svg key={i + part} text={part} />
         ) : (
           part
         )
@@ -29,33 +44,17 @@ const Link = ({ children, ...props }) => {
   )
 }
 
-const EmbedColorPill = ({ color }) => {
-  let computed
-
-  if (color) {
-    const r = (color >> 16) & 0xff
-    const g = (color >> 8) & 0xff
-    const b = color & 0xff
-    computed = `rgba(${r},${g},${b},1)`
-  }
-
-  const style = { backgroundColor: computed !== undefined ? computed : '' }
-  return <div className="embed-color-pill" style={style} />
-}
-
 const EmbedTitle = ({ title, url }) => {
   if (!title) {
     return null
   }
 
-  let computed = (
-    <div className="embed-title">{parseEmojis(parseEmbedTitle(title))}</div>
-  )
+  let computed = <Title>{parseEmojis(parseEmbedTitle(title))}</Title>
   if (url) {
     computed = (
-      <Link href={url} className="embed-title">
-        {parseEmojis(parseEmbedTitle(title))}
-      </Link>
+      <Title>
+        <Link href={url}>{parseEmojis(parseEmbedTitle(title))}</Link>
+      </Title>
     )
   }
 
@@ -81,25 +80,23 @@ const EmbedAuthor = ({ name, url, icon_url }) => {
 
   let authorName
   if (name) {
-    authorName = <span className="embed-author-name">{name}</span>
+    authorName = <AuthorName>{name}</AuthorName>
     if (url) {
       authorName = (
-        <Link href={url} className="embed-author-name">
-          {name}
-        </Link>
+        <AuthorName>
+          <Link href={url}>{name}</Link>
+        </AuthorName>
       )
     }
   }
 
-  const authorIcon = icon_url ? (
-    <img src={icon_url} role="presentation" className="embed-author-icon" />
-  ) : null
+  const authorIcon = icon_url ? <AuthorIcon src={icon_url} /> : null
 
   return (
-    <div className="embed-author">
+    <Author>
       {authorIcon}
       {parseEmojis(authorName)}
-    </div>
+    </Author>
   )
 }
 
@@ -108,22 +105,18 @@ const EmbedField = ({ name, value, inline }) => {
     return null
   }
 
-  const cls = 'embed-field' + (inline ? ' embed-field-inline' : '')
-
   const fieldName = name ? (
-    <div className="embed-field-name">{parseEmojis(parseEmbedTitle(name))}</div>
+    <FieldName>{parseEmojis(parseEmbedTitle(name))}</FieldName>
   ) : null
   const fieldValue = value ? (
-    <div className="embed-field-value markup">
-      {parseEmojis(parseAllowLinks(value))}
-    </div>
+    <FieldValue>{parseEmojis(parseAllowLinks(value))}</FieldValue>
   ) : null
 
   return (
-    <div className={cls}>
+    <Field inline={inline}>
       {fieldName}
       {fieldValue}
-    </div>
+    </Field>
   )
 }
 
@@ -159,22 +152,13 @@ const EmbedFooter = ({ timestamp, text, icon_url }) => {
   time = time.isValid() ? time.format('ddd MMM Do, YYYY [at] h:mm A') : null
 
   const footerText = [text, time].filter(Boolean).join(' | ')
-  const footerIcon =
-    text && icon_url ? (
-      <img
-        src={icon_url}
-        className="embed-footer-icon"
-        role="presentation"
-        width="20"
-        height="20"
-      />
-    ) : null
+  const footerIcon = text && icon_url ? <FooterIcon src={icon_url} /> : null
 
   return (
-    <div>
+    <React.Fragment>
       {footerIcon}
-      <span className="embed-footer">{parseEmojis(footerText)}</span>
-    </div>
+      <Footer>{parseEmojis(footerText)}</Footer>
+    </React.Fragment>
   )
 }
 
@@ -183,11 +167,7 @@ const EmbedFields = ({ fields }) => {
     return null
   }
 
-  return (
-    <div className="embed-fields">
-      {fields.map((f, i) => <EmbedField key={i} {...f} />)}
-    </div>
-  )
+  return <Fields>{fields.map((f, i) => <EmbedField key={i} {...f} />)}</Fields>
 }
 
 const Embed = ({
@@ -203,24 +183,20 @@ const Embed = ({
   footer
 }) => {
   return (
-    <div className="accessory">
-      <div className="embed-wrapper">
-        <EmbedColorPill color={color} />
-        <div className="embed embed-rich">
-          <div className="embed-content">
-            <div className="embed-content-inner">
-              <EmbedAuthor {...author} />
-              <EmbedTitle title={title} url={url} />
-              <EmbedDescription content={description} />
-              <EmbedFields fields={fields} />
-            </div>
-            <EmbedThumbnail {...thumbnail} />
-          </div>
-          <EmbedImage {...image} />
-          <EmbedFooter timestamp={timestamp} {...footer} />
-        </div>
-      </div>
-    </div>
+    <Root>
+      <ColorPill color={color} />
+      <Wrapper>
+        <Content>
+          <EmbedAuthor {...author} />
+          <EmbedTitle title={title} url={url} />
+          <EmbedDescription content={description} />
+          <EmbedFields fields={fields} />
+          <EmbedThumbnail {...thumbnail} />
+        </Content>
+        <EmbedImage {...image} />
+        <EmbedFooter timestamp={timestamp} {...footer} />
+      </Wrapper>
+    </Root>
   )
 }
 
