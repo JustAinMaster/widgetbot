@@ -6,7 +6,6 @@ export const Root = styled('div')`
   max-width: 520px;
   display: flex;
   color: hsla(0, 0%, 100%, 0.7);
-  overflow: hidden;
 `
 
 export const Wrapper = styled('div')`
@@ -16,14 +15,15 @@ export const Wrapper = styled('div')`
   max-width: 520px;
   display: flex;
   flex-direction: column;
-  background-color: rgba(46, 48, 54, 0.3);
-  border: 1px solid hsla(0, 0%, 80%, 0.3);
-  border-color: rgba(46, 48, 54, 0.6);
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 `
 
 export const Content = styled('div')`
   width: 100%;
   display: flex;
+  overflow: hidden;
   ${({ theme }) =>
     theme.embed.type === 'article'
       ? css`
