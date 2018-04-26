@@ -1,9 +1,11 @@
 import { Module, Dictionary, Computed } from '@cerebral/fluent'
+import Router from '@cerebral/router'
 import { State } from './types'
 import * as signals from './sequences'
 import * as computed from './computed'
 
 const state: State = {
+  screen: null,
   loading: true,
   server: {
     name: null,
@@ -30,5 +32,24 @@ const state: State = {
 
 export const module = Module({
   state,
-  signals
+  signals,
+  modules: {
+    router: Router({
+      baseUrl: '/channels',
+      routes: [
+        {
+          path: '/:server/:channel',
+          signal: 'fetchChannel'
+        },
+        {
+          path: '/:server',
+          signal: 'fetchServer'
+        },
+        {
+          path: '/',
+          signal: 'routeHome'
+        }
+      ]
+    })
+  }
 })

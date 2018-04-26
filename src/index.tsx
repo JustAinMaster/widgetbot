@@ -1,9 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
-// Router
-import { BrowserRouter as Router } from 'react-router-dom'
-
 // Cerebral
 import { Container } from '@cerebral/react'
 import controller from './controllers/cerebral'
@@ -15,11 +12,9 @@ import registerServiceWorker from './registerServiceWorker'
 // Render App
 ReactDOM.render(
   <Container controller={controller}>
-    <Router>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
-    </Router>
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
   </Container>,
   document.getElementById('root')
 )

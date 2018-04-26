@@ -6,9 +6,11 @@ import {
   ConnectFactory
 } from '@cerebral/fluent'
 import { State, Signals } from '../../store/types'
+import { Provider as RouterProvider } from '@cerebral/router'
 
 // Create an interface where you compose your providers together
 interface Providers {
+  router: RouterProvider,
   state: State
 }
 

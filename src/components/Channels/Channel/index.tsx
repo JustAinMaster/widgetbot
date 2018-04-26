@@ -7,35 +7,21 @@ import { Root, Hashtag, Name } from './elements'
 interface Props {
   name: string
   id: string
-  i: number
+  order: number
   active: boolean
 }
 
-export default connect<Props>()
-  .with(({ state, signals, props }) => ({
-    switchChannel: signals.switchChannel
-  }))
-  .toClass(
-    props =>
-      class Channel extends React.PureComponent<typeof props> {
-        render() {
-          const { name, i, id, switchChannel, active } = this.props
+class Channel extends React.PureComponent<Props> {
+  render() {
+    const { name, order, id, active } = this.props
 
-          return (
-            <Root
-              selected={active}
-              id={id}
-              i={i}
-              onClick={() => {
-                switchChannel({
-                  channel: id
-                })
-              }}
-            >
-              <Hashtag />
-              <Name>{name}</Name>
-            </Root>
-          )
-        }
-      }
-  )
+    return (
+      <Root selected={active} id={id} order={order}>
+        <Hashtag />
+        <Name>{name}</Name>
+      </Root>
+    )
+  }
+}
+
+export default Channel

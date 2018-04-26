@@ -1,3 +1,4 @@
+import { State } from './../types'
 import { Context, BranchContext } from 'fluent'
 import Log from 'logger'
 
@@ -70,6 +71,12 @@ export function closeDrawerOnMobile({ state, props }: Context) {
 export function loading(status: boolean) {
   return ({ state, props }: Context) => {
     state.loading = status
+  }
+}
+
+export function switchScreen(screen: State['screen']) {
+  return ({ state, props }: Context) => {
+    state.screen = screen
   }
 }
 

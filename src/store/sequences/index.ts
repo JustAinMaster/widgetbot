@@ -3,22 +3,52 @@ import * as actions from '../actions'
 import { Toggles } from '../types'
 import { message } from '../../types/socket'
 
+export const routeHome = () => {
+  location.href = '/'
+}
+
+/**
+ * Router
+ */
 export const fetchServer = sequenceWithProps<{
   server: string
-  channel?: string
 }>(s =>
-  s.branch(actions.select).paths({
-    cached: s => s,
-    uncached: s =>
-      s
-        .action(actions.loading(true))
-        .branch(actions.GraphQL.fetchServer)
-        .paths({
-          success: s => s.action(actions.GraphQL.store),
-          error: s => s
-        })
-        .action(actions.loading(false))
-  })
+  s
+    .action(actions.switchScreen('choose-channel'))
+    .branch(actions.select)
+    .paths({
+      cached: s => s,
+      uncached: s =>
+        s
+          .action(actions.loading(true))
+          .branch(actions.GraphQL.fetchServer)
+          .paths({
+            success: s => s.action(actions.GraphQL.store),
+            error: s => s
+          })
+          .action(actions.loading(false))
+    })
+)
+
+export const fetchChannel = sequenceWithProps<{
+  server: string
+  channel: string
+}>(s =>
+  s
+    .action(actions.switchScreen('active-channel'))
+    .branch(actions.select)
+    .paths({
+      cached: s => s,
+      uncached: s =>
+        s
+          .action(actions.loading(true))
+          .branch(actions.GraphQL.fetchServer)
+          .paths({
+            success: s => s.action(actions.GraphQL.store),
+            error: s => s
+          })
+          .action(actions.loading(false))
+    })
 )
 
 export const insertMessage = sequenceWithProps<message>(s =>
@@ -30,6 +60,7 @@ export const switchChannel = sequenceWithProps<{
 }>(s =>
   s
     .action(actions.closeDrawerOnMobile)
+    .action(actions.switchScreen('active-channel'))
     .branch(actions.select)
     .paths({
       cached: s => s,

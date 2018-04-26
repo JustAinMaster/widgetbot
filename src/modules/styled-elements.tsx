@@ -1,7 +1,7 @@
 import * as React from 'react'
 import styled, { css } from 'typed-emotion'
 import { Scrollbars } from 'react-custom-scrollbars'
-import { Link } from 'react-router-dom'
+import { connect } from 'fluent'
 import Color from 'kolor'
 
 const ScrollableCSS = css`
@@ -60,20 +60,46 @@ export const Hash = styled('div')`
 
 interface ChannelProps {
   id: string
-  [key: string]: any
 }
-export const Channel = (props: ChannelProps) => (
-  <Link
-    to={(() => {
-      const { id } = props
-      const path = location.pathname.split('/')
+export const Channel = connect<ChannelProps>()
+  .with(({ state, signals, props }) => ({
+    switchChannel: signals.switchChannel
+  }))
+  .toClass(
+    props =>
+      class Channel extends React.PureComponent<typeof props> {
+        url: string
 
-      if (path.length > 4) {
-        return id
+        componentWillMount() {
+          this.url = this.getUrl()
+        }
+
+        getUrl() {
+          const { id } = this.props
+          const path = location.pathname.split('/')
+
+          return path.length > 4 ? id : `/channels/${path[2]}/${id}`
+        }
+
+        handleClick = (e: Event) => {
+          const { switchChannel, id } = this.props
+          e.preventDefault()
+
+          history.pushState(null, null, this.url)
+
+          switchChannel({
+            channel: id
+          })
+        }
+
+        render() {
+          return (
+            <a
+              href={this.url}
+              {...this.props}
+              onClick={this.handleClick.bind(this)}
+            />
+          )
+        }
       }
-
-      return `/channels/${path[2]}/${id}`
-    })()}
-    {...props}
-  />
-)
+  )

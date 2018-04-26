@@ -22,6 +22,7 @@ export interface Theme {
 }
 
 export interface State {
+  screen: 'choose-channel' | 'active-channel'
   // Message loading state
   loading: boolean
   // Server info

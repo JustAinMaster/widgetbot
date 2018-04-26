@@ -27,7 +27,7 @@ export default connect()
                     <Channel
                       name={name}
                       id={id}
-                      i={i}
+                      order={i}
                       active={id === activeChannel}
                       key={id}
                     />

@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import styled, { keyframes } from 'typed-emotion'
 import { Hash, Channel } from 'styled-elements'
 import Color from 'kolor'
@@ -17,7 +16,7 @@ const fade = i => keyframes`
 interface Props {
   selected: boolean
   to: string
-  i: number
+  order: number
 }
 export const Root = styled<Props, any>(Channel)`
   text-decoration: none;
@@ -44,7 +43,7 @@ export const Root = styled<Props, any>(Channel)`
       : Color(theme.colors.primary)
           .fadeOut(0.7)
           .toString()};
-  animation: ${({ i }) => fade(i)} 0.5s ease;
+  animation: ${({ order }) => fade(order)} 0.5s ease;
 
   &:hover {
     background-color: ${({ theme }) =>

@@ -13,6 +13,7 @@
   "dependencies": {
     "@cerebral/fluent": "^1.0.3",
     "@cerebral/react": "^3.2.2",
+    "@cerebral/router": "^3.2.2",
     "@types/highlight.js": "^9.12.2",
     "@types/react-notification-system": "^0.2.37",
     "@types/socket.io-client": "^1.4.32",
@@ -34,7 +35,6 @@
     "react-emotion": "^9.1.2",
     "react-icons": "^2.2.7",
     "react-notification-system": "^0.2.17",
-    "react-router-dom": "^4.2.2",
     "react-scripts-ts": "2.15.1",
     "react-transition-group": "^2.3.1",
     "simple-markdown": "^0.3.3",
