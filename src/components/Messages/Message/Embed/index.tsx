@@ -1,7 +1,8 @@
 import * as React from 'react'
 import * as Moment from 'moment'
 import { parseAllowLinks, parseEmbedTitle } from '../Markdown'
-import { Image, Twemoji } from '../Markdown/elements'
+import { Twemoji } from '../Markdown/elements'
+import { ThemeProvider } from 'emotion-theming'
 import {
   Root,
   ColorPill,
@@ -16,20 +17,23 @@ import {
   Title,
   AuthorName,
   AuthorIcon,
-  Author
+  Author,
+  FooterText,
+  Thumbnail,
+  Description
 } from './elements'
 
 function parseEmojis(text) {
   if (text) {
     if (typeof text === 'string') {
-      return <Twemoji text={text} />
-    } else if (text instanceof Array) {
+      return <Twemoji svg text={text} />
+    }
+    if (text instanceof Array) {
       return text.map((part, i) => {
-        return part === 'string' ? (
-          <Twemoji svg key={i + part} text={part} />
-        ) : (
-          part
-        )
+        if (typeof part === 'string') {
+          return <Twemoji svg key={i + part} text={part} />
+        }
+        return part
       })
     }
   }
@@ -49,31 +53,21 @@ const EmbedTitle = ({ title, url }) => {
     return null
   }
 
-  let computed = <Title>{parseEmojis(parseEmbedTitle(title))}</Title>
-  if (url) {
-    computed = (
-      <Title>
-        <Link href={url}>{parseEmojis(parseEmbedTitle(title))}</Link>
-      </Title>
-    )
-  }
-
-  return computed
-}
-
-const EmbedDescription = ({ content }) => {
-  if (!content) {
-    return null
-  }
-
-  return (
-    <div className="embed-description markup">
-      {parseEmojis(parseAllowLinks(content))}
-    </div>
+  return url ? (
+    <Title>
+      <Link href={url}>{parseEmojis(parseEmbedTitle(title))}</Link>
+    </Title>
+  ) : (
+    <Title>{parseEmojis(parseEmbedTitle(title))}</Title>
   )
 }
 
-const EmbedAuthor = ({ name, url, icon_url }) => {
+const EmbedDescription = ({ content }) =>
+  content ? (
+    <Description>{parseEmojis(parseAllowLinks(content))}</Description>
+  ) : null
+
+const EmbedAuthor = ({ name, url, iconURL }) => {
   if (!name) {
     return null
   }
@@ -90,7 +84,7 @@ const EmbedAuthor = ({ name, url, icon_url }) => {
     }
   }
 
-  const authorIcon = icon_url ? <AuthorIcon src={icon_url} /> : null
+  const authorIcon = iconURL ? <AuthorIcon src={iconURL} /> : null
 
   return (
     <Author>
@@ -120,29 +114,17 @@ const EmbedField = ({ name, value, inline }) => {
   )
 }
 
-const EmbedThumbnail = ({ url, height, width }) => {
-  if (!url) {
-    return null
-  }
+const EmbedThumbnail = ({ proxyURL, height, width }) =>
+  proxyURL ? <Thumbnail src={proxyURL} height={height} width={width} /> : null
 
-  return <Image src={url} height={height} width={width} />
-}
+const EmbedImage = ({ proxyURL, height }) =>
+  proxyURL ? (
+    <span>
+      <Thumbnail rich src={proxyURL} />
+    </span>
+  ) : null
 
-const EmbedImage = ({ url, height }) => {
-  if (!url) {
-    return null
-  }
-
-  // NOTE: for some reason it's a link in the original DOM
-  // not sure if this breaks the styling, probably does
-  return (
-    <a className="embed-thumbnail embed-thumbnail-rich">
-      <img className="image" role="presentation" src={url} />
-    </a>
-  )
-}
-
-const EmbedFooter = ({ timestamp, text, icon_url }) => {
+const EmbedFooter = ({ timestamp, text, proxyIconUrl }) => {
   if (!text && !timestamp) {
     return null
   }
@@ -152,13 +134,14 @@ const EmbedFooter = ({ timestamp, text, icon_url }) => {
   time = time.isValid() ? time.format('ddd MMM Do, YYYY [at] h:mm A') : null
 
   const footerText = [text, time].filter(Boolean).join(' | ')
-  const footerIcon = text && icon_url ? <FooterIcon src={icon_url} /> : null
+  const footerIcon =
+    text && proxyIconUrl ? <FooterIcon src={proxyIconUrl} /> : null
 
   return (
-    <React.Fragment>
+    <Footer>
       {footerIcon}
-      <Footer>{parseEmojis(footerText)}</Footer>
-    </React.Fragment>
+      <FooterText>{parseEmojis(footerText)}</FooterText>
+    </Footer>
   )
 }
 
@@ -180,23 +163,33 @@ const Embed = ({
   thumbnail,
   image,
   timestamp,
-  footer
+  footer,
+  ...embed
 }) => {
   return (
-    <Root>
-      <ColorPill color={color} />
-      <Wrapper>
-        <Content>
-          <EmbedAuthor {...author} />
-          <EmbedTitle title={title} url={url} />
-          <EmbedDescription content={description} />
-          <EmbedFields fields={fields} />
-          <EmbedThumbnail {...thumbnail} />
-        </Content>
-        <EmbedImage {...image} />
-        <EmbedFooter timestamp={timestamp} {...footer} />
-      </Wrapper>
-    </Root>
+    <ThemeProvider
+      theme={theme => ({
+        ...theme,
+        embed
+      })}
+    >
+      <Root>
+        <ColorPill color={color} />
+        <Wrapper>
+          <Content>
+            <div>
+              <EmbedAuthor {...author} />
+              <EmbedTitle title={title} url={url} />
+              <EmbedDescription content={description} />
+              <EmbedFields fields={fields} />
+            </div>
+            <EmbedThumbnail {...thumbnail} />
+          </Content>
+          <EmbedImage {...image} />
+          <EmbedFooter timestamp={timestamp} {...footer} />
+        </Wrapper>
+      </Root>
+    </ThemeProvider>
   )
 }
 

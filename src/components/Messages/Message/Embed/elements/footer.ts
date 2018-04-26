@@ -1,10 +1,12 @@
-import styled, { css } from 'typed-emotion'
+import styled, { css } from '../ThemeContext'
 
-export const Footer = styled('span')`
+export const Footer = styled('div')``
+
+export const FooterText = styled('span')`
   display: inline-block;
   font-weight: 500;
   font-size: 12px;
-  color: rgba(79, 83, 91, 0.6);
+  color: hsla(0, 0%, 100%, 0.6);
   letter-spacing: 0;
 `
 

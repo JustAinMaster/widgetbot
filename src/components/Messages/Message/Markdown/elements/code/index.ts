@@ -42,8 +42,7 @@ export const Code = styled<Props, 'code'>('code')`
             0 2px 0 rgba(0, 0, 0, 0.06);
           display: block;
           line-height: 16px;
-          margin-top: 4px;
-          margin-bottom: 12px;
+          margin-top: 6px;
           padding: 7px;
           border-radius: 5px;
         `};

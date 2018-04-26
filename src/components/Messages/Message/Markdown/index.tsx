@@ -3,7 +3,16 @@ import SimpleMarkdown from 'simple-markdown'
 import * as hljs from 'highlight.js'
 
 import message from '../../../../types/message'
-import { Mention, Role, Channel, Twemoji, Emoji, Image, Code } from './elements'
+import {
+  Mention,
+  Role,
+  Channel,
+  Twemoji,
+  Emoji,
+  Link,
+  Image,
+  Code
+} from './elements'
 import Embed from '../Embed'
 
 import { EmojiParser } from 'react-emoji-render'
@@ -56,7 +65,9 @@ export function parseText(msg: message) {
         e = replace(
           e,
           `<@&${role.id}>`,
-          <Role role={role} key={role.id} color={role.color}>{`@${role.name}`}</Role>
+          <Role role={role} key={role.id} color={role.color}>{`@${
+            role.name
+          }`}</Role>
         )
       })
 
@@ -140,7 +151,14 @@ export function parseText(msg: message) {
   function emoji(input) {
     return input.map((part, i) => {
       if (typeof part === 'string') {
-        return <Twemoji svg onlyEmojiClassName="enlarged" text={part} key={i * Math.random()} />
+        return (
+          <Twemoji
+            svg
+            onlyEmojiClassName="enlarged"
+            text={part}
+            key={i * Math.random()}
+          />
+        )
       }
       return part
     })
@@ -539,7 +557,7 @@ function createRules(r) {
         const children = recurseOutput(node.content, state)
         const title = node.title || astToString(node.content)
         return createReactElement(
-          'a',
+          Link,
           {
             title: title,
             href: SimpleMarkdown.sanitizeUrl(node.target),
@@ -557,7 +575,8 @@ function createRules(r) {
         return createReactElement(
           Code,
           {
-            inline: true
+            inline: true,
+            className: 'inline'
           },
           state.key,
           recurse(node, recurseOutput, state)

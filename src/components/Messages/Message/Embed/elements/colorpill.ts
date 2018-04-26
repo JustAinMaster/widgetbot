@@ -1,4 +1,4 @@
-import styled, { css } from 'typed-emotion'
+import styled, { css } from '../ThemeContext'
 
 interface Props {
   color: number

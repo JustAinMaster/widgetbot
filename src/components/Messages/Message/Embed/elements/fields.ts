@@ -1,4 +1,4 @@
-import styled, { css } from 'typed-emotion'
+import styled, { css } from '../ThemeContext'
 
 interface Props {
   inline: boolean
@@ -8,8 +8,7 @@ export const Fields = styled('div')`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-top: -10px;
-  margin-bottom: 10px;
+  margin-top: 4px;
 `
 
 export const Field = styled<Props, 'div'>('div')`

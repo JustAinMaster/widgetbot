@@ -1,4 +1,4 @@
-import styled, { css } from 'typed-emotion'
+import styled, { css } from '../ThemeContext'
 
 export const Author = styled('div')`
   display: flex;
@@ -11,6 +11,9 @@ export const AuthorName = styled('span')`
   font-weight: 500;
   font-size: 14px;
   color: hsla(0, 0%, 100%, 1);
+  & > a {
+    color: inherit;
+  }
 `
 
 export const AuthorIcon = styled('img')`

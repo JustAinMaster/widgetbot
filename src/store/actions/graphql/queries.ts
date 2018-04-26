@@ -54,13 +54,17 @@ export const messages =
         description
         url
         timestamp
+        author {
+          name
+          url
+          iconURL
+        }
         fields {
           value
           name
           inline
         }
         footer {
-          iconURL
           proxyIconUrl
           text
         }
@@ -68,13 +72,11 @@ export const messages =
           height
           width
           proxyURL
-          url
         }
         image {
           height
           width
           proxyURL
-          url
         }
         provider {
           name

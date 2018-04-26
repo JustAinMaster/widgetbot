@@ -1,4 +1,4 @@
-import styled, { css } from 'typed-emotion'
+import styled, { css } from '../ThemeContext'
 
 export const Root = styled('div')`
   position: relative;
@@ -20,22 +20,36 @@ export const Wrapper = styled('div')`
   border-color: rgba(46, 48, 54, 0.6);
 `
 
-export const Content = styled.div`
+export const Content = styled('div')`
   width: 100%;
   display: flex;
-  margin-bottom: 10px;
-  flex-direction: column;
+  ${({ theme }) =>
+    theme.embed.type === 'article'
+      ? css`
+          flex-direction: column;
+        `
+      : null};
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  & code.inline {
+    font-size: 85%;
+  }
 `
 
 export const Title = styled('div')`
   color: hsla(0, 0%, 100%, 1);
   display: inline-block;
   font-weight: 500;
-  margin-bottom: 4px;
   font-size: 14px;
 `
 
 export { Field, Fields, FieldName, FieldValue } from './fields'
 export { ColorPill } from './colorpill'
-export { Footer, FooterIcon } from './footer'
+export { Footer, FooterText, FooterIcon } from './footer'
 export { Author, AuthorName, AuthorIcon } from './author'
+export { Thumbnail } from './thumbnail'
+export { Description } from './description'
