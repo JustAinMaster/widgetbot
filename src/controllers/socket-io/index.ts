@@ -1,10 +1,8 @@
 import * as io from 'socket.io-client'
-import { message, Room } from '../../types/socket'
 import { connect } from 'fluent'
+import { addNotification } from 'notify'
 
-interface Props {
-  addNotification: Function
-}
+import { message, Room } from '../../types/socket'
 
 export const socket = io({
   path: '/api/socket-io',
@@ -16,7 +14,7 @@ export const unsubscribe = (room: Room) => socket.emit('unsubscribe', room)
 
 // This is rendered as a React component
 let rendered = false
-export default connect<Props>()
+export default connect()
   .with(({ state, signals, props }) => ({
     insertMessage: signals.insertMessage,
     channel: state.channel
@@ -32,7 +30,7 @@ export default connect<Props>()
     })
 
     socket.on('notify', data => {
-      props.addNotification(data)
+      addNotification(data)
     })
 
     rendered = true

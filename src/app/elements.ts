@@ -3,6 +3,16 @@ import { Theme } from '../store/types'
 import Color from 'kolor'
 
 export const Notifications = styled('div')`
+  * {
+    word-break: initial;
+  }
+
+  button {
+    cursor: pointer;
+    outline: 0;
+    font-weight: 500 !important;
+  }
+
   .notification {
     background-color: ${({ theme }) =>
       Color(theme.colors.background)

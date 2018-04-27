@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { connect } from 'fluent'
-import * as Notify from 'react-notification-system'
 
 import ChooseChannel from '../components/Overlays/ChooseChannel'
-import { Root, Notifications } from './elements'
+import { Root } from './elements'
+import Notifications from './notify'
 
 import Channels from '../components/Channels'
 import Messages from '../components/Messages'
@@ -24,27 +24,13 @@ export default connect()
 
           return (
             <Root>
-              <Initiate addNotification={this.addNotification.bind(this)} />
-              <Notifications>
-                <Notify ref={ref => (this.notifications = ref)} />
-              </Notifications>
-
+              <Initiate />
+              <Notifications />
               <Channels />
               {screen === 'active-channel' && <Messages />}
               {screen === 'choose-channel' && <ChooseChannel />}
             </Root>
           )
-        }
-
-        notifications: Notify.System
-
-        addNotification(notification) {
-          if (this.notifications) {
-            this.notifications.addNotification({
-              position: 'br',
-              ...notification
-            })
-          }
         }
       }
   )

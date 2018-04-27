@@ -1,3 +1,4 @@
+import { addNotification } from 'notify'
 import { State } from './../types'
 import { Context, BranchContext } from 'fluent'
 import Log from 'logger'
@@ -5,6 +6,7 @@ import Log from 'logger'
 import { Channel } from '../../types/responses'
 import { Toggles } from '../types'
 import { message } from '../../types/socket'
+import { Notification } from 'react-notification-system'
 
 /**
  * Selects a server (and or) channel and returns a branch
@@ -60,6 +62,13 @@ export function insertMessage({ state, props }: Context<message>) {
       }
     })
   }
+}
+
+export function notify({
+  state,
+  props
+}: Context<{ notification: Notification | Notification[] }>) {
+  addNotification(props.notification)
 }
 
 export function closeDrawerOnMobile({ state, props }: Context) {

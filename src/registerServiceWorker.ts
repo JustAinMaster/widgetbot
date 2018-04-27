@@ -1,3 +1,4 @@
+import { addNotification } from 'notify'
 // In production, we register a service worker to serve assets from local cache.
 
 // This lets the app load faster on subsequent visits in production, and gives
@@ -65,11 +66,18 @@ function registerValidSW(swUrl: string) {
           installingWorker.onstatechange = () => {
             if (installingWorker.state === 'installed') {
               if (navigator.serviceWorker.controller) {
-                // At this point, the old content will have been purged and
-                // the fresh content will have been added to the cache.
-                // It's the perfect time to display a 'New content is
-                // available; please refresh.' message in your web app.
-                console.log('New content is available; please refresh.')
+                addNotification({
+                  level: 'info',
+                  title: 'Update available',
+                  message: 'An new update is available! Please refresh',
+                  autoDismiss: 0,
+                  action: {
+                    label: 'Refresh',
+                    callback() {
+                      location.reload()
+                    }
+                  }
+                })
               } else {
                 // At this point, everything has been precached.
                 // It's the perfect time to display a
@@ -107,9 +115,13 @@ function checkValidServiceWorker(swUrl: string) {
       }
     })
     .catch(() => {
-      console.log(
-        'No internet connection found. App is running in offline mode.'
-      )
+      addNotification({
+        level: 'warning',
+        title: `Server issues`,
+        autoDismiss: 15,
+        message:
+          'Failed to connect to the server, the embed is currently working offline'
+      })
     })
 }
 

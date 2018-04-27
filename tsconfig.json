@@ -13,6 +13,7 @@
     "baseUrl": ".",
     "paths": {
       "logger": ["src/modules/logger.ts"],
+      "notify": ["src/app/notify.tsx"],
       "styled-elements": ["src/modules/styled-elements.tsx"],
       "typed-emotion": ["src/controllers/emotion/index.ts"],
       "queries": ["src/store/actions/graphql/queries.ts"],

@@ -24,7 +24,7 @@ export const fetchServer = sequenceWithProps<{
           .branch(actions.GraphQL.fetchServer)
           .paths({
             success: s => s.action(actions.GraphQL.store),
-            error: s => s
+            error: s => s.action(actions.notify)
           })
           .action(actions.loading(false))
     })
@@ -45,7 +45,7 @@ export const fetchChannel = sequenceWithProps<{
           .branch(actions.GraphQL.fetchServer)
           .paths({
             success: s => s.action(actions.GraphQL.store),
-            error: s => s
+            error: s => s.action(actions.notify)
           })
           .action(actions.loading(false))
     })
@@ -70,7 +70,7 @@ export const switchChannel = sequenceWithProps<{
           .branch(actions.GraphQL.fetchChannel)
           .paths({
             success: s => s.action(actions.GraphQL.updateChannel),
-            error: s => s
+            error: s => s.action(actions.notify)
           })
           .action(actions.loading(false))
     })

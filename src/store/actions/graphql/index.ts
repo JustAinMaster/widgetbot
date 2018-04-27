@@ -1,3 +1,4 @@
+import { addNotification } from 'notify'
 import { Context, BranchContext } from 'fluent'
 import { request } from 'graphql-request'
 
@@ -10,6 +11,7 @@ import {
   ChannelResponse,
   Channel
 } from '../../../types/responses'
+import { Notification } from 'react-notification-system'
 
 namespace GraphQL {
   /**
@@ -21,7 +23,9 @@ namespace GraphQL {
     path
   }: BranchContext<{
     success: ServerResponse
-    error: {}
+    error: {
+      notification: Notification[]
+    }
   }>) {
     const loadMessages = !!state.activeChannel
 
@@ -58,7 +62,24 @@ namespace GraphQL {
 
         return path.success(response)
       })
-      .catch(() => path.error({}))
+      .catch(({ response }) => {
+        const errors = response.errors.map(error => ({
+          level: 'error',
+          title: 'An error occured whilst loading this embed',
+          message: error.message,
+          autoDismiss: 0,
+          action: {
+            label: 'Support server',
+            callback() {
+              window.open('https://discord.gg/zyqZWr2')
+            }
+          }
+        }))
+
+        return path.error({
+          notification: errors
+        })
+      })
   }
 
   /**
@@ -70,7 +91,9 @@ namespace GraphQL {
     path
   }: BranchContext<{
     success: { channel: Channel }
-    error: {}
+    error: {
+      notification: Notification[]
+    }
   }>) {
     let cached
     state.channels.map((channel, i) => {
@@ -107,7 +130,24 @@ namespace GraphQL {
           }
         })
       })
-      .catch(() => path.error({}))
+      .catch(({ response }) => {
+        const errors = response.errors.map(error => ({
+          level: 'error',
+          title: 'An error occured whilst loading this embed',
+          message: error.message,
+          autoDismiss: 0,
+          action: {
+            label: 'Support server',
+            callback() {
+              window.open('https://discord.gg/zyqZWr2')
+            }
+          }
+        }))
+
+        return path.error({
+          notification: errors
+        })
+      })
   }
 
   /**
