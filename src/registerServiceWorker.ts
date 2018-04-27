@@ -69,7 +69,7 @@ function registerValidSW(swUrl: string) {
                 addNotification({
                   level: 'info',
                   title: 'Update available',
-                  message: 'An new update is available! Please refresh',
+                  message: 'A new update is available! Please refresh',
                   autoDismiss: 0,
                   action: {
                     label: 'Refresh',
