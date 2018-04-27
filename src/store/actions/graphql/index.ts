@@ -13,6 +13,19 @@ import {
 } from '../../../types/responses'
 import { Notification } from 'react-notification-system'
 
+const serverIssues = {
+  level: 'warning',
+  title: `Server down`,
+  autoDismiss: 15,
+  message: 'The server is currently experiencing difficulties',
+  action: {
+    label: 'Try again',
+    callback() {
+      location.reload
+    }
+  }
+}
+
 namespace GraphQL {
   /**
    * Fetches a server (optionally with a selected channel)
@@ -63,18 +76,20 @@ namespace GraphQL {
         return path.success(response)
       })
       .catch(({ response }) => {
-        const errors = response.errors.map(error => ({
-          level: 'error',
-          title: 'An error occured whilst loading this embed',
-          message: error.message,
-          autoDismiss: 0,
-          action: {
-            label: 'Support server',
-            callback() {
-              window.open('https://discord.gg/zyqZWr2')
-            }
-          }
-        }))
+        const errors = response
+          ? response.errors.map(error => ({
+              level: 'error',
+              title: 'An error occured whilst loading this embed',
+              message: error.message,
+              autoDismiss: 0,
+              action: {
+                label: 'Support server',
+                callback() {
+                  window.open('https://discord.gg/zyqZWr2')
+                }
+              }
+            }))
+          : serverIssues
 
         return path.error({
           notification: errors
@@ -131,18 +146,20 @@ namespace GraphQL {
         })
       })
       .catch(({ response }) => {
-        const errors = response.errors.map(error => ({
-          level: 'error',
-          title: 'An error occured whilst loading this embed',
-          message: error.message,
-          autoDismiss: 0,
-          action: {
-            label: 'Support server',
-            callback() {
-              window.open('https://discord.gg/zyqZWr2')
-            }
-          }
-        }))
+        const errors = response
+          ? response.errors.map(error => ({
+              level: 'error',
+              title: 'An error occured whilst loading this embed',
+              message: error.message,
+              autoDismiss: 0,
+              action: {
+                label: 'Support server',
+                callback() {
+                  window.open('https://discord.gg/zyqZWr2')
+                }
+              }
+            }))
+          : serverIssues
 
         return path.error({
           notification: errors
