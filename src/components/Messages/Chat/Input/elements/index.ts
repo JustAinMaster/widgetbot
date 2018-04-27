@@ -16,6 +16,25 @@ export const Input = styled('textarea')`
   font-weight: 400;
   letter-spacing: -0.025rem;
   line-height: 1.25rem;
+  ::-webkit-scrollbar {
+    width: 5px;
+    background-color: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50px;
+  }
+
+  ::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
 `
 
 export { Suggestion, Emoji, Name } from './suggestion'

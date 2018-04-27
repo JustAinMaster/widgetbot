@@ -10,9 +10,7 @@ class EmojiPanel extends React.PureComponent {
       <Root>
         <Emoji
           onMouseEnter={() => this.mouseEnter()}
-          onMouseOut={() => this.mouseOut()}
           text={this.state.emoji}
-          hover={this.state.hover}
           onClick={() => console.log(1)}
         />
       </Root>
@@ -20,19 +18,12 @@ class EmojiPanel extends React.PureComponent {
   }
 
   state = {
-    emoji: randomEmoji(),
-    hover: false
+    emoji: randomEmoji()
   }
 
   mouseEnter = () =>
     this.setState({
-      emoji: randomEmoji(),
-      hover: true
-    })
-
-  mouseOut = () =>
-    this.setState({
-      hover: false
+      emoji: randomEmoji()
     })
 }
 

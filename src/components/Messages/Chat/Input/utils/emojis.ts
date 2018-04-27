@@ -11,13 +11,14 @@ export const emojis = emojiKeywords.map((keyword, index) => {
 export function getEmojiMatches(query) {
   const matches = []
   emojis.forEach(emoji => {
-    const matchingIndex = emoji.keyword.indexOf(query)
+    const matchingIndex =
+      emoji.keyword === `:${query}:` ? 0 : emoji.keyword.indexOf(query)
+
     if (matchingIndex !== -1) {
-      matches.push(
-        Object.assign({}, emoji, {
-          index: matchingIndex
-        })
-      )
+      matches.push({
+        ...emoji,
+        index: matchingIndex + emoji.keyword.length
+      })
     }
   })
 

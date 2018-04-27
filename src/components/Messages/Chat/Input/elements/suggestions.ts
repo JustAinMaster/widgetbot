@@ -9,7 +9,7 @@ interface Props {
 export const Suggestions = styled<Props, any>(OverlayedScroll)`
   position: absolute !important;
   left: 0;
-  bottom: calc(100% - 10px);
+  bottom: calc(100% - 5px);
   height: ${({ length }) =>
     (length > 9 ? 300 : length * 32) + 8 * 2}px !important;
   background-color: ${({ theme }) =>

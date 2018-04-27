@@ -25,8 +25,10 @@ export const initialState = {
 
 interface Props {
   defaultValue?: string
+  placeholder?: string
   value?: string
   onChange?: Function
+  onSubmit?: Function
   rows?: number
   suggestionsLimit?: number
 }
@@ -80,6 +82,7 @@ class EmojiInput extends React.Component<Props> {
           onChange={event => {
             this.onChange(event.target.value)
           }}
+          placeholder={this.props.placeholder || false}
           onClick={this.resetState.bind(this)}
           onKeyDown={event => {
             switch (event.keyCode) {
@@ -91,11 +94,29 @@ class EmojiInput extends React.Component<Props> {
                 }
                 return
               case TAB:
-              case ENTER:
                 if (this.suggestions) {
                   this.suggestions.selectSuggestion()
                   event.preventDefault()
                 }
+                return
+              case ENTER:
+                if (this.suggestions) {
+                  this.suggestions.selectSuggestion()
+                  event.preventDefault()
+                  return
+                }
+
+                if (!event.shiftKey) {
+                  // Submit
+                  if (this.props.onSubmit) {
+                    this.props.onSubmit(this.textComponent.value)
+                    // Clear input field
+                    this.textComponent.value = ''
+                    if (this.props.onChange) this.props.onChange('')
+                  }
+                  event.preventDefault()
+                }
+
                 return
               case ESCAPE:
                 this.resetState()

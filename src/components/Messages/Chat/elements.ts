@@ -13,11 +13,15 @@ export const Root = styled('form')`
 
 export const Typing = styled('div')``
 
-export const Field = styled('div')`
+interface FieldProps {
+  rows: number
+}
+export const Field = styled<FieldProps, 'div'>('div')`
   display: flex;
   border-radius: 5px;
   background-color: ${({ theme }) =>
     Color(theme.colors.primary)
       .fadeOut(0.9)
       .toString()};
+  height: ${({ rows }) => (rows > 7 ? 7 : rows) * 20 + 22}px;
 `
