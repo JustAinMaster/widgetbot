@@ -4,11 +4,13 @@ import { Scrollable } from 'styled-elements'
 import Group from './group'
 
 import { Root } from './elements'
-import Message from './Message'
-import { Loading } from '../Overlays'
-import Header, { Name, Topic } from '../Header'
-import Wrapper from '../Wrapper'
 import ErrorAhoy from '../Overlays/ErrorAhoy'
+import { Loading } from '../Overlays'
+
+import Wrapper from '../Wrapper'
+import Header, { Name, Topic } from '../Header'
+import Message from './Message'
+import Chat from './Chat'
 
 export default connect()
   .with(({ state, signals, props }) => ({
@@ -59,6 +61,7 @@ export default connect()
             <Wrapper>
               {header}
               {content}
+              <Chat />
             </Wrapper>
           ) : (
             <ErrorAhoy />

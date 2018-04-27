@@ -16,7 +16,7 @@ export const Wrapper = styled('div')`
   display: flex;
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   overflow: hidden;
 `
 

@@ -4,6 +4,7 @@ import * as Notify from 'react-notification-system'
 
 import ChooseChannel from '../components/Overlays/ChooseChannel'
 import { Root, Notifications } from './elements'
+
 import Channels from '../components/Channels'
 import Messages from '../components/Messages'
 import Members from '../components/Members'

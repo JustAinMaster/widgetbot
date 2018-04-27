@@ -17,7 +17,8 @@
       "typed-emotion": ["src/controllers/emotion/index.ts"],
       "queries": ["src/store/actions/graphql/queries.ts"],
       "socket-io": ["src/controllers/socket-io"],
-      "fluent": ["src/controllers/cerebral/fluent.ts"]
+      "fluent": ["src/controllers/cerebral/fluent.ts"],
+      "emoji": ["src/components/Messages/Message/Markdown/elements/emoji.ts"]
     }
   },
   "exclude": [
