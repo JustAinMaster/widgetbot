@@ -2,7 +2,7 @@ import * as React from 'react'
 import message from '../../../types/message'
 import Markdown from './Markdown'
 
-import { Group, Avatar, Content, Markup, Text } from './elements'
+import { Group, Avatar, Content, Markup, Text, Edited } from './elements'
 import Author from './Author'
 
 interface Props {
@@ -21,7 +21,10 @@ class Message extends React.PureComponent<Props, any> {
           <Author author={message.author} time={message.timestamp} />
           <Markup>
             {messages.map(message => (
-              <Text key={message.id}>{Markdown(message)}</Text>
+              <Text key={message.id}>
+                {Markdown(message)}
+                {message.editedAt && <Edited>(edited)</Edited>}
+              </Text>
             ))}
           </Markup>
         </Content>

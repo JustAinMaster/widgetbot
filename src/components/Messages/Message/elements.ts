@@ -81,3 +81,11 @@ export const Text = styled('div')`
     }
   }
 `
+
+// Edited
+export const Edited = styled('span')`
+  font-size: 0.625rem;
+  line-height: 0.625rem;
+  margin-left: 3px;
+  opacity: 0.3;
+`
