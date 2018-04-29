@@ -67,7 +67,7 @@ export function sendMessage({
 }: Context<{ channel: string; message: string }>) {
   socket.emit('sendMessage', {
     server: state.server.id,
-    props
+    ...props
   })
 }
 
