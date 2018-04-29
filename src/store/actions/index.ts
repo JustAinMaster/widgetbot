@@ -49,7 +49,7 @@ export function select({
   return cached ? path.cached(true) : path.uncached(true)
 }
 
-export function insertMessage({ state, props }: Context<message>) {
+export function setMessage({ state, props }: Context<message>) {
   const channel = state.channels.get(props.channel)
 
   if (channel && channel.messages) {

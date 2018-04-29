@@ -17,6 +17,7 @@ let rendered = false
 export default connect()
   .with(({ state, signals, props }) => ({
     insertMessage: signals.insertMessage,
+    updateMessage: signals.updateMessage,
     channel: state.channel
   }))
   .to((props): any => {
@@ -27,6 +28,10 @@ export default connect()
 
     socket.on('message', (data: message) => {
       props.insertMessage(data)
+    })
+
+    socket.on('messageUpdate', (data: message) => {
+      props.updateMessage(data)
     })
 
     socket.on('notify', data => {
