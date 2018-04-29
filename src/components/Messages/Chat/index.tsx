@@ -7,7 +7,9 @@ import Input from './Input'
 
 export default connect()
   .with(({ state, signals, props }) => ({
-    channel: state.channel.get()
+    channel: state.channel.get(),
+    activeChannel: state.activeChannel,
+    sendMessage: signals.sendMessage
   }))
   .toClass(
     props =>
@@ -21,8 +23,10 @@ export default connect()
           this.setState({ rows })
         }
 
-        onSubmit(message: String) {
-          console.log(message)
+        onSubmit(message: string) {
+          const { sendMessage, activeChannel } = this.props
+
+          sendMessage({ channel: activeChannel, message })
         }
 
         render() {

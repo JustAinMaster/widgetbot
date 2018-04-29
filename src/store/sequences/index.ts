@@ -51,6 +51,9 @@ export const fetchChannel = sequenceWithProps<{
     })
 )
 
+/**
+ * Message sequences
+ */
 export const insertMessage = sequenceWithProps<message>(s =>
   s.action(actions.setMessage)
 )
@@ -58,6 +61,11 @@ export const insertMessage = sequenceWithProps<message>(s =>
 export const updateMessage = sequenceWithProps<message>(s =>
   s.action(actions.setMessage)
 )
+
+export const sendMessage = sequenceWithProps<{
+  channel: string
+  message: string
+}>(s => s.action(actions.sendMessage))
 
 export const switchChannel = sequenceWithProps<{
   channel: string

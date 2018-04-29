@@ -2,6 +2,7 @@ import { addNotification } from 'notify'
 import { State } from './../types'
 import { Context, BranchContext } from 'fluent'
 import Log from 'logger'
+import { socket } from 'socket-io'
 
 import { Channel } from '../../types/responses'
 import { Toggles } from '../types'
@@ -49,6 +50,9 @@ export function select({
   return cached ? path.cached(true) : path.uncached(true)
 }
 
+/**
+ * Message actions
+ */
 export function setMessage({ state, props }: Context<message>) {
   const channel = state.channels.get(props.channel)
 
@@ -57,6 +61,19 @@ export function setMessage({ state, props }: Context<message>) {
   }
 }
 
+export function sendMessage({
+  state,
+  props
+}: Context<{ channel: string; message: string }>) {
+  socket.emit('sendMessage', {
+    server: state.server.id,
+    props
+  })
+}
+
+/**
+ * General actions
+ */
 export function notify({
   state,
   props
