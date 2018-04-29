@@ -16,7 +16,7 @@ const state: State = {
   visible: {
     channels: window.innerWidth > 520
   },
-  channels: null,
+  channels: Dictionary({}),
   activeChannel: null,
   channel: Computed(computed.activeChannel),
   theme: {

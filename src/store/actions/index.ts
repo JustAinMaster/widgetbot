@@ -37,14 +37,9 @@ export function select({
   if (props.channel) {
     state.activeChannel = props.channel
 
-    if (state.channels) {
-      let channelCached = false
-      state.channels.map(channel => {
-        if (channel.id === props.channel && channel.messages) {
-          channelCached = true
-        }
-      })
-      cached = channelCached
+    const channel = state.channels.get(props.channel)
+    if (channel && channel.messages) {
+      cached = true
     } else {
       cached = false
     }
@@ -55,12 +50,10 @@ export function select({
 }
 
 export function insertMessage({ state, props }: Context<message>) {
-  if (state.channels) {
-    state.channels.map((channel, i) => {
-      if (channel.id === props.channel && channel.messages) {
-        state.channels[i].messages.push(props.message)
-      }
-    })
+  const channel = state.channels.get(props.channel)
+
+  if (channel && channel.messages) {
+    channel.messages.set(props.message.id, props.message)
   }
 }
 

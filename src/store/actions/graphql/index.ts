@@ -1,6 +1,7 @@
 import { addNotification } from 'notify'
 import { Context, BranchContext } from 'fluent'
 import { request } from 'graphql-request'
+import * as _ from 'lodash'
 
 import { subscribe } from 'socket-io'
 import * as queries from 'queries'
@@ -12,6 +13,7 @@ import {
   Channel
 } from '../../../types/responses'
 import { Notification } from 'react-notification-system'
+import { Dictionary } from '@cerebral/fluent'
 
 const serverIssues = {
   level: 'warning',
@@ -110,21 +112,15 @@ namespace GraphQL {
       notification: Notification[]
     }
   }>) {
-    let cached
-    state.channels.map((channel, i) => {
-      // If it's the active channel, and it has messages => cached
-      if (channel.id === state.activeChannel && channel.messages) {
-        cached = i
-      }
-    })
+    const channel = state.channels.get(state.activeChannel)
 
-    if (typeof cached === 'number') {
+    if (channel.messages) {
       subscribe({
         server: state.server.id,
         channel: state.activeChannel
       })
       // Cached
-      return path.success({ channel: state.channels[cached] })
+      return path.success({ channel })
     }
 
     // Uncached
@@ -174,17 +170,14 @@ namespace GraphQL {
     state,
     props
   }: Context<{ channel: Channel }>) {
-    const { channel } = props
+    const channel = props.channel.id
 
-    state.channels.map((c, i) => {
-      if (c.id === channel.id) {
-        state.channels[i] = {
-          ...c,
-          ...channel
-        }
-      }
+    state.channels.set(channel, {
+      ...state.channels.get(channel),
+      name: props.channel.name,
+      topic: props.channel.topic,
+      messages: Dictionary(_.keyBy(props.channel.messages, 'id'))
     })
-    console.log(props, channel)
   }
 
   /**
@@ -210,15 +203,19 @@ namespace GraphQL {
       }
     }
 
-    // Map the channels and merge the messages
-    state.channels = server.channels.map((channel, i) => {
-      if (channel.id === state.activeChannel) {
-        return {
-          ...channel,
-          ...server.channel
-        }
-      }
-      return channel
+    server.channels.forEach(channel => {
+      state.channels.set(channel.id, {
+        ...state.channels.get(channel.id),
+        ...(channel.id === state.activeChannel
+          ? {
+              name: server.channel.name,
+              topic: server.channel.topic,
+              messages: Dictionary(_.keyBy(server.channel.messages, 'id'))
+            }
+          : {
+              name: channel.name
+            })
+      })
     })
   }
 }

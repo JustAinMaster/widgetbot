@@ -7,7 +7,7 @@ import Input from './Input'
 
 export default connect()
   .with(({ state, signals, props }) => ({
-    channel: state.channel
+    channel: state.channel.get()
   }))
   .toClass(
     props =>
@@ -26,7 +26,7 @@ export default connect()
         }
 
         render() {
-          const channel = this.props.channel.get()
+          const { channel } = this.props
 
           return (
             <Root>

@@ -1,5 +1,6 @@
-import { messages } from './message'
+import Message from './message'
 import { Theme } from '../store/types'
+import { Dictionary } from '@cerebral/fluent'
 
 type Channels = {
   name: string
@@ -10,7 +11,7 @@ export interface Channel {
   name: string
   topic?: string
   id?: string
-  messages?: messages
+  messages?: Dictionary<Message>
 }
 
 export interface ServerResponse {

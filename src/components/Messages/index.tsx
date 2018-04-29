@@ -13,30 +13,32 @@ import Message from './Message'
 import Chat from './Chat'
 
 export default connect()
-  .with(({ state, signals, props }) => ({
-    // Observe values
-    observe: [state.channels],
-
-    loading: state.loading,
-    activeChannel: state.activeChannel,
-    channel: state.channel
-  }))
+  .with(({ state, signals, props }) => {
+    const channel = state.channel.get()
+    return {
+      loading: state.loading,
+      activeChannel: state.activeChannel,
+      channel,
+      messages: channel && channel.messages ? channel.messages.values() : null
+    }
+  })
   .toClass(
     props =>
       class Messages extends React.PureComponent<typeof props> {
         getContent = () => {
           const { loading } = this.props
-          const channel = this.props.channel.get()
+          const { messages } = this.props
 
           if (loading) {
             return <Loading />
           }
 
-          if (channel && channel.messages) {
-            const messages = Group(channel.messages)
+          if (messages) {
+            const grouped = Group(messages)
+
             return (
               <Scrollable innerRef={this.scroll.bind(this)}>
-                {messages.map(group => (
+                {grouped.map(group => (
                   <Message messages={group} key={group[0].id} />
                 ))}
               </Scrollable>
@@ -47,7 +49,7 @@ export default connect()
         }
 
         render() {
-          const channel = this.props.channel.get()
+          const { channel } = this.props
 
           const header = channel && (
             <Header>

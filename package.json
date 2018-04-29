@@ -15,6 +15,7 @@
     "@cerebral/react": "^3.2.2",
     "@cerebral/router": "^3.2.2",
     "@types/highlight.js": "^9.12.2",
+    "@types/lodash": "^4.14.108",
     "@types/react-notification-system": "^0.2.37",
     "@types/socket.io-client": "^1.4.32",
     "babel-plugin-emotion": "^9.1.2",

@@ -8,7 +8,7 @@ import Header from './Header'
 
 export default connect()
   .with(({ state, signals, props }) => ({
-    channels: state.channels,
+    channels: state.channels.entries(),
     activeChannel: state.activeChannel,
     visible: state.visible.channels
   }))
@@ -23,7 +23,7 @@ export default connect()
               <Root visible={visible}>
                 <Header />
                 <OverlayedScroll>
-                  {channels.map(({ name, id }, i) => (
+                  {channels.map(([id, { name }], i) => (
                     <Channel
                       name={name}
                       id={id}

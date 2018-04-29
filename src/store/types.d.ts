@@ -1,12 +1,11 @@
 import { Dictionary, ComputedValue } from '@cerebral/fluent'
 import * as signals from './sequences'
-import { messages } from '../types/message'
+import Message from '../types/message'
 
 interface Channel {
   name: string
-  id: string
   topic?: string
-  messages?: messages
+  messages?: Dictionary<Message>
 }
 
 export type Toggles = 'channels'
@@ -33,7 +32,7 @@ export interface State {
     icon: string
   }
   // Array of channels
-  channels: Channel[]
+  channels: Dictionary<Channel>
   // Active channel ID
   activeChannel: string
   // Returns the active channel object
