@@ -8,6 +8,7 @@ import Notifications from './notify'
 import Channels from '../components/Channels'
 import Messages from '../components/Messages'
 import Members from '../components/Members'
+import Modal from '../components/Modal'
 
 // SocketIO
 import Initiate from '../controllers/socket-io'
@@ -25,6 +26,7 @@ export default connect()
           return (
             <Root>
               <Initiate />
+              <Modal />
               <Notifications />
               <Channels />
               {screen === 'active-channel' && <Messages />}

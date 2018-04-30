@@ -8,6 +8,7 @@ import { Channel } from '../../types/responses'
 import { Toggles } from '../types'
 import { message } from '../../types/socket'
 import { Notification } from 'react-notification-system'
+import Modal from '../../types/modal'
 
 /**
  * Selects a server (and or) channel and returns a branch
@@ -101,6 +102,16 @@ export function switchScreen(screen: State['screen']) {
 
 export function toggle({ state, props }: Context<{ component: Toggles }>) {
   state.visible[props.component] = !state.visible[props.component]
+}
+
+export function modal({
+  state,
+  props
+}: Context<{ open: boolean; type?: Modal['type']; data?: Modal['data'] }>) {
+  state.modal = {
+    ...state.modal,
+    ...props
+  }
 }
 
 export { default as GraphQL } from './graphql'

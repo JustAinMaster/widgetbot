@@ -1,6 +1,7 @@
 import { Dictionary, ComputedValue } from '@cerebral/fluent'
 import * as signals from './sequences'
 import Message from '../types/message'
+import Modal from '../types/modal'
 
 interface Channel {
   name: string
@@ -43,9 +44,8 @@ export interface State {
   // Theme
   theme: Theme
 
-  // stringDictionary: Dictionary<string>
-  // isAwesome: ComputedValue<boolean>
-  // upperFoo: string
+  // Modal
+  modal: Modal
 }
 
 export type Signals = { [key in keyof typeof signals]: typeof signals[key] }

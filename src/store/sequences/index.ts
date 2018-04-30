@@ -1,7 +1,9 @@
 import { sequence, sequenceWithProps } from 'fluent'
 import * as actions from '../actions'
 import { Toggles } from '../types'
+
 import { message } from '../../types/socket'
+import Modal from '../../types/modal'
 
 export const routeHome = () => {
   location.href = '/'
@@ -51,22 +53,6 @@ export const fetchChannel = sequenceWithProps<{
     })
 )
 
-/**
- * Message sequences
- */
-export const insertMessage = sequenceWithProps<message>(s =>
-  s.action(actions.setMessage)
-)
-
-export const updateMessage = sequenceWithProps<message>(s =>
-  s.action(actions.setMessage)
-)
-
-export const sendMessage = sequenceWithProps<{
-  channel: string
-  message: string
-}>(s => s.action(actions.sendMessage))
-
 export const switchChannel = sequenceWithProps<{
   channel: string
 }>(s =>
@@ -88,6 +74,31 @@ export const switchChannel = sequenceWithProps<{
     })
 )
 
+/**
+ * Message sequences
+ */
+export const insertMessage = sequenceWithProps<message>(s =>
+  s.action(actions.setMessage)
+)
+
+export const updateMessage = sequenceWithProps<message>(s =>
+  s.action(actions.setMessage)
+)
+
+export const sendMessage = sequenceWithProps<{
+  channel: string
+  message: string
+}>(s => s.action(actions.sendMessage))
+
+/**
+ * Interactive sequences
+ */
 export const toggle = sequenceWithProps<{ component: Toggles }>(s =>
   s.action(actions.toggle)
 )
+
+export const modal = sequenceWithProps<{
+  open: boolean
+  type?: Modal['type']
+  data?: Modal['data']
+}>(s => s.action(actions.modal))

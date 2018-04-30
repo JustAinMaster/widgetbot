@@ -16,6 +16,11 @@ const state: State = {
   visible: {
     channels: window.innerWidth > 520
   },
+  modal: {
+    open: false,
+    type: null,
+    data: null
+  },
   channels: Dictionary({}),
   activeChannel: null,
   channel: Computed(computed.activeChannel),

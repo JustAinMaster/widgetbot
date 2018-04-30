@@ -12,18 +12,6 @@ interface Props {
 }
 
 class MessageAuthor extends React.PureComponent<Props> {
-  verified(authorID: string): JSX.Element {
-    if (authorID === "294916911194570754") { // samdd
-      return <Verified href="https://samdd.me/" title="Developer" />
-    }
-    
-    if (authorID === "111783814740594688") { // Voakie
-      return <Verified href="https://voakie.com/" title="Developer" />
-    }
-    
-    return null
-  }
-
   render() {
     const { author, time } = this.props
 
@@ -31,10 +19,24 @@ class MessageAuthor extends React.PureComponent<Props> {
       <Root>
         <Name color={author.color}>{author.name}</Name>
         {author.bot && <Tag>Bot</Tag>}
-        {this.verified(author.id)}
+        <this.verified id={author.id} />
         <Time>{Moment(time).calendar()}</Time>
       </Root>
     )
+  }
+
+  verified({ id }: { id: string }) {
+    if (id === '294916911194570754') {
+      // samdd
+      return <Verified href="https://samdd.me/" title="Developer" />
+    }
+
+    if (id === '111783814740594688') {
+      // Voakie
+      return <Verified href="https://voakie.com/" title="Developer" />
+    }
+
+    return null
   }
 }
 

@@ -82,7 +82,7 @@ class EmojiInput extends React.Component<Props> {
           onChange={event => {
             this.onChange(event.target.value)
           }}
-          placeholder={this.props.placeholder || false}
+          placeholder={this.props.placeholder || null}
           onClick={this.resetState.bind(this)}
           onKeyDown={event => {
             switch (event.keyCode) {

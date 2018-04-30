@@ -1,4 +1,5 @@
 import styled, { css } from 'typed-emotion'
+import { ExpandableImage } from 'styled-elements'
 
 enum Max {
   height = 300,
@@ -35,10 +36,10 @@ const scale = (Image: ImageProps) => {
   return null
 }
 
-export const Image = styled<ImageProps, 'img'>('img')`
+export const Image = styled<ImageProps, any>(ExpandableImage)`
   display: block;
   margin: 10px 0;
-  cursor: zoom-in;
+  cursor: pointer;
   border-radius: 3px;
   ${scale};
 

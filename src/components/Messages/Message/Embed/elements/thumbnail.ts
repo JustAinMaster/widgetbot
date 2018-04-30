@@ -1,12 +1,14 @@
 import styled, { css } from '../ThemeContext'
+import { ExpandableImage } from 'styled-elements'
 
 interface Props {
   rich?: boolean
 }
-export const Thumbnail = styled<Props, 'img'>('img')`
+export const Thumbnail = styled<Props, any>(ExpandableImage)`
   border-radius: 3px;
   object-fit: contain;
   flex-shrink: 0;
+  cursor: pointer;
 
   ${({ rich, theme }) =>
     rich
