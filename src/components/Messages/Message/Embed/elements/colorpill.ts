@@ -5,7 +5,7 @@ interface Props {
 }
 export const ColorPill = styled<Props, 'div'>('div')`
   width: 4px;
-  background: #cacbce;
+  background-color: rgba(255, 255, 255, 0.2);
   border-radius: 3px 0 0 3px;
   -ms-flex-negative: 0;
   flex-shrink: 0;

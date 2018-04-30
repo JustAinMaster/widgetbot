@@ -25,7 +25,7 @@ export const Content = styled('div')`
   display: flex;
   overflow: hidden;
   ${({ theme }) =>
-    theme.embed.type === 'article'
+    /^article|image$/.test(theme.embed.type)
       ? css`
           flex-direction: column;
         `

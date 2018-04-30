@@ -16,7 +16,7 @@ export const Thumbnail = styled<Props, any>(ExpandableImage)`
           width: auto;
           margin: 5px 0;
         `
-      : theme.embed.type === 'article'
+      : /^article|image$/.test(theme.embed.type)
         ? css`
             margin-top: 8px;
             width: 400px;
