@@ -102,3 +102,7 @@ export const modal = sequenceWithProps<{
   type?: Modal['type']
   data?: Modal['data']
 }>(s => s.action(actions.modal))
+
+export const typing = sequenceWithProps<{ typing: boolean; channel: string }>(
+  s => s.action(actions.typing)
+)

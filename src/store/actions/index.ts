@@ -114,4 +114,14 @@ export function modal({
   }
 }
 
+export function typing({
+  state,
+  props
+}: Context<{ channel: string; typing: boolean }>) {
+  socket.emit('typing', {
+    server: state.server.id,
+    ...props
+  })
+}
+
 export { default as GraphQL } from './graphql'

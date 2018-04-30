@@ -28,6 +28,7 @@ interface Props {
   placeholder?: string
   value?: string
   onChange?: Function
+  onKeyPress?: Function
   onSubmit?: Function
   rows?: number
   suggestionsLimit?: number
@@ -122,6 +123,7 @@ class EmojiInput extends React.Component<Props> {
                 this.resetState()
                 break
               default:
+                if (this.props.onKeyPress) this.props.onKeyPress(event)
                 break
             }
           }}

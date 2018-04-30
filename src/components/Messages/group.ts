@@ -9,8 +9,8 @@ function compare(a: Message, b: Message) {
     a.author.id !== b.author.id ||
     // If the name is not equal to the previous message
     a.author.name !== b.author.name ||
-    // If the interval between the previous message is greater than 10 mins
-    b.timestamp - a.timestamp > 10 * 60 * 1000
+    // If the interval between the previous message is greater than 5 mins
+    b.timestamp - a.timestamp > 5 * 60 * 1000
   )
 }
 
