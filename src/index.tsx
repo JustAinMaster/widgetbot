@@ -1,13 +1,12 @@
+import { Container } from '@cerebral/react'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
-// Cerebral
-import { Container } from '@cerebral/react'
-import controller from './controllers/cerebral'
-
-import ThemeProvider from './app/ThemeProvider'
 import App from './app'
+import ThemeProvider from './app/ThemeProvider'
+import controller from './controllers/cerebral'
 import registerServiceWorker from './registerServiceWorker'
+
 
 // Render App
 ReactDOM.render(

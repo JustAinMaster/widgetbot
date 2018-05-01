@@ -1,26 +1,27 @@
-import * as React from 'react'
+import { ThemeProvider } from 'emotion-theming'
 import * as Moment from 'moment'
+import * as React from 'react'
+
 import { parseAllowLinks, parseEmbedTitle } from '../Markdown'
 import { Twemoji } from '../Markdown/elements'
-import { ThemeProvider } from 'emotion-theming'
 import {
-  Root,
-  ColorPill,
-  Wrapper,
-  Content,
-  Fields,
-  FieldName,
-  FieldValue,
-  Field,
-  FooterIcon,
-  Footer,
-  Title,
-  AuthorName,
-  AuthorIcon,
   Author,
+  AuthorIcon,
+  AuthorName,
+  ColorPill,
+  Content,
+  Description,
+  Field,
+  FieldName,
+  Fields,
+  FieldValue,
+  Footer,
+  FooterIcon,
   FooterText,
+  Root,
   Thumbnail,
-  Description
+  Title,
+  Wrapper,
 } from './elements'
 
 function parseEmojis(text) {

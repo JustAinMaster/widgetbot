@@ -1,5 +1,5 @@
-import styled, { css } from 'typed-emotion'
 import Color from 'kolor'
+import styled, { css } from 'typed-emotion'
 
 interface Props {
   open: boolean

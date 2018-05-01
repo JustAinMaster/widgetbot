@@ -1,4 +1,4 @@
-import styled, { css } from 'typed-emotion'
+import styled from 'typed-emotion'
 
 export const Root = styled('div')`
   width: 100%;

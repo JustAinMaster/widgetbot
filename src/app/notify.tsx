@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as N from 'react-notification-system'
+
 import { Notifications } from './elements'
 
 const initial: N.Notification[] = []

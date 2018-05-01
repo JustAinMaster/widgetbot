@@ -1,6 +1,6 @@
-import * as React from 'react'
-import { connect } from 'fluent'
 import { ThemeProvider as Provider } from 'emotion-theming'
+import { connect } from 'fluent'
+import * as React from 'react'
 
 const ThemeProvider = connect()
   .with(({ state, signals, props }) => ({

@@ -1,6 +1,6 @@
-import * as io from 'socket.io-client'
 import { connect } from 'fluent'
 import { addNotification } from 'notify'
+import * as io from 'socket.io-client'
 
 import { message, Room } from '../../types/socket'
 

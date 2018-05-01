@@ -1,16 +1,14 @@
-import * as React from 'react'
 import { connect } from 'fluent'
+import * as React from 'react'
 import { Scrollable } from 'styled-elements'
-import Group from './group'
 
-import { Root } from './elements'
-import ErrorAhoy from '../Overlays/ErrorAhoy'
-import { Loading } from '../Overlays'
-
-import Wrapper from '../Wrapper'
 import Header, { Name, Topic } from '../Header'
-import Message from './Message'
+import { Loading } from '../Overlays'
+import ErrorAhoy from '../Overlays/ErrorAhoy'
+import Wrapper from '../Wrapper'
 import Chat from './Chat'
+import Group from './group'
+import Message from './Message'
 
 export default connect()
   .with(({ state, signals, props }) => {

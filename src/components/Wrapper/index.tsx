@@ -1,5 +1,6 @@
-import * as React from 'react'
 import { connect } from 'fluent'
+import * as React from 'react'
+
 import { Wrapper } from './elements'
 
 export default connect()

@@ -1,14 +1,13 @@
-import { addNotification } from 'notify'
-import { State } from './../types'
-import { Context, BranchContext } from 'fluent'
+import { BranchContext, Context } from 'fluent'
 import Log from 'logger'
+import { addNotification } from 'notify'
+import { Notification } from 'react-notification-system'
 import { socket } from 'socket-io'
 
-import { Channel } from '../../types/responses'
-import { Toggles } from '../types'
-import { message } from '../../types/socket'
-import { Notification } from 'react-notification-system'
 import Modal from '../../types/modal'
+import { message } from '../../types/socket'
+import { Toggles } from '../types'
+import { State } from './../types'
 
 /**
  * Selects a server (and or) channel and returns a branch

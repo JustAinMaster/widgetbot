@@ -1,8 +1,10 @@
-import { Embed } from './../../../../types/message.d'
 import styled, { ThemedReactEmotionInterface } from 'react-emotion'
+import { Theme } from 'typed-emotion'
+
+import { Embed } from './../../../../types/message.d'
+
 export * from 'typed-emotion'
 
-import { Theme } from 'typed-emotion'
 interface Context extends Theme {
   embed: Embed
 }

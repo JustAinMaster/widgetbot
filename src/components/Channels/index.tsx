@@ -1,9 +1,9 @@
-import * as React from 'react'
 import { connect } from 'fluent'
+import * as React from 'react'
 import { OverlayedScroll } from 'styled-elements'
 
-import { Root } from './elements'
 import Channel from './Channel'
+import { Root } from './elements'
 import Header from './Header'
 
 export default connect()

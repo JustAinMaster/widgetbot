@@ -1,6 +1,6 @@
-import styled, { keyframes } from 'typed-emotion'
-import { Hash, Channel } from 'styled-elements'
 import Color from 'kolor'
+import { Channel, Hash } from 'styled-elements'
+import styled, { keyframes } from 'typed-emotion'
 
 const fade = i => keyframes`
   from {

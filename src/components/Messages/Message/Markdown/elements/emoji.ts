@@ -1,5 +1,5 @@
-import styled, { css } from 'typed-emotion'
 import { Twemoji as EmojiParser } from 'react-emoji-render'
+import styled, { css } from 'typed-emotion'
 
 interface Props {
   enlarged?: boolean

@@ -1,8 +1,6 @@
 import * as React from 'react'
-import Transition from 'react-transition-group/Transition'
-import { connect } from 'fluent'
 
-import { Root, Hashtag, Name } from './elements'
+import { Hashtag, Name, Root } from './elements'
 
 interface Props {
   name: string

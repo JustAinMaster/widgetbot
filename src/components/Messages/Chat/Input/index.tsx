@@ -1,9 +1,9 @@
 import * as React from 'react'
 import getCaretCoordinates from 'textarea-caret'
 
+import { Input, Root } from './elements'
 import Suggestions from './Suggestions'
 import { getEmojiMatches } from './utils/emojis'
-import { Root, Input } from './elements'
 
 // Keycodes
 const TAB = 9

@@ -1,5 +1,6 @@
-import styled, { css } from '../ThemeContext'
 import { ExpandableImage } from 'styled-elements'
+
+import styled, { css } from '../ThemeContext'
 
 interface Props {
   rich?: boolean

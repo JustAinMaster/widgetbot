@@ -1,4 +1,4 @@
-import styled, { css } from 'typed-emotion'
+import styled from 'typed-emotion'
 
 interface Props {
   squashed: boolean

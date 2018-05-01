@@ -1,7 +1,6 @@
-import styled, { css } from 'typed-emotion'
-import { Channel as ChannelLink } from 'styled-elements'
-import { Role as RoleType } from '../../../../../types/message'
 import Color from 'kolor'
+import { Channel as ChannelLink } from 'styled-elements'
+import styled, { css } from 'typed-emotion'
 
 interface Props {
   color?: string

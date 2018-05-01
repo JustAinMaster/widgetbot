@@ -1,6 +1,7 @@
-import styled, { css } from 'typed-emotion'
-import { light, dark } from './hljs'
 import Color from 'kolor'
+import styled, { css } from 'typed-emotion'
+
+import { light } from './hljs'
 
 const fonts = `'${[
   'Operator Mono Lig',

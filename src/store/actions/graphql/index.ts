@@ -1,19 +1,13 @@
-import { addNotification } from 'notify'
-import { Context, BranchContext } from 'fluent'
+import { Dictionary } from '@cerebral/fluent'
+import { BranchContext, Context } from 'fluent'
 import { request } from 'graphql-request'
 import * as _ from 'lodash'
-
-import { subscribe } from 'socket-io'
-import * as queries from 'queries'
 import Log from 'logger'
-
-import {
-  ServerResponse,
-  ChannelResponse,
-  Channel
-} from '../../../types/responses'
+import * as queries from 'queries'
 import { Notification } from 'react-notification-system'
-import { Dictionary } from '@cerebral/fluent'
+import { subscribe } from 'socket-io'
+
+import { Channel, ChannelResponse, ServerResponse } from '../../../types/responses'
 
 const serverIssues = {
   level: 'warning',

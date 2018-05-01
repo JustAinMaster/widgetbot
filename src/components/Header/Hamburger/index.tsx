@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { Ham, Burger } from './elements'
+
+import { Burger, Ham } from './elements'
 
 interface Props {
   onClick?: Function

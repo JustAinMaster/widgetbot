@@ -1,6 +1,6 @@
-import styled, { css } from 'typed-emotion'
-import { OverlayedScroll } from 'styled-elements'
 import Color from 'kolor'
+import { OverlayedScroll } from 'styled-elements'
+import styled from 'typed-emotion'
 
 interface Props {
   length: number

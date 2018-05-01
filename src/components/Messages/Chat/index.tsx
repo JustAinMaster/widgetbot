@@ -1,7 +1,7 @@
-import * as React from 'react'
 import { connect } from 'fluent'
+import * as React from 'react'
 
-import { Root, Field } from './elements'
+import { Field, Root } from './elements'
 import Emoji from './Emoji'
 import Input from './Input'
 

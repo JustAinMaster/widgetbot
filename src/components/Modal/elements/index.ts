@@ -1,5 +1,6 @@
-import styled, { css } from './ThemeContext'
 import Color from 'kolor'
+
+import styled, { css } from './ThemeContext'
 
 export const Root = styled('dialog')`
   display: flex;

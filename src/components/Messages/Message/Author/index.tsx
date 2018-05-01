@@ -1,10 +1,9 @@
-import * as React from 'react'
 import * as Moment from 'moment'
+import * as React from 'react'
 
-import { Root, Name, Time } from './elements'
 import { Author } from '../../../../types/message'
-
 import { Tag, Verified } from './Badges'
+import { Name, Root, Time } from './elements'
 
 interface Props {
   author: Author

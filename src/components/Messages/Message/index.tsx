@@ -1,9 +1,9 @@
 import * as React from 'react'
-import message from '../../../types/message'
-import Markdown from './Markdown'
 
-import { Group, Avatar, Content, Markup, Text, Edited } from './elements'
+import message from '../../../types/message'
 import Author from './Author'
+import { Avatar, Content, Edited, Group, Markup, Text } from './elements'
+import Markdown from './Markdown'
 
 interface Props {
   messages: message[]

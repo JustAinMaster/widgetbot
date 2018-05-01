@@ -1,6 +1,7 @@
 import * as React from 'react'
 import scrollIntoViewIfNeeded from 'scroll-into-view-if-needed'
-import { Suggestions, Suggestion, Emoji, Name } from './elements'
+
+import { Emoji, Name, Suggestion, Suggestions } from './elements'
 
 interface Options {
   value: string

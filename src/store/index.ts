@@ -1,8 +1,9 @@
-import { Module, Dictionary, Computed } from '@cerebral/fluent'
+import { Computed, Dictionary, Module } from '@cerebral/fluent'
 import Router from '@cerebral/router'
-import { State } from './types'
-import * as signals from './sequences'
+
 import * as computed from './computed'
+import * as signals from './sequences'
+import { State } from './types'
 
 const state: State = {
   screen: null,

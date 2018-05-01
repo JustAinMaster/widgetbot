@@ -1,5 +1,5 @@
-import styled, { css } from 'typed-emotion'
 import { ExpandableImage } from 'styled-elements'
+import styled, { css } from 'typed-emotion'
 
 enum Max {
   height = 300,

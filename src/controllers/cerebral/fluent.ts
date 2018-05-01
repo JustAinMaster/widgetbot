@@ -1,16 +1,11 @@
-import {
-  IContext,
-  IBranchContext,
-  SequenceFactory,
-  SequenceWithPropsFactory,
-  ConnectFactory
-} from '@cerebral/fluent'
-import { State, Signals } from '../../store/types'
+import { ConnectFactory, IBranchContext, IContext, SequenceFactory, SequenceWithPropsFactory } from '@cerebral/fluent'
 import { Provider as RouterProvider } from '@cerebral/router'
+
+import { Signals, State } from '../../store/types'
 
 // Create an interface where you compose your providers together
 interface Providers {
-  router: RouterProvider,
+  router: RouterProvider
   state: State
 }
 

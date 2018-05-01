@@ -1,7 +1,7 @@
-import * as React from 'react'
 import { connect } from 'fluent'
+import * as React from 'react'
 
-import { Root, Icon, Name, Count } from './elements'
+import { Count, Icon, Name, Root } from './elements'
 
 export default connect()
   .with(({ state, signals, props }) => ({

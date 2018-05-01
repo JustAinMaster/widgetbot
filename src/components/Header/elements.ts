@@ -1,6 +1,6 @@
-import styled from 'typed-emotion'
-import { Hash } from 'styled-elements'
 import * as Color from 'kolor'
+import { Hash } from 'styled-elements'
+import styled from 'typed-emotion'
 
 export const Root = styled('header')`
   overflow: hidden;

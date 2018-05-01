@@ -1,8 +1,7 @@
 import * as React from 'react'
-import { connect } from 'fluent'
 
+import { Emoji, Root } from './elements'
 import randomEmoji from './random'
-import { Root, Emoji } from './elements'
 
 class EmojiPanel extends React.PureComponent {
   render() {

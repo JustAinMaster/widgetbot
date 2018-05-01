@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { connect } from 'fluent'
+import * as React from 'react'
 
 import { Root } from './elements'
 import Hamburger from './Hamburger'

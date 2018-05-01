@@ -1,8 +1,8 @@
-import * as React from 'react'
-import { connect } from 'fluent'
 import { ThemeProvider } from 'emotion-theming'
+import { connect } from 'fluent'
+import * as React from 'react'
 
-import { Root, Box, Close, Image, OpenImage } from './elements'
+import { Box, Close, Image, OpenImage, Root } from './elements'
 
 export default connect()
   .with(({ state, signals, props }) => ({

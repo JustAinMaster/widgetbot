@@ -1,9 +1,9 @@
-import { sequence, sequenceWithProps } from 'fluent'
+import { sequenceWithProps } from 'fluent'
+
+import Modal from '../../types/modal'
+import { message } from '../../types/socket'
 import * as actions from '../actions'
 import { Toggles } from '../types'
-
-import { message } from '../../types/socket'
-import Modal from '../../types/modal'
 
 export const routeHome = () => {
   location.href = '/'

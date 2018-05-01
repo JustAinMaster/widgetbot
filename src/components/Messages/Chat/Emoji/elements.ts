@@ -1,5 +1,5 @@
-import styled, { css } from 'typed-emotion'
 import { Twemoji } from 'emoji'
+import styled from 'typed-emotion'
 
 export const Root = styled('div')`
   margin: 9px 12px;

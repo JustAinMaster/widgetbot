@@ -1,5 +1,5 @@
-import styled, { css } from 'typed-emotion'
 import Color from 'kolor'
+import styled, { css } from 'typed-emotion'
 
 export const Root = styled('div')``
 

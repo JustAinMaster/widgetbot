@@ -1,21 +1,12 @@
-import * as React from 'react'
-import SimpleMarkdown from 'simple-markdown'
 import * as hljs from 'highlight.js'
+import * as React from 'react'
+import { EmojiParser } from 'react-emoji-render'
+import SimpleMarkdown from 'simple-markdown'
 
 import message from '../../../../types/message'
-import {
-  Mention,
-  Role,
-  Channel,
-  Twemoji,
-  Emoji,
-  Link,
-  Image,
-  Code
-} from './elements'
 import Embed from '../Embed'
+import { Channel, Code, Emoji, Image, Link, Mention, Role, Twemoji } from './elements'
 
-import { EmojiParser } from 'react-emoji-render'
 // import Emoji from "./emoji"
 const $Emoji = { people: [{ names: ['disabled'], surrogates: '😀' }] }
 

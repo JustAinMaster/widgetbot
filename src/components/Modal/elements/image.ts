@@ -1,5 +1,4 @@
-import styled, { css } from './ThemeContext'
-import Color from 'kolor'
+import styled from './ThemeContext'
 
 export const Image = styled('img')`
   max-width: 70vw;

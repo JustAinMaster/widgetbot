@@ -1,6 +1,6 @@
-import styled, { css } from 'typed-emotion'
 import { Twemoji } from 'emoji'
 import Color from 'kolor'
+import styled, { css } from 'typed-emotion'
 
 interface Props {
   selected: boolean
