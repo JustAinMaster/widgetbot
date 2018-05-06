@@ -1,4 +1,4 @@
-import { sequenceWithProps } from 'fluent'
+import { sequence, sequenceWithProps } from 'fluent'
 
 import Modal from '../../types/modal'
 import { message } from '../../types/socket'
@@ -110,3 +110,12 @@ export const modal = sequenceWithProps<{
 export const typing = sequenceWithProps<{ typing: boolean; channel: string }>(
   s => s.action(actions.typing)
 )
+
+/**
+ * Authentication sequences
+ */
+export const createAccount = sequenceWithProps<{ name: string }>(s =>
+  s.action(actions.createAccount)
+)
+
+export const singleSignOn = sequence(s => s.action(actions.singleSignOn))

@@ -102,6 +102,17 @@ export function sendMessage({
 }
 
 /**
+ * Authentication actions
+ */
+export function createAccount({ state, props }: Context<{ name: string }>) {
+  console.log(`creating ${name}`)
+}
+
+export function singleSignOn({ state, props }: Context) {
+  console.log('single sign on')
+}
+
+/**
  * General actions
  */
 export function notify({
@@ -111,21 +122,18 @@ export function notify({
   addNotification(props.notification)
 }
 
-export function closeDrawerOnMobile({ state, props }: Context) {
-  if (window.innerWidth < 520) {
-    state.visible.channels = false
-  }
-}
-
 export function loading(status: boolean) {
   return ({ state, props }: Context) => {
     state.loading = status
   }
 }
 
-export function switchScreen(screen: State['screen']) {
-  return ({ state, props }: Context) => {
-    state.screen = screen
+/**
+ * Interactive actions
+ */
+export function closeDrawerOnMobile({ state, props }: Context) {
+  if (window.innerWidth < 520) {
+    state.visible.channels = false
   }
 }
 
@@ -140,6 +148,12 @@ export function modal({
   state.modal = {
     ...state.modal,
     ...props
+  }
+}
+
+export function switchScreen(screen: State['screen']) {
+  return ({ state, props }: Context) => {
+    state.screen = screen
   }
 }
 

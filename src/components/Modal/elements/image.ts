@@ -1,9 +1,11 @@
 import styled from './ThemeContext'
 
 export const Image = styled('img')`
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  border-radius: 3px;
   max-width: 70vw;
   max-height: 70vh;
-  border-radius: 3px;
+  user-select: none;
 `
 
 export const OpenImage = styled('a')`

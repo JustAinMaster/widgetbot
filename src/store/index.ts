@@ -18,8 +18,8 @@ const state: State = {
     channels: window.innerWidth > 520
   },
   modal: {
-    open: false,
-    type: null,
+    open: true,
+    type: 'authenticate',
     data: null
   },
   channels: Dictionary({}),
@@ -33,7 +33,8 @@ const state: State = {
     },
     light: false,
     compact: false
-  }
+  },
+  user: null
 }
 
 export const module = Module({

@@ -2,6 +2,7 @@ import { ThemeProvider } from 'emotion-theming'
 import { connect } from 'fluent'
 import * as React from 'react'
 
+import Authenticate from './Authenticate'
 import { Box, Close, Image, OpenImage, Root } from './elements'
 
 export default connect()
@@ -20,6 +21,10 @@ export default connect()
         content = () => {
           const { modal } = this.props
 
+          if (modal.type === 'authenticate') {
+            return <Authenticate />
+          }
+
           if (modal.type === 'image') {
             return (
               <React.Fragment>
@@ -34,6 +39,7 @@ export default connect()
               </React.Fragment>
             )
           }
+
           return null
         }
 
@@ -68,9 +74,7 @@ export default connect()
           if (modal.open) {
             switch (keyCode) {
               case 27:
-              case 8: {
                 this.close()
-              }
             }
           }
         }

@@ -33,7 +33,6 @@ export const Box = styled('div')`
   position: relative;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 
   max-height: calc(100vw - 20px);
   max-width: calc(100vw - 40px);
@@ -48,6 +47,9 @@ export const Box = styled('div')`
 `
 
 export const Content = styled('div')`
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
   background-color: ${({ theme }) => theme.colors.background};
   border-radius: 3px;

@@ -1,7 +1,9 @@
-import { Dictionary, ComputedValue } from '@cerebral/fluent'
-import * as signals from './sequences'
+import { ComputedValue, Dictionary } from '@cerebral/fluent'
+
 import Message from '../types/message'
 import Modal from '../types/modal'
+import { User } from '../types/user'
+import * as signals from './sequences'
 
 interface Channel {
   name: string
@@ -46,6 +48,9 @@ export interface State {
 
   // Modal
   modal: Modal
+
+  // User
+  user: User
 }
 
 export type Signals = { [key in keyof typeof signals]: typeof signals[key] }
