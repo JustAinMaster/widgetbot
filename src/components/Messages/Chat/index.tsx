@@ -5,6 +5,8 @@ import { Field, Root } from './elements'
 import Emoji from './Emoji'
 import Input from './Input'
 
+export let input: HTMLInputElement = null
+
 export default connect()
   .with(({ state, signals, props }) => ({
     channel: state.channel.get(),
@@ -26,7 +28,14 @@ export default connect()
 
         onSubmit(message: string) {
           const { sendMessage, activeChannel } = this.props
-          sendMessage({ channel: activeChannel, message })
+          sendMessage({
+            channel: activeChannel,
+            message
+          })
+
+          // TODO: Clear the input field only when the user is signed in.
+          // Currently it's throwing an error whenever I introduce it
+          input.value = ''
         }
 
         isTyping(typing: boolean) {
@@ -43,6 +52,7 @@ export default connect()
                 <Input
                   onChange={this.onChange.bind(this)}
                   onSubmit={this.onSubmit.bind(this)}
+                  inputRef={ref => (input = ref)}
                   onKeyPress={this.typing.bind(this)}
                   placeholder={channel ? `Message #${channel.name}` : null}
                 />

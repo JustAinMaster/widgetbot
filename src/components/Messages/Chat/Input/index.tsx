@@ -30,6 +30,7 @@ interface Props {
   onChange?: Function
   onKeyPress?: Function
   onSubmit?: Function
+  inputRef?: Function
   rows?: number
   suggestionsLimit?: number
 }
@@ -78,6 +79,9 @@ class EmojiInput extends React.Component<Props> {
           rows={this.props.rows}
           innerRef={textComponent => {
             this.textComponent = textComponent
+
+            // Call inputRef handler
+            if (this.props.inputRef) this.props.inputRef(textComponent)
           }}
           {...valueProps}
           onChange={event => {
@@ -111,8 +115,6 @@ class EmojiInput extends React.Component<Props> {
                   // Submit
                   if (this.props.onSubmit) {
                     this.props.onSubmit(this.textComponent.value)
-                    // Clear input field
-                    this.textComponent.value = ''
                     if (this.props.onChange) this.props.onChange('')
                   }
                   event.preventDefault()

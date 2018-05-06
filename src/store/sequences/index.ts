@@ -89,8 +89,12 @@ export const sendMessage = sequenceWithProps<{
   channel: string
   message: string
 }>(s =>
-  s.branch(actions.sendMessage).paths({
-    sending: s => s /*.action(actions.setMessage)*/
+  s.branch(actions.signIn).paths({
+    complete: s =>
+      s.branch(actions.sendMessage).paths({
+        sending: s => s /*.action(actions.setMessage)*/
+      }),
+    interrupted: s => s
   })
 )
 

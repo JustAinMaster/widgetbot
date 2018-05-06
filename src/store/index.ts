@@ -18,8 +18,8 @@ const state: State = {
     channels: window.innerWidth > 520
   },
   modal: {
-    open: true,
-    type: 'authenticate',
+    open: false,
+    type: null,
     data: null
   },
   channels: Dictionary({}),

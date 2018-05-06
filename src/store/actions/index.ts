@@ -4,8 +4,10 @@ import { addNotification } from 'notify'
 import { Notification } from 'react-notification-system'
 import { socket } from 'socket-io'
 
+import Message from '../../types/message'
 import Modal from '../../types/modal'
 import { message } from '../../types/socket'
+import { User } from '../../types/user'
 import { Toggles } from '../types'
 import { State } from './../types'
 
@@ -72,10 +74,15 @@ export function sendMessage({
   },
   { channel: string; message: string }
 >) {
-  socket.emit('sendMessage', {
-    server: state.server.id,
-    ...props
-  })
+  socket.emit(
+    'sendMessage',
+    {
+      server: state.server.id,
+      ...props
+    },
+    (message: Message) => {}
+  )
+
   return path.sending({
     // channel: props.channel,
     // message: {
@@ -104,8 +111,76 @@ export function sendMessage({
 /**
  * Authentication actions
  */
+let resolvees: Function[] = []
+export async function signIn({
+  state,
+  props,
+  path
+}: BranchContext<{
+  complete: {
+    user: User
+  }
+  interrupted: {
+    error: string
+  }
+}>) {
+  if (!state.user) {
+    state.modal = {
+      ...state.modal,
+      open: true,
+      type: 'authenticate'
+    }
+
+    // The position in the resolvees array
+    let que: number
+
+    let timer
+    try {
+      // Become a resolvee for once the user is signed in
+      // Execution is gracefully stopped until this is complete
+      const user = (await new Promise((resolve, reject) => {
+        que = resolvees.push(resolve) - 1
+
+        // Check to make sure the user hasn't closed the dialog
+        timer = setInterval(() => {
+          if (!state.modal.open || state.modal.type !== 'authenticate') {
+            // If they've closed it, reject the promise and go down
+            // the interrupted path
+            reject(`You need to sign in to send messages`)
+          }
+        }, 500)
+      })) as User
+
+      clearInterval(timer)
+
+      return path.complete({ user })
+    } catch (error) {
+      clearInterval(timer)
+
+      // Remove the resolver from the resolvees array
+      resolvees.splice(que, 1)
+
+      // User declined to sign in /
+      // Something went wrong
+      return path.interrupted({ error })
+    }
+  }
+
+  return path.complete({ user: state.user })
+}
+
 export function createAccount({ state, props }: Context<{ name: string }>) {
-  console.log(`creating ${name}`)
+  socket.emit('signIn', props, user => {
+    state.user = {
+      ...state.user,
+      ...user
+    }
+
+    // Resolve resolvee sequences
+    if (resolvees.length) {
+      resolvees.forEach(resolve => resolve(state.user))
+    }
+  })
 }
 
 export function singleSignOn({ state, props }: Context) {
@@ -122,10 +197,8 @@ export function notify({
   addNotification(props.notification)
 }
 
-export function loading(status: boolean) {
-  return ({ state, props }: Context) => {
-    state.loading = status
-  }
+export const loading = (status: boolean) => ({ state, props }: Context) => {
+  state.loading = status
 }
 
 /**
@@ -145,10 +218,7 @@ export function modal({
   state,
   props
 }: Context<{ open: boolean; type?: Modal['type']; data?: Modal['data'] }>) {
-  state.modal = {
-    ...state.modal,
-    ...props
-  }
+  state.modal = { ...state.modal, ...props }
 }
 
 export function switchScreen(screen: State['screen']) {
