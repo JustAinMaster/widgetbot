@@ -63,11 +63,41 @@ export function setMessage({ state, props }: Context<message>) {
 
 export function sendMessage({
   state,
-  props
-}: Context<{ channel: string; message: string }>) {
+  props,
+  path
+}: BranchContext<
+  {
+    // sending: message
+    sending: any
+  },
+  { channel: string; message: string }
+>) {
   socket.emit('sendMessage', {
     server: state.server.id,
     ...props
+  })
+  return path.sending({
+    // channel: props.channel,
+    // message: {
+    //   content: props.message,
+    //   timestamp: +new Date(),
+    //   attachment: null,
+    //   id: 'a',
+    //   type: 'DEFAULT',
+    //   mentions: ,
+    //   reactions: [],
+    //   embeds: [],
+    //   editedAt: null,
+    //   author: {
+    //     name: 'test',
+    //     id: 'asdsadasd',
+    //     avatar: null,
+    //     bot: false,
+    //     color: '#fff',
+    //     discriminator: 'a',
+    //     roles: null
+    //   }
+    // }
   })
 }
 

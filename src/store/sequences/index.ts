@@ -88,7 +88,11 @@ export const updateMessage = sequenceWithProps<message>(s =>
 export const sendMessage = sequenceWithProps<{
   channel: string
   message: string
-}>(s => s.action(actions.sendMessage))
+}>(s =>
+  s.branch(actions.sendMessage).paths({
+    sending: s => s /*.action(actions.setMessage)*/
+  })
+)
 
 /**
  * Interactive sequences

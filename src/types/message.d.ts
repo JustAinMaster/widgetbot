@@ -34,12 +34,11 @@ interface Message {
 
 export interface Author {
   name: string
-  discriminator: string
   bot: boolean
-  avatar: string | null
+  avatar: string
   id: string
   color: string
-  roles: Role[] | null
+  roles: Role[]
 }
 
 export interface Role {
