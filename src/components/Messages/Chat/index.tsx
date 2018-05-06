@@ -72,9 +72,8 @@ export default connect()
 
           if (now - monitor.last > threshold) {
             this.isTyping(true)
+            monitor.last = now
           }
-
-          monitor.last = now
         }
       }
   )
