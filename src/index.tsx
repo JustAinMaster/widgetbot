@@ -1,3 +1,5 @@
+import './res/index.css'
+
 import { Container } from '@cerebral/react'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'

@@ -12,15 +12,17 @@ export default connect()
 
     return (
       <Root>
-        <Icon src={server.icon} />
-        <Name>{server.name}</Name>
-        <Count
-          title={`${server.memberCount} ${
-            plural ? 'members' : 'member'
-          } in this server`}
-        >
-          {server.memberCount}
-        </Count>
+        {server.icon && <Icon src={server.icon} />}
+        {server.name && <Name>{server.name}</Name>}
+        {server.memberCount && (
+          <Count
+            title={`${server.memberCount} ${
+              plural ? 'members' : 'member'
+            } in this server`}
+          >
+            {server.memberCount}
+          </Count>
+        )}
       </Root>
     )
   })

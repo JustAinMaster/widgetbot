@@ -44,11 +44,11 @@ export const module = Module({
       baseUrl: '/channels',
       routes: [
         {
-          path: '/:server/:channel',
+          path: '/:server/:channel/',
           signal: 'fetchChannel'
         },
         {
-          path: '/:server',
+          path: '/:server/',
           signal: 'fetchServer'
         },
         {

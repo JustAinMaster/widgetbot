@@ -1,8 +1,8 @@
-import * as React from 'react'
-import styled, { css } from 'typed-emotion'
-import { Scrollbars } from 'react-custom-scrollbars'
 import { connect } from 'fluent'
 import Color from 'kolor'
+import * as React from 'react'
+import { Scrollbars } from 'react-custom-scrollbars'
+import styled from 'typed-emotion'
 
 /**
  * Visible scrollbar
@@ -92,7 +92,7 @@ export const Channel = connect<ChannelProps>()
           const { id } = this.props
           const path = location.pathname.split('/')
 
-          return path.length > 4 ? id : `/channels/${path[2]}/${id}`
+          return path.length > 4 ? id : `/channels/${path[2]}/${id}/`
         }
 
         handleClick = (e: Event) => {
