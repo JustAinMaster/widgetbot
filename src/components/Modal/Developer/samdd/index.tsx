@@ -23,12 +23,19 @@ class Developer extends React.PureComponent {
               {`Hey there! I build products for humans.\nI started the second iteration of this service from scratch.\n`}
             </Description>
 
-            <Chip href="https://samdd.me/r?github">GitHub</Chip>
-            <Chip href="https://twitter.com/thesamdd">Twitter</Chip>
-            <Chip href="https://samdd.me">Site</Chip>
+            <Chip href="https://samdd.me/r?github" target="_blank">
+              GitHub
+            </Chip>
+            <Chip href="https://twitter.com/thesamdd" target="_blank">
+              Twitter
+            </Chip>
+            <Chip href="https://samdd.me" target="_blank">
+              Website
+            </Chip>
             <Chip
               // href="/channels/335836376031428618/339910176956219403/"
               href="https://discord.gg/dxxFh9Q"
+              target="_blank"
             >
               Discord
             </Chip>
