@@ -74,14 +74,7 @@ export function sendMessage({
   },
   { channel: string; message: string }
 >) {
-  socket.emit(
-    'sendMessage',
-    {
-      server: state.server.id,
-      ...props
-    },
-    (message: Message) => {}
-  )
+  socket.emit('sendMessage', props, (message: Message) => {})
 
   return path.sending({
     // channel: props.channel,
@@ -231,10 +224,7 @@ export function typing({
   state,
   props
 }: Context<{ channel: string; typing: boolean }>) {
-  socket.emit('typing', {
-    server: state.server.id,
-    ...props
-  })
+  socket.emit('typing', props)
 }
 
 export { default as GraphQL } from './graphql'

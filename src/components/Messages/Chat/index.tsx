@@ -34,7 +34,9 @@ export default connect()
           })
 
           // TODO: Clear the input field only when the user is signed in.
-          // Currently it's throwing an error whenever I introduce it
+          // Currently it's throwing an error whenever I observe the
+          // state.user object. It's probably due to the shit-ish flow
+          // that I created, or a bug with cerebral.
           input.value = ''
         }
 
@@ -74,12 +76,18 @@ export default connect()
           const now = +new Date()
           const { monitor } = this
 
+          // Clear the previous stopped-typing timer
           clearTimeout(this.monitor.timer)
+
+          // If they don't register a keypress within the threshold
+          // then they've stopped typing
           this.monitor.timer = setTimeout(() => {
             this.isTyping(false)
             this.monitor.last = null
           }, threshold)
 
+          // If the threshold time has passed, then send another
+          // keypress event to the server
           if (now - monitor.last > threshold) {
             this.isTyping(true)
             monitor.last = now

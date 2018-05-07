@@ -18,6 +18,7 @@ export default connect()
   .with(({ state, signals, props }) => ({
     insertMessage: signals.insertMessage,
     updateMessage: signals.updateMessage,
+    server: state.server,
     channel: state.channel
   }))
   .to((props): any => {
@@ -25,6 +26,10 @@ export default connect()
 
     // Connect the websocket
     socket.connect()
+
+    socket.emit('register', {
+      server: props.server.id
+    })
 
     socket.on('message', (data: message) => {
       props.insertMessage(data)
