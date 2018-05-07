@@ -15,6 +15,7 @@ export const OpenImage = styled('a')`
   text-decoration: none;
   font-weight: 500;
   font-size: 14px;
+  user-select: none;
 
   &:hover {
     opacity: 1;
