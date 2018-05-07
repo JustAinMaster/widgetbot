@@ -92,7 +92,7 @@ export const Channel = connect<ChannelProps>()
           const { id } = this.props
           const path = location.pathname.split('/')
 
-          return path.length > 4 ? id : `/channels/${path[2]}/${id}/`
+          return path.length > 5 ? id : `/channels/${path[2]}/${id}/`
         }
 
         handleClick = (e: Event) => {

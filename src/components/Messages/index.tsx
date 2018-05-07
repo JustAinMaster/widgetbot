@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Scrollable } from 'styled-elements'
 
 import Header, { Name, Topic } from '../Header'
-import { Loading } from '../Overlays'
+import { Loading, NoMessages } from '../Overlays'
 import ErrorAhoy from '../Overlays/ErrorAhoy'
 import Wrapper from '../Wrapper'
 import Chat from './Chat'
@@ -34,12 +34,14 @@ export default connect()
           if (messages) {
             const grouped = Group(messages)
 
-            return (
+            return grouped.length ? (
               <Scrollable innerRef={this.scroll.bind(this)}>
                 {grouped.map(group => (
                   <Message messages={group} key={group[0].id} />
                 ))}
               </Scrollable>
+            ) : (
+              <NoMessages />
             )
           }
 
