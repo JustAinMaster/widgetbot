@@ -8,7 +8,11 @@ interface Props {
 }
 
 const Hamburger = ({ onClick, open }: Props) => (
-  <Ham open={open || false} onClick={onClick ? onClick.bind(this) : null}>
+  <Ham
+    open={open || false}
+    onClick={onClick ? onClick.bind(this) : null}
+    className="hamburger"
+  >
     <Burger />
   </Ham>
 )

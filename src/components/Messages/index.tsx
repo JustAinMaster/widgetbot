@@ -35,13 +35,16 @@ export default connect()
             const grouped = Group(messages)
 
             return grouped.length ? (
-              <Scrollable innerRef={this.scroll.bind(this)}>
+              <Scrollable
+                innerRef={this.scroll.bind(this)}
+                className="messages"
+              >
                 {grouped.map(group => (
                   <Message messages={group} key={group[0].id} />
                 ))}
               </Scrollable>
             ) : (
-              <NoMessages />
+              <NoMessages  className="no-messages" />
             )
           }
 

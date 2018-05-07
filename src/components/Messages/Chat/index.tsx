@@ -49,8 +49,8 @@ export default connect()
           const { channel } = this.props
 
           return (
-            <Root>
-              <Field rows={this.state.rows}>
+            <Root className="chat">
+              <Field rows={this.state.rows} className="field">
                 <Input
                   onChange={this.onChange.bind(this)}
                   onSubmit={this.onSubmit.bind(this)}

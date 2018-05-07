@@ -10,7 +10,7 @@ export default connect()
     toggle: () => signals.toggle({ component: 'channels' })
   }))
   .to(({ children, open, toggle }) => (
-    <Root>
+    <Root className="header">
       <Hamburger onClick={toggle} open={open} />
       {children}
     </Root>

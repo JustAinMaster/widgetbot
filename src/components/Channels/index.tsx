@@ -20,7 +20,7 @@ export default connect()
 
           if (channels) {
             return (
-              <Root visible={visible}>
+              <Root visible={visible} className="channels">
                 <Header />
                 <OverlayedScroll>
                   {channels.map(([id, { name }], i) => (

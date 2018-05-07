@@ -15,11 +15,13 @@ class MessageAuthor extends React.PureComponent<Props> {
     const { author, time } = this.props
 
     return (
-      <Root>
-        <Name color={author.color}>{author.name}</Name>
-        {author.bot && <Tag>Bot</Tag>}
+      <Root className="author">
+        <Name color={author.color} className="name">
+          {author.name}
+        </Name>
+        {author.bot && <Tag className="bot">Bot</Tag>}
         <this.verified id={author.id} />
-        <Time>{Moment(time).calendar()}</Time>
+        <Time className="time">{Moment(time).calendar()}</Time>
       </Root>
     )
   }

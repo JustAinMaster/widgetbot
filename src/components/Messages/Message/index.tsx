@@ -15,15 +15,17 @@ class Message extends React.PureComponent<Props, any> {
     const [message] = messages
 
     return (
-      <Group>
-        <Avatar url={message.author.avatar} />
-        <Content>
+      <Group className="message">
+        <Avatar url={message.author.avatar} className="avatar" />
+        <Content className="content">
           <Author author={message.author} time={message.timestamp} />
-          <Markup>
+          <Markup className="markup">
             {messages.map(message => (
-              <Text key={message.id}>
+              <Text key={message.id} className="text">
                 {Markdown(message)}
-                {message.editedAt && <Edited>(edited)</Edited>}
+                {message.editedAt && (
+                  <Edited className="edited">{`(edited)`}</Edited>
+                )}
               </Text>
             ))}
           </Markup>

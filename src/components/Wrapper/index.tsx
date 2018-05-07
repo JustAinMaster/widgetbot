@@ -16,6 +16,7 @@ export default connect()
         }
       }}
       squashed={channelsOpen}
+      className="wrapper"
     >
       {children}
     </Wrapper>

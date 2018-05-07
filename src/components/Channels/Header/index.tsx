@@ -11,14 +11,15 @@ export default connect()
     const plural = server.memberCount !== 1
 
     return (
-      <Root>
-        {server.icon && <Icon src={server.icon} />}
-        {server.name && <Name>{server.name}</Name>}
+      <Root className="header">
+        {server.icon && <Icon src={server.icon} className="icon" />}
+        {server.name && <Name className="name">{server.name}</Name>}
         {server.memberCount && (
           <Count
             title={`${server.memberCount} ${
               plural ? 'members' : 'member'
             } in this server`}
+            className="count"
           >
             {server.memberCount}
           </Count>

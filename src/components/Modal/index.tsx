@@ -50,9 +50,10 @@ export default connect()
                 onClick={e =>
                   e.target === e.currentTarget ? this.close() : null
                 }
+                className="modal"
               >
-                <Box>
-                  <Close onClick={this.close.bind(this)} />
+                <Box className="box">
+                  <Close onClick={this.close.bind(this)} className="close" />
                   <this.content />
                 </Box>
               </Root>

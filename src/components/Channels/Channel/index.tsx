@@ -14,9 +14,9 @@ class Channel extends React.PureComponent<Props> {
     const { name, order, id, active } = this.props
 
     return (
-      <Root selected={active} id={id} order={order}>
-        <Hashtag />
-        <Name>{name}</Name>
+      <Root selected={active} id={id} order={order} className="channel">
+        <Hashtag className="hash" />
+        <Name className="name">{name}</Name>
       </Root>
     )
   }

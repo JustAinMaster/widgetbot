@@ -6,7 +6,7 @@ import randomEmoji from './random'
 class EmojiPanel extends React.PureComponent {
   render() {
     return (
-      <Root>
+      <Root className="emoji">
         <Emoji
           onMouseEnter={() => this.mouseEnter()}
           text={this.state.emoji}
