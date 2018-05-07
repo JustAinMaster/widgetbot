@@ -3,6 +3,7 @@ import { connect } from 'fluent'
 import * as React from 'react'
 
 import Authenticate from './Authenticate'
+import { Sam, Voakie } from './Developer'
 import { Box, Close, Image, OpenImage, Root } from './elements'
 
 export default connect()
@@ -38,6 +39,10 @@ export default connect()
                 </OpenImage>
               </React.Fragment>
             )
+          }
+
+          if (modal.type === 'developer') {
+            return modal.data === 'voakie' ? <Voakie /> : <Sam />
           }
 
           return null

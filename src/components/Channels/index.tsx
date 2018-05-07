@@ -5,6 +5,7 @@ import { OverlayedScroll } from 'styled-elements'
 import Channel from './Channel'
 import { Root } from './elements'
 import Header from './Header'
+import Panel from './Panel'
 
 export default connect()
   .with(({ state, signals, props }) => ({
@@ -33,6 +34,7 @@ export default connect()
                     />
                   ))}
                 </OverlayedScroll>
+                <Panel />
               </Root>
             )
           }
