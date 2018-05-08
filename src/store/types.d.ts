@@ -1,5 +1,6 @@
 import { ComputedValue, Dictionary } from '@cerebral/fluent'
 
+import { Category } from '../types/category'
 import Message from '../types/message'
 import Modal from '../types/modal'
 import { User } from '../types/user'
@@ -7,6 +8,7 @@ import * as signals from './sequences'
 
 interface Channel {
   name: string
+  category: string
   topic?: string
   messages?: Dictionary<Message>
 }
@@ -34,8 +36,12 @@ export interface State {
     memberCount: number
     icon: string
   }
+
   // Array of channels
   channels: Dictionary<Channel>
+  // Categorised channels
+  categories: ComputedValue<Category[]>
+
   // Active channel ID
   activeChannel: string
   // Returns the active channel object

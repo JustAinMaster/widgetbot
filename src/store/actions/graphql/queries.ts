@@ -99,10 +99,10 @@ export const server = gql`
       icon
       channels {
         name
+        category
         id
       }
       channel(id: $channel) @include(if: $withChannel) {
-        name
         topic
         ${messages}
       }

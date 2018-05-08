@@ -19,9 +19,10 @@ export const Root = styled<Props, 'div'>('div')`
   display: flex;
   flex-direction: column;
   will-change: transform;
+  overflow: hidden;
 
   & > div > div:nth-child(1) {
-    padding: 10px 0;
+    padding-bottom: 10px;
   }
 
   ${({ visible }) =>

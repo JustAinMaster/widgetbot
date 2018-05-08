@@ -22,9 +22,13 @@ const state: State = {
     type: null,
     data: null
   },
+
   channels: Dictionary({}),
+  categories: Computed(computed.categories),
+
   activeChannel: null,
   channel: Computed(computed.activeChannel),
+
   theme: {
     colors: {
       primary: '#fff',

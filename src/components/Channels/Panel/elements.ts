@@ -13,8 +13,17 @@ export const Root = styled('footer')`
       .fadeOut(0.7)
       .toString()};
   user-select: none;
+  z-index: 1;
 
-  background-color: rgba(0, 0, 0, 0.08);
+  background-color: ${({ theme }) =>
+    Color(theme.colors.background)
+      .darken(0.05)
+      .toString()};
+  box-shadow: 0px 0px 27px 15px
+    ${({ theme }) =>
+      Color(theme.colors.background)
+        .darken(0.05)
+        .toString()};
 `
 
 export const Developers = styled('div')`

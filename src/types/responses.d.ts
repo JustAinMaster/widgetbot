@@ -1,10 +1,12 @@
-import Message from './message'
-import { Theme } from '../store/types'
 import { Dictionary } from '@cerebral/fluent'
+
+import { Theme } from '../store/types'
+import Message from './message'
 
 type Channels = {
   name: string
   id: string
+  category: string
 }[]
 
 export interface Channel {

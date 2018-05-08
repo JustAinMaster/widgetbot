@@ -205,16 +205,14 @@ namespace GraphQL {
 
     server.channels.forEach(channel => {
       state.channels.set(channel.id, {
-        ...state.channels.get(channel.id),
+        ...(state.channels.get(channel.id) as any),
         ...(channel.id === state.activeChannel
           ? {
-              name: server.channel.name,
-              topic: server.channel.topic,
+              ...channel,
+              ...server.channel,
               messages: Dictionary(_.keyBy(server.channel.messages, 'id'))
             }
-          : {
-              name: channel.name
-            })
+          : channel)
       })
     })
   }

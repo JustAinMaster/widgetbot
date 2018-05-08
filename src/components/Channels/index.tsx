@@ -2,14 +2,14 @@ import { connect } from 'fluent'
 import * as React from 'react'
 import { OverlayedScroll } from 'styled-elements'
 
-import Channel from './Channel'
+import ChannelCategory from './Category'
 import { Root } from './elements'
 import Header from './Header'
 import Panel from './Panel'
 
 export default connect()
   .with(({ state, signals, props }) => ({
-    channels: state.channels.entries(),
+    categories: state.categories.get(),
     activeChannel: state.activeChannel,
     visible: state.visible.channels
   }))
@@ -17,29 +17,23 @@ export default connect()
     props =>
       class Channels extends React.PureComponent<typeof props> {
         render() {
-          const { visible, channels, activeChannel } = this.props
+          const { visible, categories, activeChannel } = this.props
 
-          if (channels) {
-            return (
-              <Root visible={visible} className="channels">
-                <Header />
-                <OverlayedScroll>
-                  {channels.map(([id, { name }], i) => (
-                    <Channel
-                      name={name}
-                      id={id}
-                      order={i}
-                      active={id === activeChannel}
-                      key={id}
-                    />
-                  ))}
-                </OverlayedScroll>
-                <Panel />
-              </Root>
-            )
-          }
-
-          return <Root visible={visible} />
+          return (
+            <Root visible={visible} className="channels">
+              <Header />
+              <OverlayedScroll>
+                {categories.map((category, i) => (
+                  <ChannelCategory
+                    category={category}
+                    activeChannel={activeChannel}
+                    key={i}
+                  />
+                ))}
+              </OverlayedScroll>
+              <Panel />
+            </Root>
+          )
         }
       }
   )

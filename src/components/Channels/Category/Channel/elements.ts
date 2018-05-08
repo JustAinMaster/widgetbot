@@ -43,7 +43,7 @@ export const Root = styled<Props, any>(Channel)`
       : Color(theme.colors.primary)
           .fadeOut(0.7)
           .toString()};
-  animation: ${({ order }) => fade(order)} 0.5s ease;
+  /* animation: ${({ order }) => fade(order)} 0.5s ease; */
 
   &:hover {
     background-color: ${({ theme }) =>
