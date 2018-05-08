@@ -35,9 +35,9 @@ export const Heading = styled('h3')`
 `
 
 export const Description = styled('span')`
+  display: block;
   font-size: 14px;
   margin-bottom: 12px;
-  display: inline-block;
 `
 
 interface ChipProps {

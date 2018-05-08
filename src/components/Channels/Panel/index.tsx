@@ -27,12 +27,12 @@ export default connect()
             <Root>
               <Developers>
                 <Developer
-                  src="https://cdn.samdd.me/static/widgetbot/avatar.svg"
-                  onClick={() => this.toggle('samdd')}
-                />
-                <Developer
                   src="https://voakie.com/favicon/android-icon-36x36.png"
                   onClick={() => this.toggle('voakie')}
+                />
+                <Developer
+                  src="https://cdn.samdd.me/static/widgetbot/avatar.svg"
+                  onClick={() => this.toggle('samdd')}
                 />
               </Developers>
               <Version
