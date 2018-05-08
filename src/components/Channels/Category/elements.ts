@@ -4,7 +4,6 @@ import Down from 'react-icons/lib/fa/angle-down'
 import Right from 'react-icons/lib/fa/angle-right'
 import styled from 'typed-emotion'
 
-
 export const Root = styled('div')`
   padding-top: 20px;
 `
@@ -14,7 +13,7 @@ export const Name = styled('div')`
   display: flex;
   color: ${({ theme }) =>
     Color(theme.colors.primary)
-      .fadeOut(0.65)
+      .fadeOut(0.6)
       .toString()};
   margin: 2px 8px;
   text-transform: uppercase;
@@ -51,6 +50,10 @@ export const Collapse = styled(Down)`
   height: 20px;
   width: 20px;
   padding: 4px;
+  color: inherit;
+  & * {
+    color: inherit;
+  }
 `
 
 export const Expand = Collapse.withComponent(Right)
