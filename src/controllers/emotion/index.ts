@@ -1,6 +1,7 @@
 import styled, { ThemedReactEmotionInterface } from 'react-emotion'
 
 import * as Store from '../../store/types'
+import { ParsedUrl } from '../../types/url'
 
 export * from 'react-emotion'
 
@@ -16,6 +17,7 @@ export interface Theme extends Store.Theme {
     accent: string
     background: string
   }
+  url: ParsedUrl
 }
 
 export default styled as ThemedReactEmotionInterface<Theme>

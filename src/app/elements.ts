@@ -1,6 +1,4 @@
-import styled, { injectGlobal } from 'typed-emotion'
-
-import { Theme } from '../store/types'
+import styled, { injectGlobal, Theme } from 'typed-emotion'
 
 export const Notifications = styled('div')`
   * {
@@ -32,8 +30,9 @@ export const Root = styled('main')`
 function globals(theme: Theme) {
   injectGlobal`
     html, body, #root {
-      width: 100%;
-      height: 100%;
+      position: relative;
+      width: ${theme.url.width ? `${theme.url.width}px` : `100%`};
+      height: ${theme.url.height ? `${theme.url.height}px` : `100%`};
       background-color: ${theme.colors.background};
       overflow: hidden;
     }

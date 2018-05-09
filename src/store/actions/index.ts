@@ -7,6 +7,7 @@ import { socket } from 'socket-io'
 import Message from '../../types/message'
 import Modal from '../../types/modal'
 import { message } from '../../types/socket'
+import { RawUrl } from '../../types/url'
 import { User } from '../../types/user'
 import { Toggles } from '../types'
 import { State } from './../types'
@@ -24,7 +25,7 @@ export function select({
     cached: boolean
     uncached: boolean
   },
-  { server?: string; channel?: string }
+  RawUrl
 >) {
   let cached = false
 
@@ -50,6 +51,21 @@ export function select({
 
   Log('warn', `Selected`, props, cached ? `from cache` : `from network`)
   return cached ? path.cached(true) : path.uncached(true)
+}
+
+/**
+ * Router
+ */
+export function routed({ state, props }: Context<RawUrl>) {
+  state.url = {}
+
+  if (props.width && !isNaN(+props.width)) {
+    state.url.width = +props.width
+  }
+
+  if (props.height && !isNaN(+props.height)) {
+    state.url.height = +props.height
+  }
 }
 
 /**

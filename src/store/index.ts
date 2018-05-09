@@ -23,6 +23,8 @@ const state: State = {
     data: null
   },
 
+  url: null,
+
   channels: Dictionary({}),
   categories: Computed(computed.categories),
 

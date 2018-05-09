@@ -16,6 +16,7 @@ export const fetchServer = sequenceWithProps<{
   server: string
 }>(s =>
   s
+    .action(actions.routed)
     .action(actions.switchScreen('choose-channel'))
     .branch(actions.select)
     .paths({
@@ -37,6 +38,7 @@ export const fetchChannel = sequenceWithProps<{
   channel: string
 }>(s =>
   s
+    .action(actions.routed)
     .action(actions.switchScreen('active-channel'))
     .branch(actions.select)
     .paths({

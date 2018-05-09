@@ -12,7 +12,8 @@ const ThemeProvider = connect()
         _primary: Color(state.theme.colors.primary),
         _background: Color(state.theme.colors.background),
         _accent: Color(state.theme.colors.accent)
-      }
+      },
+      url: state.url
     }
   }))
   .to(props => <Provider theme={props.theme}>{props.children}</Provider>)

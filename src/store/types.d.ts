@@ -3,6 +3,7 @@ import { ComputedValue, Dictionary } from '@cerebral/fluent'
 import { Category } from '../types/category'
 import Message from '../types/message'
 import Modal from '../types/modal'
+import { ParsedUrl } from '../types/url'
 import { User } from '../types/user'
 import * as signals from './sequences'
 
@@ -36,6 +37,9 @@ export interface State {
     memberCount: number
     icon: string
   }
+
+  // Router url
+  url: ParsedUrl
 
   // Array of channels
   channels: Dictionary<Channel>
