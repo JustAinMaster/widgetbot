@@ -1,4 +1,4 @@
-import { ExpandableImage } from 'styled-elements'
+import ExpandableImage from 'styled-elements/expandableImage'
 
 import styled, { css } from '../ThemeContext'
 

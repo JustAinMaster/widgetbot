@@ -1,4 +1,3 @@
-import Color from 'kolor'
 import styled, { css } from 'typed-emotion'
 
 export const Root = styled('div')``
@@ -6,7 +5,7 @@ export const Root = styled('div')``
 // Group
 // prettier-ignore
 export const Group = styled('div')`
-  border-bottom: 1px solid ${({ theme }) => Color(theme.colors.primary).fadeOut(0.96).toString()};
+  border-bottom: 1px solid ${({ theme }) => theme.colors._primary.fadeOut(0.96).toString()};
   box-sizing: border-box;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -54,10 +53,7 @@ export const Markup = styled('div')`
   margin-top: 6px;
   white-space: pre-wrap;
   word-wrap: break-word;
-  color: ${({ theme }) =>
-    Color(theme.colors.primary)
-      .fadeOut(0.3)
-      .toString()};
+  color: ${({ theme }) => theme.colors._primary.fadeOut(0.3).toString()};
   & strong {
     font-weight: 700;
     color: inherit;

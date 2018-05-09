@@ -4,5 +4,18 @@ import * as Store from '../../store/types'
 
 export * from 'react-emotion'
 
-export type Theme = Store.Theme
-export default styled as ThemedReactEmotionInterface<Store.Theme>
+type Color = any
+
+export interface Theme extends Store.Theme {
+  colors: {
+    _primary: Color
+    _accent: Color
+    _background: Color
+
+    primary: string
+    accent: string
+    background: string
+  }
+}
+
+export default styled as ThemedReactEmotionInterface<Theme>

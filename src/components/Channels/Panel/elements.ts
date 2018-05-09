@@ -1,4 +1,3 @@
-import * as Color from 'kolor'
 import styled from 'typed-emotion'
 
 export const Root = styled('footer')`
@@ -8,22 +7,14 @@ export const Root = styled('footer')`
   padding: 10px;
   font-size: 12px;
   font-weight: 500;
-  color: ${({ theme }) =>
-    Color(theme.colors.primary)
-      .fadeOut(0.7)
-      .toString()};
+  color: ${({ theme }) => theme.colors._primary.fadeOut(0.7).toString()};
   user-select: none;
   z-index: 1;
 
   background-color: ${({ theme }) =>
-    Color(theme.colors.background)
-      .darken(0.05)
-      .toString()};
+    theme.colors._background.darken(0.05).toString()};
   box-shadow: 0px 0px 27px 15px
-    ${({ theme }) =>
-      Color(theme.colors.background)
-        .darken(0.05)
-        .toString()};
+    ${({ theme }) => theme.colors._background.darken(0.05).toString()};
 `
 
 export const Developers = styled('div')`

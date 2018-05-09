@@ -1,8 +1,8 @@
+import { connect } from 'fluent'
 import * as React from 'react'
+import { ScrollOverlay } from 'styled-elements/scrollable'
 
 import { Root } from './elements'
-import { OverlayedScroll } from 'styled-elements'
-import { connect } from 'fluent'
 
 export default connect()
   .with(({ state, signals, props }) => ({
@@ -19,7 +19,7 @@ export default connect()
 
             return (
               <Root>
-                <OverlayedScroll>hi</OverlayedScroll>
+                <ScrollOverlay>hi</ScrollOverlay>
               </Root>
             )
           }

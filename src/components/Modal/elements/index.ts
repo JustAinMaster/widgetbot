@@ -1,4 +1,4 @@
-import Color from 'kolor'
+import focusable from 'styled-elements/focusable'
 
 import styled, { css } from './ThemeContext'
 
@@ -71,17 +71,22 @@ export const Close = styled('button')`
 
   border: none;
   outline: none;
-  border-radius: 50%;
   cursor: pointer;
   transition: background-color 0.1s ease;
 
   &:hover,
   &:focus {
     background-color: ${({ theme }) =>
-      Color(theme.colors.primary)
+      theme.colors._primary
         .fadeOut(0.8)
         .toString()};
   }
+
+  &, &::after {
+    border-radius: 50%;
+  }
+
+  ${focusable};
 `
 
 export * from './image'

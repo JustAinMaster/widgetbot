@@ -1,8 +1,9 @@
 import { connect } from 'fluent'
 import * as React from 'react'
-import { Scrollable } from 'styled-elements'
+import { ScrollVisible } from 'styled-elements/scrollable'
 
 import Header, { Name, Topic } from '../Header'
+import { Join, Stretch } from '../Header/elements'
 import { Loading, NoMessages } from '../Overlays'
 import ErrorAhoy from '../Overlays/ErrorAhoy'
 import Wrapper from '../Wrapper'
@@ -35,16 +36,16 @@ export default connect()
             const grouped = Group(messages)
 
             return grouped.length ? (
-              <Scrollable
+              <ScrollVisible
                 innerRef={this.scroll.bind(this)}
                 className="messages"
               >
                 {grouped.map(group => (
                   <Message messages={group} key={group[0].id} />
                 ))}
-              </Scrollable>
+              </ScrollVisible>
             ) : (
-              <NoMessages  className="no-messages" />
+              <NoMessages className="no-messages" />
             )
           }
 
@@ -56,8 +57,11 @@ export default connect()
 
           const header = channel && (
             <Header>
-              <Name>{channel.name}</Name>
-              {channel.topic && <Topic>{channel.topic}</Topic>}
+              <Stretch>
+                <Name>{channel.name}</Name>
+                {channel.topic && <Topic>{channel.topic}</Topic>}
+              </Stretch>
+              <Join>Join</Join>
             </Header>
           )
           const content = this.getContent()

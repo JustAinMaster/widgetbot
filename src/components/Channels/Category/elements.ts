@@ -1,5 +1,4 @@
 import { Twemoji } from 'emoji'
-import * as Color from 'kolor'
 import Down from 'react-icons/lib/fa/angle-down'
 import Right from 'react-icons/lib/fa/angle-right'
 import styled from 'typed-emotion'
@@ -11,10 +10,7 @@ export const Root = styled('div')`
 export const Name = styled('div')`
   height: 20px;
   display: flex;
-  color: ${({ theme }) =>
-    Color(theme.colors.primary)
-      .fadeOut(0.6)
-      .toString()};
+  color: ${({ theme }) => theme.colors._primary.fadeOut(0.6).toString()};
   margin: 2px 8px;
   text-transform: uppercase;
   user-select: none;
@@ -22,10 +18,7 @@ export const Name = styled('div')`
   transition: color 0.1s ease;
 
   &:hover {
-    color: ${({ theme }) =>
-      Color(theme.colors.primary)
-        .fadeOut(0.3)
-        .toString()};
+    color: ${({ theme }) => theme.colors._primary.fadeOut(0.3).toString()};
   }
 `
 

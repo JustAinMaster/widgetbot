@@ -1,3 +1,5 @@
+import withProps from 'recompose/withProps'
+import Button from 'styled-elements/button'
 import styled from 'typed-emotion'
 
 import { Content } from '../elements'
@@ -23,7 +25,7 @@ export const Mugshot = styled('img')`
   -webkit-user-drag: none;
 `
 
-export const Bio = styled('p')`
+export const Bio = styled('div')`
   max-width: 300px;
   white-space: pre-line;
 `
@@ -40,30 +42,17 @@ export const Description = styled('span')`
   margin-bottom: 12px;
 `
 
-interface ChipProps {
-  color?: string
-}
-export const Chip = styled<ChipProps, 'a'>('a')`
-  height: 24px;
-  cursor: pointer;
-  min-width: 60px;
+const ButtonLink = withProps({
+  variant: 'mini',
+  color: 'rgba(255, 255, 255, 0.15)'
+})(Button.withComponent('a') as any)
+
+export const Chip = styled<any, 'a'>(ButtonLink)`
   display: inline-block;
   text-decoration: none;
-  text-align: center;
-  border-radius: 40px;
   opacity: 0.8;
-  background: ${({ color }) => (color ? color : `rgba(255, 255, 255, 0.15)`)};
-  line-height: 24px;
-  padding: 0 10px;
-  font-size: 14px;
   margin: 2px 0;
-  margin-right: 5px;
-  user-select: none;
-  transition: opacity 0.2s ease;
-
-  &:hover {
-    opacity: 1;
-  }
+  margin-right: 4px;
 `
 
 interface GraphProps {

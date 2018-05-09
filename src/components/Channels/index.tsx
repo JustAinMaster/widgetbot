@@ -1,6 +1,6 @@
 import { connect } from 'fluent'
 import * as React from 'react'
-import { OverlayedScroll } from 'styled-elements'
+import { ScrollOverlay } from 'styled-elements/scrollable'
 
 import ChannelCategory from './Category'
 import { Root } from './elements'
@@ -22,7 +22,7 @@ export default connect()
           return (
             <Root visible={visible} className="channels">
               <Header />
-              <OverlayedScroll>
+              <ScrollOverlay>
                 {categories.map((category, i) => (
                   <ChannelCategory
                     category={category}
@@ -30,7 +30,7 @@ export default connect()
                     key={i}
                   />
                 ))}
-              </OverlayedScroll>
+              </ScrollOverlay>
               <Panel />
             </Root>
           )

@@ -20,7 +20,7 @@ class Developer extends React.PureComponent {
           <Bio>
             <Heading>samdd</Heading>
             <Description>
-              {`Hey there! I build products for humans.\nI started the second iteration of this service.`}
+              {`Hey there! I build products for humans.\nI created the second iteration of this service.`}
             </Description>
 
             <Chip href="https://samdd.me/r?github" target="_blank">

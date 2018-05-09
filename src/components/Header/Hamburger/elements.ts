@@ -1,4 +1,3 @@
-import Color from 'kolor'
 import styled, { css } from 'typed-emotion'
 
 interface Props {
@@ -31,7 +30,7 @@ export const Ham = styled<Props, 'button'>('button')`
     height: 40px;
     opacity: 0;
     transition: opacity 0.1s ease;
-    background-color: ${({ theme }) => Color(theme.colors.primary).fadeOut(0.93).toString()};
+    background-color: ${({ theme }) => theme.colors._primary.fadeOut(0.93).toString()};
     border-radius: 50%;
   }
 

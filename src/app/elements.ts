@@ -1,4 +1,3 @@
-import Color from 'kolor'
 import styled, { injectGlobal } from 'typed-emotion'
 
 import { Theme } from '../store/types'
@@ -16,15 +15,11 @@ export const Notifications = styled('div')`
 
   .notification {
     background-color: ${({ theme }) =>
-      Color(theme.colors.background)
-        .lighten(0.1)
-        .toString()} !important;
+      theme.colors._background.lighten(0.1).toString()} !important;
   }
   .notification-dismiss {
     background-color: ${({ theme }) =>
-      Color(theme.colors.background)
-        .lighten(0.4)
-        .toString()} !important;
+      theme.colors._background.lighten(0.4).toString()} !important;
   }
 `
 

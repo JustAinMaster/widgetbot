@@ -1,5 +1,4 @@
 import { Twemoji } from 'emoji'
-import Color from 'kolor'
 import styled, { css } from 'typed-emotion'
 
 interface Props {
@@ -18,9 +17,7 @@ export const Suggestion = styled<Props, 'div'>('div')`
   ${({ selected, theme }) =>
     selected
       ? css`
-          background-color: ${Color(theme.colors.primary)
-            .fadeOut(0.95)
-            .toString()};
+          background-color: ${theme.colors._primary.fadeOut(0.95).toString()};
         `
       : null};
 `

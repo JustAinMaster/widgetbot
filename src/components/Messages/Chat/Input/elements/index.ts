@@ -16,6 +16,8 @@ export const Input = styled('textarea')`
   font-weight: 400;
   letter-spacing: -0.025rem;
   line-height: 1.25rem;
+  color: ${({ theme }) => theme.colors._primary.fadeOut(0.3).toString()};
+
   ::-webkit-scrollbar {
     width: 5px;
     background-color: transparent;

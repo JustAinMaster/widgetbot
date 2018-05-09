@@ -1,4 +1,4 @@
-import * as Color from 'kolor'
+import Button from 'styled-elements/button'
 
 import { Content } from '../elements'
 import styled, { css } from '../elements/ThemeContext'
@@ -70,10 +70,7 @@ export const Input = styled('input')`
   font-size: 16px;
 
   background-color: rgba(0, 0, 0, 0.1);
-  color: ${({ theme }) =>
-    Color(theme.colors.primary)
-      .fadeOut(0.1)
-      .toString()};
+  color: ${({ theme }) => theme.colors._primary.fadeOut(0.1).toString()};
 
   &:focus,
   &:active {
@@ -81,76 +78,13 @@ export const Input = styled('input')`
   }
 `
 
-export const Button = styled('button')`
-  position: relative;
-  overflow: hidden;
-  font-size: 16px;
-  background-color: ${({ theme }) => theme.colors.accent};
-  transition: transform 0.4s cubic-bezier(0.13, 0.78, 0, 2);
-
+export const Create = styled(Button)`
   margin: 20px 0 14px;
-  height: 44px;
-  min-height: 44px;
-  min-width: 130px;
-  border-radius: 3px;
-  cursor: pointer;
-  font-weight: 500;
-  outline: none;
-  border: none;
-
-  &::before {
-    display: block;
-    content: '';
-    position: absolute;
-    background: rgb(0, 0, 0);
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-  }
-
-  &::after {
-    background: #fff;
-    content: '';
-    height: 500px;
-    opacity: 0.2;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    transform: rotate(35deg) translate(-215px, -215px);
-    transition: transform 0.5s ease;
-    width: 20px;
-    pointer-events: none;
-    box-shadow: 0 0 40px 24px #fff;
-  }
-
-  &:hover,
-  &:focus {
-    &::before {
-      opacity: 0.1;
-    }
-
-    &::after {
-      transform: rotate(35deg) translate(500%, -50px);
-    }
-  }
-
-  &:active {
-    transform: scale(0.95);
-    &::before {
-      opacity: 0;
-    }
-  }
 `
 
 export const SSO = styled('div')`
   font-size: 14px;
-  color: ${({ theme }) =>
-    Color(theme.colors.primary)
-      .fadeOut(0.8)
-      .toString()};
+  color: ${({ theme }) => theme.colors._primary.fadeOut(0.8).toString()};
 
   text-align: left;
 `

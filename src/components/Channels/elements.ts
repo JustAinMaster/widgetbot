@@ -1,4 +1,3 @@
-import Color from 'kolor'
 import styled, { css } from 'typed-emotion'
 
 interface Props {
@@ -9,9 +8,7 @@ export const Root = styled<Props, 'div'>('div')`
   position: absolute;
   z-index: 9;
   background-color: ${({ theme }) =>
-    Color(theme.colors.background)
-      .darken(0.036)
-      .toString()};
+    theme.colors._background.darken(0.036).toString()};
   width: 200px;
   height: 100%;
   flex-shrink: 0;

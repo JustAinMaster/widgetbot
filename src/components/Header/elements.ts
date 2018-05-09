@@ -1,5 +1,5 @@
-import * as Color from 'kolor'
-import { Hash } from 'styled-elements'
+import Button from 'styled-elements/button'
+import { Hash } from 'styled-elements/channel'
 import styled from 'typed-emotion'
 
 export const Root = styled('header')`
@@ -16,7 +16,11 @@ export const Root = styled('header')`
     0 1px 0 rgba(0, 0, 0, 0.1), 0 2px 0 rgba(0, 0, 0, 0.06);
 `
 
-// prettier-ignore
+export const Stretch = styled('div')`
+  display: flex;
+  flex-grow: 1;
+`
+
 export const Name = styled(Hash)`
   font-size: 18px;
   font-weight: 600;
@@ -35,6 +39,7 @@ export const Name = styled(Hash)`
     padding-left: 0;
   }
 `
+
 export const Topic = styled('div')`
   text-overflow: ellipsis;
   overflow: hidden;
@@ -43,12 +48,11 @@ export const Topic = styled('div')`
   font-weight: 500;
   padding: 0 15px;
   border-left: 1px solid
-    ${({ theme }) =>
-      Color(theme.colors.primary)
-        .fadeOut(0.9)
-        .toString()};
-  color: ${({ theme }) =>
-    Color(theme.colors.primary)
-      .fadeOut(0.4)
-      .toString()};
+    ${({ theme }) => theme.colors._primary.fadeOut(0.9).toString()};
+  color: ${({ theme }) => theme.colors._primary.fadeOut(0.4).toString()};
+`
+
+export const Join = styled(Button)`
+  background: ${({ theme }) => theme.colors._accent.fadeOut(0.6).toString()};
+  margin-right: 20px;
 `

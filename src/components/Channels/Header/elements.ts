@@ -1,4 +1,3 @@
-import * as Color from 'kolor'
 import styled from 'typed-emotion'
 
 export const Root = styled('header')`
@@ -35,10 +34,7 @@ export const Name = styled('h1')`
 
 export const Count = styled('div')`
   font-size: 10px;
-  background: ${({ theme }) =>
-    Color(theme.colors.accent)
-      .fadeOut(0.6)
-      .toString()};
+  background: ${({ theme }) => theme.colors._accent.fadeOut(0.6).toString()};
   margin: 4px 0;
   line-height: 20px;
   padding: 0 6px;

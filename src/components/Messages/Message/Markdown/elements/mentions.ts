@@ -1,5 +1,5 @@
 import Color from 'kolor'
-import { Channel as ChannelLink } from 'styled-elements'
+import ChannelLink from 'styled-elements/channel'
 import styled, { css } from 'typed-emotion'
 
 interface Props {

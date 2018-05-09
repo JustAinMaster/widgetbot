@@ -2,7 +2,7 @@ import { connect } from 'fluent'
 import * as React from 'react'
 
 import {
-  Button,
+  Create,
   Discord,
   Greeting,
   Group,
@@ -60,7 +60,9 @@ export default connect()
                   autoFocus={true}
                   spellCheck={false}
                 />
-                <Button onClick={this.createAccount.bind(this)}>Create</Button>
+                <Create onClick={this.createAccount.bind(this)} variant="large">
+                  Create
+                </Create>
                 <SSO>
                   Discord account?
                   <Discord onClick={this.singleSignOn.bind(this)}>

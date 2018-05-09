@@ -1,5 +1,4 @@
-import Color from 'kolor'
-import { Channel, Hash } from 'styled-elements'
+import Channel, { Hash } from 'styled-elements/channel'
 import styled, { keyframes } from 'typed-emotion'
 
 const fade = i => keyframes`
@@ -33,27 +32,18 @@ export const Root = styled<Props, any>(Channel)`
   padding: 0 8px;
   background-color: ${({ selected, theme }) =>
     selected
-      ? `${Color(theme.colors.primary).fadeOut(0.9)} !important`
+      ? `${theme.colors._primary.fadeOut(0.9)} !important`
       : 'transparent'};
   color: ${({ selected, theme }) =>
     selected
-      ? `${Color(theme.colors.primary)
-          .fadeOut(0.1)
-          .toString()} !important`
-      : Color(theme.colors.primary)
-          .fadeOut(0.7)
-          .toString()};
+      ? `${theme.colors._primary.fadeOut(0.1).toString()} !important`
+      : theme.colors._primary.fadeOut(0.7).toString()};
   /* animation: ${({ order }) => fade(order)} 0.5s ease; */
 
   &:hover {
     background-color: ${({ theme }) =>
-      Color(theme.colors.primary)
-        .fadeOut(0.96)
-        .toString()};
-    color: ${({ theme }) =>
-      Color(theme.colors.primary)
-        .fadeOut(0.3)
-        .toString()};
+      theme.colors._primary.fadeOut(0.96).toString()};
+    color: ${({ theme }) => theme.colors._primary.fadeOut(0.3).toString()};
   }
 `
 
