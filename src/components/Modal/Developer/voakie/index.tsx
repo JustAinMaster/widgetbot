@@ -20,7 +20,7 @@ class Developer extends React.PureComponent {
           <Bio>
             <Heading>Voakie</Heading>
             <Description>
-              {`Sieg heil! I am `}<b>thy</b>{` creator`}
+              I am the founder of WidgetBot.io and pay myself less than samdd
             </Description>
 
             <Chip href="https://github.com/voakie" target="_blank">
