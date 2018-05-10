@@ -5,7 +5,17 @@ import SimpleMarkdown from 'simple-markdown'
 
 import message from '../../../../types/message'
 import Embed from '../Embed'
-import { Channel, Code, Emoji, Image, Link, Mention, Role, Twemoji } from './elements'
+import {
+  Channel,
+  Code,
+  Edited,
+  Emoji,
+  Image,
+  Link,
+  Mention,
+  Role,
+  Twemoji,
+} from './elements'
 
 // import Emoji from "./emoji"
 const $Emoji = { people: [{ names: ['disabled'], surrogates: '😀' }] }
@@ -157,7 +167,8 @@ export function parseText(msg: message) {
 
   return (
     <React.Fragment>
-      {msg.content ? emoji(mentions(parse(msg.content), msg.mentions)) : null}
+      {msg.content && emoji(mentions(parse(msg.content), msg.mentions))}
+      {msg.editedAt && <Edited className="edited">{`(edited)`}</Edited>}
       {attachment(msg)}
       {embed(msg)}
     </React.Fragment>

@@ -11,10 +11,16 @@ export const Notifications = styled('div')`
     font-weight: 500 !important;
   }
 
+  .notifications-br {
+    bottom: ${({ theme }) =>
+      theme.url.height ? `calc(100% - ${theme.url.height}px)` : '0'};
+  }
+
   .notification {
     background-color: ${({ theme }) =>
       theme.colors._background.lighten(0.1).toString()} !important;
   }
+
   .notification-dismiss {
     background-color: ${({ theme }) =>
       theme.colors._background.lighten(0.4).toString()} !important;

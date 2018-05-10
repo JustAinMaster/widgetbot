@@ -131,10 +131,15 @@ const EmbedFooter = ({ timestamp, text, proxyIconUrl }) => {
   }
 
   // pass null, since undefined will make moment(...) return the current date/time
-  let time: any = Moment(timestamp !== undefined ? timestamp : null)
-  time = time.isValid() ? time.format('ddd MMM Do, YYYY [at] h:mm A') : null
+  let time = Moment(timestamp !== undefined ? timestamp : null)
 
-  const footerText = [text, time].filter(Boolean).join(' | ')
+  const footerText = [
+    text,
+    time.isValid() ? time.calendar() : null
+  ]
+    .filter(Boolean)
+    .join(' • ')
+
   const footerIcon =
     text && proxyIconUrl ? <FooterIcon src={proxyIconUrl} /> : null
 

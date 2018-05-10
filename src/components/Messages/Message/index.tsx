@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import message from '../../../types/message'
 import Author from './Author'
-import { Avatar, Content, Edited, Group, Markup, Text } from './elements'
+import { Avatar, Content, Group, Markup, Text } from './elements'
 import Markdown from './Markdown'
 
 interface Props {
@@ -23,9 +23,6 @@ class Message extends React.PureComponent<Props, any> {
             {messages.map(message => (
               <Text key={message.id} className="text">
                 {Markdown(message)}
-                {message.editedAt && (
-                  <Edited className="edited">{`(edited)`}</Edited>
-                )}
               </Text>
             ))}
           </Markup>

@@ -1,11 +1,11 @@
 import { connect } from 'fluent'
 import * as React from 'react'
+import initiate from 'socket-io'
 
 import Channels from '../components/Channels'
 import Messages from '../components/Messages'
 import Modal from '../components/Modal'
 import ChooseChannel from '../components/Overlays/ChooseChannel'
-import Initiate from '../controllers/socket-io'
 import { Root } from './elements'
 import Notifications from './notify'
 
@@ -17,12 +17,15 @@ export default connect()
   .toClass(
     props =>
       class App extends React.PureComponent<typeof props> {
+        componentDidMount() {
+          initiate()
+        }
+
         render() {
           const { screen } = this.props
 
           return (
             <Root>
-              <Initiate />
               <Modal />
               <Notifications />
               <Channels />

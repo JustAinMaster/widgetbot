@@ -1,53 +1,29 @@
-import { connect } from 'fluent'
 import { addNotification } from 'notify'
 import * as io from 'socket.io-client'
 
-import { message, Room } from '../../types/socket'
+import { Room } from '../../types/socket'
+import controller from '../cerebral'
 
-export const socket = io({
-  path: '/api/socket-io',
-  autoConnect: false
-})
+// Initiate socket-io
+export const socket = io({ path: '/api/socket-io', autoConnect: false })
 
+// Channel events
 export const subscribe = (room: Room) => socket.emit('subscribe', room)
 export const unsubscribe = (room: Room) => socket.emit('unsubscribe', room)
 
-// This is rendered as a React component
-let rendered = false
-export default connect()
-  .with(({ state, signals, props }) => ({
-    insertMessage: signals.insertMessage,
-    updateMessage: signals.updateMessage,
-    server: state.server,
-    channel: state.channel
-  }))
-  .to((props): any => {
-    if (rendered) return null
+const initiate = () => {
+  // Register socket
+  socket.connect()
+  socket.emit('register', { server: controller.state.server.id })
 
-    // Connect the websocket
-    socket.connect()
+  socket.on('message', controller.signals.insertMessage)
+  socket.on('messageUpdate', controller.signals.updateMessage)
+  socket.on('notify', addNotification)
+}
 
-    socket.emit('register', {
-      server: props.server.id
-    })
-
-    socket.on('message', (data: message) => {
-      props.insertMessage(data)
-    })
-
-    socket.on('messageUpdate', (data: message) => {
-      props.updateMessage(data)
-    })
-
-    socket.on('notify', data => {
-      addNotification(data)
-    })
-
-    rendered = true
-    return null
-  })
+export default initiate
 
 // Debugging
 if (window) {
-  ;(<any>window).socket = socket
+  ;(window as any).socket = socket
 }

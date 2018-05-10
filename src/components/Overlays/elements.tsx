@@ -22,8 +22,8 @@ const Root = styled('div')`
 export const Wrap = function<T>(wrapper: T): T {
   const Component: any = wrapper
   return (props => (
-    <Root>
-      <Component {...props} />
+    <Root {...props}>
+      <Component />
     </Root>
   )) as any
 }

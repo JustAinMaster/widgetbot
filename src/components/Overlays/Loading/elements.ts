@@ -22,8 +22,8 @@ export const Spinner = styled('div')`
     width: 15px;
     height: 15px;
     position: absolute;
-    top: 0;
-    left: 0;
+    top: -24px;
+    left: -32px;
     animation: ${cube} 1.8s infinite ease-in-out;
   }
   &::after {

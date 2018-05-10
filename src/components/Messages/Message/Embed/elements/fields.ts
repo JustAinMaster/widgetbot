@@ -13,7 +13,7 @@ export const Fields = styled('div')`
 
 export const Field = styled<Props, 'div'>('div')`
   flex: 0;
-  padding-top: 10px;
+  /* padding-top: 10px; */
   min-width: 100%;
   max-width: 506px;
   ${({ inline }) =>
