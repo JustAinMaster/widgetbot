@@ -9,6 +9,7 @@ export const Image = styled('img')`
 `
 
 export const OpenImage = styled('a')`
+  color: #fff;
   line-height: 30px;
   opacity: 0.5;
   transition: opacity 0.15s ease;

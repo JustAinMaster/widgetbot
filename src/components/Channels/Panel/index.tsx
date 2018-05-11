@@ -23,18 +23,27 @@ export default connect()
         }
 
         render() {
+          const sam = (
+            <Developer
+              src="https://cdn.samdd.me/static/widgetbot/avatar.svg"
+              onClick={() => this.toggle('samdd')}
+              key="sam"
+            />
+          )
+          const voakie = (
+            <Developer
+              src="https://voakie.com/favicon/android-icon-36x36.png"
+              onClick={() => this.toggle('voakie')}
+              key="voakie"
+            />
+          )
+
           return (
             <Root>
               <Developers>
-                <Developer
-                  src="https://voakie.com/favicon/android-icon-36x36.png"
-                  onClick={() => this.toggle('voakie')}
-                />
-                <Developer
-                  src="https://cdn.samdd.me/static/widgetbot/avatar.svg"
-                  onClick={() => this.toggle('samdd')}
-                />
+                {Math.random() > 0.7 ? [voakie, sam] : [sam, voakie]}
               </Developers>
+
               <Version
                 href={`https://github.com/widgetbot-io/embed`}
                 target="_blank"
