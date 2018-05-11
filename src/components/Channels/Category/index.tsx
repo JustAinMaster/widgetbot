@@ -23,10 +23,12 @@ class ChannelCategory extends React.PureComponent<Props> {
 
     return (
       <Root className="category">
-        <Name onClick={this.toggle.bind(this)}>
-          {this.state.open ? <Collapse /> : <Expand />}
-          <Text text={category.name} />
-        </Name>
+        {category.name && (
+          <Name onClick={this.toggle.bind(this)}>
+            {this.state.open ? <Collapse /> : <Expand />}
+            <Text text={category.name} />
+          </Name>
+        )}
 
         {category.channels.map(
           ({ name, id }, order) =>

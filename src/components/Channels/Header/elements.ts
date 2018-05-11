@@ -33,6 +33,7 @@ export const Name = styled('h1')`
 `
 
 export const Count = styled('div')`
+  flex-shrink: 0;
   font-size: 10px;
   background: ${({ theme }) => theme.colors._accent.fadeOut(0.6).toString()};
   margin: 4px 0;
