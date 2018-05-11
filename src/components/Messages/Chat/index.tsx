@@ -24,6 +24,7 @@ export default connect()
         onChange(value: string) {
           const rows = value.split(/\r\n|\r|\n/).length
           this.setState({ rows })
+          this.typing()
         }
 
         onSubmit(message: string) {
@@ -55,7 +56,6 @@ export default connect()
                   onChange={this.onChange.bind(this)}
                   onSubmit={this.onSubmit.bind(this)}
                   inputRef={ref => (input = ref)}
-                  onKeyPress={this.typing.bind(this)}
                   placeholder={channel ? `Message #${channel.name}` : null}
                 />
                 <Emoji />

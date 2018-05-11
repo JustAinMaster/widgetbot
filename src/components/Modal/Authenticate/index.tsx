@@ -9,7 +9,7 @@ import {
   Input,
   Root,
   SSO,
-  Title,
+  Title
 } from './elements'
 
 export default connect()
@@ -54,15 +54,16 @@ export default connect()
             <Root loading={awaiting}>
               <Title>Welcome!</Title>
               <Greeting>Pick a name to start chatting</Greeting>
-              <Group label="name">
+              <Group label="name" onSubmit={this.createAccount.bind(this)}>
                 <Input
                   innerRef={ref => (this.nameField = ref)}
                   autoFocus={true}
                   spellCheck={false}
+                  minLength={2}
+                  maxLength={32}
+                  required
                 />
-                <Create onClick={this.createAccount.bind(this)} variant="large">
-                  Create
-                </Create>
+                <Create variant="large">Create</Create>
                 <SSO>
                   Discord account?
                   <Discord onClick={this.singleSignOn.bind(this)}>
