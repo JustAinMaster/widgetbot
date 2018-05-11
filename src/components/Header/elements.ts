@@ -19,6 +19,7 @@ export const Root = styled('header')`
 export const Stretch = styled('div')`
   display: flex;
   flex-grow: 1;
+  overflow: hidden;
 `
 
 export const Name = styled(Hash)`
