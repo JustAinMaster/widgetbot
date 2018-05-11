@@ -11,7 +11,7 @@ export const messages =
         name
         id
         avatar
-        bot
+        type
         color
       }
       reactions {
@@ -91,6 +91,19 @@ export const messages =
     }
   `
 
+const theme =
+  'theme' +
+  gql`
+    {
+      colors {
+        primary
+        accent
+        background
+      }
+      css
+    }
+  `
+
 export const server = gql`
   query Messages($server: String!, $channel: String, $withChannel: Boolean!) {
     server(id: $server) {
@@ -106,13 +119,7 @@ export const server = gql`
         topic
         ${messages}
       }
-      theme {
-        colors {
-          primary
-          accent
-          background
-        }
-      }
+      ${theme}
     }
   }
 `
@@ -125,13 +132,7 @@ export const channel = gql`
         topic
         ${messages}
       }
-      theme {
-        colors {
-          primary
-          accent
-          background
-        }
-      }
+      ${theme}
     }
   }
 `

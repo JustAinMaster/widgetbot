@@ -22,8 +22,8 @@ export interface Theme {
     accent: string
     background: string
   }
+  css: string
   compact: boolean
-  light: boolean
 }
 
 export interface State {

@@ -22,7 +22,7 @@ export const Name = styled<NameProps, 'strong'>('strong')`
 // Timestamp
 export const Time = styled('span')`
   line-height: 21px;
-  color: hsla(0, 0%, 100%, 0.2);
+  color: ${({ theme }) => theme.colors._primary.fadeOut(0.8).toString()};
   font-size: 0.75rem;
   font-weight: 400;
   letter-spacing: 0;

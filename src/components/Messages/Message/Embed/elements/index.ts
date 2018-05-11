@@ -5,7 +5,7 @@ export const Root = styled('div')`
   margin-top: 5px;
   max-width: 520px;
   display: flex;
-  color: hsla(0, 0%, 100%, 0.7);
+  color: ${({ theme }) => theme.colors._primary.fadeOut(0.3).toString()};
 `
 
 export const Wrapper = styled('div')`

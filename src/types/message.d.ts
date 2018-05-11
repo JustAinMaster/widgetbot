@@ -34,7 +34,7 @@ interface Message {
 
 export interface Author {
   name: string
-  bot: boolean
+  type: 'guest' | 'member' | 'sysadmin' | 'bot'
   avatar: string
   id: string
   color: string

@@ -37,7 +37,7 @@ const state: State = {
       accent: '#7289da',
       background: '#36393E'
     },
-    light: false,
+    css: ``,
     compact: false
   },
   user: null

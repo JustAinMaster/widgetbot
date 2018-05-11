@@ -33,6 +33,10 @@ export const Root = styled('main')`
   ${({ theme }) => globals(theme)};
 `
 
+const CSS = document.createElement('style')
+CSS.setAttribute('custom-css', '')
+document.body.appendChild(CSS)
+
 function globals(theme: Theme) {
   injectGlobal`
     html, body, #root {
@@ -58,5 +62,8 @@ function globals(theme: Theme) {
       word-break: break-word;
     }
   `
+
+  CSS.innerText = theme.css
+
   return null
 }
