@@ -18,6 +18,11 @@ export const Input = styled('textarea')`
   line-height: 1.25rem;
   color: ${({ theme }) => theme.colors._primary.fadeOut(0.3).toString()};
 
+  &::placeholder {
+    color: ${({ theme }) => theme.colors._primary.fadeOut(0.7).toString()};
+    user-select: none;
+  }
+
   ::-webkit-scrollbar {
     width: 5px;
     background-color: transparent;

@@ -1,10 +1,12 @@
 import { BranchContext, Context } from 'fluent'
+import * as _ from 'lodash'
 import Log from 'logger'
 import { addNotification } from 'notify'
 import { Notification } from 'react-notification-system'
 import { socket } from 'socket-io'
 
-import Message from '../../types/message'
+import controller from '../../controllers/cerebral'
+import generate from '../../modules/message/generate'
 import Modal from '../../types/modal'
 import { message } from '../../types/socket'
 import { RawUrl } from '../../types/url'
@@ -79,41 +81,44 @@ export function setMessage({ state, props }: Context<message>) {
   }
 }
 
+export function deleteMessage({
+  state,
+  props
+}: Context<{ channel: string; id: string }>) {
+  const channel = state.channels.get(props.channel)
+
+  if (channel && channel.messages) {
+    channel.messages.delete(props.id)
+  }
+}
+
 export function sendMessage({
   state,
   props,
   path
-}: BranchContext<
-  {
-    // sending: message
-    sending: any
-  },
-  { channel: string; message: string }
->) {
-  socket.emit('sendMessage', props, (message: Message) => {})
+}: BranchContext<{ sending: message }, { channel: string; message: string }>) {
+  const { channel } = props
+  const id = _.times(20, () => _.random(9)).join('')
+
+  socket.emit('sendMessage', { ...props, id }, () => {
+    controller.signals.deleteMessage({ channel, id })
+  })
 
   return path.sending({
-    // channel: props.channel,
-    // message: {
-    //   content: props.message,
-    //   timestamp: +new Date(),
-    //   attachment: null,
-    //   id: 'a',
-    //   type: 'DEFAULT',
-    //   mentions: ,
-    //   reactions: [],
-    //   embeds: [],
-    //   editedAt: null,
-    //   author: {
-    //     name: 'test',
-    //     id: 'asdsadasd',
-    //     avatar: null,
-    //     bot: false,
-    //     color: '#fff',
-    //     discriminator: 'a',
-    //     roles: null
-    //   }
-    // }
+    channel,
+    message: generate({
+      author: {
+        name: state.user.name,
+        avatar: state.user.avatar,
+        id: state.user.id,
+        type: state.user.type,
+        roles: null,
+        color: '#000000'
+      },
+      id,
+      message: props.message,
+      type: 'SENDING'
+    })
   })
 }
 

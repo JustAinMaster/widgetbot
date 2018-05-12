@@ -30,10 +30,17 @@ class MessageAuthor extends React.PureComponent<Props> {
   render() {
     const { author, time } = this.props
 
+    const name = author.name.includes('#')
+      ? author.name
+          .split('#')
+          .slice(0, -1)
+          .join('#')
+      : author.name
+
     return (
       <Root className="author">
         <Name color={author.color} className="name">
-          {author.name}
+          {name}
         </Name>
         {this.tags()}
         <Time className="time">{Moment(time).calendar()}</Time>

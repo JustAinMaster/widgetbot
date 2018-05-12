@@ -37,10 +37,9 @@ const ExpandableImage = connect<Props>()
           const { className, src } = this.props
 
           return (
-            <Root className={className || null}>
+            <Root className={className || null} onClick={this.open}>
               <Image
                 src={src}
-                onClick={this.open}
                 onLoad={() => this.setState({ type: 'loaded' })}
                 onError={() => this.setState({ type: 'error' })}
               />

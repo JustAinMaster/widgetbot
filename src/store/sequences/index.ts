@@ -87,6 +87,10 @@ export const updateMessage = sequenceWithProps<message>(s =>
   s.action(actions.setMessage)
 )
 
+export const deleteMessage = sequenceWithProps<{ channel: string; id: string }>(
+  s => s.action(actions.deleteMessage)
+)
+
 export const sendMessage = sequenceWithProps<{
   channel: string
   message: string
@@ -94,7 +98,7 @@ export const sendMessage = sequenceWithProps<{
   s.branch(actions.signIn).paths({
     complete: s =>
       s.branch(actions.sendMessage).paths({
-        sending: s => s /*.action(actions.setMessage)*/
+        sending: s => s.action(actions.setMessage)
       }),
     interrupted: s => s
   })

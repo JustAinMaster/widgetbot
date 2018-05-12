@@ -1,3 +1,4 @@
+import { ThemeProvider } from 'emotion-theming'
 import * as React from 'react'
 
 import message from '../../../types/message'
@@ -10,6 +11,11 @@ interface Props {
 }
 
 class Message extends React.PureComponent<Props, any> {
+  theme = message => theme => ({
+    ...theme,
+    message
+  })
+
   render() {
     const { messages } = this.props
     const [message] = messages
@@ -21,9 +27,9 @@ class Message extends React.PureComponent<Props, any> {
           <Author author={message.author} time={message.timestamp} />
           <Markup className="markup">
             {messages.map(message => (
-              <Text key={message.id} className="text">
-                {Markdown(message)}
-              </Text>
+              <ThemeProvider key={message.id} theme={this.theme(message)}>
+                <Text className="text">{Markdown(message)}</Text>
+              </ThemeProvider>
             ))}
           </Markup>
         </Content>

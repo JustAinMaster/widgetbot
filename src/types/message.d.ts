@@ -1,3 +1,11 @@
+export interface Attachment {
+  url: string | null
+  height: number | null
+  width: number | null
+}
+
+export type MessageType = 'DEFAULT' | 'SENDING'
+
 interface Message {
   id: string
   author: Author
@@ -5,13 +13,9 @@ interface Message {
   content: string | null
   embeds: Embed[]
   editedAt: Date
-  type: string
+  type: MessageType
   reactions: undefined[] | Reaction[]
-  attachment: {
-    url: string | null
-    height: number | null
-    width: number | null
-  }
+  attachment: Attachment
   mentions: {
     channels: {
       name: string
@@ -32,10 +36,12 @@ interface Message {
   }
 }
 
+export type AuthorTypes = 'guest' | 'member' | 'sysadmin' | 'bot'
+
 export interface Author {
   name: string
-  type: 'guest' | 'member' | 'sysadmin' | 'bot'
   avatar: string
+  type: AuthorTypes
   id: string
   color: string
   roles: Role[]

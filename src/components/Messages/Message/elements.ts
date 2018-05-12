@@ -1,4 +1,4 @@
-import styled, { css } from 'typed-emotion'
+import styled, { css } from './ThemeContext'
 
 export const Root = styled('div')``
 
@@ -53,17 +53,13 @@ export const Markup = styled('div')`
   margin-top: 6px;
   white-space: pre-wrap;
   word-wrap: break-word;
-  color: ${({ theme }) => theme.colors._primary.fadeOut(0.3).toString()};
-  & strong {
-    font-weight: 700;
-    color: inherit;
-  }
 `
 
 // Text
 export const Text = styled('div')`
-  color: inherit;
+  color: ${({ theme }) => theme.colors._primary.fadeOut(0.3).toString()};
   margin-bottom: 7px;
+  opacity: ${({ theme }) => (theme.message.type === 'SENDING' ? 0.5 : 1)};
 
   & * {
     color: inherit;
@@ -75,5 +71,10 @@ export const Text = styled('div')`
     &:hover {
       text-decoration: underline;
     }
+  }
+
+  & strong {
+    font-weight: 700;
+    color: inherit;
   }
 `
