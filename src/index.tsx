@@ -1,6 +1,7 @@
 import './res/index.css'
 
 import { Container } from '@cerebral/react'
+import { connect } from 'raven'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
@@ -8,7 +9,6 @@ import App from './app'
 import ThemeProvider from './app/ThemeProvider'
 import controller from './controllers/cerebral'
 import registerServiceWorker from './registerServiceWorker'
-
 
 // Render App
 ReactDOM.render(
@@ -21,6 +21,7 @@ ReactDOM.render(
 )
 
 registerServiceWorker()
+connect()
 
 // Hot reloading
 declare const module: any

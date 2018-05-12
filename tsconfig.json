@@ -13,6 +13,7 @@
     "baseUrl": ".",
     "paths": {
       "logger": ["src/modules/logger.ts"],
+      "raven": ["src/modules/sentry.ts"],
       "notify": ["src/app/notify.tsx"],
       "styled-elements/*": ["src/modules/styled-elements/*"],
       "typed-emotion": ["src/controllers/emotion/index.ts"],

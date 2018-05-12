@@ -16,6 +16,7 @@
     "@cerebral/router": "^3.2.2",
     "@types/highlight.js": "^9.12.2",
     "@types/lodash": "^4.14.108",
+    "@types/raven-js": "^3.10.0",
     "@types/react-notification-system": "^0.2.37",
     "@types/recompose": "^0.26.1",
     "@types/socket.io-client": "^1.4.32",
