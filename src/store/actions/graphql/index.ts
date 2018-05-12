@@ -10,7 +10,7 @@ import { subscribe } from 'socket-io'
 import {
   Channel,
   ChannelResponse,
-  ServerResponse,
+  ServerResponse
 } from '../../../types/responses'
 
 const serverIssues = {
@@ -30,7 +30,7 @@ namespace GraphQL {
   /**
    * Fetches a server (optionally with a selected channel)
    */
-  export function fetchServer({
+  export async function fetchServer({
     state,
     props,
     path
@@ -64,38 +64,40 @@ namespace GraphQL {
       ...(loadMessages ? [`with messages on channel`, state.activeChannel] : [])
     )
 
-    return request('/api/graphql', queries.server, variables)
-      .then((response: ServerResponse) => {
-        if (loadMessages) {
-          subscribe({
-            server: state.server.id,
-            channel: state.activeChannel
-          })
-        }
+    try {
+      const response = (await request(
+        '/api/graphql',
+        queries.server,
+        variables
+      )) as ServerResponse
 
-        return path.success(response)
-      })
-      .catch(({ response }) => {
-        const errors =
-          response && response.errors
-            ? response.errors.map(error => ({
-                level: 'error',
-                title: 'An error occured whilst loading this embed',
-                message: error.message,
-                autoDismiss: 0,
-                action: {
-                  label: 'Support server',
-                  callback() {
-                    window.open('https://discord.gg/zyqZWr2')
-                  }
-                }
-              }))
-            : serverIssues
-
-        return path.error({
-          notification: errors
+      if (loadMessages) {
+        subscribe({
+          server: state.server.id,
+          channel: state.activeChannel
         })
-      })
+      }
+
+      return path.success(response)
+    } catch ({ response }) {
+      const errors =
+        response && response.errors
+          ? response.errors.map(error => ({
+              level: 'error',
+              title: 'An error occured whilst loading this embed',
+              message: error.message,
+              autoDismiss: 0,
+              action: {
+                label: 'Support server',
+                callback() {
+                  window.open('https://discord.gg/zyqZWr2')
+                }
+              }
+            }))
+          : serverIssues
+
+      return path.error({ notification: errors })
+    }
   }
 
   /**
