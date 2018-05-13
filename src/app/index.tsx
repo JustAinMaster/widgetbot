@@ -1,5 +1,6 @@
 import { connect } from 'fluent'
 import * as React from 'react'
+import { IntlProvider } from 'react-intl'
 import initiate from 'socket-io'
 
 import Channels from '../components/Channels'
@@ -12,7 +13,9 @@ import Notifications from './notify'
 // SocketIO
 export default connect()
   .with(({ state, signals, props }) => ({
-    screen: state.screen
+    screen: state.screen,
+    locale: state.url.lang,
+    translation: state.translation
   }))
   .toClass(
     props =>
@@ -22,16 +25,22 @@ export default connect()
         }
 
         render() {
-          const { screen } = this.props
+          const { screen, locale, translation } = this.props
 
           return (
-            <Root>
-              <Modal />
-              <Notifications />
-              <Channels />
-              {screen === 'active-channel' && <Messages />}
-              {screen === 'choose-channel' && <ChooseChannel />}
-            </Root>
+            <IntlProvider
+              locale={locale}
+              messages={translation}
+              textComponent={React.Fragment}
+            >
+              <Root>
+                <Modal />
+                <Notifications />
+                <Channels />
+                {screen === 'active-channel' && <Messages />}
+                {screen === 'choose-channel' && <ChooseChannel />}
+              </Root>
+            </IntlProvider>
           )
         }
       }

@@ -14,6 +14,8 @@
     "paths": {
       "logger": ["src/modules/logger.ts"],
       "raven": ["src/modules/sentry.ts"],
+      "locales": ["src/app/locales"],
+      "locales/*": ["src/app/locales/*"],
       "notify": ["src/app/notify.tsx"],
       "styled-elements/*": ["src/modules/styled-elements/*"],
       "typed-emotion": ["src/controllers/emotion/index.ts"],

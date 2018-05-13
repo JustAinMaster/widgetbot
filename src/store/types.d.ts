@@ -1,5 +1,6 @@
 import { ComputedValue, Dictionary } from '@cerebral/fluent'
 
+import { Translation } from '../app/locales'
 import { Category } from '../types/category'
 import Message from '../types/message'
 import Modal from '../types/modal'
@@ -61,6 +62,9 @@ export interface State {
 
   // User
   user: User
+
+  // Translation
+  translation: Translation
 }
 
 export type Signals = { [key in keyof typeof signals]: typeof signals[key] }

@@ -1,10 +1,20 @@
 import { ThemeProvider } from 'emotion-theming'
 import * as React from 'react'
+import { FormattedMessage } from 'react-intl'
 
 import message from '../../../types/message'
-import Author from './Author'
-import { Avatar, Content, Group, Markup, Text } from './elements'
+import Author, { Timestamp } from './Author'
+import {
+  Avatar,
+  Content,
+  Group,
+  JoinMember,
+  JoinText,
+  Markup,
+  Text
+} from './elements'
 import Markdown from './Markdown'
+import parseUsername from './parseUsername'
 
 interface Props {
   messages: message[]
@@ -19,6 +29,24 @@ class Message extends React.PureComponent<Props, any> {
   render() {
     const { messages } = this.props
     const [message] = messages
+
+    if (message.type === 'GUILD_MEMBER_JOIN') {
+      const { name } = parseUsername(message.author.name)
+
+      return (
+        <Group className="message join">
+          <Content className="content">
+            <JoinText>
+              <FormattedMessage
+                id="message.join_message"
+                values={{ name: <JoinMember>{name}</JoinMember> }}
+              />
+            </JoinText>
+            <Timestamp time={message.timestamp} />
+          </Content>
+        </Group>
+      )
+    }
 
     return (
       <Group className="message">

@@ -4,7 +4,7 @@ export interface Attachment {
   width: number | null
 }
 
-export type MessageType = 'DEFAULT' | 'SENDING'
+export type MessageType = 'DEFAULT' | 'GUILD_MEMBER_JOIN' | 'SENDING'
 
 interface Message {
   id: string

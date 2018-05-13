@@ -40,7 +40,7 @@ export const Ham = styled<Props, 'button'>('button')`
     }
   }
 
-  @media (min-width: 520px) {
+  @media (min-width: 521px) {
     ${({ open }) => open ? css`
       transform: rotate(-180deg);
       &::before {

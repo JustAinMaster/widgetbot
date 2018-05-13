@@ -29,7 +29,7 @@ export const Wrapper = styled<Props, 'div'>('div')`
   }
 
   ${({ squashed }) => squashed ? css`
-    @media (min-width: 520px) {
+    @media (min-width: 521px) {
       margin-left: 200px;
       width: calc(100% - 200px);
     }

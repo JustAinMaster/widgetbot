@@ -14,6 +14,21 @@ export default connect()
   .toClass(
     props =>
       class Modal extends React.PureComponent<typeof props> {
+        state = {
+          open: this.props.modal.open
+        }
+        timer
+
+        componentWillReceiveProps(nextProps) {
+          const { open } = nextProps.modal
+          if (open) {
+            this.setState({ open })
+          } else {
+            clearTimeout(this.timer)
+            this.timer = setTimeout(() => this.setState({ open }), 100)
+          }
+        }
+
         theme = theme => ({
           ...theme,
           modal: this.props.modal
@@ -59,7 +74,7 @@ export default connect()
               >
                 <Box className="box">
                   <Close onClick={this.close.bind(this)} className="close" />
-                  <this.content />
+                  {this.state.open && <this.content />}
                 </Box>
               </Root>
             </ThemeProvider>

@@ -1,5 +1,6 @@
 import { connect } from 'fluent'
 import * as React from 'react'
+import { FormattedMessage } from 'react-intl'
 import { ScrollVisible } from 'styled-elements/scrollable'
 
 import Header, { Name, Topic } from '../Header'
@@ -61,7 +62,9 @@ export default connect()
                 <Name>{channel.name}</Name>
                 {channel.topic && <Topic>{channel.topic}</Topic>}
               </Stretch>
-              <Join>Join</Join>
+              <Join>
+                <FormattedMessage id="header.join" />
+              </Join>
             </Header>
           )
           const content = this.getContent()

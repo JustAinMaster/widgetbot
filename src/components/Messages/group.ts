@@ -5,6 +5,7 @@ import Message, { messages } from '../../types/message'
  */
 function compare(a: Message, b: Message) {
   return (
+    a.type === 'GUILD_MEMBER_JOIN' ||
     // If the ID is not equal to the previous message
     a.author.id !== b.author.id ||
     // If the name is not equal to the previous message

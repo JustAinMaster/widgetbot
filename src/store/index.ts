@@ -1,5 +1,6 @@
 import { Computed, Dictionary, Module } from '@cerebral/fluent'
 import Router from '@cerebral/router'
+import { translations } from 'locales'
 
 import * as computed from './computed'
 import * as signals from './sequences'
@@ -40,7 +41,9 @@ const state: State = {
     css: ``,
     compact: false
   },
-  user: null
+  user: null,
+
+  translation: translations.en
 }
 
 export const module = Module({

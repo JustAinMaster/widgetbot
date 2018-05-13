@@ -1,4 +1,5 @@
 import { BranchContext, Context } from 'fluent'
+import { Locales, translations } from 'locales'
 import * as _ from 'lodash'
 import Log from 'logger'
 import { addNotification } from 'notify'
@@ -59,7 +60,9 @@ export function select({
  * Router
  */
 export function routed({ state, props }: Context<RawUrl>) {
-  state.url = {}
+  state.url = {
+    lang: 'en'
+  }
 
   if (props.width && !isNaN(+props.width)) {
     state.url.width = +props.width
@@ -67,6 +70,18 @@ export function routed({ state, props }: Context<RawUrl>) {
 
   if (props.height && !isNaN(+props.height)) {
     state.url.height = +props.height
+  }
+
+  if (props.lang) {
+    if (Object.keys(translations).indexOf(props.lang) !== -1) {
+      const lang = props.lang as Locales
+      state.url.lang = lang
+      state.translation = translations[lang]
+    } else {
+      console.error(
+        `"${props.lang}" is not a valid / translated locale! falling back to EN`
+      )
+    }
   }
 }
 
@@ -100,7 +115,7 @@ export function sendMessage({
   const { channel } = props
   const id = _.times(20, () => _.random(9)).join('')
 
-  socket.emit('sendMessage', { ...props, id }, () => {
+  socket.emit('sendMessage', props, () => {
     controller.signals.deleteMessage({ channel, id })
   })
 

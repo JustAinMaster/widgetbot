@@ -1,9 +1,13 @@
+import { Locales } from '../app/locales'
+
 export interface RawUrl {
   server?: string
   channel?: string
 
   height?: string
   width?: string
+
+  lang?: string
 }
 
 export interface ParsedUrl {
@@ -12,4 +16,6 @@ export interface ParsedUrl {
 
   height?: number
   width?: number
+
+  lang?: Locales
 }

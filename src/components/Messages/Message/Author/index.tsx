@@ -2,6 +2,7 @@ import * as Moment from 'moment'
 import * as React from 'react'
 
 import { Author } from '../../../../types/message'
+import parseUsername from '../parseUsername'
 import { Sysadmin, Tag, Verified } from './Badges'
 import { Name, Root, Time } from './elements'
 
@@ -9,6 +10,10 @@ interface Props {
   author: Author
   time: number
 }
+
+export const Timestamp = ({ time }: { time: number }) => (
+  <Time className="time">{Moment(time).calendar()}</Time>
+)
 
 class MessageAuthor extends React.PureComponent<Props> {
   tags() {
@@ -29,13 +34,7 @@ class MessageAuthor extends React.PureComponent<Props> {
 
   render() {
     const { author, time } = this.props
-
-    const name = author.name.includes('#')
-      ? author.name
-          .split('#')
-          .slice(0, -1)
-          .join('#')
-      : author.name
+    const { name } = parseUsername(author.name)
 
     return (
       <Root className="author">
@@ -43,7 +42,7 @@ class MessageAuthor extends React.PureComponent<Props> {
           {name}
         </Name>
         {this.tags()}
-        <Time className="time">{Moment(time).calendar()}</Time>
+        <Timestamp time={time} />
       </Root>
     )
   }
