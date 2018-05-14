@@ -14,7 +14,6 @@ export const Thumbnail = styled<Props, any>(ExpandableImage)`
   ${({ rich, theme }) =>
     rich
       ? css`
-          width: auto;
           margin: 5px 0;
         `
       : /^article|image$/.test(theme.embed.type)
