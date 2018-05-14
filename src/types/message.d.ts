@@ -14,7 +14,7 @@ interface Message {
   embeds: Embed[]
   editedAt: Date
   type: MessageType
-  reactions: undefined[] | Reaction[]
+  reactions: Reaction[]
   attachment: Attachment
   mentions: {
     channels: {
@@ -107,11 +107,8 @@ export interface EmbedVideo {
 }
 
 export interface Reaction {
-  message: {
-    id: string
-  }
-  id: string
   name: string
+  id: string
   count: number
 }
 

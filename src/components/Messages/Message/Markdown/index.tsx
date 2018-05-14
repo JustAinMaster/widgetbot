@@ -14,7 +14,7 @@ import {
   Link,
   Mention,
   Role,
-  Twemoji,
+  Twemoji
 } from './elements'
 
 // import Emoji from "./emoji"
@@ -120,15 +120,13 @@ export function parseText(msg: message) {
   }
 
   function attachment(msg, setPopup?) {
-    if (msg.attachment.url)
-      return (
-        <Image
-          src={msg.attachment.url}
-          height={+msg.attachment.height}
-          width={+msg.attachment.width}
-        />
-      )
-    return null
+    return msg.attachment ? (
+      <Image
+        src={msg.attachment.url}
+        height={+msg.attachment.height}
+        width={+msg.attachment.width}
+      />
+    ) : null
   }
 
   function embed(msg: message) {

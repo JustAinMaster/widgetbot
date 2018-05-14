@@ -11,10 +11,12 @@ import {
   JoinMember,
   JoinText,
   Markup,
+  Reactions,
   Text
 } from './elements'
 import Markdown from './Markdown'
 import parseUsername from './parseUsername'
+import Reaction from './Reaction'
 
 interface Props {
   messages: message[]
@@ -56,7 +58,16 @@ class Message extends React.PureComponent<Props, any> {
           <Markup className="markup">
             {messages.map(message => (
               <ThemeProvider key={message.id} theme={this.theme(message)}>
-                <Text className="text">{Markdown(message)}</Text>
+                <React.Fragment>
+                  <Text className="text">{Markdown(message)}</Text>
+                  {message.reactions && (
+                    <Reactions className="reactions">
+                      {message.reactions.map((reaction, i) => (
+                        <Reaction key={i} {...reaction} />
+                      ))}
+                    </Reactions>
+                  )}
+                </React.Fragment>
               </ThemeProvider>
             ))}
           </Markup>

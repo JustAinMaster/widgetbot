@@ -7,7 +7,6 @@ import Channels from '../components/Channels'
 import Messages from '../components/Messages'
 import Modal from '../components/Modal'
 import ChooseChannel from '../components/Overlays/ChooseChannel'
-import { Root } from './elements'
 import Notifications from './notify'
 
 // SocketIO
@@ -33,13 +32,13 @@ export default connect()
               messages={translation}
               textComponent={React.Fragment}
             >
-              <Root>
+              <React.Fragment>
                 <Modal />
                 <Notifications />
                 <Channels />
                 {screen === 'active-channel' && <Messages />}
                 {screen === 'choose-channel' && <ChooseChannel />}
-              </Root>
+              </React.Fragment>
             </IntlProvider>
           )
         }

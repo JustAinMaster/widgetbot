@@ -27,43 +27,39 @@ export const Notifications = styled('div')`
   }
 `
 
-export const Root = styled('main')`
-  width: 100%;
-  height: 100%;
-  ${({ theme }) => globals(theme)};
-`
+export namespace GlobalStyles {
+  const CSS = document.createElement('style')
 
-const CSS = document.createElement('style')
-CSS.setAttribute('custom-css', '')
-document.body.appendChild(CSS)
+  export function inject(theme: Theme) {
+    injectGlobal`
+      html, body, #root {
+        position: relative;
+        width: ${theme.url.width ? `${theme.url.width}px` : `100%`};
+        height: ${theme.url.height ? `${theme.url.height}px` : `100%`};
+        background-color: ${theme.colors.background};
+        overflow: hidden;
+      }
 
-function globals(theme: Theme) {
-  injectGlobal`
-    html, body, #root {
-      position: relative;
-      width: ${theme.url.width ? `${theme.url.width}px` : `100%`};
-      height: ${theme.url.height ? `${theme.url.height}px` : `100%`};
-      background-color: ${theme.colors.background};
-      overflow: hidden;
-    }
+      #root {
+        opacity: 1 !important;
+        transform: initial !important;
+      }
 
-    #root {
-      opacity: 1 !important;
-      transform: initial !important;
-    }
+      /* Resets */
+      * {
+        color: ${theme.colors.primary};
+        font-family: Whitney, Helvetica Neue, Helvetica, Arial, Lucida Grande,
+          sans-serif;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+        word-break: break-word;
+      }
+    `
+    CSS.setAttribute('custom-css', '')
+    document.body.appendChild(CSS)
+  }
 
-    /* Resets */
-    * {
-      color: ${theme.colors.primary};
-      font-family: Whitney, Helvetica Neue, Helvetica, Arial, Lucida Grande,
-        sans-serif;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-      word-break: break-word;
-    }
-  `
-
-  CSS.innerText = theme.css
-
-  return null
+  export function update(theme: Theme) {
+    CSS.innerText = theme.css
+  }
 }

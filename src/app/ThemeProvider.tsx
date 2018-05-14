@@ -2,6 +2,7 @@ import { ThemeProvider as Provider } from 'emotion-theming'
 import { connect } from 'fluent'
 import * as Color from 'kolor'
 import * as React from 'react'
+import { GlobalStyles } from './elements'
 
 const ThemeProvider = connect()
   .with(({ state, signals, props }) => ({
@@ -16,6 +17,23 @@ const ThemeProvider = connect()
       url: state.url || {}
     }
   }))
-  .to(props => <Provider theme={props.theme}>{props.children}</Provider>)
+  .toClass(
+    props =>
+      class ThemeProvider extends React.PureComponent<typeof props> {
+        componentDidMount() {
+          const { theme } = this.props
+          GlobalStyles.inject(theme)
+        }
+
+        componentWillReceiveProps(nextProps) {
+          const { theme } = nextProps
+          GlobalStyles.update(theme)
+        }
+
+        render() {
+          return <Provider {...this.props} />
+        }
+      }
+  )
 
 export default ThemeProvider

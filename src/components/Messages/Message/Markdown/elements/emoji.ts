@@ -1,5 +1,5 @@
-import { Twemoji as EmojiParser } from 'react-emoji-render'
 import styled, { css } from 'typed-emotion'
+import EmojiParser from 'styled-elements/Emoji'
 
 interface Props {
   enlarged?: boolean
@@ -7,19 +7,20 @@ interface Props {
 
 const emoji = (enlarged: boolean) => css`
   object-fit: contain;
+  -webkit-user-drag: none;
 
   ${enlarged
     ? css`
-        height: 34px !important;
-        width: 34px !important;
-        margin: 3px 1px !important;
-        vertical-align: bottom !important;
+        height: 34px;
+        width: 34px;
+        margin: 3px 1px;
+        vertical-align: bottom;
       `
     : css`
-        width: 22px !important;
-        height: 22px !important;
-        vertical-align: -0.4em !important;
-        margin: 0 !important;
+        width: 22px;
+        height: 22px;
+        vertical-align: -0.4em;
+        margin: 0;
       `};
 `
 
@@ -28,10 +29,9 @@ export const Emoji = styled<Props, 'img'>('img')`
 `
 
 export const Twemoji = styled(EmojiParser)`
-  & img {
-    ${emoji(false)};
-  }
-  &.enlarged img {
+  ${emoji(false)};
+
+  &.enlarged {
     ${emoji(true)};
   }
 `

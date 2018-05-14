@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { Category } from '../../../types/category'
 import Channel from './Channel'
-import { Collapse, Expand, Name, Root, Text } from './elements'
+import { Collapse, Expand, Name, Root, Text, Emoji } from './elements'
 
 interface Props {
   category: Category
@@ -26,7 +26,9 @@ class ChannelCategory extends React.PureComponent<Props> {
         {category.name && (
           <Name onClick={this.toggle.bind(this)}>
             {this.state.open ? <Collapse /> : <Expand />}
-            <Text text={category.name} />
+            <Text>
+              <Emoji>{category.name}</Emoji>
+            </Text>
           </Name>
         )}
 

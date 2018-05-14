@@ -22,7 +22,7 @@ export const Name = styled('div')`
   }
 `
 
-export const Text = styled(Twemoji)`
+export const Text = styled('span')`
   margin: 0;
   font-size: 12px;
   font-weight: 500;
@@ -31,11 +31,12 @@ export const Text = styled(Twemoji)`
   white-space: nowrap;
   overflow: hidden;
   color: inherit;
-  & > img {
-    width: 13px !important;
-    height: 100% !important;
-    margin-right: 2px !important;
-  }
+`
+
+export const Emoji = styled(Twemoji)`
+  width: 13px !important;
+  height: 100% !important;
+  margin-right: 2px !important;
 `
 
 export const Collapse = styled(Down)`

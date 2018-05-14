@@ -9,11 +9,7 @@ interface Request {
 }
 
 const generate = (req: Request): Message => ({
-  attachment: {
-    url: null,
-    height: null,
-    width: null
-  },
+  attachment: null,
   author: req.author,
   content: req.message,
   editedAt: null,

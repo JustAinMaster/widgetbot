@@ -26,12 +26,6 @@ export const Emoji = styled(Twemoji)`
   width: 16px;
   height: 16px;
   text-align: center;
-
-  img {
-    width: 100% !important;
-    height: 100% !important;
-    vertical-align: top !important;
-  }
 `
 
 export const Name = styled('div')`

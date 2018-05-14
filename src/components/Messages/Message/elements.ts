@@ -15,6 +15,10 @@ export const Group = styled('div')`
   padding: 20px 0 13px;
   user-select: text;
   word-wrap: break-word;
+
+  &.join {
+    padding: 15px 0;
+  }
 `
 
 interface AvatarProps {
@@ -64,6 +68,8 @@ export const Markup = styled('div')`
   white-space: pre-wrap;
   word-wrap: break-word;
 `
+
+export const Reactions = styled('div')``
 
 export const Text = styled('div')`
   color: ${({ theme }) => theme.colors._primary.fadeOut(0.3).toString()};
