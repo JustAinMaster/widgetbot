@@ -21,18 +21,22 @@ import {
   Root,
   Thumbnail,
   Title,
-  Wrapper,
+  Wrapper
 } from './elements'
 
 function parseEmojis(text) {
   if (text) {
     if (typeof text === 'string') {
-      return <Twemoji svg text={text} />
+      return <Twemoji resolveNames>{text}</Twemoji>
     }
     if (text instanceof Array) {
       return text.map((part, i) => {
         if (typeof part === 'string') {
-          return <Twemoji svg key={i + part} text={part} />
+          return (
+            <Twemoji resolveNames key={i + part}>
+              {part}
+            </Twemoji>
+          )
         }
         return part
       })
@@ -133,10 +137,7 @@ const EmbedFooter = ({ timestamp, text, proxyIconUrl }) => {
   // pass null, since undefined will make moment(...) return the current date/time
   let time = Moment(timestamp !== undefined ? timestamp : null)
 
-  const footerText = [
-    text,
-    time.isValid() ? time.calendar() : null
-  ]
+  const footerText = [text, time.isValid() ? time.calendar() : null]
     .filter(Boolean)
     .join(' • ')
 

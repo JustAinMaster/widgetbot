@@ -9,9 +9,10 @@ class EmojiPanel extends React.PureComponent {
       <Root className="emoji">
         <Emoji
           onMouseEnter={() => this.mouseEnter()}
-          text={this.state.emoji}
           onClick={() => console.log(1)}
-        />
+        >
+          {this.state.emoji}
+        </Emoji>
       </Root>
     )
   }

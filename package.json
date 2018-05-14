@@ -23,8 +23,6 @@
     "@types/socket.io-client": "^1.4.32",
     "babel-plugin-emotion": "^9.1.2",
     "cerebral": "^5.0.0-1526222433248",
-    "emojis-keywords": "^2.0.0",
-    "emojis-list": "^2.1.0",
     "emotion": "^9.1.2",
     "emotion-theming": "^9.1.2",
     "graphql": "^0.13.2",

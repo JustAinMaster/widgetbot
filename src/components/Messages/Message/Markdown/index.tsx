@@ -1,6 +1,5 @@
 import * as hljs from 'highlight.js'
 import * as React from 'react'
-import { EmojiParser } from 'react-emoji-render'
 import SimpleMarkdown from 'simple-markdown'
 
 import message from '../../../../types/message'
@@ -152,7 +151,7 @@ export function parseText(msg: message) {
       if (typeof part === 'string') {
         return (
           <Twemoji
-            svg
+            resolveNames
             onlyEmojiClassName="enlarged"
             text={part}
             key={i * Math.random()}
@@ -306,9 +305,7 @@ function getEmojiURL(surrogate) {
   try {
     // we could link to discord's cdn, but there's a lot of these
     // and i'd like to minimize the amount of data we need directly from them
-    return `https://twemoji.maxcdn.com/2/svg/${EmojiParser.convert.toCodePoint(
-      surrogate
-    )}.svg`
+    return `https://twemoji.maxcdn.com/2/svg/aaa.svg`
   } catch (error) {
     return ''
   }
