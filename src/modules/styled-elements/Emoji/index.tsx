@@ -65,11 +65,12 @@ class Emoji extends React.PureComponent<Props> {
       return cache.get(text)
     }
 
-    const cached = text
+    let parsed = text
     for (let keyword of Object.keys(emojiMap)) {
-      return text.split(`:${keyword}:`).join(emojiMap[keyword])
+      parsed = parsed.split(`:${keyword}:`).join(emojiMap[keyword])
     }
-    cache.set(cached, text)
+    cache.set(text, parsed)
+    return parsed
   }
 
   handleError(event) {
