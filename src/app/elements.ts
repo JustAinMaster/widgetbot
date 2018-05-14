@@ -61,5 +61,18 @@ export namespace GlobalStyles {
 
   export function update(theme: Theme) {
     CSS.innerText = theme.css
+
+    injectGlobal`
+      html, body, #root {
+        width: ${theme.url.width ? `${theme.url.width}px` : `100%`};
+        height: ${theme.url.height ? `${theme.url.height}px` : `100%`};
+        background-color: ${theme.colors.background};
+      }
+
+      /* Resets */
+      * {
+        color: ${theme.colors.primary};
+      }
+    `
   }
 }
