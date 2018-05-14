@@ -14,6 +14,7 @@ import { RawUrl } from '../../types/url'
 import { User } from '../../types/user'
 import { Toggles } from '../types'
 import { State } from './../types'
+import { Reaction } from '../../types/message'
 
 /**
  * Selects a server (and or) channel and returns a branch
@@ -107,6 +108,17 @@ export function deleteMessage({
   }
 }
 
+export function deleteMessageBulk({
+  state,
+  props
+}: Context<{ channel: string; ids: string[] }>) {
+  const channel = state.channels.get(props.channel)
+
+  if (channel && channel.messages) {
+    props.ids.forEach(id => channel.messages.delete(id))
+  }
+}
+
 export function sendMessage({
   state,
   props,
@@ -135,6 +147,58 @@ export function sendMessage({
       type: 'SENDING'
     })
   })
+}
+
+/**
+ * Reactions
+ */
+
+export function messageReactionAdd({
+  state,
+  props
+}: Context<{
+  channel: string
+  id: string
+  reaction: Reaction
+}>) {
+  const channel = state.channels.get(props.channel)
+
+  if (channel && channel.messages) {
+    const message = channel.messages.get(props.id)
+    if (message) {
+      if (!message.reactions) message.reactions = []
+
+      const sameReaction = message.reactions.find(
+        r => r.id === props.reaction.id && r.name === props.reaction.name
+      )
+
+      if (sameReaction) {
+        sameReaction.count = props.reaction.count
+      } else {
+        message.reactions.push(props.reaction)
+      }
+    }
+  }
+}
+
+export function messageReactionRemove({
+  state,
+  props
+}: Context<{
+  channel: string
+  id: string
+  reaction: Reaction
+}>) {
+  const channel = state.channels.get(props.channel)
+
+  if (channel && channel.messages) {
+    const message = channel.messages.get(props.id)
+    if (message) {
+      message.reactions = message.reactions.filter(
+        r => !(r.id === props.reaction.id && r.name === props.reaction.name)
+      )
+    }
+  }
 }
 
 /**

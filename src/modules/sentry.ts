@@ -11,11 +11,13 @@ export function R(callback: (RavenStatic) => any) {
 
 export function connect() {
   R(Raven => {
-    Raven.config(token, {
-      environment: process.env.NODE_ENV,
-      release: `${version}`,
-      tags: { version }
-    }).install()
+    if (process.env.NODE_ENV !== 'development') {
+      Raven.config(token, {
+        environment: process.env.NODE_ENV,
+        release: `${version}`,
+        tags: { version }
+      }).install()
+    }
   })
 }
 

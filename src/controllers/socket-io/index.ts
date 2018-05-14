@@ -18,6 +18,12 @@ const initiate = () => {
 
   socket.on('message', controller.signals.insertMessage)
   socket.on('messageUpdate', controller.signals.updateMessage)
+  socket.on('messageDelete', controller.signals.deleteMessage)
+  socket.on('messageDeleteBulk', controller.signals.deleteMessageBulk)
+
+  socket.on('messageReactionAdd', controller.signals.messageReactionAdd)
+  socket.on('messageReactionRemove', controller.signals.messageReactionRemove)
+
   socket.on('notify', addNotification)
 }
 

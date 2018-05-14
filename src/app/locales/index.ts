@@ -1,13 +1,11 @@
 import { Define, Load } from './helpers'
+import BaseTranslation from './translations/en'
 
-export interface Translation {
-  'message.join_message': string
-  'message.channel': string
-  'header.join': string
-}
-
+// Import the translations from ./translations/
 export const locales = Define(['en'])
 
 export type Locales = (typeof locales)[number]
+
+export type Translation = typeof BaseTranslation
 
 export const translations = Load(locales)

@@ -4,6 +4,7 @@ import Modal from '../../types/modal'
 import { message } from '../../types/socket'
 import * as actions from '../actions'
 import { Toggles } from '../types'
+import { Reaction } from '../../types/message'
 
 export const routeHome = () => {
   location.href = '/'
@@ -91,6 +92,11 @@ export const deleteMessage = sequenceWithProps<{ channel: string; id: string }>(
   s => s.action(actions.deleteMessage)
 )
 
+export const deleteMessageBulk = sequenceWithProps<{
+  channel: string
+  ids: string[]
+}>(s => s.action(actions.deleteMessageBulk))
+
 export const sendMessage = sequenceWithProps<{
   channel: string
   message: string
@@ -103,6 +109,22 @@ export const sendMessage = sequenceWithProps<{
     interrupted: s => s
   })
 )
+
+/**
+ * Reaction sequences
+ */
+
+export const messageReactionAdd = sequenceWithProps<{
+  channel: string
+  id: string
+  reaction: Reaction
+}>(s => s.action(actions.messageReactionAdd))
+
+export const messageReactionRemove = sequenceWithProps<{
+  channel: string
+  id: string
+  reaction: Reaction
+}>(s => s.action(actions.messageReactionRemove))
 
 /**
  * Interactive sequences
