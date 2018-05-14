@@ -20,12 +20,8 @@ export const Thumbnail = styled<Props, any>(ExpandableImage)`
       : /^article|image$/.test(theme.embed.type)
         ? css`
             margin-top: 8px;
-            width: 400px;
-            height: auto;
           `
         : css`
-            max-height: 80px;
             margin-left: 20px;
-            max-width: 80px;
           `};
 `

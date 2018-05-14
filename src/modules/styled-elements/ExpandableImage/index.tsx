@@ -6,6 +6,11 @@ import { Image, Loader, Root } from './elements'
 interface Props {
   src: string
   className?: string
+
+  height?: number
+  width?: number
+  maxWidth?: number
+  maxHeight?: number
 }
 
 /**
@@ -22,7 +27,7 @@ const ExpandableImage = connect<Props>()
           type: 'loading'
         }
 
-        open = () => {
+        open() {
           const { src, toggle } = this.props
           if (src) {
             toggle({
@@ -34,10 +39,24 @@ const ExpandableImage = connect<Props>()
         }
 
         render() {
-          const { className, src } = this.props
+          const {
+            className,
+            height,
+            width,
+            maxHeight,
+            maxWidth,
+            src
+          } = this.props
 
           return (
-            <Root className={className || null} onClick={this.open}>
+            <Root
+              className={className || null}
+              onClick={this.open.bind(this)}
+              maxHeight={maxHeight}
+              maxWidth={maxWidth}
+              height={height}
+              width={width}
+            >
               <Image
                 src={src}
                 onLoad={() => this.setState({ type: 'loaded' })}

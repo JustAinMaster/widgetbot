@@ -119,13 +119,28 @@ const EmbedField = ({ name, value, inline }) => {
   )
 }
 
-const EmbedThumbnail = ({ proxyURL, height, width }) =>
-  proxyURL ? <Thumbnail src={proxyURL} height={height} width={width} /> : null
+const EmbedThumbnail = ({ type, proxyURL, height, width }) =>
+  proxyURL ? (
+    <Thumbnail
+      src={proxyURL}
+      height={height}
+      width={width}
+      maxWidth={/^article|image$/.test(type) ? 400 : 80}
+      maxHeight={/^article|image$/.test(type) ? 300 : 80}
+    />
+  ) : null
 
-const EmbedImage = ({ proxyURL, height }) =>
+const EmbedImage = ({ proxyURL, height, width }) =>
   proxyURL ? (
     <span>
-      <Thumbnail rich src={proxyURL} />
+      <Thumbnail
+        rich
+        src={proxyURL}
+        height={height}
+        width={width}
+        maxWidth={400}
+        maxHeight={300}
+      />
     </span>
   ) : null
 
@@ -190,7 +205,7 @@ const Embed = ({
               <EmbedDescription content={description} />
               <EmbedFields fields={fields} />
             </div>
-            <EmbedThumbnail {...thumbnail} />
+            <EmbedThumbnail type={embed.type} {...thumbnail} />
           </Content>
           <EmbedImage {...image} />
           <EmbedFooter timestamp={timestamp} {...footer} />

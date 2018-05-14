@@ -1,10 +1,19 @@
 import styled from 'typed-emotion'
 
 import { Loading } from '../../../components/Overlays'
+import { Scale } from 'styled-elements/ScaledImage'
 
-export const Root = styled('div')`
+interface Props {
+  maxHeight: number
+  maxWidth: number
+  height: number
+  width: number
+}
+
+export const Root = styled<Props, 'div'>('div')`
   position: relative;
   overflow: hidden;
+  ${props => new Scale(props).css};
 `
 
 export const Image = styled('img')`
