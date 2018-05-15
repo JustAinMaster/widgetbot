@@ -2,18 +2,25 @@ import { Category } from '../../types/category'
 import { Channels } from '../../types/responses'
 
 const Categorise = (channels: Channels): Category[] => {
+  let indexes = new Map<string, number>()
   let categorised = [] as Category[]
 
   channels.forEach((channel, i) => {
-    const lastCategory = categorised[categorised.length - 1]
+    const newCategory = {
+      name: channel.category,
+      channels: [channel]
+    }
 
-    if (lastCategory && lastCategory.name === channel.category) {
-      lastCategory.channels.push(channel)
+    if (channel.category) {
+      let index = indexes.get(channel.category)
+      if (typeof index === 'number') {
+        categorised[index].channels.push(channel)
+      } else {
+        index = categorised.push(newCategory) - 1
+        indexes.set(channel.category, index)
+      }
     } else {
-      categorised.push({
-        name: channel.category || null,
-        channels: [channel]
-      })
+      categorised.push(newCategory)
     }
   })
 
