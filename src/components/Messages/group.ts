@@ -29,7 +29,7 @@ const Group = (messages: messages): messages[] => {
   let group = null
   let previous: Message
 
-  messages.map((message, i) => {
+  messages.forEach((message, i) => {
     if (group === null || compare(previous, message)) {
       group = result.push([]) - 1
     }

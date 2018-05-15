@@ -1,5 +1,5 @@
 import * as React from 'react'
-import scrollIntoViewIfNeeded from 'scroll-into-view-if-needed'
+import scrollIntoView from 'scroll-into-view-if-needed'
 
 import { Emoji, Name, Suggestion, Suggestions } from './elements'
 
@@ -33,9 +33,9 @@ class EmojiSuggestions extends React.Component<Props> {
 
   focus(suggestion: HTMLElement) {
     if (suggestion && !this.mouseEvent) {
-      scrollIntoViewIfNeeded(suggestion, {
-        easing: 'ease',
-        duration: 70
+      scrollIntoView(suggestion, {
+        behavior: 'smooth',
+        scrollMode: 'if-needed'
       })
     }
   }
