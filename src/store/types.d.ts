@@ -7,10 +7,12 @@ import Modal from '../types/modal'
 import { ParsedUrl } from '../types/url'
 import { User } from '../types/user'
 import * as signals from './sequences'
+import { Permissions } from '../types/permissions'
 
 interface Channel {
   name: string
   category: string
+  permissions: Permissions
   topic?: string
   messages?: Dictionary<Message>
 }

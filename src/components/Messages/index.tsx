@@ -73,7 +73,7 @@ export default connect()
             <Wrapper>
               {header}
               {content}
-              <Chat />
+              {channel && channel.permissions.SEND_MESSAGES && <Chat />}
             </Wrapper>
           ) : (
             <ErrorAhoy />

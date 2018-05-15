@@ -173,12 +173,17 @@ namespace GraphQL {
     props
   }: Context<{ channel: Channel }>) {
     const channel = props.channel.id
+    const prev = state.channels.get(channel)
 
     state.channels.set(channel, {
-      ...state.channels.get(channel),
+      ...prev,
       name: props.channel.name,
       topic: props.channel.topic,
-      messages: Dictionary(_.keyBy(props.channel.messages, 'id'))
+      messages: Dictionary(_.keyBy(props.channel.messages, 'id')),
+      permissions: {
+        ...(prev && prev.permissions),
+        ...props.channel.permissions
+      }
     })
   }
 
