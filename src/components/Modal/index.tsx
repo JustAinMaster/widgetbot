@@ -2,6 +2,7 @@ import { ThemeProvider } from 'emotion-theming'
 import { connect } from 'fluent'
 import * as React from 'react'
 
+import About from './About'
 import Authenticate from './Authenticate'
 import { Sam, Voakie } from './Developer'
 import { Box, Close, Image, OpenImage, Root } from './elements'
@@ -54,6 +55,10 @@ export default connect()
                 </OpenImage>
               </React.Fragment>
             )
+          }
+
+          if (modal.type === 'about') {
+            return <About />
           }
 
           if (modal.type === 'developer') {

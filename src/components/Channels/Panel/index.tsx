@@ -12,7 +12,7 @@ export default connect()
   .toClass(
     props =>
       class Panel extends React.PureComponent<typeof props> {
-        toggle(name: string) {
+        toggleDev(name: string) {
           const { toggle } = this.props
 
           toggle({
@@ -22,18 +22,29 @@ export default connect()
           })
         }
 
+        toggleAbout(event: Event) {
+          const { toggle } = this.props
+          event.preventDefault()
+
+          toggle({
+            open: true,
+            type: 'about',
+            data: null
+          })
+        }
+
         render() {
           const sam = (
             <Developer
               src="https://cdn.samdd.me/static/widgetbot/avatar.svg"
-              onClick={() => this.toggle('samdd')}
+              onClick={() => this.toggleDev('samdd')}
               key="sam"
             />
           )
           const voakie = (
             <Developer
               src="https://voakie.com/favicon/android-icon-36x36.png"
-              onClick={() => this.toggle('voakie')}
+              onClick={() => this.toggleDev('voakie')}
               key="voakie"
             />
           )
@@ -47,6 +58,7 @@ export default connect()
               <Version
                 href={`https://github.com/widgetbot-io/embed`}
                 target="_blank"
+                onClick={this.toggleAbout.bind(this)}
               >
                 {`v${version}`}
               </Version>
