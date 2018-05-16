@@ -193,7 +193,7 @@ export function messageReactionRemove({
 
   if (channel && channel.messages) {
     const message = channel.messages.get(props.id)
-    if (message) {
+    if (message && message.reactions) {
       message.reactions = message.reactions.filter(
         r => !(r.id === props.reaction.id && r.name === props.reaction.name)
       )
