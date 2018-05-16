@@ -1,6 +1,7 @@
 import { connect } from 'fluent'
 import * as React from 'react'
 import { FormattedMessage } from 'react-intl'
+import { fetchInvite } from 'socket-io'
 import { ScrollVisible } from 'styled-elements/scrollable'
 
 import Header, { Name, Topic } from '../Header'
@@ -16,6 +17,7 @@ export default connect()
   .with(({ state, signals, props }) => {
     const channel = state.channel.get()
     return {
+      server: state.server,
       loading: state.loading,
       activeChannel: state.activeChannel,
       channel,
@@ -54,7 +56,7 @@ export default connect()
         }
 
         render() {
-          const { channel } = this.props
+          const { server, channel } = this.props
 
           const header = channel && (
             <Header>
@@ -62,9 +64,15 @@ export default connect()
                 <Name>{channel.name}</Name>
                 {channel.topic && <Topic>{channel.topic}</Topic>}
               </Stretch>
-              <Join>
-                <FormattedMessage id="header.join" />
-              </Join>
+              {server.invite && (
+                <Join
+                  href={server.invite}
+                  target="_blank"
+                  onClick={this.join.bind(this)}
+                >
+                  <FormattedMessage id="header.join" />
+                </Join>
+              )}
             </Header>
           )
           const content = this.getContent()
@@ -78,6 +86,25 @@ export default connect()
           ) : (
             <ErrorAhoy />
           )
+        }
+
+        async join(event: Event) {
+          const { activeChannel, server } = this.props
+          const { window, document } = self.open()
+
+          event.preventDefault()
+
+          document.body.style.backgroundColor = '#36393F'
+          document.title = `Join "${server.name}"`
+
+          // Attempt to get an invite for the specified channel
+          // if it fails, fallback to one on a random channel
+          try {
+            const invite = await fetchInvite(activeChannel)
+            document.location.href = invite
+          } catch (e) {
+            document.location.href = server.invite
+          }
         }
 
         /**

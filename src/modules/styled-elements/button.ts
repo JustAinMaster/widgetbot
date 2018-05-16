@@ -16,6 +16,7 @@ const Button = styled<Props, 'button'>('button')`
   transition: box-shadow 0.3s ease;
   text-align: center;
   border: none;
+  text-decoration: none;
 
   cursor: pointer;
   font-weight: 500;

@@ -4,10 +4,10 @@ import { Translation } from '../app/locales'
 import { Category } from '../types/category'
 import Message from '../types/message'
 import Modal from '../types/modal'
+import { Permissions } from '../types/permissions'
 import { ParsedUrl } from '../types/url'
 import { User } from '../types/user'
 import * as signals from './sequences'
-import { Permissions } from '../types/permissions'
 
 interface Channel {
   name: string
@@ -39,6 +39,7 @@ export interface State {
     id: string
     memberCount: number
     icon: string
+    invite: string
   }
 
   // Router url

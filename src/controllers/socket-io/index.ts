@@ -1,15 +1,13 @@
 import { addNotification } from 'notify'
 import * as io from 'socket.io-client'
 
-import { Room } from '../../types/socket'
 import controller from '../cerebral'
 
 // Initiate socket-io
 export const socket = io({ path: '/api/socket-io', autoConnect: false })
 
-// Channel events
-export const subscribe = (room: Room) => socket.emit('subscribe', room)
-export const unsubscribe = (room: Room) => socket.emit('unsubscribe', room)
+export { fetchInvite } from './fetchInvite'
+export { subscribe, unsubscribe } from './subscriptions'
 
 const initiate = () => {
   // Register socket
