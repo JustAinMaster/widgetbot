@@ -20,7 +20,13 @@ const Categorise = (channels: Channels): Category[] => {
         indexes.set(channel.category, index)
       }
     } else {
-      categorised.push(newCategory)
+      const lastCategory = categorised[categorised.length - 1]
+
+      if (!lastCategory.name) {
+        lastCategory.channels.push(channel)
+      } else {
+        categorised.push(newCategory)
+      }
     }
   })
 
