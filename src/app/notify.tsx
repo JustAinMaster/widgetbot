@@ -7,17 +7,17 @@ const initial: N.Notification[] = []
 let ref
 
 export const addNotification = (
-  notification: N.Notification | N.Notification[]
+  notifications: N.Notification | N.Notification[]
 ) => {
-  if (notification instanceof Array) {
-    for (let notif of notification) {
-      if (!ref) {
-        initial.push(notif)
-      } else {
-        ref(notif)
-      }
+  if (!(notifications instanceof Array)) notifications = [notifications]
+
+  for (const n of notifications) {
+    const notification = {
+      ...n,
+      message:
+        typeof n.message === 'string' ? n.message : JSON.stringify(n.message)
     }
-  } else {
+
     if (!ref) {
       initial.push(notification)
     } else {

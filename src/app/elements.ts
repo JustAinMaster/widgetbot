@@ -1,10 +1,6 @@
 import styled, { injectGlobal, Theme } from 'typed-emotion'
 
 export const Notifications = styled('div')`
-  * {
-    word-break: initial;
-  }
-
   button {
     cursor: pointer;
     outline: 0;
@@ -19,6 +15,8 @@ export const Notifications = styled('div')`
   .notification {
     background-color: ${({ theme }) =>
       theme.colors._background.lighten(0.1).toString()} !important;
+    min-height: 60px;
+    height: auto !important;
   }
 
   .notification-dismiss {
