@@ -8,7 +8,7 @@ import {
   Graph,
   Heading,
   Mugshot,
-  Root,
+  Root
 } from '../elements'
 
 class Developer extends React.PureComponent {
@@ -20,7 +20,7 @@ class Developer extends React.PureComponent {
           <Bio>
             <Heading>samdd</Heading>
             <Description>
-              {`Hey there! I build products for humans.\nI created the second iteration of this service.`}
+              {`Hey there! I build products for humans.\nI created the current iteration of this chat platform.`}
             </Description>
 
             <Chip href="https://samdd.me/r?github" target="_blank">

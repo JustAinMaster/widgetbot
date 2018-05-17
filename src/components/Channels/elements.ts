@@ -34,4 +34,16 @@ export const Root = styled<Props, 'div'>('div')`
       : css`
           transform: translateX(-250px);
         `};
+
+  @media (max-width: 400px), (max-height: 340px) {
+    width: 180px;
+  }
+
+  @media (max-width: 210px) {
+    width: 150px;
+  }
+
+  @media (max-width: 170px) {
+    width: 150px;
+  }
 `

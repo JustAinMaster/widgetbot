@@ -3,11 +3,17 @@ import styled, { css } from 'typed-emotion'
 const base = css`
   user-select: none;
   color: #fff;
-  line-height: 21px;
+  line-height: 16px;
   font-size: 10px;
   font-weight: 500;
   vertical-align: top;
   margin-left: 3px;
+
+  @media (max-width: 340px), (max-height: 370px) {
+    font-size: 8px;
+    font-weight: 400;
+    margin-left: 5px;
+  }
 `
 
 // Bot tag
@@ -18,14 +24,23 @@ export const Tag = styled('span')`
   flex-shrink: 0;
   padding: 1px 2px;
   margin-left: 6px;
+  margin-top: 4px;
+  margin-bottom: 4px;
   text-transform: uppercase;
+
+  @media (max-width: 340px), (max-height: 370px) {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    line-height: 13px;
+  }
 `
 
 const TagIcon = css`
   ${base};
   display: inline-block;
-  height: 21px;
+  background-position: center;
   width: 21px;
+
   & ~ a {
     margin-left: 0;
   }

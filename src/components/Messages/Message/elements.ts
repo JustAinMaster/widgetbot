@@ -19,6 +19,16 @@ export const Group = styled('div')`
   &.join {
     padding: 15px 0;
   }
+
+  @media (max-width: 500px), (max-height: 370px) {
+    padding: 12px 0 10px;
+    margin-left: 15px;
+  }
+
+  @media (max-width: 260px) {
+    margin-left: 10px;
+    width: calc(100% - 20px);
+  }
 `
 
 interface AvatarProps {
@@ -33,10 +43,16 @@ export const Avatar = styled<AvatarProps, 'div'>('div')`
     theme.compact
       ? css``
       : css`
-          background-size: 40px 40px;
+          background-size: cover;
           height: 40px;
           width: 40px;
           margin-right: 20px;
+
+          @media (max-width: 400px), (max-height: 370px) {
+            height: 35px;
+            width: 35px;
+            margin-right: 15px;
+          }
         `}
 `
 

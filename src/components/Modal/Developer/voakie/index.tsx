@@ -8,7 +8,7 @@ import {
   Graph,
   Heading,
   Mugshot,
-  Root,
+  Root
 } from '../elements'
 
 class Developer extends React.PureComponent {
@@ -19,9 +19,7 @@ class Developer extends React.PureComponent {
           <Mugshot src="https://voakie.com/favicon/android-icon-192x192.png" />
           <Bio>
             <Heading>Voakie</Heading>
-            <Description>
-              I am the founder of WidgetBot.io and pay myself less than samdd
-            </Description>
+            <Description>{`I am the founder of WidgetBot.io`}</Description>
 
             <Chip href="https://github.com/voakie" target="_blank">
               GitHub
@@ -32,13 +30,13 @@ class Developer extends React.PureComponent {
             <Chip href="https://voakie.com" target="_blank">
               Website
             </Chip>
-            {/* <Chip
-              // href="/channels/335836376031428618/339910176956219403/"
-              href="https://discord.gg/dxxFh9Q"
+            <Chip
+              // href="/channels/33583637603142818/339910176956219403/"
+              href="https://discord.gg/zyqZWr2"
               target="_blank"
             >
               Discord
-            </Chip> */}
+            </Chip>
           </Bio>
         </Root>
         <Graph

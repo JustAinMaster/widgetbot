@@ -7,6 +7,7 @@ export const Root = styled('dialog')`
   position: fixed;
   justify-content: center;
   align-items: center;
+  padding: 0;
 
   width: 100%;
   height: 100%;
@@ -34,7 +35,7 @@ export const Box = styled('div')`
   display: flex;
   flex-direction: column;
 
-  max-height: calc(100vw - 20px);
+  max-height: calc(100vh - 20px);
   max-width: calc(100vw - 40px);
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
@@ -44,6 +45,13 @@ export const Box = styled('div')`
       : css`
           transform: scale(0.6);
         `};
+
+  @media (max-width: 270px), (max-height: 200px) {
+    height: 100vh;
+    width: 100vw;
+    max-height: 100vh;
+    max-width: 100vw;
+  }
 `
 
 export const Content = styled('div')`
@@ -53,6 +61,12 @@ export const Content = styled('div')`
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
   background-color: ${({ theme }) => theme.colors.background};
   border-radius: 3px;
+
+  @media (max-width: 270px), (max-height: 200px) {
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+  }
 `
 
 // prettier-ignore

@@ -11,18 +11,35 @@ export const Card = styled(Content)`
 
 export const Root = styled('div')`
   display: flex;
-  flex-direction: row;
+
+  @media (max-width: 550px) {
+    flex-direction: column;
+    text-align: center;
+  }
 `
 
 export const Mugshot = styled('img')`
   height: 130px;
-  width: 145px;
+  width: 130px;
   padding: 10px;
-  padding-right: 25px;
-  margin-right: 20px;
-
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
   -webkit-user-drag: none;
+
+  @media (max-width: 550px) {
+    margin: 0 auto;
+    margin-bottom: 5px;
+  }
+
+  @media (max-width: 400px) {
+    height: 100px;
+    width: 100px;
+  }
+
+  @media (min-width: 551px) {
+    padding-right: 25px;
+    margin-right: 20px;
+    width: 145px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+  }
 `
 
 export const Bio = styled('div')`
@@ -70,4 +87,8 @@ export const Graph = styled<GraphProps, 'div'>('div')`
   background-position: center;
   background-size: contain;
   cursor: pointer;
+
+  @media (max-width: 380px), (max-height: 370px) {
+    display: none;
+  }
 `

@@ -24,6 +24,8 @@ export const Root = styled<Props, any>(Channel)`
   display: flex;
   border-radius: 3px;
   flex-direction: row;
+  font-size: 16px;
+  font-weight: 500;
   height: 32px;
   line-height: 32px;
   width: calc(100% - 16px);
@@ -45,12 +47,18 @@ export const Root = styled<Props, any>(Channel)`
       theme.colors._primary.fadeOut(0.96).toString()};
     color: ${({ theme }) => theme.colors._primary.fadeOut(0.3).toString()};
   }
+
+  @media (max-width: 400px), (max-height: 340px) {
+    height: 28px;
+    line-height: 28px;
+    font-size: 14px;
+  }
 `
 
 export const Name = styled('div')`
   color: inherit;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: inherit;
+  font-weight: inherit;
   text-overflow: ellipsis;
   width: 100%;
   overflow: hidden;

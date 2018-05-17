@@ -14,6 +14,11 @@ export const Root = styled('header')`
   box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.1),
     0px 4px 5px 0px rgba(0, 0, 0, 0.12), 0px 1px 10px 0px rgba(0, 0, 0, 0.09),
     0 1px 0 rgba(0, 0, 0, 0.1), 0 2px 0 rgba(0, 0, 0, 0.06);
+
+  @media (max-width: 270px), (max-height: 300px) {
+    height: 41px;
+    padding: 7px 0;
+  }
 `
 
 export const Stretch = styled('div')`
@@ -39,6 +44,14 @@ export const Name = styled(Hash)`
     background: none;
     padding-left: 0;
   }
+
+  @media (max-width: 330px) {
+    flex-shrink: 1;
+  }
+
+  @media (max-width: 270px) {
+    font-size: 16px;
+  }
 `
 
 export const Topic = styled('div')`
@@ -51,6 +64,10 @@ export const Topic = styled('div')`
   border-left: 1px solid
     ${({ theme }) => theme.colors._primary.fadeOut(0.9).toString()};
   color: ${({ theme }) => theme.colors._primary.fadeOut(0.4).toString()};
+
+  @media (max-width: 330px) {
+    display: none;
+  }
 `
 
 const JoinLink = Button.withComponent('a')
