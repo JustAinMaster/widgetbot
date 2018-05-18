@@ -1,6 +1,6 @@
 # Discord embed
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/widgetbot-io/embed.svg)](https://greenkeeper.io/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/widgetbot-io/embed.svg)](https://greenkeeper.io/) [![Maintainability](https://api.codeclimate.com/v1/badges/b59560cf2c74db9f3e96/maintainability)](https://codeclimate.com/github/widgetbot-io/embed/maintainability)
 
 ![Screenshot](https://i.imgur.com/eGKcLlN.png)
 
