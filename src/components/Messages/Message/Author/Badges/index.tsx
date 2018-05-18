@@ -6,6 +6,7 @@ const base = css`
   line-height: 16px;
   font-size: 10px;
   font-weight: 500;
+  flex-shrink: 0;
   vertical-align: top;
   margin-left: 3px;
 
@@ -39,6 +40,7 @@ const TagIcon = css`
   ${base};
   display: inline-block;
   background-position: center;
+  background-repeat: no-repeat;
   width: 21px;
 
   & ~ a {
