@@ -1,13 +1,17 @@
 import { sequence, sequenceWithProps } from 'fluent'
 
+import { Reaction } from '../../types/message'
 import Modal from '../../types/modal'
 import { message } from '../../types/socket'
 import * as actions from '../actions'
 import { Toggles } from '../types'
-import { Reaction } from '../../types/message'
 
 export const routeHome = () => {
-  location.href = '/'
+  if (process.env.NODE_ENV === 'development') {
+    location.href = 'http://localhost:8000'
+  } else {
+    location.href = '/'
+  }
 }
 
 /**

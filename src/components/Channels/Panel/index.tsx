@@ -34,25 +34,17 @@ export default connect()
         }
 
         render() {
-          const sam = (
-            <Developer
-              src="https://cdn.samdd.me/static/widgetbot/avatar.svg"
-              onClick={() => this.toggleDev('samdd')}
-              key="sam"
-            />
-          )
-          const voakie = (
-            <Developer
-              src="https://voakie.com/favicon/android-icon-36x36.png"
-              onClick={() => this.toggleDev('voakie')}
-              key="voakie"
-            />
-          )
-
           return (
             <Root>
               <Developers>
-                {Math.random() > 0.7 ? [voakie, sam] : [sam, voakie]}
+                <Developer
+                  src="https://cdn.samdd.me/static/widgetbot/avatar.svg"
+                  onClick={() => this.toggleDev('samdd')}
+                />
+                <Developer
+                  src="https://voakie.com/favicon/android-icon-36x36.png"
+                  onClick={() => this.toggleDev('voakie')}
+                />
               </Developers>
 
               <Version

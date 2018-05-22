@@ -52,18 +52,17 @@ export const module = Module({
   signals,
   modules: {
     router: Router({
-      baseUrl: '/channels',
       routes: [
         {
-          path: '/:server/:channel/',
+          path: '/channels/:server/:channel/',
           signal: 'fetchChannel'
         },
         {
-          path: '/:server/',
+          path: '/channels/:server/',
           signal: 'fetchServer'
         },
         {
-          path: '/',
+          path: '/*',
           signal: 'routeHome'
         }
       ]
