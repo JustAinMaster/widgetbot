@@ -263,7 +263,7 @@ export async function signIn({
 }
 
 export function createAccount({ state, props }: Context<{ name: string }>) {
-  socket.emit('signIn', props, user => {
+  socket.emit('signUp', props, user => {
     state.user = {
       ...state.user,
       ...user
