@@ -16,6 +16,7 @@ const state: State = {
     invite: null,
     memberCount: null
   },
+  subscriptions: Dictionary({}),
   visible: {
     channels: window.innerWidth > 520
   },

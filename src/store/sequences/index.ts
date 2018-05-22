@@ -115,9 +115,19 @@ export const sendMessage = sequenceWithProps<{
 )
 
 /**
+ * Socket.io sequences
+ */
+export const subscribe = sequenceWithProps<{ channel: string }>(s =>
+  s.action(actions.subscribe)
+)
+
+export const unsubscribe = sequenceWithProps<{ channel: string }>(s =>
+  s.action(actions.unsubscribe)
+)
+
+/**
  * Reaction sequences
  */
-
 export const messageReactionAdd = sequenceWithProps<{
   channel: string
   id: string

@@ -72,31 +72,29 @@ namespace GraphQL {
       )) as ServerResponse
 
       if (loadMessages) {
-        subscribe({
-          server: state.server.id,
-          channel: state.activeChannel
-        })
+        subscribe(state.activeChannel)
       }
 
       return path.success(response)
-    } catch ({ response }) {
-      const errors =
-        response && response.errors
-          ? response.errors.map(error => ({
-              level: 'error',
-              title: 'An error occured whilst loading this embed',
-              message: error.message,
-              autoDismiss: 0,
-              action: {
-                label: 'Support server',
-                callback() {
-                  window.open('https://discord.gg/zyqZWr2')
-                }
-              }
-            }))
-          : serverIssues
+    } catch (e) {
+      console.error(e)
+      // const errors =
+      //   response && response.errors
+      //     ? response.errors.map(error => ({
+      //         level: 'error',
+      //         title: 'An error occured whilst loading this embed',
+      //         message: error.message,
+      //         autoDismiss: 0,
+      //         action: {
+      //           label: 'Support server',
+      //           callback() {
+      //             window.open('https://discord.gg/zyqZWr2')
+      //           }
+      //         }
+      //       }))
+      //     : serverIssues
 
-      return path.error({ notification: errors })
+      return path.error({ notification: [] })
     }
   }
 
@@ -116,10 +114,7 @@ namespace GraphQL {
     const channel = state.channels.get(state.activeChannel)
 
     if (channel.messages) {
-      subscribe({
-        server: state.server.id,
-        channel: state.activeChannel
-      })
+      subscribe(state.activeChannel)
       // Cached
       return path.success({ channel })
     }
@@ -130,10 +125,7 @@ namespace GraphQL {
       channel: state.activeChannel
     })
       .then((response: ChannelResponse) => {
-        subscribe({
-          server: state.server.id,
-          channel: state.activeChannel
-        })
+        subscribe(state.activeChannel)
 
         return path.success({
           channel: {

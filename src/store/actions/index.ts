@@ -8,13 +8,13 @@ import { socket } from 'socket-io'
 
 import controller from '../../controllers/cerebral'
 import generate from '../../modules/message/generate'
+import { Reaction } from '../../types/message'
 import Modal from '../../types/modal'
 import { message } from '../../types/socket'
 import { RawUrl } from '../../types/url'
 import { User } from '../../types/user'
 import { Toggles } from '../types'
 import { State } from './../types'
-import { Reaction } from '../../types/message'
 
 /**
  * Selects a server (and or) channel and returns a branch
@@ -150,9 +150,29 @@ export function sendMessage({
 }
 
 /**
+ * Socket.io
+ */
+export function subscribe({
+  state,
+  props
+}: Context<{
+  channel: string
+}>) {
+  state.subscriptions.set(props.channel, true)
+}
+
+export function unsubscribe({
+  state,
+  props
+}: Context<{
+  channel: string
+}>) {
+  state.subscriptions.set(props.channel, false)
+}
+
+/**
  * Reactions
  */
-
 export function messageReactionAdd({
   state,
   props

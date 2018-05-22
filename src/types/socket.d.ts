@@ -5,7 +5,4 @@ export interface message {
   message: Message
 }
 
-export interface Room {
-  server: string
-  channel: string
-}
+export type Subscription = string

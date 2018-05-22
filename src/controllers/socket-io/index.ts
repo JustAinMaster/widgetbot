@@ -12,7 +12,12 @@ export { subscribe, unsubscribe } from './subscriptions'
 const initiate = () => {
   // Register socket
   socket.connect()
-  socket.emit('register', { server: controller.state.server.id })
+  socket.on('connect', () => {
+    socket.emit('register', {
+      server: controller.state.server.id,
+      subscriptions: controller.state.subscriptions.keys()
+    })
+  })
 
   socket.on('message', controller.signals.insertMessage)
   socket.on('messageUpdate', controller.signals.updateMessage)

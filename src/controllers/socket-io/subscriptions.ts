@@ -1,6 +1,14 @@
 import { socket } from 'socket-io'
 
-import { Room } from '../../types/socket'
+import { Subscription } from '../../types/socket'
+import controller from '../cerebral'
 
-export const subscribe = (room: Room) => socket.emit('subscribe', room)
-export const unsubscribe = (room: Room) => socket.emit('unsubscribe', room)
+export const subscribe = (channel: Subscription) => {
+  socket.emit('subscribe', channel)
+  controller.signals.subscribe({ channel })
+}
+
+export const unsubscribe = (channel: Subscription) => {
+  socket.emit('unsubscribe', channel)
+  controller.signals.unsubscribe({ channel })
+}

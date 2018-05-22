@@ -42,6 +42,9 @@ export interface State {
     invite: string
   }
 
+  // Channels that the user is subscribed to
+  subscriptions: Dictionary<boolean>
+
   // Router url
   url: ParsedUrl
 
