@@ -76,25 +76,24 @@ namespace GraphQL {
       }
 
       return path.success(response)
-    } catch (e) {
-      console.error(e)
-      // const errors =
-      //   response && response.errors
-      //     ? response.errors.map(error => ({
-      //         level: 'error',
-      //         title: 'An error occured whilst loading this embed',
-      //         message: error.message,
-      //         autoDismiss: 0,
-      //         action: {
-      //           label: 'Support server',
-      //           callback() {
-      //             window.open('https://discord.gg/zyqZWr2')
-      //           }
-      //         }
-      //       }))
-      //     : serverIssues
+    } catch ({ response }) {
+      const errors =
+        response && response.errors
+          ? response.errors.map(error => ({
+              level: 'error',
+              title: 'An error occured whilst loading this embed',
+              message: error.message,
+              autoDismiss: 0,
+              action: {
+                label: 'Support server',
+                callback() {
+                  window.open('https://discord.gg/zyqZWr2')
+                }
+              }
+            }))
+          : serverIssues
 
-      return path.error({ notification: [] })
+      return path.error({ notification: errors })
     }
   }
 

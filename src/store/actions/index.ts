@@ -167,7 +167,7 @@ export function unsubscribe({
 }: Context<{
   channel: string
 }>) {
-  state.subscriptions.set(props.channel, false)
+  state.subscriptions.delete(props.channel)
 }
 
 /**
