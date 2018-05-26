@@ -74,7 +74,7 @@ class Message extends React.PureComponent<Props, any> {
                   message.id === lastSeen &&
                     // And it's not at the end of the list
                     i !== messages.length - 1 && (
-                      <Sys.Container>
+                      <Sys.Container className="system-message">
                         <Sys.Lines>
                           <Sys.Message>New Messages</Sys.Message>
                         </Sys.Lines>
