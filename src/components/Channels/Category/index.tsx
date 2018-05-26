@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { Category } from '../../../types/category'
 import Channel from './Channel'
-import { Collapse, Expand, Name, Root, Text, Emoji } from './elements'
+import { Collapse, Emoji, Expand, Name, Root, Text } from './elements'
 
 interface Props {
   category: Category
@@ -32,18 +32,22 @@ class ChannelCategory extends React.PureComponent<Props> {
           </Name>
         )}
 
-        {category.channels.map(
-          ({ name, id }, order) =>
-            this.state.open || activeChannel === id ? (
-              <Channel
-                name={name}
-                id={id}
-                order={order}
-                active={activeChannel === id}
-                key={id}
-              />
-            ) : null
-        )}
+        {category.channels.map(({ name, id, unread }, order) => {
+          const selected = activeChannel === id
+
+          return this.state.open || selected || unread ? (
+            <Channel
+              key={id}
+              {...{
+                name,
+                id,
+                order,
+                unread,
+                selected
+              }}
+            />
+          ) : null
+        })}
       </Root>
     )
   }

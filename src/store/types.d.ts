@@ -13,6 +13,7 @@ interface Channel {
   name: string
   category: string
   permissions: Permissions
+  unread: boolean
   topic?: string
   messages?: Dictionary<Message>
 }

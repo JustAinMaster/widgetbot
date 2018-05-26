@@ -204,6 +204,7 @@ namespace GraphQL {
 
     server.channels.forEach(channel => {
       state.channels.set(channel.id, {
+        unread: false,
         ...(state.channels.get(channel.id) as any),
         ...(channel.id === state.activeChannel
           ? {

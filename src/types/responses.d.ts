@@ -6,6 +6,7 @@ import { Permissions } from './permissions'
 
 type Channels = {
   name: string
+  unread: boolean
   id: string
   category: string
   permissions: Permissions

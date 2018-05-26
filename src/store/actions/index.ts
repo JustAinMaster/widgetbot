@@ -47,6 +47,9 @@ export function select({
 
     const channel = state.channels.get(props.channel)
     if (channel && channel.messages) {
+      // Remove unread indicator
+      channel.unread = false
+
       cached = true
     } else {
       cached = false
@@ -94,6 +97,11 @@ export function setMessage({ state, props }: Context<message>) {
 
   if (channel && channel.messages) {
     channel.messages.set(props.message.id, props.message)
+
+    // Set unread indicator
+    if (props.channel !== state.activeChannel) {
+      channel.unread = true
+    }
   }
 }
 

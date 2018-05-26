@@ -1,5 +1,5 @@
 import Channel, { Hash } from 'styled-elements/channel'
-import styled, { keyframes } from 'typed-emotion'
+import styled, { css, keyframes } from 'typed-emotion'
 
 const fade = i => keyframes`
   from {
@@ -14,10 +14,12 @@ const fade = i => keyframes`
 
 interface Props {
   selected: boolean
-  to: string
+  unread: boolean
   order: number
 }
-export const Root = styled<Props, any>(Channel)`
+
+export const Root = styled<Props, 'div'>(Channel as any)`
+  position: relative;
   text-decoration: none;
   user-select: none;
   cursor: ${({ selected }) => (selected ? 'default' : 'pointer')};
@@ -29,15 +31,14 @@ export const Root = styled<Props, any>(Channel)`
   height: 32px;
   line-height: 32px;
   width: calc(100% - 16px);
-  overflow: hidden;
   margin: 2px 8px;
   padding: 0 8px;
   background-color: ${({ selected, theme }) =>
     selected
       ? `${theme.colors._primary.fadeOut(0.9)} !important`
       : 'transparent'};
-  color: ${({ selected, theme }) =>
-    selected
+  color: ${({ selected, unread, theme }) =>
+    selected || unread
       ? `${theme.colors._primary.fadeOut(0.1).toString()} !important`
       : theme.colors._primary.fadeOut(0.7).toString()};
   /* animation: ${({ order }) => fade(order)} 0.5s ease; */
@@ -47,6 +48,25 @@ export const Root = styled<Props, any>(Channel)`
       theme.colors._primary.fadeOut(0.96).toString()};
     color: ${({ theme }) => theme.colors._primary.fadeOut(0.3).toString()};
   }
+
+${({ unread, theme }) =>
+  unread &&
+  css`
+    &::before {
+      position: absolute;
+      display: block;
+      content: '';
+
+      left: -8px;
+      top: 50%;
+      transform: translateY(-50%);
+
+      height: 8px;
+      width: 4px;
+      background-color: ${theme.colors._primary.fadeOut(0.4).toString()};
+      border-radius: 0 6px 6px 0;
+    }
+  `}
 
   @media (max-width: 400px), (max-height: 340px) {
     height: 28px;

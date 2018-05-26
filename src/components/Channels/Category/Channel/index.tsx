@@ -4,17 +4,18 @@ import { Hashtag, Name, Root } from './elements'
 
 interface Props {
   name: string
+  unread: boolean
   id: string
   order: number
-  active: boolean
+  selected: boolean
 }
 
 class Channel extends React.PureComponent<Props> {
   render() {
-    const { name, order, id, active } = this.props
+    const { name } = this.props
 
     return (
-      <Root selected={active} id={id} order={order} className="channel">
+      <Root {...this.props} className="channel">
         <Hashtag className="hash" />
         <Name className="name">{name}</Name>
       </Root>
