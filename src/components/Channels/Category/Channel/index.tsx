@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { Hashtag, Name, Root } from './elements'
+import { Hashtag, Name, Pings, Root } from './elements'
 
 interface Props {
   name: string
@@ -18,6 +18,7 @@ class Channel extends React.PureComponent<Props> {
       <Root {...this.props} className="channel">
         <Hashtag className="hash" />
         <Name className="name">{name}</Name>
+        <Pings className="pings">1</Pings>
       </Root>
     )
   }

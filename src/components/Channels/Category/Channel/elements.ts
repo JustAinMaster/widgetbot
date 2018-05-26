@@ -49,30 +49,38 @@ export const Root = styled<Props, 'div'>(Channel as any)`
     color: ${({ theme }) => theme.colors._primary.fadeOut(0.3).toString()};
   }
 
-${({ unread, theme }) =>
-  unread &&
-  css`
-    &::before {
-      position: absolute;
-      display: block;
-      content: '';
+  ${({ unread, theme }) =>
+    unread &&
+    css`
+      &::before {
+        position: absolute;
+        display: block;
+        content: '';
 
-      left: -8px;
-      top: 50%;
-      transform: translateY(-50%);
+        left: -8px;
+        top: 50%;
+        transform: translateY(-50%);
 
-      height: 8px;
-      width: 4px;
-      background-color: ${theme.colors._primary.fadeOut(0.4).toString()};
-      border-radius: 0 6px 6px 0;
-    }
-  `}
+        height: 8px;
+        width: 4px;
+        background-color: ${theme.colors._primary.fadeOut(0.4).toString()};
+        border-radius: 0 6px 6px 0;
+      }
+    `}
 
   @media (max-width: 400px), (max-height: 340px) {
     height: 28px;
     line-height: 28px;
     font-size: 14px;
   }
+`
+
+export const Hashtag = styled(Hash)`
+  flex-shrink: 0;
+  opacity: 0.6;
+  height: 100%;
+  width: 16px;
+  margin-right: 7px;
 `
 
 export const Name = styled('div')`
@@ -84,9 +92,19 @@ export const Name = styled('div')`
   overflow: hidden;
 `
 
-export const Hashtag = styled(Hash)`
-  opacity: 0.6;
-  height: 100%;
-  width: 16px;
-  margin-right: 7px;
+export const Pings = styled('div')`
+  display: inline-block;
+  flex-shrink: 0;
+  padding: 0 6px;
+  margin: 7px 0;
+  border-radius: 3px;
+
+  font-size: 75%;
+  line-height: 150%;
+  font-weight: 500;
+
+  background-color: #f04747;
+  color: #fff;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25), inset 0 1px 0 hsla(0, 0%, 100%, 0.15);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
 `
