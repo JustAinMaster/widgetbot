@@ -109,3 +109,43 @@ export const Text = styled('div')`
     color: inherit;
   }
 `
+
+export namespace Sys {
+  export const Container = styled('div')`
+    height: 1px;
+    margin: 12px 0;
+  `
+
+  export const Lines = styled('div')`
+    width: calc(100% - 50px);
+    height: 16px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+    &::before {
+      background-color: #f04747;
+      content: '';
+      height: 1px;
+      display: block;
+      opacity: 0.4;
+    }
+  `
+
+  export const Message = styled('span')`
+    display: inline-block;
+    color: rgba(240, 71, 71, 0.8);
+    line-height: 16px;
+    text-transform: uppercase;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0 10px;
+    z-index: 2;
+    margin-top: -8px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #36393e;
+  `
+}

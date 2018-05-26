@@ -12,6 +12,7 @@ import {
   ChannelResponse,
   ServerResponse
 } from '../../../types/responses'
+import { getLast } from '../util'
 
 const serverIssues = {
   level: 'warning',
@@ -129,7 +130,10 @@ namespace GraphQL {
         return path.success({
           channel: {
             id: state.activeChannel,
-            ...response.server.channel
+            ...response.server.channel,
+            messages: Dictionary(
+              _.keyBy(response.server.channel.messages, 'id')
+            )
           }
         })
       })
@@ -168,9 +172,10 @@ namespace GraphQL {
 
     state.channels.set(channel, {
       ...prev,
+      lastSeenID: getLast(props.channel.messages.values()),
       name: props.channel.name,
       topic: props.channel.topic,
-      messages: Dictionary(_.keyBy(props.channel.messages, 'id')),
+      messages: props.channel.messages,
       permissions: {
         ...(prev && prev.permissions),
         ...props.channel.permissions
@@ -209,10 +214,7 @@ namespace GraphQL {
         ...(state.channels.get(channel.id) as any),
         ...(channel.id === state.activeChannel
           ? {
-              lastSeenID: (() => {
-                const lastMessage = server.channel.messages.slice(-1).pop()
-                return lastMessage ? lastMessage.id : null
-              })(),
+              lastSeenID: getLast(server.channel.messages),
               ...channel,
               ...server.channel,
               messages: Dictionary(_.keyBy(server.channel.messages, 'id'))

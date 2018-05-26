@@ -18,7 +18,7 @@ class Channel extends React.PureComponent<Props> {
       <Root {...this.props} className="channel">
         <Hashtag className="hash" />
         <Name className="name">{name}</Name>
-        <Pings className="pings">1</Pings>
+        {false && <Pings className="pings">1</Pings>}
       </Root>
     )
   }

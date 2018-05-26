@@ -15,6 +15,7 @@ import { RawUrl } from '../../types/url'
 import { User } from '../../types/user'
 import { Toggles } from '../types'
 import { State } from './../types'
+import { getLast } from './util'
 
 /**
  * Selects a server (and or) channel and returns a branch
@@ -33,6 +34,15 @@ export function select({
 >) {
   let cached = false
 
+  // Mark all messages as read on the current channel
+  if (state.activeChannel) {
+    const channel = state.channels.get(state.activeChannel)
+
+    if (channel && channel.messages) {
+      channel.lastSeenID = getLast(channel.messages.values())
+    }
+  }
+
   // If the server field has an icon entry, it's cached
   if (props.server) {
     state.server.id = props.server
@@ -48,7 +58,6 @@ export function select({
     const channel = state.channels.get(props.channel)
     if (channel && channel.messages) {
       // Remove unread indicator
-      channel.lastSeenID = null
       channel.unread = false
 
       cached = true
@@ -105,13 +114,7 @@ export function setMessage({ state, props }: Context<message>) {
     }
 
     if (props.channel !== state.activeChannel) {
-      const lastMessage = messages => messages && messages.keys().slice(-1)[0]
-
-      const isUnread = (lastSeen: string, messages) =>
-        !!lastSeen && lastMessage(messages) !== lastSeen
-
-      console.log(isUnread(props.message.id, channel.messages))
-      channel.unread = isUnread(props.message.id, channel.messages)
+      channel.unread = true
     }
   }
 }

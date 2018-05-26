@@ -20,6 +20,12 @@ export interface Channel {
   messages?: Dictionary<Message>
 }
 
+export interface ChannelResponse {
+  server: {
+    channel: Channel & { messages: Message[] }
+  }
+}
+
 export interface ServerResponse {
   server: {
     name: string
@@ -28,15 +34,6 @@ export interface ServerResponse {
     icon: string
     theme: Theme
     channels: Channels
-    channel?: {
-      topic: string
-      messages: Message[]
-    }
-  }
-}
-
-export interface ChannelResponse {
-  server: {
-    channel: Channel
+    channel?: ChannelResponse['server']['channel']
   }
 }

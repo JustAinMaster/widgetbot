@@ -29,7 +29,7 @@ export default connect()
       class Messages extends React.PureComponent<typeof props> {
         getContent = () => {
           const { loading } = this.props
-          const { messages } = this.props
+          const { channel, messages } = this.props
 
           if (loading) {
             return <Loading />
@@ -44,7 +44,11 @@ export default connect()
                 className="messages"
               >
                 {grouped.map(group => (
-                  <Message messages={group} key={group[0].id} />
+                  <Message
+                    messages={group}
+                    key={group[0].id}
+                    lastSeen={channel.lastSeenID}
+                  />
                 ))}
               </ScrollVisible>
             ) : (
