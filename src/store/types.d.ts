@@ -9,10 +9,11 @@ import { ParsedUrl } from '../types/url'
 import { User } from '../types/user'
 import * as signals from './sequences'
 
-interface Channel {
+export interface Channel {
   name: string
   category: string
   permissions: Permissions
+  lastSeenID: string
   unread: boolean
   topic?: string
   messages?: Dictionary<Message>

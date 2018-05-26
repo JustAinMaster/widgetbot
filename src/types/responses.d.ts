@@ -28,7 +28,10 @@ export interface ServerResponse {
     icon: string
     theme: Theme
     channels: Channels
-    channel?: Channel
+    channel?: {
+      topic: string
+      messages: Message[]
+    }
   }
 }
 

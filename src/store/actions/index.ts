@@ -48,6 +48,7 @@ export function select({
     const channel = state.channels.get(props.channel)
     if (channel && channel.messages) {
       // Remove unread indicator
+      channel.lastSeenID = null
       channel.unread = false
 
       cached = true
@@ -98,9 +99,19 @@ export function setMessage({ state, props }: Context<message>) {
   if (channel && channel.messages) {
     channel.messages.set(props.message.id, props.message)
 
-    // Set unread indicator
+    // Unread indicators
+    if (props.channel === state.activeChannel) {
+      channel.lastSeenID = props.message.id
+    }
+
     if (props.channel !== state.activeChannel) {
-      channel.unread = true
+      const lastMessage = messages => messages && messages.keys().slice(-1)[0]
+
+      const isUnread = (lastSeen: string, messages) =>
+        !!lastSeen && lastMessage(messages) !== lastSeen
+
+      console.log(isUnread(props.message.id, channel.messages))
+      channel.unread = isUnread(props.message.id, channel.messages)
     }
   }
 }

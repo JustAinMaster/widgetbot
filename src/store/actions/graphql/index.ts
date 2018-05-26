@@ -205,9 +205,14 @@ namespace GraphQL {
     server.channels.forEach(channel => {
       state.channels.set(channel.id, {
         unread: false,
+        lastSeenID: null,
         ...(state.channels.get(channel.id) as any),
         ...(channel.id === state.activeChannel
           ? {
+              lastSeenID: (() => {
+                const lastMessage = server.channel.messages.slice(-1).pop()
+                return lastMessage ? lastMessage.id : null
+              })(),
               ...channel,
               ...server.channel,
               messages: Dictionary(_.keyBy(server.channel.messages, 'id'))

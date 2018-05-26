@@ -339,7 +339,7 @@ array-flatten@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/array-flatten/-/array-flatten-1.1.1.tgz#9a5f699051b1e7073328f2a008968b64ea2955d2"
 
-array-flatten@^2.1.0:
+array-flatten@^2.1.0, array-flatten@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/array-flatten/-/array-flatten-2.1.1.tgz#426bb9da84090c1838d812c8150af20a8331e296"
 
@@ -2135,6 +2135,10 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
+curry@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/curry/-/curry-1.2.0.tgz#9e6dd289548dba7e653d5ae3fe903fe7dfb33af2"
+
 cyclist@~0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-0.2.2.tgz#1b33792e11e914a2fd6d6ed6447464444e5fa640"
@@ -3166,6 +3170,13 @@ fstream@^1.0.0, fstream@^1.0.10, fstream@^1.0.2:
 function-bind@^1.0.2, function-bind@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
+
+function-pipe@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/function-pipe/-/function-pipe-1.2.1.tgz#9f5e413c15bcd614b067fc200a9caf2ee591f06a"
+  dependencies:
+    array-flatten "^2.1.1"
+    poly-apply "^1.0.0"
 
 function-tree@^3.2.2:
   version "3.2.2"
@@ -5628,6 +5639,12 @@ pkg-dir@^2.0.0:
 pn@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pn/-/pn-1.1.0.tgz#e2f4cef0e219f463c179ab37463e4e1ecdccbafb"
+
+poly-apply@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/poly-apply/-/poly-apply-1.0.0.tgz#60b40ced36f981fc7e75f18fa4ec0c901e7cdecd"
+  dependencies:
+    curry "^1.2.0"
 
 portfinder@^1.0.9:
   version "1.0.13"
