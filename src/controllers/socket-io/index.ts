@@ -15,7 +15,7 @@ const initiate = () => {
   socket.on('connect', () => {
     socket.emit('register', {
       server: controller.state.server.id,
-      token: controller.state.user.token,
+      token: controller.state.url.token || controller.state.user.token,
       subscriptions: controller.state.subscriptions.keys()
     })
   })

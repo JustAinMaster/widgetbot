@@ -76,7 +76,7 @@ export const storage = StorageModule({
   target: localStorage,
   json: true,
   sync: {
-    jwt: 'user.token'
+    token: 'user.token'
   },
   prefix: 'embed'
 })

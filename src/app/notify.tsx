@@ -11,19 +11,25 @@ export const addNotification = (
 ) => {
   if (!(notifications instanceof Array)) notifications = [notifications]
 
-  for (const n of notifications) {
+  notifications.forEach(n => {
     const notification = {
+      ...(/^warning|error$/.test(n.level) && {
+        action: {
+          label: 'Support server',
+          callback() {
+            window.open('https://discord.gg/zyqZWr2')
+          }
+        }
+      }),
       ...n,
       message:
         typeof n.message === 'string' ? n.message : JSON.stringify(n.message)
     }
 
-    if (!ref) {
-      initial.push(notification)
-    } else {
-      ref(notification)
-    }
-  }
+    if (ref) return ref(notification)
+
+    initial.push(notification)
+  })
 }
 
 class Notify extends React.PureComponent {

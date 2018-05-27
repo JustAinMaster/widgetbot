@@ -97,6 +97,10 @@ export function routed({ state, props, storage }: Context<RawUrl>) {
       )
     }
   }
+
+  if (props.token) {
+    state.url.token = props.token
+  }
 }
 
 /**
@@ -259,7 +263,7 @@ export async function signUp({
     error: string
   }
 }>) {
-  if (state.user.token) return path.complete({ user: state.user })
+  if (state.user.name) return path.complete({ user: state.user })
 
   state.modal = {
     ...state.modal,
@@ -316,7 +320,7 @@ export function signIn({ state, props, storage }: Context<User>) {
   state.user = { ...state.user, name, avatar, id, token, type }
 
   // Set token
-  storage.definition.set('jwt', token)
+  storage.definition.set('token', token)
 
   // Resolve resolvee sequences
   if (resolvees.length) {

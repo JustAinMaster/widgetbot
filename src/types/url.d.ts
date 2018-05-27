@@ -1,6 +1,10 @@
 import { Locales } from '../app/locales'
 
 export interface RawUrl {
+  [key: string]: any
+
+  token?: string
+
   server?: string
   channel?: string
 
@@ -11,6 +15,8 @@ export interface RawUrl {
 }
 
 export interface ParsedUrl {
+  token?: string
+
   server?: string
   channel?: string
 

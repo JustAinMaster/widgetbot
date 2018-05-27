@@ -84,13 +84,7 @@ namespace GraphQL {
               level: 'error',
               title: 'An error occured whilst loading this embed',
               message: error.message,
-              autoDismiss: 0,
-              action: {
-                label: 'Support server',
-                callback() {
-                  window.open('https://discord.gg/zyqZWr2')
-                }
-              }
+              autoDismiss: 0
             }))
           : serverIssues
 
@@ -143,11 +137,7 @@ namespace GraphQL {
               level: 'error',
               title: 'An error occured whilst loading this embed',
               message: error.message,
-              autoDismiss: 0,
-              action: {
-                label: 'Support server',
-                callback: () => window.open('https://discord.gg/zyqZWr2')
-              }
+              autoDismiss: 0
             }))
           : serverIssues
 
