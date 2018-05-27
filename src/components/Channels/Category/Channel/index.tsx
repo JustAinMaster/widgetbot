@@ -11,13 +11,25 @@ interface Props {
 }
 
 class Channel extends React.PureComponent<Props> {
+  name: HTMLDivElement
+
+  componentDidMount() {
+    const { selected } = this.props
+
+    if (selected && this.name) {
+      this.name.scrollIntoView()
+    }
+  }
+
   render() {
     const { name } = this.props
 
     return (
       <Root {...this.props} className="channel">
         <Hashtag className="hash" />
-        <Name className="name">{name}</Name>
+        <Name innerRef={ref => (this.name = ref)} className="name">
+          {name}
+        </Name>
         {false && <Pings className="pings">1</Pings>}
       </Root>
     )

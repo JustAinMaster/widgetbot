@@ -1,3 +1,4 @@
+import { ScrollOverlay } from 'styled-elements/scrollable'
 import styled, { css } from 'typed-emotion'
 
 interface Props {
@@ -45,5 +46,13 @@ export const Root = styled<Props, 'div'>('div')`
 
   @media (max-width: 170px) {
     width: 150px;
+  }
+`
+
+export const Categories = styled(ScrollOverlay)`
+  & > div:nth-child(1) {
+    & > *:last-child {
+      margin-bottom: 40px;
+    }
   }
 `

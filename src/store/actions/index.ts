@@ -36,7 +36,7 @@ export function select({
 
   // Mark all messages as read on the current channel
   if (state.activeChannel) {
-    const channel = state.channels.get(state.activeChannel)
+    const channel = state.channel.get()
 
     if (channel && channel.messages) {
       channel.lastSeenID = getLast(channel.messages.values())

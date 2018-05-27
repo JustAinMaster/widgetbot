@@ -28,7 +28,10 @@ export default connect()
         }
 
         onSubmit(message: string) {
+          if (message.length === 0) return
+
           const { sendMessage, activeChannel } = this.props
+
           sendMessage({
             channel: activeChannel,
             message

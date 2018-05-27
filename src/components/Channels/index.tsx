@@ -1,9 +1,8 @@
 import { connect } from 'fluent'
 import * as React from 'react'
-import { ScrollOverlay } from 'styled-elements/scrollable'
 
-import ChannelCategory from './Category'
-import { Root } from './elements'
+import Category from './Category'
+import { Categories, Root } from './elements'
 import Header from './Header'
 import Panel from './Panel'
 
@@ -22,15 +21,17 @@ export default connect()
           return (
             <Root visible={visible} className="channels">
               <Header />
-              <ScrollOverlay>
+              <Categories>
                 {categories.map((category, i) => (
-                  <ChannelCategory
-                    category={category}
-                    activeChannel={activeChannel}
+                  <Category
                     key={i}
+                    {...{
+                      category,
+                      activeChannel
+                    }}
                   />
                 ))}
-              </ScrollOverlay>
+              </Categories>
               <Panel />
             </Root>
           )
