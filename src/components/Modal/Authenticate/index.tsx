@@ -15,7 +15,7 @@ import {
 export default connect()
   .with(({ state, signals, props }) => ({
     toggle: signals.modal,
-    createAccount: signals.createAccount,
+    signUp: signals.signUp,
     singleSignOn: signals.singleSignOn
   }))
   .toClass(
@@ -26,15 +26,15 @@ export default connect()
         }
         nameField: HTMLInputElement
 
-        createAccount(event: Event) {
+        signUp(event: Event) {
           event.preventDefault()
 
           const name = this.nameField.value
 
-          const { toggle, createAccount } = this.props
+          const { toggle, signUp } = this.props
           toggle({ open: false })
 
-          createAccount({ name })
+          signUp({ name })
         }
 
         singleSignOn(event: Event) {
@@ -54,7 +54,7 @@ export default connect()
             <Root loading={awaiting}>
               <Title>Welcome!</Title>
               <Greeting>Pick a name to start chatting</Greeting>
-              <Group label="name" onSubmit={this.createAccount.bind(this)}>
+              <Group label="name" onSubmit={this.signUp.bind(this)}>
                 <Input
                   innerRef={ref => (this.nameField = ref)}
                   autoFocus={true}

@@ -3,7 +3,7 @@ import {
   IBranchContext,
   IContext,
   SequenceFactory,
-  SequenceWithPropsFactory,
+  SequenceWithPropsFactory
 } from '@cerebral/fluent'
 import { Provider as RouterProvider } from '@cerebral/router'
 
@@ -12,6 +12,7 @@ import { Signals, State } from '../../store/types'
 // import Controller from '.'
 interface Providers {
   router: RouterProvider
+  storage: any
   state: State
 }
 

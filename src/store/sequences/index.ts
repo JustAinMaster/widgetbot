@@ -3,6 +3,7 @@ import { sequence, sequenceWithProps } from 'fluent'
 import { Reaction } from '../../types/message'
 import Modal from '../../types/modal'
 import { message } from '../../types/socket'
+import { User } from '../../types/user'
 import * as actions from '../actions'
 import { Toggles } from '../types'
 
@@ -105,7 +106,7 @@ export const sendMessage = sequenceWithProps<{
   channel: string
   message: string
 }>(s =>
-  s.branch(actions.signIn).paths({
+  s.branch(actions.signUp).paths({
     complete: s =>
       s.branch(actions.sendMessage).paths({
         sending: s => s.action(actions.setMessage)
@@ -160,8 +161,10 @@ export const typing = sequenceWithProps<{ typing: boolean; channel: string }>(
 /**
  * Authentication sequences
  */
-export const createAccount = sequenceWithProps<{ name: string }>(s =>
+export const signUp = sequenceWithProps<{ name: string }>(s =>
   s.action(actions.createAccount)
 )
+
+export const signIn = sequenceWithProps<User>(s => s.action(actions.signIn))
 
 export const singleSignOn = sequence(s => s.action(actions.singleSignOn))

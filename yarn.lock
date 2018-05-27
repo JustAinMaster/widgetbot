@@ -52,6 +52,10 @@
     cerebral "^4.2.2"
     url-mapper "^1.1.1"
 
+"@cerebral/storage@^4.2.2":
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/@cerebral/storage/-/storage-4.2.2.tgz#21fbc13bfd9091c15102392aeb0356cc1895be87"
+
 "@emotion/hash@^0.6.2":
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/@emotion/hash/-/hash-0.6.3.tgz#0e7a5604626fc6c6d4ac4061a2f5ac80d50262a4"

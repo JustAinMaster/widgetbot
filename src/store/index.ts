@@ -1,5 +1,6 @@
 import { Computed, Dictionary, Module } from '@cerebral/fluent'
 import Router from '@cerebral/router'
+import StorageModule from '@cerebral/storage'
 import { translations } from 'locales'
 
 import * as computed from './computed'
@@ -43,30 +44,45 @@ const state: State = {
     css: ``,
     compact: false
   },
-  user: null,
+  user: {
+    avatar: null,
+    id: null,
+    name: null,
+    token: null,
+    type: null
+  },
 
   translation: translations.en
 }
 
+export const router = Router({
+  routes: [
+    {
+      path: '/channels/:server/:channel/',
+      signal: 'fetchChannel'
+    },
+    {
+      path: '/channels/:server/',
+      signal: 'fetchServer'
+    },
+    {
+      path: '/*',
+      signal: 'routeHome'
+    }
+  ]
+})
+
+export const storage = StorageModule({
+  target: localStorage,
+  json: true,
+  sync: {
+    jwt: 'user.token'
+  },
+  prefix: 'embed'
+})
+
 export const module = Module({
   state,
   signals,
-  modules: {
-    router: Router({
-      routes: [
-        {
-          path: '/channels/:server/:channel/',
-          signal: 'fetchChannel'
-        },
-        {
-          path: '/channels/:server/',
-          signal: 'fetchServer'
-        },
-        {
-          path: '/*',
-          signal: 'routeHome'
-        }
-      ]
-    })
-  }
+  modules: { router, storage }
 })

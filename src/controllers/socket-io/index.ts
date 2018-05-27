@@ -15,9 +15,12 @@ const initiate = () => {
   socket.on('connect', () => {
     socket.emit('register', {
       server: controller.state.server.id,
+      token: controller.state.user.token,
       subscriptions: controller.state.subscriptions.keys()
     })
   })
+
+  socket.on('signIn', controller.signals.signIn)
 
   socket.on('message', controller.signals.insertMessage)
   socket.on('messageUpdate', controller.signals.updateMessage)

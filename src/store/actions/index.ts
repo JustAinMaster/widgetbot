@@ -73,7 +73,7 @@ export function select({
 /**
  * Router
  */
-export function routed({ state, props }: Context<RawUrl>) {
+export function routed({ state, props, storage }: Context<RawUrl>) {
   state.url = {
     lang: 'en'
   }
@@ -247,7 +247,7 @@ export function messageReactionRemove({
  * Authentication actions
  */
 let resolvees: Function[] = []
-export async function signIn({
+export async function signUp({
   state,
   props,
   path
@@ -259,63 +259,69 @@ export async function signIn({
     error: string
   }
 }>) {
-  if (!state.user) {
-    state.modal = {
-      ...state.modal,
-      open: true,
-      type: 'authenticate'
-    }
+  if (state.user.token) return path.complete({ user: state.user })
 
-    // The position in the resolvees array
-    let que: number
-
-    let timer
-    try {
-      // Become a resolvee for once the user is signed in
-      // Execution is gracefully stopped until this is complete
-      const user = (await new Promise((resolve, reject) => {
-        que = resolvees.push(resolve) - 1
-
-        // Check to make sure the user hasn't closed the dialog
-        timer = setInterval(() => {
-          if (!state.modal.open || state.modal.type !== 'authenticate') {
-            // If they've closed it, reject the promise and go down
-            // the interrupted path
-            reject(`You need to sign in to send messages`)
-          }
-        }, 500)
-      })) as User
-
-      clearInterval(timer)
-
-      return path.complete({ user })
-    } catch (error) {
-      clearInterval(timer)
-
-      // Remove the resolver from the resolvees array
-      resolvees.splice(que, 1)
-
-      // User declined to sign in /
-      // Something went wrong
-      return path.interrupted({ error })
-    }
+  state.modal = {
+    ...state.modal,
+    open: true,
+    type: 'authenticate'
   }
 
-  return path.complete({ user: state.user })
+  // The position in the resolvees array
+  let que: number
+
+  let timer
+  try {
+    // Become a resolvee for once the user is signed in
+    // Execution is gracefully stopped until this is complete
+    const user = (await new Promise((resolve, reject) => {
+      que = resolvees.push(resolve) - 1
+
+      // Check to make sure the user hasn't closed the dialog
+      timer = setInterval(() => {
+        if (!state.modal.open || state.modal.type !== 'authenticate') {
+          // If they've closed it, reject the promise and go down
+          // the interrupted path
+          reject(`You need to sign in to send messages`)
+        }
+      }, 500)
+    })) as User
+
+    clearInterval(timer)
+
+    return path.complete({ user })
+  } catch (error) {
+    clearInterval(timer)
+
+    // Remove the resolver from the resolvees array
+    resolvees.splice(que, 1)
+
+    // User declined to sign in /
+    // Something went wrong
+    return path.interrupted({ error })
+  }
 }
 
-export function createAccount({ state, props }: Context<{ name: string }>) {
-  socket.emit('signUp', props, user => {
-    state.user = {
-      ...state.user,
-      ...user
-    }
+export function createAccount({
+  state,
+  storage,
+  props
+}: Context<{ name: string }>) {
+  socket.emit('signUp', props)
+}
 
-    // Resolve resolvee sequences
-    if (resolvees.length) {
-      resolvees.forEach(resolve => resolve(state.user))
-    }
-  })
+export function signIn({ state, props, storage }: Context<User>) {
+  const { name, avatar, id, token, type } = props
+
+  state.user = { ...state.user, name, avatar, id, token, type }
+
+  // Set token
+  storage.definition.set('jwt', token)
+
+  // Resolve resolvee sequences
+  if (resolvees.length) {
+    resolvees.forEach(resolve => resolve(state.user))
+  }
 }
 
 export function singleSignOn({ state, props }: Context) {
