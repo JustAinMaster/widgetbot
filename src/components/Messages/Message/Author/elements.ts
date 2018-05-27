@@ -5,6 +5,7 @@ export const Root = styled('span')`
   display: flex;
   height: 24px;
   line-height: 24px;
+  overflow: hidden;
 `
 
 // Username

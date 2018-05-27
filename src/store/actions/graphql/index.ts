@@ -101,7 +101,7 @@ namespace GraphQL {
   /**
    * Fetches a channel
    */
-  export function fetchChannel({
+  export async function fetchChannel({
     state,
     props,
     path
@@ -113,51 +113,46 @@ namespace GraphQL {
   }>) {
     const channel = state.channels.get(state.activeChannel)
 
-    if (channel.messages) {
+    if (channel && channel.messages) {
       subscribe(state.activeChannel)
       // Cached
       return path.success({ channel })
     }
 
     // Uncached
-    return request('/api/graphql', queries.channel, {
-      server: state.server.id,
-      channel: state.activeChannel
-    })
-      .then((response: ChannelResponse) => {
-        subscribe(state.activeChannel)
 
-        return path.success({
-          channel: {
-            id: state.activeChannel,
-            ...response.server.channel,
-            messages: Dictionary(
-              _.keyBy(response.server.channel.messages, 'id')
-            )
-          }
-        })
-      })
-      .catch(({ response }) => {
-        const errors =
-          response && response.errors
-            ? response.errors.map(error => ({
-                level: 'error',
-                title: 'An error occured whilst loading this embed',
-                message: error.message,
-                autoDismiss: 0,
-                action: {
-                  label: 'Support server',
-                  callback() {
-                    window.open('https://discord.gg/zyqZWr2')
-                  }
-                }
-              }))
-            : serverIssues
+    try {
+      const response = (await request('/api/graphql', queries.channel, {
+        server: state.server.id,
+        channel: state.activeChannel
+      })) as ChannelResponse
 
-        return path.error({
-          notification: errors
-        })
+      subscribe(state.activeChannel)
+
+      return path.success({
+        channel: {
+          id: state.activeChannel,
+          ...response.server.channel,
+          messages: Dictionary(_.keyBy(response.server.channel.messages, 'id'))
+        }
       })
+    } catch ({ response }) {
+      const errors =
+        response && response.errors
+          ? response.errors.map(error => ({
+              level: 'error',
+              title: 'An error occured whilst loading this embed',
+              message: error.message,
+              autoDismiss: 0,
+              action: {
+                label: 'Support server',
+                callback: () => window.open('https://discord.gg/zyqZWr2')
+              }
+            }))
+          : serverIssues
+
+      return path.error({ notification: errors })
+    }
   }
 
   /**
