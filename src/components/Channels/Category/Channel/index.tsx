@@ -17,7 +17,7 @@ class Channel extends React.PureComponent<Props> {
     const { selected } = this.props
 
     if (selected && this.name) {
-      this.name.scrollIntoView()
+      // this.name.scrollIntoView()
     }
   }
 
