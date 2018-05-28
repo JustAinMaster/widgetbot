@@ -110,7 +110,6 @@ export const server = gql`
       name
       memberCount
       icon
-      invite
       channels {
         name
         category

@@ -1,3 +1,5 @@
+import api from 'embed-api'
+import * as _ from 'lodash'
 import { addNotification } from 'notify'
 import * as io from 'socket.io-client'
 
@@ -31,6 +33,17 @@ const initiate = () => {
   socket.on('messageReactionRemove', controller.signals.messageReactionRemove)
 
   socket.on('notify', addNotification)
+
+  // Embed API
+  socket.on('signIn', d => api.emit('signIn', _.omit(d, 'token')))
+
+  socket.on('message', d => api.emit('message', d))
+  socket.on('messageUpdate', d => api.emit('messageUpdate', d))
+  socket.on('messageDelete', d => api.emit('messageDelete', d))
+  socket.on('messageDeleteBulk', d => api.emit('messageDeleteBulk', d))
+
+  socket.on('messageReactionAdd', d => api.emit('messageReactionAdd', d))
+  socket.on('messageReactionRemove', d => api.emit('messageReactionRemove', d))
 }
 
 export default initiate

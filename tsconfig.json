@@ -22,6 +22,7 @@
       "queries": ["src/store/actions/graphql/queries.ts"],
       "socket-io": ["src/controllers/socket-io"],
       "fluent": ["src/controllers/cerebral/fluent.ts"],
+      "embed-api": ["src/controllers/embed-api"],
       "emoji": ["src/components/Messages/Message/Markdown/elements/emoji.ts"]
     }
   },

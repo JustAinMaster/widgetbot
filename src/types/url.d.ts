@@ -3,6 +3,7 @@ import { Locales } from '../app/locales'
 export interface RawUrl {
   [key: string]: any
 
+  api?: string
   token?: string
 
   server?: string
@@ -15,6 +16,7 @@ export interface RawUrl {
 }
 
 export interface ParsedUrl {
+  api?: string
   token?: string
 
   server?: string

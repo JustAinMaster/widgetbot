@@ -101,6 +101,10 @@ export function routed({ state, props, storage }: Context<RawUrl>) {
   if (props.token) {
     state.url.token = props.token
   }
+
+  if (props.api) {
+    state.url.api = props.api
+  }
 }
 
 /**
