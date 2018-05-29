@@ -30,7 +30,6 @@ export interface ServerResponse {
   server: {
     name: string
     memberCount: number
-    invite: string
     icon: string
     theme: Theme
     channels: Channels

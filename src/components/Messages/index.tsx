@@ -13,6 +13,8 @@ import Chat from './Chat'
 import Group from './group'
 import Message from './Message'
 
+const defaultInvite = 'https://discord.gg/mpMQCuj'
+
 export default connect()
   .with(({ state, signals, props }) => {
     const channel = state.channel.get()
@@ -68,15 +70,13 @@ export default connect()
                 <Name>{channel.name}</Name>
                 {channel.topic && <Topic>{channel.topic}</Topic>}
               </Stretch>
-              {server.invite && (
-                <Join
-                  href={server.invite}
-                  target="_blank"
-                  onClick={this.join.bind(this)}
-                >
-                  <FormattedMessage id="header.join" />
-                </Join>
-              )}
+              <Join
+                href={defaultInvite}
+                target="_blank"
+                onClick={this.join.bind(this)}
+              >
+                <FormattedMessage id="header.join" />
+              </Join>
             </Header>
           )
           const content = this.getContent()
@@ -107,7 +107,7 @@ export default connect()
             const invite = await fetchInvite(activeChannel)
             document.location.href = invite
           } catch (e) {
-            document.location.href = server.invite
+            document.location.href = defaultInvite
           }
         }
 

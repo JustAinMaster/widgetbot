@@ -14,7 +14,6 @@ const state: State = {
     name: null,
     icon: null,
     id: null,
-    invite: null,
     memberCount: null
   },
   subscriptions: Dictionary({}),

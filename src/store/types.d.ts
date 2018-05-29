@@ -41,7 +41,6 @@ export interface State {
     id: string
     memberCount: number
     icon: string
-    invite: string
   }
 
   // Channels that the user is subscribed to

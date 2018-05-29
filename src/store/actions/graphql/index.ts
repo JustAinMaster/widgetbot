@@ -180,7 +180,6 @@ namespace GraphQL {
         ...state.server,
         name: server.name,
         icon: server.icon,
-        invite: server.invite,
         memberCount: server.memberCount
       }
     }
