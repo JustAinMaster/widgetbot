@@ -21,6 +21,9 @@ export const ScrollVisible = styled(Scrollbars)`
         }
       }
     }
+    &:nth-child(2) {
+      display: none;
+    }
     &:nth-child(3) {
       background-color: rgba(0, 0, 0, 0.15);
       border-radius: 50px !important;
