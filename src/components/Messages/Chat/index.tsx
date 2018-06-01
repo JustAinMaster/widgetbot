@@ -2,7 +2,6 @@ import { connect } from 'fluent'
 import * as React from 'react'
 
 import { Field, Root } from './elements'
-import Emoji from './Emoji'
 import Input from './Input'
 
 export let input: HTMLInputElement = null
@@ -61,7 +60,7 @@ export default connect()
                   inputRef={ref => (input = ref)}
                   placeholder={channel ? `Message #${channel.name}` : null}
                 />
-                <Emoji />
+                {/* <Emoji /> */}
               </Field>
             </Root>
           )

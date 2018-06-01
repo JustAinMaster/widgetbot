@@ -12,6 +12,7 @@ export interface RawUrl {
   height?: string
   width?: string
 
+  preset?: string
   lang?: string
 }
 
@@ -25,5 +26,6 @@ export interface ParsedUrl {
   height?: number
   width?: number
 
+  preset?: 'crate'
   lang?: Locales
 }

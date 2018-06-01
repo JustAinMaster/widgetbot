@@ -1,13 +1,19 @@
-import styled from 'typed-emotion'
+import styled, { css } from 'typed-emotion'
 
 export const Root = styled('form')`
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  margin: 0 15px 20px;
   padding-top: 5px;
   position: relative;
+  margin: 0 15px 20px;
   box-shadow: 0 -1px 0 hsla(0, 0%, 100%, 0.06);
+
+  ${({ theme }) =>
+    theme.url.preset === 'crate' &&
+    css`
+      margin: 0;
+    `};
 `
 
 export const Typing = styled('div')``
@@ -21,4 +27,11 @@ export const Field = styled<FieldProps, 'div'>('div')`
   background-color: ${({ theme }) =>
     theme.colors._primary.fadeOut(0.9).toString()};
   height: ${({ rows }) => (rows > 7 ? 7 : rows) * 20 + 22}px;
+
+  ${({ theme, rows }) =>
+    theme.url.preset === 'crate' &&
+    css`
+      border-radius: 0;
+      height: ${(rows > 7 ? 7 : rows) * 20 + 35}px;
+    `};
 `

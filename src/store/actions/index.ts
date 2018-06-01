@@ -11,7 +11,7 @@ import generate from '../../modules/message/generate'
 import { Reaction } from '../../types/message'
 import Modal from '../../types/modal'
 import { message } from '../../types/socket'
-import { RawUrl } from '../../types/url'
+import { ParsedUrl, RawUrl } from '../../types/url'
 import { User } from '../../types/user'
 import { Toggles } from '../types'
 import { State } from './../types'
@@ -104,6 +104,10 @@ export function routed({ state, props, storage }: Context<RawUrl>) {
 
   if (props.api) {
     state.url.api = props.api
+  }
+
+  if (props.preset && /^crate$/.test(props.preset)) {
+    state.url.preset = props.preset as ParsedUrl['preset']
   }
 }
 
