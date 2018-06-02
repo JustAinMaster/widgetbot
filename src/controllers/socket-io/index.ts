@@ -40,7 +40,9 @@ const initiate = () => {
   socket.on('message', d => api.emit('message', d))
   socket.on('messageUpdate', d => api.emit('messageUpdate', d))
   socket.on('messageDelete', d => api.emit('messageDelete', d))
-  socket.on('messageDeleteBulk', d => api.emit('messageDeleteBulk', d))
+  socket.on('messageDeleteBulk', ({ channel, ids }) =>
+    ids.forEach(id => api.emit('messageDelete', { channel, id }))
+  )
 
   socket.on('messageReactionAdd', d => api.emit('messageReactionAdd', d))
   socket.on('messageReactionRemove', d => api.emit('messageReactionRemove', d))
