@@ -12,6 +12,7 @@ import Wrapper from '../Wrapper'
 import Chat from './Chat'
 import Group from './group'
 import Message from './Message'
+import { addNotification } from 'notify'
 
 const defaultInvite = 'https://discord.gg/mpMQCuj'
 
@@ -107,7 +108,14 @@ export default connect()
             const invite = await fetchInvite(activeChannel)
             document.location.href = invite
           } catch (e) {
-            document.location.href = defaultInvite
+            window.close()
+            addNotification({
+              level: 'error',
+              title: 'Unable to Join',
+              message:
+                'WidgetBot does not have permissions to invite you to this server...',
+              autoDismiss: 5000
+            })
           }
         }
 
