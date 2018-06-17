@@ -58,7 +58,8 @@
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "pull": "git stash && git pull && yarn && yarn build",
-    "precommit": "pretty-quick --staged"
+    "precommit": "pretty-quick --staged",
+    "doc": "typedoc --out ./docs/ ./src/index.tsx"
   },
   "devDependencies": {
     "@types/jest": "^23.0.0",
@@ -68,6 +69,7 @@
     "husky": "^0.14.3",
     "prettier": "^1.13.5",
     "pretty-quick": "^1.6.0",
+    "typedoc": "^0.11.1",
     "typescript": "^2.9.2"
   }
 }
