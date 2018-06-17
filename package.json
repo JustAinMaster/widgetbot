@@ -59,7 +59,7 @@
     "eject": "react-scripts-ts eject",
     "pull": "git stash && git pull && yarn && yarn build",
     "precommit": "pretty-quick --staged",
-    "doc": "typedoc --includeDeclarations --exclude \"**/node_modules/!(@widgetbot)/**\" --out ./docs/ ./src/index.tsx"
+    "doc": "typedoc --ignoreCompilerErrors --includeDeclarations --excludeExternals --externalPattern \"**/node_modules/!(@widgetbot)/**\" --out ./docs/ ./src/index.tsx"
   },
   "devDependencies": {
     "@types/jest": "^23.0.0",
