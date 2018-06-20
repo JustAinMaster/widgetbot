@@ -1,5 +1,5 @@
 import * as React from 'react'
-import emoji from 'react-easy-emoji'
+import emoji from '@widgetbot/react-easy-emoji'
 import { Emote } from 'styled-elements/Emoji/elements'
 import { cx } from 'emotion'
 import emojiMap from 'styled-elements/Emoji/emojiMap'

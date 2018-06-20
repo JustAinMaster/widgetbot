@@ -9,7 +9,10 @@ import { Toggles } from '../types'
 
 export const routeHome = () => {
   if (process.env.NODE_ENV === 'development') {
-    location.href = 'http://localhost:8000'
+    const ping = new Image()
+    ping.src = 'http://localhost:8000'
+    ping.onload = () => (location.href = 'http://localhost:8000')
+    ping.onerror = () => (location.href = '/channels/299881420891881473/')
   } else {
     location.href = '/'
   }
