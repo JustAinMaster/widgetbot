@@ -1,8 +1,8 @@
-import * as React from 'react'
 import emoji from '@widgetbot/react-easy-emoji'
-import { Emote } from 'styled-elements/Emoji/elements'
 import { cx } from 'emotion'
-import emojiMap from 'styled-elements/Emoji/emojiMap'
+import * as React from 'react'
+import { Emote } from 'styled-elements/Emoji/elements'
+import { iterate } from 'styled-elements/Emoji/emojiMap'
 
 const cache = new Map<string, string>()
 
@@ -18,7 +18,7 @@ interface Props {
 
 class Emoji extends React.PureComponent<Props> {
   render() {
-    let { text } = this
+    let text = this.getText()
     let { className, resolveNames, onlyEmojiClassName, src } = this.props
 
     // Return a custom emoji
@@ -55,7 +55,7 @@ class Emoji extends React.PureComponent<Props> {
     return this.jumbofy(resolved)
   }
 
-  get text() {
+  getText() {
     let { children, text } = this.props
     return children && !text ? children : text
   }
@@ -66,9 +66,12 @@ class Emoji extends React.PureComponent<Props> {
     }
 
     let parsed = text
-    for (let keyword of Object.keys(emojiMap)) {
-      parsed = parsed.split(`:${keyword}:`).join(emojiMap[keyword])
-    }
+    iterate(({ keywords, emoji }) =>
+      keywords.forEach(keyword => {
+        parsed = parsed.split(`:${keyword}:`).join(emoji)
+      })
+    )
+
     cache.set(text, parsed)
     return parsed
   }

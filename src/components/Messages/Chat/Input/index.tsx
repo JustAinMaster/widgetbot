@@ -1,196 +1,128 @@
+import Downshift, { ControllerStateAndHelpers } from 'downshift'
 import * as React from 'react'
-import getCaretCoordinates from 'textarea-caret'
 
-import { Input, Root } from './elements'
-import Suggestions from './Suggestions'
-import { getEmojiMatches } from './utils/emojis'
+import { Suggestion, Suggestions, Textarea } from './elements'
+import * as emoji from './suggestions/emoji'
+import { extractQuery } from './util'
 
-// Keycodes
-const TAB = 9
-const ENTER = 13
-const ESCAPE = 27
-const UP = 38
-const DOWN = 40
+const MAX_SUGGESTIONS = 10
 
-const SUGGESTIONS_TOP_OFFSET = 20
-const DEFAULT_ROWS = 10
-const DEFAULT_SUGGESTIONS_LIMIT = 5
+class Input extends React.PureComponent {
+  downshift: ControllerStateAndHelpers<any>
+  textarea: HTMLTextAreaElement
 
-export const initialState = {
-  leftIndex: -1,
-  caretPosition: -1,
-  showSuggestions: false,
-  query: null
-}
+  /**
+   * Listens for keydown events and passes them to downshift
+   */
+  keyDown = event => {
+    const TAB = 9
+    const ENTER = 13
 
-interface Props {
-  defaultValue?: string
-  placeholder?: string
-  value?: string
-  onChange?: Function
-  onKeyPress?: Function
-  onSubmit?: Function
-  inputRef?: Function
-  rows?: number
-  suggestionsLimit?: number
-}
-
-class EmojiInput extends React.Component<Props> {
-  state = initialState
-  textComponent
-  suggestions
-
-  onChange(value) {
-    if (this.props.onChange) {
-      this.props.onChange(value)
+    switch (event.keyCode) {
+      case ENTER:
+        if (!event.shiftKey) {
+          console.log(this.downshift.inputValue)
+          event.preventDefault()
+        }
+        return
+      case TAB:
+        event.preventDefault()
+        this.downshift.selectHighlightedItem()
+        return
+      default:
+        break
     }
   }
 
-  getValue() {
-    return this.textComponent.value
+  stateReducer = (state, changes) => {
+    console.log(state, changes)
+
+    switch (changes.type) {
+      // Disable enter key
+      case Downshift.stateChangeTypes.keyDownEnter:
+        return state
+      default:
+        return changes
+    }
   }
 
-  resetState() {
-    this.setState(initialState)
+  parseQuery = () => {
+    if (!this.textarea) return null
+    const query = extractQuery(this.textarea)
+
+    // Emojis
+    if (query.length > 2 && query[0] === ':' && query[1] !== ':') {
+      return { handler: emoji, query: query.substring(1) }
+    }
+
+    return null
+  }
+
+  suggestions() {
+    const {
+      isOpen,
+      getItemProps,
+      getMenuProps,
+      highlightedIndex
+    } = this.downshift
+
+    const suggestion = this.parseQuery()
+    if (!suggestion) return null
+
+    const { handler, query } = suggestion
+    const suggestions = handler.getSuggestions(query).slice(0, MAX_SUGGESTIONS)
+
+    if (isOpen && suggestions && suggestions.length) {
+      return (
+        <Suggestions length={suggestions.length} {...getMenuProps()}>
+          {handler.description(query)}
+
+          {suggestions.map((item, index) => (
+            <Suggestion
+              {...getItemProps({
+                key: handler.toString(item),
+                index,
+                item: {
+                  ...item,
+                  toString: () => handler.toString(item)
+                },
+                selected: highlightedIndex === index
+              })}
+            >
+              {handler.suggestion(item)}
+            </Suggestion>
+          ))}
+        </Suggestions>
+      )
+    }
+
+    return null
   }
 
   render() {
-    let suggestions = []
-    if (this.state.showSuggestions && this.state.query) {
-      suggestions = getEmojiMatches(this.state.query)
-        .slice(0, this.props.suggestionsLimit || 20)
-        .map(emoji => ({
-          value: emoji.character,
-          keyword: emoji.keyword
-        }))
-    }
-
-    const valueProps: any = {}
-    if (this.props.value) {
-      valueProps.value = this.props.value
-    }
-    if (this.props.defaultValue) {
-      valueProps.defaultValue = this.props.defaultValue
-    }
-
     return (
-      <Root>
-        <Input
-          rows={this.props.rows}
-          innerRef={textComponent => {
-            this.textComponent = textComponent
+      <Downshift
+        stateReducer={this.stateReducer}
+        // itemToString={item => (item ? item.toString() : '')}
+        defaultHighlightedIndex={0}
+      >
+        {downshift => {
+          const { getInputProps } = (this.downshift = downshift)
 
-            // Call inputRef handler
-            if (this.props.inputRef) this.props.inputRef(textComponent)
-          }}
-          {...valueProps}
-          onChange={event => {
-            this.onChange(event.target.value)
-          }}
-          placeholder={this.props.placeholder || null}
-          onClick={this.resetState.bind(this)}
-          onKeyDown={event => {
-            switch (event.keyCode) {
-              case UP:
-              case DOWN:
-                if (this.suggestions) {
-                  this.suggestions.traverseSuggestions(event.keyCode === DOWN)
-                  event.preventDefault()
-                }
-                return
-              case TAB:
-                if (this.suggestions) {
-                  this.suggestions.selectSuggestion()
-                  event.preventDefault()
-                }
-                return
-              case ENTER:
-                if (this.suggestions) {
-                  this.suggestions.selectSuggestion()
-                  event.preventDefault()
-                  return
-                }
+          return (
+            <div>
+              <Textarea
+                innerRef={ref => (this.textarea = ref)}
+                {...getInputProps({ onKeyDown: this.keyDown })}
+              />
 
-                if (!event.shiftKey) {
-                  // Submit
-                  if (this.props.onSubmit) {
-                    this.props.onSubmit(this.textComponent.value)
-                    if (this.props.onChange) this.props.onChange('')
-                  }
-                  event.preventDefault()
-                }
-
-                return
-              case ESCAPE:
-                this.resetState()
-                break
-              default:
-                if (this.props.onKeyPress) this.props.onKeyPress(event)
-                break
-            }
-          }}
-          onInput={() => {
-            const textComponent = this.textComponent
-            const caretPosition = textComponent.selectionStart
-            let leftIndex = caretPosition
-            const value = textComponent.value
-            while (leftIndex > 0) {
-              leftIndex -= 1
-              if (/\s/.test(value[leftIndex])) {
-                leftIndex += 1
-                break
-              }
-            }
-            const query = value.substring(leftIndex, caretPosition)
-            const newState: any = {
-              leftIndex,
-              caretPosition,
-              showSuggestions: false
-            }
-            if (query.length > 1 && query[0] === ':' && query[1] !== ':') {
-              newState.showSuggestions = true
-              newState.query = query.substring(1)
-            }
-            if (!this.state.showSuggestions && newState.showSuggestions) {
-              const { top, left } = getCaretCoordinates(
-                textComponent,
-                textComponent.selectionEnd
-              )
-            }
-            this.setState(newState)
-          }}
-        />
-        {this.state.showSuggestions &&
-          suggestions.length > 0 && (
-            <Suggestions
-              ref={sug => {
-                this.suggestions = sug
-              }}
-              options={suggestions}
-              onSelect={option => {
-                const text = this.textComponent.value
-                let value = option.keyword
-                const beforeQuery = text.substring(0, this.state.leftIndex)
-                const afterQuery = text.substring(
-                  this.state.caretPosition,
-                  text.length
-                )
-                const newText = `${beforeQuery}${value} ${afterQuery}`
-                this.textComponent.value = newText
-                this.onChange(newText)
-                this.textComponent.focus()
-                const newCaretPosition = this.state.leftIndex + value.length + 1
-                this.textComponent.setSelectionRange(
-                  newCaretPosition,
-                  newCaretPosition
-                )
-                this.resetState()
-              }}
-            />
-          )}
-      </Root>
+              {this.suggestions()}
+            </div>
+          )
+        }}
+      </Downshift>
     )
   }
 }
 
-export default EmojiInput
+export default Input

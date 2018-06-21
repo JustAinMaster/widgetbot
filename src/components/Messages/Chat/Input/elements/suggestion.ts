@@ -5,7 +5,7 @@ interface Props {
   selected: boolean
 }
 
-export const Suggestion = styled<Props, 'div'>('div')`
+export const Suggestion = styled<Props, 'li'>('li')`
   display: flex;
   cursor: pointer;
   height: 32px;
@@ -22,7 +22,7 @@ export const Suggestion = styled<Props, 'div'>('div')`
       : null};
 `
 
-export const Emoji = styled(Twemoji)`
+export const Icon = styled(Twemoji)`
   width: 16px;
   height: 16px;
   text-align: center;

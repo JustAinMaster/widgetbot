@@ -328,7 +328,7 @@ export function signIn({ state, props, storage }: Context<User>) {
   state.user = { ...state.user, name, avatar, id, token, type }
 
   // Set token
-  storage.definition.set('token', token)
+  storage.set('token', token)
 
   // Resolve resolvee sequences
   if (resolvees.length) {

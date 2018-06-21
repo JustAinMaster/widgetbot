@@ -54,12 +54,13 @@ export default connect()
           return (
             <Root className="chat">
               <Field rows={this.state.rows} className="field">
-                <Input
+                {/* <Input
                   onChange={this.onChange.bind(this)}
                   onSubmit={this.onSubmit.bind(this)}
                   inputRef={ref => (input = ref)}
                   placeholder={channel ? `Message #${channel.name}` : null}
-                />
+                /> */}
+                <Input />
                 {/* <Emoji /> */}
               </Field>
             </Root>

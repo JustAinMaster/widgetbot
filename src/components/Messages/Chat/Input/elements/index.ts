@@ -4,7 +4,7 @@ export const Root = styled('div')`
   width: 100%;
 `
 
-export const Input = styled('textarea')`
+export const Textarea = styled('textarea')`
   width: 100%;
   height: 100%;
   padding: 10px 16px;
@@ -44,5 +44,5 @@ export const Input = styled('textarea')`
   }
 `
 
-export { Suggestion, Emoji, Name } from './suggestion'
-export { Suggestions } from './suggestions'
+export * from './suggestion'
+export * from './suggestions'
