@@ -1106,14 +1106,7 @@ const categoryMap = {
     '🔎': ['mag_right'],
     '🛒': ['shopping_cart', 'shopping_trolley'],
     '🧮': ['abacus', 'calculation'],
-    '🧾': [
-      'receipt',
-      'reciept',
-      'accounting',
-      'bookkeeping',
-      'evidence',
-      'proof'
-    ],
+    '🧾': ['receipt'],
     '🧰': ['toolbox', 'mechanic'],
     '🧲': ['magnet', 'horseshoe'],
     '🧪': ['test_tube', 'chemistry', 'experiment', 'science'],

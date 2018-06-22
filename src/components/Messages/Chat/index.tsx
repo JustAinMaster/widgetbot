@@ -4,7 +4,7 @@ import * as React from 'react'
 import { Field, Root } from './elements'
 import Input from './Input'
 
-export let input: HTMLInputElement = null
+export let input: HTMLTextAreaElement = null
 
 export default connect()
   .with(({ state, signals, props }) => ({
@@ -54,13 +54,14 @@ export default connect()
           return (
             <Root className="chat">
               <Field rows={this.state.rows} className="field">
-                {/* <Input
+                <Input
                   onChange={this.onChange.bind(this)}
                   onSubmit={this.onSubmit.bind(this)}
-                  inputRef={ref => (input = ref)}
-                  placeholder={channel ? `Message #${channel.name}` : null}
-                /> */}
-                <Input />
+                  innerRef={ref => (input = ref)}
+                  innerProps={{
+                    placeholder: channel ? `Message #${channel.name}` : null
+                  }}
+                />
                 {/* <Emoji /> */}
               </Field>
             </Root>

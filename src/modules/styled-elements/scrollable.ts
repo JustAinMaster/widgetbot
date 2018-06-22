@@ -18,6 +18,7 @@ export const ScrollVisible = styled(Scrollbars)`
         }
         &:last-child {
           margin-bottom: 15px;
+          border-bottom: none;
         }
       }
     }

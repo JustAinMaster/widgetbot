@@ -1,128 +1,143 @@
-import Downshift, { ControllerStateAndHelpers } from 'downshift'
 import * as React from 'react'
 
-import { Suggestion, Suggestions, Textarea } from './elements'
-import * as emoji from './suggestions/emoji'
-import { extractQuery } from './util'
+import { Root, Textarea } from './elements'
+import Suggestions from './Suggestions'
+import * as channels from './suggestions/channel'
+import * as emojis from './suggestions/emoji'
+import extractQuery from './utils/extractQuery'
+import injectValue from './utils/injectValue'
 
-const MAX_SUGGESTIONS = 10
+interface Props {
+  innerRef?: (textarea: HTMLTextAreaElement) => void
+  innerProps?: React.InputHTMLAttributes<HTMLTextAreaElement>
 
-class Input extends React.PureComponent {
-  downshift: ControllerStateAndHelpers<any>
+  onChange?: Function
+  onKeyPress?: Function
+  onSubmit?: Function
+}
+
+export const handlers = [emojis, channels]
+
+class MagicTextarea extends React.Component<Props> {
+  initialState = {
+    leftIndex: -1,
+    caretPosition: -1,
+
+    showSuggestions: false,
+    suggestions: [],
+    handler: null,
+
+    query: null
+  }
+  state = this.initialState
+  resetState = () => this.setState(this.initialState)
+
+  getValue = () => this.textarea.value
   textarea: HTMLTextAreaElement
+  suggestions: Suggestions
 
-  /**
-   * Listens for keydown events and passes them to downshift
-   */
-  keyDown = event => {
-    const TAB = 9
-    const ENTER = 13
+  onChange(value) {
+    const { onChange } = this.props
 
-    switch (event.keyCode) {
-      case ENTER:
-        if (!event.shiftKey) {
-          console.log(this.downshift.inputValue)
-          event.preventDefault()
-        }
-        return
-      case TAB:
-        event.preventDefault()
-        this.downshift.selectHighlightedItem()
-        return
-      default:
-        break
-    }
-  }
-
-  stateReducer = (state, changes) => {
-    console.log(state, changes)
-
-    switch (changes.type) {
-      // Disable enter key
-      case Downshift.stateChangeTypes.keyDownEnter:
-        return state
-      default:
-        return changes
-    }
-  }
-
-  parseQuery = () => {
-    if (!this.textarea) return null
-    const query = extractQuery(this.textarea)
-
-    // Emojis
-    if (query.length > 2 && query[0] === ':' && query[1] !== ':') {
-      return { handler: emoji, query: query.substring(1) }
-    }
-
-    return null
-  }
-
-  suggestions() {
-    const {
-      isOpen,
-      getItemProps,
-      getMenuProps,
-      highlightedIndex
-    } = this.downshift
-
-    const suggestion = this.parseQuery()
-    if (!suggestion) return null
-
-    const { handler, query } = suggestion
-    const suggestions = handler.getSuggestions(query).slice(0, MAX_SUGGESTIONS)
-
-    if (isOpen && suggestions && suggestions.length) {
-      return (
-        <Suggestions length={suggestions.length} {...getMenuProps()}>
-          {handler.description(query)}
-
-          {suggestions.map((item, index) => (
-            <Suggestion
-              {...getItemProps({
-                key: handler.toString(item),
-                index,
-                item: {
-                  ...item,
-                  toString: () => handler.toString(item)
-                },
-                selected: highlightedIndex === index
-              })}
-            >
-              {handler.suggestion(item)}
-            </Suggestion>
-          ))}
-        </Suggestions>
-      )
-    }
-
-    return null
+    onChange && onChange(value)
   }
 
   render() {
     return (
-      <Downshift
-        stateReducer={this.stateReducer}
-        itemToString={item => (item ? item.toString() : '')}
-        defaultHighlightedIndex={0}
-      >
-        {downshift => {
-          const { getInputProps } = (this.downshift = downshift)
+      <Root>
+        <Textarea
+          {...this.props.innerProps}
+          innerRef={ref => {
+            const { innerRef } = this.props
 
-          return (
-            <div>
-              <Textarea
-                innerRef={ref => (this.textarea = ref)}
-                {...getInputProps({ onKeyDown: this.keyDown })}
-              />
+            this.textarea = ref
+            innerRef && innerRef(ref)
+          }}
+          onChange={event => this.onChange(event.target.value)}
+          onClick={this.resetState}
+          onKeyDown={event => {
+            switch (event.key) {
+              case 'ArrowUp':
+              case 'ArrowDown':
+                if (!this.suggestions) return
 
-              {this.suggestions()}
-            </div>
-          )
-        }}
-      </Downshift>
+                this.suggestions.traverseSuggestions(event.key === 'ArrowDown')
+                event.preventDefault()
+                return
+              case 'Tab':
+                if (!this.suggestions) return
+
+                this.suggestions.selectSuggestion()
+                event.preventDefault()
+                return
+              case 'Enter':
+                if (this.suggestions) {
+                  this.suggestions.selectSuggestion()
+                  event.preventDefault()
+                  return
+                }
+
+                if (!event.shiftKey) {
+                  // Submit
+                  if (!this.props.onSubmit) {
+                    this.props.onSubmit(this.textarea.value)
+                    if (this.props.onChange) this.props.onChange('')
+                  }
+                  event.preventDefault()
+                }
+
+                return
+              case 'Escape':
+                this.resetState()
+                break
+              default:
+                if (this.props.onKeyPress) this.props.onKeyPress(event)
+                break
+            }
+          }}
+          onInput={() => {
+            const { query, ...rest } = extractQuery(this.textarea)
+            this.setState({ ...rest, showSuggestions: false })
+
+            // Find a parser for the selected query
+            for (const handler of handlers) {
+              const parsedQuery = handler.extract(query)
+
+              if (typeof parsedQuery === 'string') {
+                this.setState({
+                  showSuggestions: true,
+                  query: parsedQuery,
+                  handler
+                })
+                break
+              }
+            }
+          }}
+        />
+
+        {this.state.showSuggestions && (
+          <Suggestions
+            ref={ref => (this.suggestions = ref)}
+            query={this.state.query}
+            handler={this.state.handler}
+            onSelect={suggestion => {
+              const { handler, leftIndex, caretPosition } = this.state
+
+              const text = injectValue({
+                input: this.textarea,
+                value: handler.toString(suggestion),
+                leftIndex,
+                caretPosition
+              })
+
+              this.onChange(text)
+              this.resetState()
+            }}
+          />
+        )}
+      </Root>
     )
   }
 }
 
-export default Input
+export default MagicTextarea
