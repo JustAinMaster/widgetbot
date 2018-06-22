@@ -103,7 +103,7 @@ class Input extends React.PureComponent {
     return (
       <Downshift
         stateReducer={this.stateReducer}
-        // itemToString={item => (item ? item.toString() : '')}
+        itemToString={item => (item ? item.toString() : '')}
         defaultHighlightedIndex={0}
       >
         {downshift => {
