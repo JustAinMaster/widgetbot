@@ -15,6 +15,7 @@ import { ParsedUrl, RawUrl } from '../../types/url'
 import { User } from '../../types/user'
 import { Toggles } from '../types'
 import { State } from './../types'
+import resolveMessage from './resolveMessage'
 import { getLast } from './util'
 
 /**
@@ -158,10 +159,15 @@ export function sendMessage({
   props,
   path
 }: BranchContext<{ sending: message }, { channel: string; message: string }>) {
-  const { channel } = props
+  const payload = {
+    ...props,
+    message: resolveMessage(props.message)
+  }
+  const { channel } = payload
+
   const id = _.times(20, () => _.random(9)).join('')
 
-  socket.emit('sendMessage', props, () => {
+  socket.emit('sendMessage', payload, () => {
     controller.signals.deleteMessage({ channel, id })
   })
 
@@ -177,7 +183,7 @@ export function sendMessage({
         color: '#000000'
       },
       id,
-      message: props.message,
+      message: payload.message,
       type: 'SENDING'
     })
   })

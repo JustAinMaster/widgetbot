@@ -2,6 +2,7 @@ import * as hljs from 'highlight.js'
 import * as React from 'react'
 import SimpleMarkdown from 'simple-markdown'
 
+import controller from '../../../../controllers/cerebral'
 import message from '../../../../types/message'
 import Embed from '../Embed'
 import {
@@ -51,12 +52,14 @@ export function parseText(msg: message) {
         )
       })
 
-      mentions.channels.forEach((channel, i) => {
+      const channels = controller.state.channels.entries()
+
+      channels.forEach(([id, { name }], i) => {
         e = replace(
           e,
-          `<#${channel.id}>`,
-          <Channel key={channel.id} id={channel.id}>
-            #{channel.name}
+          `<#${id}>`,
+          <Channel key={i} id={id}>
+            {`#${name}`}
           </Channel>
         )
       })
