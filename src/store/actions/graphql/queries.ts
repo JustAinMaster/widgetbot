@@ -20,10 +20,6 @@ export const messages =
         count
       }
       mentions {
-        channels {
-          name
-          id
-        }
         members {
           name
           id
