@@ -1,6 +1,6 @@
-import emoji from '@widgetbot/react-easy-emoji'
 import { cx } from 'emotion'
 import * as React from 'react'
+import emoji from 'react-easy-emoji'
 import { Base, Emote } from 'styled-elements/Emoji/elements'
 import { iterate } from 'styled-elements/Emoji/emojiMap'
 
