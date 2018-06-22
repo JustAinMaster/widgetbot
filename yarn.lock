@@ -2482,12 +2482,6 @@ dotenv@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-4.0.0.tgz#864ef1379aced55ce6f95debecdce179f7a0cd1d"
 
-downshift@^2.0.7:
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/downshift/-/downshift-2.0.7.tgz#273b315ed2c449c1e13e2f9ddcdd03fb6e09a005"
-  dependencies:
-    prop-types "^15.6.0"
-
 duplexer3@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/duplexer3/-/duplexer3-0.1.4.tgz#ee01dd1cac0ed3cbc7fdbea37dc0a8f1ce002ce2"
@@ -7487,10 +7481,6 @@ test-exclude@^4.2.1:
 text-table@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
-
-textarea-caret@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/textarea-caret/-/textarea-caret-3.1.0.tgz#5d5a35bb035fd06b2ff0e25d5359e97f2655087f"
 
 throat@^4.0.0:
   version "4.1.0"
