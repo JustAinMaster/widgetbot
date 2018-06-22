@@ -1,14 +1,14 @@
 import emoji from '@widgetbot/react-easy-emoji'
 import { cx } from 'emotion'
 import * as React from 'react'
-import { Emote } from 'styled-elements/Emoji/elements'
+import { Base, Emote } from 'styled-elements/Emoji/elements'
 import { iterate } from 'styled-elements/Emoji/emojiMap'
 
 const cache = new Map<string, string>()
 
 interface Props {
   [key: string]: any
-  children?: string
+  children?: any
   text?: string
   className?: string
   resolveNames?: boolean
@@ -19,28 +19,23 @@ interface Props {
 class Emoji extends React.PureComponent<Props> {
   render() {
     let text = this.getText()
-    let { className, resolveNames, onlyEmojiClassName, src } = this.props
+    let { className, resolveNames, src } = this.props
 
     // Return a custom emoji
-    if (src) {
-      return <Emote src={src} className={cx('emoji', className)} />
-    }
+    if (src) return <Emote src={src} className={cx('emoji', className)} />
 
     // Validate props
     if (typeof text !== 'string') {
-      if (text === null || typeof text === 'undefined') {
-        return null
-      }
-      throw new Error(
-        `Emoji component expects string as input to be a string, received ${text}`
-      )
+      if (typeof text === 'undefined' || text === 'null') return
+
+      return React.cloneElement(text, {
+        className: cx('emoji', Base, className)
+      })
     }
 
     // Resolve all text representations of emojis
     // uses a cache store to reduce
-    if (resolveNames) {
-      text = this.resolve(text)
-    }
+    if (resolveNames) text = this.resolve(text)
 
     const resolved = emoji(text, (code, string, key) => (
       <Emote

@@ -1,5 +1,6 @@
 import matchSorter from 'match-sorter'
 import * as React from 'react'
+import { Hash } from 'styled-elements/channel'
 
 import controller from '../../../../../controllers/cerebral'
 import { Channel } from '../../../../../types/responses'
@@ -32,7 +33,9 @@ export const description = (query: string) => (
 // Render a suggestion for an emoji
 export const suggestion = ({ name }: Channel) => (
   <React.Fragment>
-    <Icon>😊</Icon>
-    <Name>{`#${name}`}</Name>
+    <Icon>
+      <Hash />
+    </Icon>
+    <Name>{name}</Name>
   </React.Fragment>
 )
