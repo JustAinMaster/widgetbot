@@ -19,10 +19,10 @@ export const getSuggestions = (query: string) =>
     ]
   })
 
-// Extract the emoji name from a query
+// Extract the channel name from a query
 export const extract = (query: string) => query[0] === '#' && query.substring(1)
 
-// Convert the emoji to a string
+// Convert the channel to a string
 export const toString = ({ name }: Channel) => `#${name}`
 
 // Render a description for a query
@@ -30,7 +30,7 @@ export const description = (query: string) => (
   <Description>Text Channels</Description>
 )
 
-// Render a suggestion for an emoji
+// Render a suggestion for an channel
 export const suggestion = ({ name }: Channel) => (
   <React.Fragment>
     <Icon>

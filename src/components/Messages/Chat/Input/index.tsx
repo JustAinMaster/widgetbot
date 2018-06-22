@@ -78,11 +78,11 @@ class MagicTextarea extends React.Component<Props> {
                 }
 
                 if (!event.shiftKey) {
+                  const { onSubmit, onChange } = this.props
+
                   // Submit
-                  if (!this.props.onSubmit) {
-                    this.props.onSubmit(this.textarea.value)
-                    if (this.props.onChange) this.props.onChange('')
-                  }
+                  onSubmit && onSubmit(this.textarea.value)
+                  onChange && onChange('')
                   event.preventDefault()
                 }
 
