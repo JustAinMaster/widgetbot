@@ -140,8 +140,7 @@ const categoryMap = {
     '👰': ['bride_with_veil'],
     '🚶': ['walking', 'pedestrian'],
     '🏃': ['runner'],
-    '💃': ['dancer'],
-    '💃': ['woman_dancer', 'woman_dancing'],
+    '💃': ['dancer', 'woman_dancer', 'woman_dancing'],
     '👯': ['dancers', 'people_with_bunny_ears'],
     '👫': ['couple'],
     '👬': ['two_men_holding_hands'],
@@ -250,7 +249,13 @@ const categoryMap = {
     '🥶': ['cold_face', 'freezing_face', 'freezing', 'cold'],
     '🥳': ['partying_face', 'partying'],
     '🥴': ['woozy_face', 'woozy'],
-    '🥺': ['pleading_face', 'begging_face', 'pleading', 'begging', 'puppy_dog_eyes'],
+    '🥺': [
+      'pleading_face',
+      'begging_face',
+      'pleading',
+      'begging',
+      'puppy_dog_eyes'
+    ],
     '🧒': ['child', 'kid'],
     '🧑': ['adult'],
     '🧓': ['older_adult', 'old'],
@@ -558,7 +563,13 @@ const categoryMap = {
     '🦓': ['zebra'],
     '🦒': ['giraffe'],
     '🦔': ['hedgehog', 'echinda', 'spiny'],
-    '🦕': ['sauropod', 'brachiosaurus', 'brontosaurus', 'diplodocus', 'dinosaur'],
+    '🦕': [
+      'sauropod',
+      'brachiosaurus',
+      'brontosaurus',
+      'diplodocus',
+      'dinosaur'
+    ],
     '🦖': ['t_rex', 'tyrannosaurus_rex'],
     '🦗': ['cricket', 'grasshopper', 'orthoptera']
   },
@@ -1095,7 +1106,14 @@ const categoryMap = {
     '🔎': ['mag_right'],
     '🛒': ['shopping_cart', 'shopping_trolley'],
     '🧮': ['abacus', 'calculation'],
-    '🧾': ['receipt', 'reciept', 'accounting', 'bookkeeping', 'evidence', 'proof'],
+    '🧾': [
+      'receipt',
+      'reciept',
+      'accounting',
+      'bookkeeping',
+      'evidence',
+      'proof'
+    ],
     '🧰': ['toolbox', 'mechanic'],
     '🧲': ['magnet', 'horseshoe'],
     '🧪': ['test_tube', 'chemistry', 'experiment', 'science'],
