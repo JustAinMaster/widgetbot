@@ -24,13 +24,14 @@ export const Suggestions = styled<Props, any>(ScrollOverlay)`
   left: 0;
   border-radius: 5px 5px 0 0;
   padding: 8px 0;
-
-  bottom: ${({ theme }) =>
-    theme.url.preset === 'crate' ? `100%` : `calc(100% - 5px)`};
-  height: ${({ length }) =>
-    (length > 9 ? 300 : length * 32) + 8 * 2 + 26}px !important;
   background-color: ${({ theme }) =>
     theme.colors._background.darken(0.05).toString()};
+  bottom: ${({ theme }) =>
+    theme.url.preset === 'crate' ? `100%` : `calc(100% - 5px)`};
+
+  height: ${({ length }) =>
+    (length > 9 ? 300 : length * 32) + 8 * 2 + 26}px !important;
+  max-height: calc(100vh - 130px);
 
   & > div:nth-child(1) {
     padding: 8px 0;
