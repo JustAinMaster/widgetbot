@@ -16,9 +16,7 @@ import {
   Role,
   Twemoji
 } from './elements'
-
-// import Emoji from "./emoji"
-const $Emoji = { people: [{ names: ['disabled'], surrogates: '😀' }] }
+import { iterate } from 'styled-elements/Emoji/emojiMap'
 
 export function parseText(msg: message) {
   function mentions(array: [string | string[]], mentions) {
@@ -322,26 +320,20 @@ const DIVERSITY_SURROGATES = ['🏻', '🏼', '🏽', '🏾', '🏿']
 const NAME_TO_EMOJI = {}
 const EMOJI_TO_NAME = {}
 
-Object.keys($Emoji).forEach(category => {
-  $Emoji[category].forEach(emoji => {
-    EMOJI_TO_NAME[emoji.surrogates] = emoji.names[0] || ''
-
-    emoji.names.forEach(name => {
-      NAME_TO_EMOJI[name] = emoji.surrogates
-
-      DIVERSITY_SURROGATES.forEach((d, i) => {
-        NAME_TO_EMOJI[`${name}::skin-tone-${i + 1}`] = emoji.surrogates.concat(
-          d
-        )
-      })
-    })
+iterate(({ keywords, emoji }) => {
+  EMOJI_TO_NAME[emoji] = keywords[0] || ''
+  keywords.forEach(keyword => {
+    NAME_TO_EMOJI[keyword] = emoji
 
     DIVERSITY_SURROGATES.forEach((d, i) => {
-      const surrogates = emoji.surrogates.concat(d)
-      const name = emoji.names[0] || ''
-
-      EMOJI_TO_NAME[surrogates] = `${name}::skin-tone-${i + 1}`
+      NAME_TO_EMOJI[`${name}::skin-tone-${i + 1}`] = emoji.concat(d)
     })
+  })
+  DIVERSITY_SURROGATES.forEach((d, i) => {
+    const surrogates = emoji.concat(d)
+    const name = keywords[0] || ''
+
+    EMOJI_TO_NAME[surrogates] = `${name}::skin-tone-${i + 1}`
   })
 })
 
