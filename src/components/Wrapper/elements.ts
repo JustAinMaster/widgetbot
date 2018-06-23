@@ -42,5 +42,9 @@ export const Wrapper = styled<Props, 'div'>('div')`
         pointer-events: none !important;
       }
     }
+    @media (max-width: 400px), (max-height: 340px) {
+      margin-left: 180px;
+      width: calc(100% - 180px);
+    }
   ` : null};
 `
