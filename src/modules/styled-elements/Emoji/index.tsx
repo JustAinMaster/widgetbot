@@ -26,7 +26,7 @@ class Emoji extends React.PureComponent<Props> {
 
     // Validate props
     if (typeof text !== 'string') {
-      if (typeof text === 'undefined' || text === 'null') return
+      if (typeof text === 'undefined' || text === null) return null
 
       return React.cloneElement(text, {
         className: cx('emoji', Base, className)
