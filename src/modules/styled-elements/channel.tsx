@@ -10,7 +10,7 @@ export const Hash = styled('div')`
 `
 
 interface Props {
-  id: string
+  id?: string
   className?: string
 }
 
@@ -24,24 +24,30 @@ const Channel = connect<Props>()
   .toClass(
     props =>
       class Channel extends React.PureComponent<typeof props> {
-        url: string
-
-        componentWillMount() {
-          this.url = this.getUrl()
+        state = {
+          url: null
         }
 
-        getUrl() {
-          const { id } = this.props
-          const path = location.pathname.split('/')
+        static getDerivedStateFromProps(props, state) {
+          if (props.id) {
+            const path = location.pathname.split('/')
+            const url =
+              path.length > 5 ? props.id : `/channels/${path[2]}/${props.id}/`
 
-          return path.length > 5 ? id : `/channels/${path[2]}/${id}/`
+            return { url }
+          }
+
+          return null
         }
 
         handleClick = (e: Event) => {
+          const { url } = this.state
+          if (!url) return
+
           const { switchChannel, id } = this.props
           e.preventDefault()
 
-          history.pushState(null, null, this.url)
+          history.pushState(null, null, url)
 
           switchChannel({
             channel: id
@@ -49,9 +55,10 @@ const Channel = connect<Props>()
         }
 
         render() {
+          const { url } = this.state
           return (
             <a
-              href={this.url}
+              href={url}
               {...{
                 className: this.props.className,
                 children: this.props.children

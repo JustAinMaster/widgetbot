@@ -7,11 +7,9 @@ import * as queries from 'queries'
 import { Notification } from 'react-notification-system'
 import { subscribe } from 'socket-io'
 
-import {
-  Channel,
-  ChannelResponse,
-  ServerResponse
-} from '../../../types/responses'
+import parseUsername from '../../../components/Messages/Message/parseUsername'
+import { ChannelResponse, ServerResponse } from '../../../types/responses'
+import { Channel } from '../../types'
 import { getLast } from '../util'
 
 const serverIssues = {
@@ -174,6 +172,30 @@ namespace GraphQL {
   export function store({ state, props }: Context<ServerResponse>) {
     const { server } = props
 
+    if (server.members) {
+      const members = server.members.map(member => {
+        const { name, discriminator } = parseUsername(member.tag)
+        return [
+          member.id,
+          {
+            name,
+            tag: member.tag,
+            discriminator,
+
+            id: member.id,
+            avatarURL: `https://cdn.discordapp.com/avatars/${member.id}/${
+              member.avatar
+            }.png?size=64`,
+
+            roles: member.roles,
+            status: member.status
+          }
+        ]
+      })
+
+      state.members.merge(members)
+    }
+
     if (server.name) {
       // Merge the server info
       state.server = {
@@ -191,21 +213,26 @@ namespace GraphQL {
       }
     }
 
-    server.channels.forEach(channel => {
-      state.channels.set(channel.id, {
-        unread: false,
-        lastSeenID: null,
-        ...(state.channels.get(channel.id) as any),
-        ...(channel.id === state.activeChannel
-          ? {
-              lastSeenID: getLast(server.channel.messages),
-              ...channel,
-              ...server.channel,
-              messages: Dictionary(_.keyBy(server.channel.messages, 'id'))
-            }
-          : channel)
-      })
-    })
+    if (server.channels) {
+      const channels = server.channels.map(channel => [
+        channel.id,
+        {
+          unread: false,
+          lastSeenID: null,
+          ...(state.channels.get(channel.id) as any),
+          ...(channel.id === state.activeChannel
+            ? {
+                lastSeenID: getLast(server.channel.messages),
+                ...channel,
+                ...server.channel,
+                messages: Dictionary(_.keyBy(server.channel.messages, 'id'))
+              }
+            : channel)
+        }
+      ])
+
+      state.channels.merge(channels)
+    }
   }
 }
 

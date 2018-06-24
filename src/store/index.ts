@@ -34,6 +34,8 @@ const state: State = {
   activeChannel: null,
   channel: Computed(computed.activeChannel),
 
+  members: Dictionary({}),
+
   theme: {
     colors: {
       primary: '#fff',

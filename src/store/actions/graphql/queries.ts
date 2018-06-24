@@ -1,5 +1,16 @@
 const gql = String.raw
 
+export const members =
+  'members' +
+  gql`
+    {
+      tag
+      id
+      status
+      avatar
+    }
+  `
+
 export const messages =
   'messages' +
   gql`
@@ -106,6 +117,7 @@ export const server = gql`
       name
       memberCount
       icon
+      ${members}
       channels {
         name
         category
@@ -131,7 +143,6 @@ export const channel = gql`
         topic
         ${messages}
       }
-      ${theme}
     }
   }
 `

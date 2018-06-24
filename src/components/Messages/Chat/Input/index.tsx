@@ -2,8 +2,10 @@ import * as React from 'react'
 
 import { Root, Textarea } from './elements'
 import Suggestions from './Suggestions'
-import * as channels from './suggestions/channel'
-import * as emojis from './suggestions/emoji'
+import Channels from './suggestions/channels'
+import Commands from './suggestions/commands'
+import Emojis from './suggestions/emojis'
+import Mentions from './suggestions/mentions'
 import extractQuery from './utils/extractQuery'
 import injectValue from './utils/injectValue'
 
@@ -16,7 +18,7 @@ interface Props {
   onSubmit?: Function
 }
 
-export const handlers = [emojis, channels]
+export const handlers = [Emojis, Mentions, Commands, Channels]
 
 class MagicTextarea extends React.Component<Props> {
   initialState = {
@@ -28,6 +30,7 @@ class MagicTextarea extends React.Component<Props> {
 
     query: null
   }
+
   state = this.initialState
   resetState = () => this.setState(this.initialState)
 
@@ -100,7 +103,7 @@ class MagicTextarea extends React.Component<Props> {
 
             // Find a parser for the selected query
             for (const handler of handlers) {
-              const parsedQuery = handler.extract(query)
+              const parsedQuery = handler.extract(query, this.textarea)
 
               if (typeof parsedQuery === 'string') {
                 this.setState({

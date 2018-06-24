@@ -1,6 +1,4 @@
-import { Dictionary } from '@cerebral/fluent'
-
-import { Theme } from '../store/types'
+import { Channel, Theme } from '../store/types'
 import Message from './message'
 import { Permissions } from './permissions'
 
@@ -12,18 +10,18 @@ type Channels = {
   permissions: Permissions
 }[]
 
-export interface Channel {
-  name: string
-  permissions: Permissions
-  topic?: string
-  id?: string
-  messages?: Dictionary<Message>
-}
-
 export interface ChannelResponse {
   server: {
     channel: Channel & { messages: Message[] }
   }
+}
+
+export type Member = {
+  tag: string
+  id: string
+  avatar: string
+  status: string
+  roles: string[]
 }
 
 export interface ServerResponse {
@@ -32,7 +30,10 @@ export interface ServerResponse {
     memberCount: number
     icon: string
     theme: Theme
+
     channels: Channels
     channel?: ChannelResponse['server']['channel']
+
+    members?: Member[]
   }
 }
