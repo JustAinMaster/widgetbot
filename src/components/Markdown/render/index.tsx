@@ -1,4 +1,6 @@
 import * as hljs from 'highlight.js'
+import * as _ from 'lodash'
+import { astToString, flattenAst, recurse } from 'markdown/render/util'
 import * as React from 'react'
 import SimpleMarkdown from 'simple-markdown'
 import { iterate } from 'styled-elements/Emoji/emojiMap'
@@ -139,50 +141,6 @@ const emojiTipOptions = {
   'data-offset': "{ 'top': 3 }"
 }
 
-function flattenAst(node, parent?) {
-  if (Array.isArray(node)) {
-    for (let n = 0; n < node.length; n++) {
-      node[n] = flattenAst(node[n], parent)
-    }
-
-    return node
-  }
-
-  if (node.content != null) {
-    node.content = flattenAst(node.content, node)
-  }
-
-  if (parent != null && node.type === parent.type) {
-    return node.content
-  }
-
-  return node
-}
-
-function astToString(node) {
-  function inner(node, result = []) {
-    if (Array.isArray(node)) {
-      node.forEach(subNode => astToString(subNode))
-    } else if (typeof node.content === 'string') {
-      result.push(node.content)
-    } else if (node.content != null) {
-      astToString(node.content)
-    }
-
-    return result
-  }
-
-  return inner(node).join('')
-}
-
-function recurse(node, recurseOutput, state) {
-  if (typeof node.content === 'string') {
-    return node.content
-  }
-
-  return recurseOutput(node.content, state)
-}
-
 function parserFor(rules, returnAst?) {
   const parser = SimpleMarkdown.parserFor(rules)
   const renderer = SimpleMarkdown.reactFor(
@@ -205,16 +163,6 @@ function parserFor(rules, returnAst?) {
 
     return renderer(ast)
   }
-}
-
-function omit(object, excluded) {
-  return Object.keys(object).reduce((result, key) => {
-    if (excluded.indexOf(key) === -1) {
-      result[key] = object[key]
-    }
-
-    return result
-  }, {})
 }
 
 // emoji stuff
@@ -262,12 +210,12 @@ iterate(({ keywords, emoji }) => {
 
 const EMOJI_NAME_AND_DIVERSITY_RE = /^:([^\s:]+?(?:::skin-tone-\d)?):/
 
-function convertNameToSurrogate(name) {
+function convertNameToSurrogate(name: string) {
   // what is t for?
   return NAME_TO_EMOJI.hasOwnProperty(name) ? NAME_TO_EMOJI[name] : ''
 }
 
-function convertSurrogateToName(surrogate, colons = true) {
+function convertSurrogateToName(surrogate: string, colons = true) {
   // what is a for?
   let a = ''
 
@@ -514,7 +462,7 @@ const parseAllowLinks = parserFor(createRules(baseRules))
 //  embed title (obviously)
 //  embed field names
 const parseEmbedTitle = parserFor(
-  omit(rulesWithoutMaskedLinks, [
+  _.omit(rulesWithoutMaskedLinks, [
     'codeBlock',
     'br',
     'mention',
