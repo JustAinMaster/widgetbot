@@ -8,14 +8,17 @@ import Author, { Timestamp } from './Author'
 import {
   Avatar,
   Content,
+  Edited,
   Group,
   JoinMember,
   JoinText,
-  Markup,
+  Messages,
   Reactions,
-  Sys,
-  Text
+  Root,
+  Sys
 } from './elements'
+import Embed from './Embed'
+import { Image } from './Embed/elements/media'
 import parseUsername from './parseUsername'
 import Reaction from './Reaction'
 
@@ -39,7 +42,7 @@ class Message extends React.PureComponent<Props, any> {
 
       return (
         <Group className="message join">
-          <Content className="content">
+          <Messages className="content">
             <JoinText>
               <FormattedMessage
                 id="message.join_message"
@@ -47,44 +50,59 @@ class Message extends React.PureComponent<Props, any> {
               />
             </JoinText>
             <Timestamp time={message.timestamp} />
-          </Content>
+          </Messages>
         </Group>
       )
     }
 
     return (
-      <Group className="message">
+      <Group className="group">
         <Avatar url={message.author.avatar} className="avatar" />
-        <Content className="content">
+        <Messages className="messages">
           <Author author={message.author} time={message.timestamp} />
-          <Markup className="markup">
-            {messages.map((message, i) => (
-              <ThemeProvider key={message.id} theme={this.theme(message)}>
-                <React.Fragment>
-                  <Text className="text">{parseText(message.content)}</Text>
-                  {message.reactions && (
-                    <Reactions className="reactions">
-                      {message.reactions.map((reaction, i) => (
-                        <Reaction key={i} {...reaction} />
-                      ))}
-                    </Reactions>
-                  )}
 
-                  {// If the message is the last one seen by the user
-                  message.id === lastSeen &&
-                    // And it's not at the end of the list
-                    i !== messages.length - 1 && (
-                      <Sys.Container className="system-message">
-                        <Sys.Lines>
-                          <Sys.Message>New Messages</Sys.Message>
-                        </Sys.Lines>
-                      </Sys.Container>
-                    )}
-                </React.Fragment>
-              </ThemeProvider>
-            ))}
-          </Markup>
-        </Content>
+          {messages.map((message, i) => (
+            <ThemeProvider key={message.id} theme={this.theme(message)}>
+              <Root className="message">
+                <Content className="content">
+                  {parseText(message.content)}
+                  {message.editedAt && (
+                    <Edited className="edited">{`(edited)`}</Edited>
+                  )}
+                </Content>
+
+                {message.attachment && (
+                  <Image
+                    src={message.attachment.url}
+                    height={+message.attachment.height}
+                    width={+message.attachment.width}
+                  />
+                )}
+
+                {message.embeds.map((embed, i) => <Embed key={i} {...embed} />)}
+
+                {message.reactions && (
+                  <Reactions className="reactions">
+                    {message.reactions.map((reaction, i) => (
+                      <Reaction key={i} {...reaction} />
+                    ))}
+                  </Reactions>
+                )}
+
+                {// If the message is the last one seen by the user
+                message.id === lastSeen &&
+                  // And it's not at the end of the list
+                  i !== messages.length - 1 && (
+                    <Sys.Container className="system-message">
+                      <Sys.Lines>
+                        <Sys.Message>New Messages</Sys.Message>
+                      </Sys.Lines>
+                    </Sys.Container>
+                  )}
+              </Root>
+            </ThemeProvider>
+          ))}
+        </Messages>
       </Group>
     )
   }

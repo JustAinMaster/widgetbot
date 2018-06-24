@@ -47,10 +47,3 @@ export const Title = styled('div')`
   font-weight: 500;
   font-size: 14px;
 `
-
-export { Field, Fields, FieldName, FieldValue } from './fields'
-export { ColorPill } from './colorpill'
-export { Footer, FooterText, FooterIcon } from './footer'
-export { Author, AuthorName, AuthorIcon } from './author'
-export { Thumbnail } from './thumbnail'
-export { Description } from './description'

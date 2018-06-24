@@ -4,25 +4,14 @@ import * as React from 'react'
 
 import { parseAllowLinks, parseEmbedTitle } from '../Markdown'
 import { Twemoji } from '../Markdown/elements'
-import {
-  Author,
-  AuthorIcon,
-  AuthorName,
-  ColorPill,
-  Content,
-  Description,
-  Field,
-  FieldName,
-  Fields,
-  FieldValue,
-  Footer,
-  FooterIcon,
-  FooterText,
-  Root,
-  Thumbnail,
-  Title,
-  Wrapper
-} from './elements'
+import { Content, Root, Title, Wrapper } from './elements'
+import { Author, AuthorIcon, AuthorName } from './elements/author'
+import { ColorPill } from './elements/colorpill'
+import { Description } from './elements/description'
+import { Field, FieldName, Fields, FieldValue } from './elements/fields'
+import { Footer, FooterIcon, FooterText } from './elements/footer'
+import { Image } from './elements/media'
+import { Thumbnail } from './elements/thumbnail'
 
 function parseEmojis(text) {
   if (text) {
@@ -187,8 +176,14 @@ const Embed = ({
   timestamp,
   footer,
   ...embed
-}) => {
-  return (
+}) =>
+  embed.type === 'gifv' ? (
+    <Image
+      src={embed.video.url.replace('.mp4', '.gif')}
+      width={+embed.video.width}
+      height={+embed.video.height}
+    />
+  ) : (
     <ThemeProvider
       theme={theme => ({
         ...theme,
@@ -213,6 +208,5 @@ const Embed = ({
       </Root>
     </ThemeProvider>
   )
-}
 
 export default Embed

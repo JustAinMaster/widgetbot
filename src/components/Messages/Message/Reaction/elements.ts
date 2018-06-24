@@ -1,5 +1,5 @@
 import { Twemoji } from 'emoji'
-import styled, { css } from 'typed-emotion'
+import styled from 'typed-emotion'
 
 export const Root = styled('div')`
   display: inline-block;
@@ -7,7 +7,7 @@ export const Root = styled('div')`
     theme.colors._primary.fadeOut(0.96).toString()};
   cursor: pointer;
   border-radius: 3px;
-  margin: 2px;
+  margin-right: 2px;
   padding: 0 7px;
   user-select: none;
   height: 22px;

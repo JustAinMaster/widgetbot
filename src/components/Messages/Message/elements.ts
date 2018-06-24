@@ -1,7 +1,5 @@
 import styled, { css } from './ThemeContext'
 
-export const Root = styled('div')``
-
 // prettier-ignore
 export const Group = styled('div')`
   border-bottom: 1px solid ${({ theme }) => theme.colors._primary.fadeOut(0.96).toString()};
@@ -56,9 +54,16 @@ export const Avatar = styled<AvatarProps, 'div'>('div')`
         `}
 `
 
-export const Content = styled('div')`
+export const Messages = styled('div')`
   flex-grow: 1;
   margin-right: 20px;
+`
+
+export const Edited = styled('span')`
+  font-size: 0.625rem;
+  line-height: 0.625rem;
+  margin-left: 3px;
+  opacity: 0.3;
 `
 
 export const JoinText = styled('span')`
@@ -77,20 +82,15 @@ export const JoinMember = styled('a')`
   }
 `
 
-export const Markup = styled('div')`
+export const Root = styled('div')`
+  color: ${({ theme }) => theme.colors._primary.fadeOut(0.3).toString()};
+  opacity: ${({ theme }) => (theme.message.type === 'SENDING' ? 0.5 : 1)};
+
   font-size: 0.9375rem;
   line-height: 1.1em;
   margin-top: 4px;
   white-space: pre-wrap;
   word-wrap: break-word;
-`
-
-export const Reactions = styled('div')``
-
-export const Text = styled('div')`
-  color: ${({ theme }) => theme.colors._primary.fadeOut(0.3).toString()};
-  margin-bottom: 7px;
-  opacity: ${({ theme }) => (theme.message.type === 'SENDING' ? 0.5 : 1)};
 
   & * {
     color: inherit;
@@ -108,6 +108,12 @@ export const Text = styled('div')`
     font-weight: 700;
     color: inherit;
   }
+`
+
+export const Reactions = styled('div')``
+
+export const Content = styled('div')`
+  margin-bottom: 7px;
 `
 
 export namespace Sys {

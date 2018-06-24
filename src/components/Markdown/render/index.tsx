@@ -124,7 +124,12 @@ export function parseText(msg: string) {
         )
     )
 
-  return emoji(mentions(parse(msg)))
+  try {
+    return msg ? emoji(mentions(parse(msg))) : null
+  } catch (e) {
+    console.error(`Failed to parse "${msg}"`, e)
+    return msg
+  }
 }
 
 function parserFor(rules, returnAst?) {
