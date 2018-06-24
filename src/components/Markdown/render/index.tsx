@@ -1,12 +1,12 @@
 import * as hljs from 'highlight.js'
 import * as _ from 'lodash'
+import baseRules from 'markdown/render/ast'
+import { Channel, Code, Link, Twemoji } from 'markdown/render/elements'
 import { astToString, flattenAst, recurse } from 'markdown/render/util'
 import * as React from 'react'
 import SimpleMarkdown from 'simple-markdown'
-import { iterate } from 'styled-elements/Emoji/emojiMap'
 
 import controller from '../../../controllers/cerebral'
-import { Channel, Code, Emoji, Link, Twemoji } from './elements'
 
 export function parseText(msg: string) {
   function mentions(array: [string | string[]]) {
@@ -133,14 +133,6 @@ export function parseText(msg: string) {
 // names are weird and sometimes missing, as i'm not sure
 // what all of these are doing exactly.
 
-const emojiTipOptions = {
-  'data-type': 'dark',
-  'data-effect': 'solid',
-  'data-delay-show': 450,
-  'data-place': 'top',
-  'data-offset': "{ 'top': 3 }"
-}
-
 function parserFor(rules, returnAst?) {
   const parser = SimpleMarkdown.parserFor(rules)
   const renderer = SimpleMarkdown.reactFor(
@@ -165,204 +157,7 @@ function parserFor(rules, returnAst?) {
   }
 }
 
-// emoji stuff
-
-const getEmoteURL = emote => `https://cdn.discordapp.com/emojis/${emote.id}.png`
-const getAnimEmoteURL = emote =>
-  `https://cdn.discordapp.com/emojis/${emote.id}.gif`
-
-function getEmojiURL(surrogate) {
-  if (['™', '©', '®'].indexOf(surrogate) > -1) {
-    return ''
-  }
-
-  try {
-    // we could link to discord's cdn, but there's a lot of these
-    // and i'd like to minimize the amount of data we need directly from them
-    return `https://twemoji.maxcdn.com/2/svg/aaa.svg`
-  } catch (error) {
-    return ''
-  }
-}
-
-// emoji lookup tables
-
-const DIVERSITY_SURROGATES = ['🏻', '🏼', '🏽', '🏾', '🏿']
-const NAME_TO_EMOJI = {}
-const EMOJI_TO_NAME = {}
-
-iterate(({ keywords, emoji }) => {
-  EMOJI_TO_NAME[emoji] = keywords[0] || ''
-  keywords.forEach(keyword => {
-    NAME_TO_EMOJI[keyword] = emoji
-
-    DIVERSITY_SURROGATES.forEach((d, i) => {
-      NAME_TO_EMOJI[`${name}::skin-tone-${i + 1}`] = emoji.concat(d)
-    })
-  })
-  DIVERSITY_SURROGATES.forEach((d, i) => {
-    const surrogates = emoji.concat(d)
-    const name = keywords[0] || ''
-
-    EMOJI_TO_NAME[surrogates] = `${name}::skin-tone-${i + 1}`
-  })
-})
-
-const EMOJI_NAME_AND_DIVERSITY_RE = /^:([^\s:]+?(?:::skin-tone-\d)?):/
-
-function convertNameToSurrogate(name: string) {
-  // what is t for?
-  return NAME_TO_EMOJI.hasOwnProperty(name) ? NAME_TO_EMOJI[name] : ''
-}
-
-function convertSurrogateToName(surrogate: string, colons = true) {
-  // what is a for?
-  let a = ''
-
-  if (EMOJI_TO_NAME.hasOwnProperty(surrogate)) {
-    a = EMOJI_TO_NAME[surrogate]
-  }
-
-  return colons ? `:${a}:` : a
-}
-
 const escape = str => str.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&')
-
-const replacer = (() => {
-  const surrogates = Object.keys(EMOJI_TO_NAME)
-    .sort(surrogate => -surrogate.length)
-    .map(surrogate => escape(surrogate))
-    .join('|')
-
-  return new RegExp('(' + surrogates + ')', 'g')
-})()
-
-function translateSurrogatesToInlineEmoji(surrogates) {
-  return surrogates.replace(replacer, (_, match) =>
-    convertSurrogateToName(match)
-  )
-}
-
-const baseRules = {
-  newline: SimpleMarkdown.defaultRules.newline,
-  paragraph: SimpleMarkdown.defaultRules.paragraph,
-  escape: SimpleMarkdown.defaultRules.escape,
-  link: SimpleMarkdown.defaultRules.link,
-  autolink: {
-    ...SimpleMarkdown.defaultRules.autolink,
-    match: SimpleMarkdown.inlineRegex(/^<(https?:\/\/[^ >]+)>/)
-  },
-  url: SimpleMarkdown.defaultRules.url,
-  strong: SimpleMarkdown.defaultRules.strong,
-  em: SimpleMarkdown.defaultRules.em,
-  u: SimpleMarkdown.defaultRules.u,
-  br: SimpleMarkdown.defaultRules.br,
-  inlineCode: SimpleMarkdown.defaultRules.inlineCode,
-  emoticon: {
-    order: SimpleMarkdown.defaultRules.text.order,
-    match: function(source) {
-      return /^(¯\\_\(ツ\)_\/¯)/.exec(source)
-    },
-    parse: function(capture) {
-      return { type: 'text', content: capture[1] }
-    }
-  },
-  codeBlock: {
-    order: SimpleMarkdown.defaultRules.codeBlock.order,
-    match: source => /^```(([A-z0-9-]+?)\n+)?\n*([^]+?)\n*```/.exec(source),
-    parse: ([, , lang, content]) => ({
-      lang: (lang || '').trim(),
-      content: content || ''
-    })
-  },
-  emoji: {
-    order: SimpleMarkdown.defaultRules.text.order,
-    match: source => EMOJI_NAME_AND_DIVERSITY_RE.exec(source),
-    parse([match, name]) {
-      const surrogate = convertNameToSurrogate(name)
-      return surrogate
-        ? {
-            name: `:${name}:`,
-            surrogate: surrogate,
-            src: getEmojiURL(surrogate)
-          }
-        : {
-            type: 'text',
-            content: match
-          }
-    },
-    react: (node, recurseOutput, state) =>
-      node.src ? (
-        <Emoji
-          key={state.key}
-          draggable={false}
-          enlarged={node.jumboable}
-          alt={node.surrogate}
-          src={node.src}
-          {...emojiTipOptions}
-        />
-      ) : (
-        <span key={state.key}>{node.surrogate}</span>
-      )
-  },
-  customEmoji: {
-    order: SimpleMarkdown.defaultRules.text.order,
-    match: source => /^<:(\w+):(\d+)>/.exec(source),
-    parse: ([, name, id]) => ({
-      emojiId: id,
-      // NOTE: we never actually try to fetch the emote
-      // so checking if colons are required (for 'name') is not
-      // something we can do to begin with
-      name,
-      src: getEmoteURL({ id })
-    }),
-    react: node => (
-      <Emoji
-        draggable={false}
-        enlarged={node.jumboable}
-        alt={`<:${node.name}:${node.emojiId}>`}
-        src={node.src}
-        {...emojiTipOptions}
-      />
-    )
-  },
-  animatedEmoji: {
-    order: SimpleMarkdown.defaultRules.text.order,
-    match: source => /^<a:(\w+):(\d+)>/.exec(source),
-    parse: ([, name, id]) => ({
-      emojiId: id,
-      // NOTE: we never actually try to fetch the emote
-      // so checking if colons are required (for 'name') is not
-      // something we can do to begin with
-      name,
-      src: getAnimEmoteURL({ id: id })
-    }),
-    react: node => (
-      <Emoji
-        draggable={false}
-        enlarged={node.jumboable}
-        alt={`<:${node.name}:${node.emojiId}>`}
-        src={node.src}
-        {...emojiTipOptions}
-      />
-    )
-  },
-  text: {
-    ...SimpleMarkdown.defaultRules.text,
-    parse: ([content], recurseParse, state) =>
-      state.nested
-        ? { content }
-        : recurseParse(translateSurrogatesToInlineEmoji(content), {
-            ...state,
-            nested: true
-          })
-  },
-  s: {
-    order: SimpleMarkdown.defaultRules.u.order,
-    match: SimpleMarkdown.inlineRegex(/^~~([\s\S]+?)~~(?!_)/),
-    parse: SimpleMarkdown.defaultRules.u.parse
-  }
-}
 
 function createRules(rule) {
   const { paragraph, url, link, codeBlock, inlineCode } = rule
