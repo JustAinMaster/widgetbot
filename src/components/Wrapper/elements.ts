@@ -33,6 +33,12 @@ export const Wrapper = styled<Props, 'div'>('div')`
       margin-left: 200px;
       width: calc(100% - 200px);
     }
+
+    @media (min-width: 521px) and (max-width: 400px), (min-width: 521px) and (max-height: 340px) {
+      margin-left: 180px;
+      width: calc(100% - 180px);
+    }
+
     @media (max-width: 520px) {
       &::after {
         pointer-events: initial;
@@ -41,10 +47,6 @@ export const Wrapper = styled<Props, 'div'>('div')`
       * {
         pointer-events: none !important;
       }
-    }
-    @media (max-width: 400px), (max-height: 340px) {
-      margin-left: 180px;
-      width: calc(100% - 180px);
     }
   ` : null};
 `
