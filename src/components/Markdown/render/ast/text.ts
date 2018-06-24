@@ -1,6 +1,8 @@
 import { EMOJI_TO_NAME } from 'markdown/render/ast/emotes'
 import SimpleMarkdown from 'simple-markdown'
 
+const escape = str => str.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&')
+
 function convertSurrogateToName(surrogate: string, colons = true) {
   // what is a for?
   let a = ''
@@ -12,6 +14,7 @@ function convertSurrogateToName(surrogate: string, colons = true) {
   return colons ? `:${a}:` : a
 }
 
+console.log('bad bit')
 const replacer = (() => {
   const surrogates = Object.keys(EMOJI_TO_NAME)
     .sort(surrogate => -surrogate.length)
@@ -20,11 +23,10 @@ const replacer = (() => {
 
   return new RegExp('(' + surrogates + ')', 'g')
 })()
+console.log('end bad bit')
 
-function translateSurrogatesToInlineEmoji(surrogates) {
-  return surrogates.replace(replacer, (_, match) =>
-    convertSurrogateToName(match)
-  )
+function textToInlineEmoji(text) {
+  return text.replace(replacer, (_, match) => convertSurrogateToName(match))
 }
 
 const text = {
@@ -32,7 +34,7 @@ const text = {
   parse: ([content], recurseParse, state) =>
     state.nested
       ? { content }
-      : recurseParse(translateSurrogatesToInlineEmoji(content), {
+      : recurseParse(textToInlineEmoji(content), {
           ...state,
           nested: true
         })

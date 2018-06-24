@@ -1,4 +1,5 @@
 import { cx } from 'emotion'
+import * as _ from 'lodash'
 import * as React from 'react'
 import emoji from 'react-easy-emoji'
 import { Base, Emote } from 'styled-elements/Emoji/elements'
@@ -39,9 +40,9 @@ class Emoji extends React.PureComponent<Props> {
 
     const resolved = emoji(text, (code, string, key) => (
       <Emote
+        innerRef={this.handleErrors.bind(this)}
         src={`https://twitter.github.io/twemoji/2/svg/${code}.svg`}
         alt={string}
-        onError={this.handleError.bind(this)}
         className={cx('emoji', className)}
         key={key}
       />
@@ -71,9 +72,20 @@ class Emoji extends React.PureComponent<Props> {
     return parsed
   }
 
-  handleError(event) {
-    const img = event.currentTarget
-    img.classList.add('error')
+  handleErrors(img: HTMLImageElement) {
+    img.onerror = () => {
+      const alt = img.getAttribute('alt')
+      if (alt === null) return
+
+      img.setAttribute(
+        'src',
+        `data:image/svg+xml;charset=UTF-8, ${encodeURIComponent(
+          `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet"><text font-size="80" dy=".35em" dx="-0.7em">${_.escape(
+            alt
+          )}</text></svg>`
+        )}`
+      )
+    }
   }
 
   jumbofy(fragment: any[]) {

@@ -126,12 +126,6 @@ export function parseText(msg: string) {
 
   return emoji(mentions(parse(msg)))
 }
-// this is mostly translated from discord's client,
-// although it's not 1:1 since the client js is minified
-// and also is transformed into some tricky code
-
-// names are weird and sometimes missing, as i'm not sure
-// what all of these are doing exactly.
 
 function parserFor(rules, returnAst?) {
   const parser = SimpleMarkdown.parserFor(rules)
