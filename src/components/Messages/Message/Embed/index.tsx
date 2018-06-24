@@ -1,8 +1,8 @@
 import { ThemeProvider } from 'emotion-theming'
+import { parseAllowLinks, parseEmbedTitle } from 'markdown/render'
 import * as Moment from 'moment'
 import * as React from 'react'
 
-import { parseAllowLinks, parseEmbedTitle } from '../Markdown'
 import { Twemoji } from '../Markdown/elements'
 import { Content, Root, Title, Wrapper } from './elements'
 import { Author, AuthorIcon, AuthorName } from './elements/author'
@@ -13,48 +13,40 @@ import { Footer, FooterIcon, FooterText } from './elements/footer'
 import { Image } from './elements/media'
 import { Thumbnail } from './elements/thumbnail'
 
-function parseEmojis(text) {
-  if (text) {
-    if (typeof text === 'string') {
-      return <Twemoji resolveNames>{text}</Twemoji>
-    }
-    if (text instanceof Array) {
-      return text.map((part, i) => {
-        if (typeof part === 'string') {
-          return (
-            <Twemoji resolveNames key={i + part}>
-              {part}
-            </Twemoji>
-          )
-        }
-        return part
-      })
-    }
-  }
-  return text
-}
-
-const Link = ({ children, ...props }) => {
-  return (
-    <a target="_blank" rel="noreferrer" {...props}>
-      {children}
-    </a>
-  )
-}
-
-const EmbedTitle = ({ title, url }) => {
-  if (!title) {
-    return null
-  }
-
-  return url ? (
-    <Title>
-      <Link href={url}>{parseEmojis(parseEmbedTitle(title))}</Link>
-    </Title>
+const parseEmojis = text =>
+  text && typeof text === 'string' ? (
+    <Twemoji resolveNames>{text}</Twemoji>
+  ) : text instanceof Array ? (
+    text.map(
+      (part, i) =>
+        typeof part === 'string' ? (
+          <Twemoji resolveNames key={i + part}>
+            {part}
+          </Twemoji>
+        ) : (
+          part
+        )
+    )
   ) : (
-    <Title>{parseEmojis(parseEmbedTitle(title))}</Title>
+    text
   )
-}
+
+const Link = ({ children, ...props }) => (
+  <a target="_blank" rel="noreferrer" {...props}>
+    {children}
+  </a>
+)
+
+const EmbedTitle = ({ title, url }) =>
+  title ? (
+    url ? (
+      <Title>
+        <Link href={url}>{parseEmojis(parseEmbedTitle(title))}</Link>
+      </Title>
+    ) : (
+      <Title>{parseEmojis(parseEmbedTitle(title))}</Title>
+    )
+  ) : null
 
 const EmbedDescription = ({ content }) =>
   content ? (

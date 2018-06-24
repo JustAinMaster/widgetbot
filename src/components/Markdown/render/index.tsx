@@ -156,8 +156,6 @@ function parserFor(rules, returnAst?) {
   }
 }
 
-const escape = str => str.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&')
-
 function createRules(rule) {
   const { paragraph, url, link, codeBlock, inlineCode } = rule
 
@@ -242,20 +240,11 @@ const rulesWithoutMaskedLinks = createRules({
   }
 })
 
-// used in:
-//  message content (non-webhook mode)
 const parse = parserFor(rulesWithoutMaskedLinks)
 
-// used in:
-//  message content (webhook mode)
-//  embed description
-//  embed field values
-const parseAllowLinks = parserFor(createRules(baseRules))
+export const parseAllowLinks = parserFor(createRules(baseRules))
 
-// used in:
-//  embed title (obviously)
-//  embed field names
-const parseEmbedTitle = parserFor(
+export const parseEmbedTitle = parserFor(
   _.omit(rulesWithoutMaskedLinks, [
     'codeBlock',
     'br',
@@ -265,8 +254,6 @@ const parseEmbedTitle = parserFor(
   ])
 )
 
-// used in:
-//  message content
 function jumboify(ast) {
   const nonEmojiNodes = ast.some(
     node =>
