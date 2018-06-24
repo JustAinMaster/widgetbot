@@ -1,38 +1,26 @@
 import matchSorter from 'match-sorter'
 import * as React from 'react'
 
-import parseUsername, { Username } from '../../../Message/parseUsername'
+import controller from '../../../../../controllers/cerebral'
+import { Member } from '../../../../../types/member'
 import { Description, Icon, Info, Name } from '../elements'
 import { Suggestion } from '../types'
 
-interface Mention {
-  avatar: string
-  username: Username
-}
-
-const users: Mention[] = [
-  {
-    username: parseUsername('samdd#3245'),
-    avatar:
-      'https://cdn.discordapp.com/avatars/294916911194570754/fb6276c39d47d5c6c0d65f922d43b116.png?size=64'
-  }
-]
-
-const Mentions: Suggestion<Mention> = {
+const Mentions: Suggestion<Member> = {
   getSuggestions: query =>
-    matchSorter(users, query, {
+    matchSorter(controller.state.members.values(), query, {
       keys: [
         {
           minRanking: matchSorter.rankings.STRING_CASE_ACRONYM,
           maxRanking: matchSorter.rankings.STARTS_WITH,
           threshold: matchSorter.rankings.STARTS_WITH,
-          key: 'username.name'
+          key: 'name'
         }
       ]
     }),
 
   extract: query => query[0] === '@' && query.substring(1),
-  toString: ({ username }) => `@${username}`,
+  toString: ({ tag }) => `@${tag}`,
 
   description: query => (
     <Description>
@@ -41,11 +29,11 @@ const Mentions: Suggestion<Mention> = {
     </Description>
   ),
 
-  suggestion: ({ username, avatar }) => (
+  suggestion: ({ name, tag, avatarURL }) => (
     <React.Fragment>
-      <Icon src={avatar} />
-      <Name>{username.name}</Name>
-      <Info>{username}</Info>
+      <Icon src={avatarURL} />
+      <Name>{name}</Name>
+      <Info>{tag}</Info>
     </React.Fragment>
   )
 }

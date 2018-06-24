@@ -183,9 +183,11 @@ namespace GraphQL {
             discriminator,
 
             id: member.id,
-            avatarURL: `https://cdn.discordapp.com/avatars/${member.id}/${
-              member.avatar
-            }.png?size=64`,
+            avatarURL: member.avatar
+              ? `https://cdn.discordapp.com/avatars/${member.id}/${
+                  member.avatar
+                }.png?size=64`
+              : `https://cdn.discordapp.com/embed/avatars/0.png`,
 
             roles: member.roles,
             status: member.status
