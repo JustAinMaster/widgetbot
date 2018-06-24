@@ -2,6 +2,7 @@ import { BranchContext, Context } from 'fluent'
 import { Locales, translations } from 'locales'
 import * as _ from 'lodash'
 import Log from 'logger'
+import enrich from 'markdown/enrich'
 import { addNotification } from 'notify'
 import { Notification } from 'react-notification-system'
 import { socket } from 'socket-io'
@@ -15,7 +16,6 @@ import { ParsedUrl, RawUrl } from '../../types/url'
 import { User } from '../../types/user'
 import { Toggles } from '../types'
 import { State } from './../types'
-import resolveMessage from './resolveMessage'
 import { getLast } from './util'
 
 /**
@@ -161,7 +161,7 @@ export function sendMessage({
 }: BranchContext<{ sending: message }, { channel: string; message: string }>) {
   const payload = {
     ...props,
-    message: resolveMessage(props.message)
+    message: enrich(props.message)
   }
   const { channel } = payload
 

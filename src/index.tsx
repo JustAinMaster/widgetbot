@@ -1,4 +1,4 @@
-import './res/index.css'
+import './app/res/index.css'
 
 import { Container } from '@cerebral/react'
 import { connect } from 'raven'

@@ -3,52 +3,40 @@ import * as React from 'react'
 import SimpleMarkdown from 'simple-markdown'
 import { iterate } from 'styled-elements/Emoji/emojiMap'
 
-import controller from '../../../../controllers/cerebral'
-import message from '../../../../types/message'
-import Embed from '../Embed'
-import {
-  Channel,
-  Code,
-  Edited,
-  Emoji,
-  Image,
-  Link,
-  Mention,
-  Role,
-  Twemoji
-} from './elements'
+import controller from '../../../controllers/cerebral'
+import { Channel, Code, Emoji, Link, Twemoji } from './elements'
 
-export function parseText(msg: message) {
-  function mentions(array: [string | string[]], mentions) {
+export function parseText(msg: string) {
+  function mentions(array: [string | string[]]) {
     return array.map(e => {
       if (typeof e !== 'string') {
         return e
       }
 
-      mentions.members.forEach((member, i) => {
-        const roles = member.roles.sort(
-          (a, b) => (a.position < b.position ? 1 : -1)
-        )
-        let color
-        for (let role of roles) {
-          if (role.color !== '#000000') {
-            color = role.color
-            break
-          }
-        }
+      // mentions.members.forEach((member, i) => {
+      //   const roles = member.roles.sort(
+      //     (a, b) => (a.position < b.position ? 1 : -1)
+      //   )
+      //   let color
+      //   for (let role of roles) {
+      //     if (role.color !== '#000000') {
+      //       color = role.color
+      //       break
+      //     }
+      //   }
 
-        e = replace(
-          e,
-          new RegExp(`<@!*${member.id}>`, 'g'),
-          <Mention
-            key={member.id}
-            color={color}
-            // onClick={() => props.setUserPopup(member)}
-          >
-            {`@${member.name}`}
-          </Mention>
-        )
-      })
+      //   e = replace(
+      //     e,
+      //     new RegExp(`<@!*${member.id}>`, 'g'),
+      //     <Mention
+      //       key={member.id}
+      //       color={color}
+      //       // onClick={() => props.setUserPopup(member)}
+      //     >
+      //       {`@${member.name}`}
+      //     </Mention>
+      //   )
+      // })
 
       const channels = controller.state.channels.entries()
 
@@ -62,43 +50,43 @@ export function parseText(msg: message) {
         )
       })
 
-      mentions.roles.forEach((role, i) => {
-        e = replace(
-          e,
-          `<@&${role.id}>`,
-          <Role role={role} key={role.id} color={role.color}>{`@${
-            role.name
-          }`}</Role>
-        )
-      })
+      // mentions.roles.forEach((role, i) => {
+      //   e = replace(
+      //     e,
+      //     `<@&${role.id}>`,
+      //     <Role role={role} key={role.id} color={role.color}>{`@${
+      //       role.name
+      //     }`}</Role>
+      //   )
+      // })
 
-      let _e: string[] | string = e as string[] | string
-      if (_e instanceof Array) {
-        _e.map(a => {
-          return typeof a === 'string'
-            ? a.replace(/<@&[0-9]{18}>/g, '@deleted-role')
-            : a
-        })
-      } else {
-        e = e.replace(/<@&[0-9]{18}>/g, '@deleted-role')
-      }
+      // let _e: string[] | string = e as string[] | string
+      // if (_e instanceof Array) {
+      //   _e.map(a => {
+      //     return typeof a === 'string'
+      //       ? a.replace(/<@&[0-9]{18}>/g, '@deleted-role')
+      //       : a
+      //   })
+      // } else {
+      //   e = e.replace(/<@&[0-9]{18}>/g, '@deleted-role')
+      // }
 
-      if (mentions.everyone) {
-        e = replace(
-          e,
-          '@everyone',
-          <Role key={Math.random()} everyone>
-            {`@everyone`}
-          </Role>
-        )
-        e = replace(
-          e,
-          '@here',
-          <Role key={Math.random()} everyone>
-            {`@here`}
-          </Role>
-        )
-      }
+      // if (mentions.everyone) {
+      //   e = replace(
+      //     e,
+      //     '@everyone',
+      //     <Role key={Math.random()} everyone>
+      //       {`@everyone`}
+      //     </Role>
+      //   )
+      //   e = replace(
+      //     e,
+      //     '@here',
+      //     <Role key={Math.random()} everyone>
+      //       {`@here`}
+      //     </Role>
+      //   )
+      // }
 
       return e
     })
@@ -119,34 +107,6 @@ export function parseText(msg: message) {
     return string
   }
 
-  function attachment(msg, setPopup?) {
-    return msg.attachment ? (
-      <Image
-        src={msg.attachment.url}
-        height={+msg.attachment.height}
-        width={+msg.attachment.width}
-      />
-    ) : null
-  }
-
-  function embed(msg: message) {
-    if (msg.embeds.length === 0) return null
-
-    return msg.embeds.map((embed, i) => {
-      if (embed.type === 'gifv') {
-        return (
-          <Image
-            src={embed.video.url.replace('.mp4', '.gif')}
-            width={+embed.video.width}
-            height={+embed.video.height}
-            key={i}
-          />
-        )
-      }
-      return <Embed key={i} {...embed} />
-    })
-  }
-
   function emoji(input) {
     return input.map((part, i) => {
       if (typeof part === 'string') {
@@ -163,14 +123,7 @@ export function parseText(msg: message) {
     })
   }
 
-  return (
-    <React.Fragment>
-      {msg.content && emoji(mentions(parse(msg.content), msg.mentions))}
-      {msg.editedAt && <Edited className="edited">{`(edited)`}</Edited>}
-      {attachment(msg)}
-      {embed(msg)}
-    </React.Fragment>
-  )
+  return emoji(mentions(parse(msg)))
 }
 // this is mostly translated from discord's client,
 // although it's not 1:1 since the client js is minified
@@ -185,35 +138,6 @@ const emojiTipOptions = {
   'data-delay-show': 450,
   'data-place': 'top',
   'data-offset': "{ 'top': 3 }"
-}
-
-// this function seems to be duplicated quite a bit in the original source...
-function createReactElement(type, props, key?, ...children) {
-  const defaultProps = type && type.defaultProps
-
-  if (props && defaultProps) {
-    for (const prop in defaultProps) {
-      if (props[prop] === undefined) {
-        props[prop] = defaultProps[prop]
-      }
-    }
-  } else if (!props) {
-    props = defaultProps || {}
-  }
-
-  props.children = children[0]
-  if (children.length > 1) {
-    props.children = children
-  }
-
-  return {
-    $$typeof: Symbol.for('react.element'),
-    type: type,
-    key: key == null ? null : `${key}`,
-    ref: null,
-    props: props,
-    _owner: null
-  }
 }
 
 function flattenAst(node, parent?) {
@@ -427,18 +351,19 @@ const baseRules = {
             content: match
           }
     },
-    react(node, recurseOutput, state) {
-      return node.src
-        ? createReactElement(Emoji, {
-            draggable: false,
-            enlarged: node.jumboable,
-            alt: node.surrogate,
-            // 'data-tip': node.name,
-            src: node.src,
-            ...emojiTipOptions
-          })
-        : createReactElement('span', {}, state.key, node.surrogate)
-    }
+    react: (node, recurseOutput, state) =>
+      node.src ? (
+        <Emoji
+          key={state.key}
+          draggable={false}
+          enlarged={node.jumboable}
+          alt={node.surrogate}
+          src={node.src}
+          {...emojiTipOptions}
+        />
+      ) : (
+        <span key={state.key}>{node.surrogate}</span>
+      )
   },
   customEmoji: {
     order: SimpleMarkdown.defaultRules.text.order,
@@ -459,16 +384,15 @@ const baseRules = {
         })
       }
     },
-    react(node) {
-      return createReactElement(Emoji, {
-        draggable: false,
-        enlarged: node.jumboable,
-        alt: `<:${node.name}:${node.emojiId}>`,
-        // 'data-tip': `:${node.name}:`,
-        src: node.src,
-        ...emojiTipOptions
-      })
-    }
+    react: node => (
+      <Emoji
+        draggable={false}
+        enlarged={node.jumboable}
+        alt={`<:${node.name}:${node.emojiId}>`}
+        src={node.src}
+        {...emojiTipOptions}
+      />
+    )
   },
   animatedEmoji: {
     order: SimpleMarkdown.defaultRules.text.order,
@@ -489,16 +413,15 @@ const baseRules = {
         })
       }
     },
-    react(node) {
-      return createReactElement(Emoji, {
-        draggable: false,
-        enlarged: node.jumboable,
-        alt: `<:${node.name}:${node.emojiId}>`,
-        // 'data-tip': `:${node.name}:`,
-        src: node.src,
-        ...emojiTipOptions
-      })
-    }
+    react: node => (
+      <Emoji
+        draggable={false}
+        enlarged={node.jumboable}
+        alt={`<:${node.name}:${node.emojiId}>`}
+        src={node.src}
+        {...emojiTipOptions}
+      />
+    )
   },
   text: {
     ...SimpleMarkdown.defaultRules.text,
@@ -540,25 +463,15 @@ function createRules(r) {
       order: r.u.order,
       match: SimpleMarkdown.inlineRegex(/^~~([\s\S]+?)~~(?!_)/),
       parse: r.u.parse,
-      react(node, recurseOutput, state) {
-        return createReactElement(
-          's',
-          {},
-          state.key,
-          recurseOutput(node.content, state)
-        )
-      }
+      react: (node, recurseOutput, state) => (
+        <s key={state.key}>{recurseOutput(node.content, state)}</s>
+      )
     },
     paragraph: {
       ...paragraph,
-      react(node, recurseOutput, state) {
-        return createReactElement(
-          'p',
-          {},
-          state.key,
-          recurseOutput(node.content, state)
-        )
-      }
+      react: (node, recurseOutput, state) => (
+        <p key={state.key}>{recurseOutput(node.content, state)}</p>
+      )
     },
     url: {
       ...url,
@@ -568,62 +481,41 @@ function createRules(r) {
     },
     link: {
       ...link,
-      react(node, recurseOutput, state) {
-        // this contains some special casing for invites (?)
-        // or something like that.
-        // we don't really bother here
-        const children = recurseOutput(node.content, state)
-        const title = node.title || astToString(node.content)
-        return createReactElement(
-          Link,
-          {
-            title: title,
-            href: SimpleMarkdown.sanitizeUrl(node.target),
-            target: '_blank',
-            rel: 'noreferrer'
-          },
-          state.key,
-          children
-        )
-      }
+      react: (node, recurseOutput, state) => (
+        <Link
+          title={node.title || astToString(node.content)}
+          href={SimpleMarkdown.sanitizeUrl(node.target)}
+          target="_blank"
+          rel="noreferrer"
+          key={state.key}
+        >
+          {recurseOutput(node.content, state)}
+        </Link>
+      )
     },
     inlineCode: {
       ...inlineCode,
-      react(node, recurseOutput, state) {
-        return createReactElement(
-          Code,
-          {
-            inline: true,
-            className: 'inline'
-          },
-          state.key,
-          recurse(node, recurseOutput, state)
-        )
-      }
+      react: (node, recurseOutput, state) => (
+        <Code inline={true} className="inline" key={state.key}>
+          {recurse(node, recurseOutput, state)}
+        </Code>
+      )
     },
     codeBlock: {
       ...codeBlock,
       react(node, recurseOutput, state) {
         if (node.lang && hljs.getLanguage(node.lang) != null) {
           const highlightedBlock = hljs.highlight(node.lang, node.content, true)
-          return createReactElement(
-            Code,
-            {
-              language: highlightedBlock.language,
-              dangerouslySetInnerHTML: {
-                __html: highlightedBlock.value
-              }
-            },
-            state.key
+          return (
+            <Code
+              key={state.key}
+              language={highlightedBlock.language}
+              dangerouslySetInnerHTML={{ __html: highlightedBlock.value }}
+            />
           )
         }
 
-        return createReactElement(
-          Code,
-          {},
-          undefined,
-          recurse(node, recurseOutput, state)
-        )
+        return <Code>{recurse(node, recurseOutput, state)}</Code>
       }
     }
   }
@@ -697,7 +589,5 @@ function jumboify(ast) {
 
   return ast
 }
-
-export { parse, parseAllowLinks, parseEmbedTitle, jumboify }
 
 export default parseText

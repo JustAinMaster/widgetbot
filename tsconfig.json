@@ -20,6 +20,8 @@
       "styled-elements/*": ["src/modules/styled-elements/*"],
       "typed-emotion": ["src/controllers/emotion/index.ts"],
       "queries": ["src/store/actions/graphql/queries.ts"],
+      "markdown": ["src/components/Markdown/index.ts"],
+      "markdown/*": ["src/components/Markdown/*"],
       "socket-io": ["src/controllers/socket-io"],
       "fluent": ["src/controllers/cerebral/fluent.ts"],
       "embed-api": ["src/controllers/embed-api"],

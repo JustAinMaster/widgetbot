@@ -1,4 +1,5 @@
 import { ThemeProvider } from 'emotion-theming'
+import { parseText } from 'markdown/render'
 import * as React from 'react'
 import { FormattedMessage } from 'react-intl'
 
@@ -15,7 +16,6 @@ import {
   Sys,
   Text
 } from './elements'
-import Markdown from './Markdown'
 import parseUsername from './parseUsername'
 import Reaction from './Reaction'
 
@@ -61,7 +61,9 @@ class Message extends React.PureComponent<Props, any> {
             {messages.map((message, i) => (
               <ThemeProvider key={message.id} theme={this.theme(message)}>
                 <React.Fragment>
-                  <Text className="text">{Markdown(message)}</Text>
+                  <Text className="text">
+                    {parseText(':smiley: *he*ll_o_ **world** `test`')}
+                  </Text>
                   {message.reactions && (
                     <Reactions className="reactions">
                       {message.reactions.map((reaction, i) => (
