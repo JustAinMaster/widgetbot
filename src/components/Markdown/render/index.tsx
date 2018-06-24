@@ -107,21 +107,20 @@ export function parseText(msg: string) {
     return string
   }
 
-  function emoji(input) {
-    return input.map((part, i) => {
-      if (typeof part === 'string') {
-        return (
+  const emoji = input =>
+    input.map(
+      (part, i) =>
+        typeof part === 'string' ? (
           <Twemoji
             resolveNames
             onlyEmojiClassName="enlarged"
             text={part}
             key={i * Math.random()}
           />
+        ) : (
+          part
         )
-      }
-      return part
-    })
-  }
+    )
 
   return emoji(mentions(parse(msg)))
 }
@@ -263,14 +262,14 @@ iterate(({ keywords, emoji }) => {
 
 const EMOJI_NAME_AND_DIVERSITY_RE = /^:([^\s:]+?(?:::skin-tone-\d)?):/
 
-function convertNameToSurrogate(name, t = '') {
+function convertNameToSurrogate(name) {
   // what is t for?
-  return NAME_TO_EMOJI.hasOwnProperty(name) ? NAME_TO_EMOJI[name] : t
+  return NAME_TO_EMOJI.hasOwnProperty(name) ? NAME_TO_EMOJI[name] : ''
 }
 
-function convertSurrogateToName(surrogate, colons = true, n = '') {
-  // what is n for?
-  let a = n
+function convertSurrogateToName(surrogate, colons = true) {
+  // what is a for?
+  let a = ''
 
   if (EMOJI_TO_NAME.hasOwnProperty(surrogate)) {
     a = EMOJI_TO_NAME[surrogate]
@@ -281,7 +280,7 @@ function convertSurrogateToName(surrogate, colons = true, n = '') {
 
 const escape = str => str.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&')
 
-const replacer = (function() {
+const replacer = (() => {
   const surrogates = Object.keys(EMOJI_TO_NAME)
     .sort(surrogate => -surrogate.length)
     .map(surrogate => escape(surrogate))
@@ -295,8 +294,6 @@ function translateSurrogatesToInlineEmoji(surrogates) {
     convertSurrogateToName(match)
   )
 }
-
-// i am not sure why are these rules split like this.
 
 const baseRules = {
   newline: SimpleMarkdown.defaultRules.newline,
@@ -324,21 +321,16 @@ const baseRules = {
   },
   codeBlock: {
     order: SimpleMarkdown.defaultRules.codeBlock.order,
-    match(source) {
-      return /^```(([A-z0-9-]+?)\n+)?\n*([^]+?)\n*```/.exec(source)
-    },
-    parse(capture) {
-      return { lang: (capture[2] || '').trim(), content: capture[3] || '' }
-    }
+    match: source => /^```(([A-z0-9-]+?)\n+)?\n*([^]+?)\n*```/.exec(source),
+    parse: ([, , lang, content]) => ({
+      lang: (lang || '').trim(),
+      content: content || ''
+    })
   },
   emoji: {
     order: SimpleMarkdown.defaultRules.text.order,
-    match(source) {
-      return EMOJI_NAME_AND_DIVERSITY_RE.exec(source)
-    },
-    parse(capture) {
-      const match = capture[0]
-      const name = capture[1]
+    match: source => EMOJI_NAME_AND_DIVERSITY_RE.exec(source),
+    parse([match, name]) {
       const surrogate = convertNameToSurrogate(name)
       return surrogate
         ? {
@@ -367,23 +359,15 @@ const baseRules = {
   },
   customEmoji: {
     order: SimpleMarkdown.defaultRules.text.order,
-    match(source) {
-      return /^<:(\w+):(\d+)>/.exec(source)
-    },
-    parse(capture) {
-      const name = capture[1]
-      const id = capture[2]
-      return {
-        emojiId: id,
-        // NOTE: we never actually try to fetch the emote
-        // so checking if colons are required (for 'name') is not
-        // something we can do to begin with
-        name: name,
-        src: getEmoteURL({
-          id: id
-        })
-      }
-    },
+    match: source => /^<:(\w+):(\d+)>/.exec(source),
+    parse: ([, name, id]) => ({
+      emojiId: id,
+      // NOTE: we never actually try to fetch the emote
+      // so checking if colons are required (for 'name') is not
+      // something we can do to begin with
+      name,
+      src: getEmoteURL({ id })
+    }),
     react: node => (
       <Emoji
         draggable={false}
@@ -396,23 +380,15 @@ const baseRules = {
   },
   animatedEmoji: {
     order: SimpleMarkdown.defaultRules.text.order,
-    match(source) {
-      return /^<a:(\w+):(\d+)>/.exec(source)
-    },
-    parse(capture) {
-      const name = capture[1]
-      const id = capture[2]
-      return {
-        emojiId: id,
-        // NOTE: we never actually try to fetch the emote
-        // so checking if colons are required (for 'name') is not
-        // something we can do to begin with
-        name: name,
-        src: getAnimEmoteURL({
-          id: id
-        })
-      }
-    },
+    match: source => /^<a:(\w+):(\d+)>/.exec(source),
+    parse: ([, name, id]) => ({
+      emojiId: id,
+      // NOTE: we never actually try to fetch the emote
+      // so checking if colons are required (for 'name') is not
+      // something we can do to begin with
+      name,
+      src: getAnimEmoteURL({ id: id })
+    }),
     react: node => (
       <Emoji
         draggable={false}
@@ -425,16 +401,13 @@ const baseRules = {
   },
   text: {
     ...SimpleMarkdown.defaultRules.text,
-    parse(capture, recurseParse, state) {
-      return state.nested
-        ? {
-            content: capture[0]
-          }
-        : recurseParse(translateSurrogatesToInlineEmoji(capture[0]), {
+    parse: ([content], recurseParse, state) =>
+      state.nested
+        ? { content }
+        : recurseParse(translateSurrogatesToInlineEmoji(content), {
             ...state,
             nested: true
           })
-    }
   },
   s: {
     order: SimpleMarkdown.defaultRules.u.order,
@@ -443,12 +416,8 @@ const baseRules = {
   }
 }
 
-function createRules(r) {
-  const paragraph = r.paragraph
-  const url = r.url
-  const link = r.link
-  const codeBlock = r.codeBlock
-  const inlineCode = r.inlineCode
+function createRules(rule) {
+  const { paragraph, url, link, codeBlock, inlineCode } = rule
 
   return {
     // rules we don't care about:
@@ -458,11 +427,11 @@ function createRules(r) {
 
     // what is highlight?
 
-    ...r,
+    ...rule,
     s: {
-      order: r.u.order,
+      order: rule.u.order,
       match: SimpleMarkdown.inlineRegex(/^~~([\s\S]+?)~~(?!_)/),
-      parse: r.u.parse,
+      parse: rule.u.parse,
       react: (node, recurseOutput, state) => (
         <s key={state.key}>{recurseOutput(node.content, state)}</s>
       )
@@ -504,13 +473,15 @@ function createRules(r) {
     codeBlock: {
       ...codeBlock,
       react(node, recurseOutput, state) {
-        if (node.lang && hljs.getLanguage(node.lang) != null) {
-          const highlightedBlock = hljs.highlight(node.lang, node.content, true)
+        const { lang, content } = node
+        if (lang && hljs.getLanguage(lang) !== null) {
+          const { language, value } = hljs.highlight(lang, content, true)
+
           return (
             <Code
               key={state.key}
-              language={highlightedBlock.language}
-              dangerouslySetInnerHTML={{ __html: highlightedBlock.value }}
+              language={language}
+              dangerouslySetInnerHTML={{ __html: value }}
             />
           )
         }
@@ -525,9 +496,7 @@ const rulesWithoutMaskedLinks = createRules({
   ...baseRules,
   link: {
     ...baseRules.link,
-    match() {
-      return null
-    }
+    match: () => null
   }
 })
 
@@ -557,16 +526,13 @@ const parseEmbedTitle = parserFor(
 // used in:
 //  message content
 function jumboify(ast) {
-  const nonEmojiNodes = ast.some(node => {
-    return (
+  const nonEmojiNodes = ast.some(
+    node =>
       node.type !== 'img' &&
       (typeof node.content !== 'string' || node.content.trim() !== '')
-    )
-  })
+  )
 
-  if (nonEmojiNodes) {
-    return ast
-  }
+  if (nonEmojiNodes) return ast
 
   const maximum = 27
   let count = 0
@@ -574,13 +540,9 @@ function jumboify(ast) {
   ast.forEach((node, i) => {
     node.props.key = i
 
-    if (node.type === 'img') {
-      count += 1
-    }
+    if (node.type === 'img') count += 1
 
-    if (count > maximum) {
-      return false
-    }
+    if (count > maximum) return false
   })
 
   if (count < maximum) {
