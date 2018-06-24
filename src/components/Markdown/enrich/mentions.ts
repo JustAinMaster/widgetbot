@@ -9,6 +9,12 @@ const mentions = (message: string) => {
       ([id, { name }]) => (result = result.split(`#${name}`).join(`<#${id}>`))
     )
 
+  controller.state.members
+    .entries()
+    .forEach(
+      ([id, { tag }]) => (result = result.split(`@${tag}`).join(`<@${id}>`))
+    )
+
   return result
 }
 
