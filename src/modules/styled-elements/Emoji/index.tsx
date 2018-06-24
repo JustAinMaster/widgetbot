@@ -72,7 +72,12 @@ class Emoji extends React.PureComponent<Props> {
     return parsed
   }
 
+  /**
+   * Resolves emojis as text embedded inside SVG if the CDN fails to load
+   */
   handleErrors(img: HTMLImageElement) {
+    if (!img) return
+
     img.onerror = () => {
       const alt = img.getAttribute('alt')
       if (alt === null) return

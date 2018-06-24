@@ -8,7 +8,7 @@ const getAnimEmoteURL = emote =>
 
 export const emoji = {
   order: SimpleMarkdown.defaultRules.text.order,
-  match: source => /^:([^\s:]+?(?:::skin-tone-\d)?):/.exec(source),
+  match: source => /^:([^\s:]+?):/.exec(source),
   parse: ([content]) => ({ content }),
   react: (node, recurseOutput, state) => (
     <Twemoji resolveNames={true} key={state.key}>
@@ -22,9 +22,6 @@ export const customEmoji = {
   match: source => /^<:(\w+):(\d+)>/.exec(source),
   parse: ([, name, id]) => ({
     emojiId: id,
-    // NOTE: we never actually try to fetch the emote
-    // so checking if colons are required (for 'name') is not
-    // something we can do to begin with
     name,
     src: getEmoteURL({ id })
   }),
@@ -42,11 +39,8 @@ export const animatedEmoji = {
   match: source => /^<a:(\w+):(\d+)>/.exec(source),
   parse: ([, name, id]) => ({
     emojiId: id,
-    // NOTE: we never actually try to fetch the emote
-    // so checking if colons are required (for 'name') is not
-    // something we can do to begin with
     name,
-    src: getAnimEmoteURL({ id: id })
+    src: getAnimEmoteURL({ id })
   }),
   react: node => (
     <Emoji

@@ -24,7 +24,6 @@ class MagicTextarea extends React.Component<Props> {
     caretPosition: -1,
 
     showSuggestions: false,
-    suggestions: [],
     handler: null,
 
     query: null
@@ -71,8 +70,8 @@ class MagicTextarea extends React.Component<Props> {
                 event.preventDefault()
                 return
               case 'Enter':
-                if (this.suggestions) {
-                  this.suggestions.selectSuggestion()
+                if (this.state.showSuggestions) {
+                  this.suggestions && this.suggestions.selectSuggestion()
                   event.preventDefault()
                   return
                 }
@@ -123,14 +122,17 @@ class MagicTextarea extends React.Component<Props> {
             onSelect={suggestion => {
               const { handler, leftIndex, caretPosition } = this.state
 
-              const text = injectValue({
-                input: this.textarea,
-                value: handler.toString(suggestion),
-                leftIndex,
-                caretPosition
-              })
+              if (suggestion) {
+                const text = injectValue({
+                  input: this.textarea,
+                  value: handler.toString(suggestion),
+                  leftIndex,
+                  caretPosition
+                })
 
-              this.onChange(text)
+                this.onChange(text)
+              }
+
               this.resetState()
             }}
           />

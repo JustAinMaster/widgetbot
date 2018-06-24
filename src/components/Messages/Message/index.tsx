@@ -61,9 +61,7 @@ class Message extends React.PureComponent<Props, any> {
             {messages.map((message, i) => (
               <ThemeProvider key={message.id} theme={this.theme(message)}>
                 <React.Fragment>
-                  <Text className="text">
-                    {parseText(':smiley: *he*ll_o_ **world** `test`')}
-                  </Text>
+                  <Text className="text">{parseText(message.content)}</Text>
                   {message.reactions && (
                     <Reactions className="reactions">
                       {message.reactions.map((reaction, i) => (
