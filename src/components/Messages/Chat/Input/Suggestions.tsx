@@ -18,14 +18,21 @@ class EmojiSuggestions extends React.Component<Props> {
   }
   mouseEvent = false
 
-  static getDerivedStateFromProps(props) {
+  static getDerivedStateFromProps(props, state) {
     const { handler, query } = props
 
-    return handler
-      ? {
-          suggestions: handler.getSuggestions(query).slice(0, MAX_SUGGESTIONS)
-        }
-      : null
+    if (handler) {
+      const suggestions = handler
+        .getSuggestions(query)
+        .slice(0, MAX_SUGGESTIONS)
+
+      return {
+        suggestions,
+        selected: state.selected > suggestions.length ? 0 : state.selected
+      }
+    }
+
+    return null
   }
 
   traverseSuggestions(increment) {
@@ -71,9 +78,8 @@ class EmojiSuggestions extends React.Component<Props> {
               this.setState({ selected: index })
               this.mouseEvent = true
             }}
-          >
-            {handler.suggestion(suggestion)}
-          </Suggestion>
+            children={handler.suggestion(suggestion)}
+          />
         ))}
       </Suggestions>
     ) : null
