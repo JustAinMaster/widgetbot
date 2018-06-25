@@ -27,7 +27,6 @@ export const Icon = styled(Twemoji)`
   height: 16px;
   text-align: center;
   flex-shrink: 0;
-  border-radius: 50%;
 `
 
 export const Name = styled('div')`
