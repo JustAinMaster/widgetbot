@@ -198,6 +198,19 @@ namespace GraphQL {
       state.members.merge(members)
     }
 
+    if (server.emoji) {
+      const emoji = server.emoji.map(({ id, name }) => [
+        id,
+        {
+          category: 'custom',
+          emoji: id,
+          keywords: [name]
+        }
+      ])
+
+      state.emojis.merge(emoji)
+    }
+
     if (server.name) {
       // Merge the server info
       state.server = {

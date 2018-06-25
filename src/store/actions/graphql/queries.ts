@@ -118,6 +118,10 @@ export const server = gql`
       memberCount
       icon
       ${members}
+      emoji {
+        name
+        id
+      }
       channels {
         name
         category

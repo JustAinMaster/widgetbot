@@ -26,6 +26,7 @@ const state: State = {
     data: null
   },
 
+  emojis: Dictionary({}),
   url: null,
 
   channels: Dictionary({}),

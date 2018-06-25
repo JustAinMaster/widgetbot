@@ -2,12 +2,13 @@ import matchSorter from 'match-sorter'
 import * as React from 'react'
 import { Emoji, emojis } from 'styled-elements/Emoji/emojiMap'
 
+import controller from '../../../../../controllers/cerebral'
 import { Description, Icon, Name } from '../elements'
 import { Suggestion } from '../types'
 
 const Emojis: Suggestion<Emoji> = {
   getSuggestions: query =>
-    matchSorter(emojis, query, {
+    matchSorter([...controller.state.emojis.values(), emojis], query, {
       keys: [
         {
           minRanking: matchSorter.rankings.STRING_CASE_ACRONYM,
@@ -17,7 +18,6 @@ const Emojis: Suggestion<Emoji> = {
         }
       ]
     }),
-
   extract: query =>
     query.length > 2 &&
     query[0] === ':' &&
@@ -33,9 +33,13 @@ const Emojis: Suggestion<Emoji> = {
     </Description>
   ),
 
-  suggestion: ({ emoji, keywords: [keyword] }) => (
+  suggestion: ({ category, emoji, keywords: [keyword] }) => (
     <React.Fragment>
-      <Icon>{emoji}</Icon>
+      {category === 'custom' ? (
+        <Icon src={`https://cdn.discordapp.com/emojis/${emoji}.png`} />
+      ) : (
+        <Icon>{emoji}</Icon>
+      )}
       <Name>{`:${keyword}:`}</Name>
     </React.Fragment>
   )

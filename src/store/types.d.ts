@@ -1,4 +1,5 @@
 import { ComputedValue, Dictionary } from '@cerebral/fluent'
+import { Emoji } from 'styled-elements/Emoji/emojiMap'
 
 import { Translation } from '../app/locales'
 import { Category } from '../types/category'
@@ -50,6 +51,9 @@ export interface State {
 
   // Router url
   url: ParsedUrl
+
+  // Custom emojis
+  emojis: Dictionary<Emoji>
 
   // Array of channels
   channels: Dictionary<Channel>

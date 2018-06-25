@@ -24,12 +24,19 @@ export type Member = {
   roles: string[]
 }
 
+export type Emoji = {
+  name: string
+  id: string
+}
+
 export interface ServerResponse {
   server: {
     name: string
     memberCount: number
     icon: string
     theme: Theme
+
+    emoji?: Emoji[]
 
     channels: Channels
     channel?: ChannelResponse['server']['channel']
