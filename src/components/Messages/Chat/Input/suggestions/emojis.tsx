@@ -8,7 +8,7 @@ import { Suggestion } from '../types'
 
 const Emojis: Suggestion<Emoji> = {
   getSuggestions: query =>
-    matchSorter([...controller.state.emojis.values(), emojis], query, {
+    matchSorter([...controller.state.emojis.values(), ...emojis], query, {
       keys: [
         {
           minRanking: matchSorter.rankings.STRING_CASE_ACRONYM,
