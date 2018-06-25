@@ -1,9 +1,10 @@
+import * as _ from 'lodash'
 import matchSorter from 'match-sorter'
 import * as React from 'react'
 import { Emoji, emojis } from 'styled-elements/Emoji/emojiMap'
 
 import controller from '../../../../../controllers/cerebral'
-import { Description, Icon, Name } from '../elements'
+import { Description, Icon, Info, Name } from '../elements'
 import { Suggestion } from '../types'
 
 const Emojis: Suggestion<Emoji> = {
@@ -41,6 +42,7 @@ const Emojis: Suggestion<Emoji> = {
         <Icon>{emoji}</Icon>
       )}
       <Name>{`:${keyword}:`}</Name>
+      <Info>{_.capitalize(category)}</Info>
     </React.Fragment>
   )
 }

@@ -44,7 +44,6 @@ export const animatedEmoji = {
   }),
   react: node => (
     <Emoji
-      draggable={false}
       enlarged={node.jumboable}
       alt={`<:${node.name}:${node.emojiId}>`}
       src={node.src}

@@ -18,6 +18,16 @@ import {
   Twemoji
 } from './elements'
 
+/*
+
+ this folder can be deleted,
+
+
+
+
+
+
+*/
 export function parseText(msg: message) {
   function mentions(array: [string | string[]], mentions) {
     return array.map(e => {

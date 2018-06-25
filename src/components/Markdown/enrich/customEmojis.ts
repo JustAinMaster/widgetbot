@@ -6,8 +6,6 @@ const customEmojis = (message: string) => {
   controller.state.emojis
     .values()
     .forEach(({ category, emoji, keywords: [keyword] }) => {
-      console.log(category, emoji, keyword, result)
-
       if (category === 'custom')
         result = result.split(`:${keyword}:`).join(`<:${keyword}:${emoji}>`)
     })
