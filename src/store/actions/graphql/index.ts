@@ -1,6 +1,6 @@
 import { Dictionary } from '@cerebral/fluent'
+import client from 'client'
 import { BranchContext, Context } from 'fluent'
-import { request } from 'graphql-request'
 import * as _ from 'lodash'
 import Log from 'logger'
 import * as queries from 'queries'
@@ -64,17 +64,16 @@ namespace GraphQL {
     )
 
     try {
-      const response = (await request(
-        '/api/graphql',
-        queries.server,
+      const response = await client.query<ServerResponse>({
+        query: queries.server,
         variables
-      )) as ServerResponse
+      })
 
       if (loadMessages) {
         subscribe(state.activeChannel)
       }
 
-      return path.success(response)
+      return path.success(response.data)
     } catch ({ response }) {
       const errors =
         response && response.errors
@@ -114,18 +113,21 @@ namespace GraphQL {
     // Uncached
 
     try {
-      const response = (await request('/api/graphql', queries.channel, {
-        server: state.server.id,
-        channel: state.activeChannel
-      })) as ChannelResponse
+      const { data } = await client.query<ChannelResponse>({
+        query: queries.channel,
+        variables: {
+          server: state.server.id,
+          channel: state.activeChannel
+        }
+      })
 
       subscribe(state.activeChannel)
 
       return path.success({
         channel: {
           id: state.activeChannel,
-          ...response.server.channel,
-          messages: Dictionary(_.keyBy(response.server.channel.messages, 'id'))
+          ...data.server.channel,
+          messages: Dictionary(_.keyBy(data.server.channel.messages, 'id'))
         }
       })
     } catch ({ response }) {

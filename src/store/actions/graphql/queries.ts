@@ -1,115 +1,91 @@
-const gql = String.raw
+import gql from 'graphql-tag'
 
-export const members =
-  'members' +
-  gql`
-    {
-      tag
-      id
-      status
-      avatar
-    }
-  `
-
-export const messages =
-  'messages' +
-  gql`
-    {
-      timestamp
-      id
-      content
-      author {
-        name
-        id
-        avatar
-        type
-        color
-      }
-      reactions {
-        id
-        name
-        count
-      }
-      mentions {
-        members {
-          name
-          id
-          roles {
-            color
-            position
-            name
-          }
-        }
-        roles {
-          name
-          color
-          id
-        }
-        everyone
-      }
-      type
-      editedAt
-      attachment {
-        url
-        height
-        width
-      }
-      embeds {
-        color
-        title
-        type
-        description
-        url
-        timestamp
-        author {
-          name
-          url
-          iconURL
-        }
-        fields {
-          value
-          name
-          inline
-        }
-        footer {
-          proxyIconUrl
-          text
-        }
-        thumbnail {
-          height
-          width
-          proxyURL
-        }
-        image {
-          height
-          width
-          proxyURL
-        }
-        provider {
-          name
-          url
-        }
-        video {
-          height
-          width
-          url
-        }
-      }
-    }
-  `
-
-const theme =
-  'theme' +
-  gql`
-    {
-      colors {
-        primary
-        accent
-        background
-      }
-      css
-    }
-  `
+// export const messages =
+//   'messages' +
+//   gql`
+//     {
+//       timestamp
+//       id
+//       content
+//       author {
+//         name
+//         id
+//         avatar
+//         type
+//         color
+//       }
+//       reactions {
+//         id
+//         name
+//         count
+//       }
+//       mentions {
+//         members {
+//           name
+//           id
+//           roles {
+//             color
+//             position
+//             name
+//           }
+//         }
+//         roles {
+//           name
+//           color
+//           id
+//         }
+//         everyone
+//       }
+//       type
+//       editedAt
+//       attachment {
+//         url
+//         height
+//         width
+//       }
+//       embeds {
+//         color
+//         title
+//         type
+//         description
+//         url
+//         timestamp
+//         author {
+//           name
+//           url
+//           iconURL
+//         }
+//         fields {
+//           value
+//           name
+//           inline
+//         }
+//         footer {
+//           proxyIconUrl
+//           text
+//         }
+//         thumbnail {
+//           height
+//           width
+//           proxyURL
+//         }
+//         image {
+//           height
+//           width
+//           proxyURL
+//         }
+//         provider {
+//           name
+//           url
+//         }
+//         video {
+//           height
+//           width
+//           url
+//         }
+//       }
+//     }
+//   `
 
 export const server = gql`
   query Messages($server: String!, $channel: String, $withChannel: Boolean!) {
@@ -117,7 +93,12 @@ export const server = gql`
       name
       memberCount
       icon
-      ${members}
+      members {
+        tag
+        id
+        status
+        avatar
+      }
       emoji {
         name
         id
@@ -132,9 +113,15 @@ export const server = gql`
       }
       channel(id: $channel) @include(if: $withChannel) {
         topic
-        ${messages}
       }
-      ${theme}
+      theme {
+        colors {
+          primary
+          accent
+          background
+        }
+        css
+      }
     }
   }
 `
@@ -145,7 +132,6 @@ export const channel = gql`
       channel(id: $channel) {
         name
         topic
-        ${messages}
       }
     }
   }

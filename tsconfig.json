@@ -23,6 +23,7 @@
       "markdown": ["src/components/Markdown/index.ts"],
       "markdown/*": ["src/components/Markdown/*"],
       "socket-io": ["src/controllers/socket-io"],
+      "client": ["src/controllers/apollo/index.ts"],
       "fluent": ["src/controllers/cerebral/fluent.ts"],
       "embed-api": ["src/controllers/embed-api"],
       "emoji": ["src/modules/styled-elements/Emoji/emoji.ts"]
