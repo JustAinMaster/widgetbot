@@ -5,7 +5,7 @@ interface Props {
 }
 
 // prettier-ignore
-export const Ham = styled<Props, 'button'>('button')`
+export const Ham = styled('button')<Props>`
   border: none;
   background: none;
   flex-shrink: 0;

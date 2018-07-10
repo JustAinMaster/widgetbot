@@ -64,7 +64,7 @@ const ButtonLink = withProps({
   color: 'rgba(255, 255, 255, 0.15)'
 })(Button.withComponent('a') as any)
 
-export const Chip = styled<any, 'a'>(ButtonLink)`
+export const Chip = styled(ButtonLink)<any>`
   display: inline-block;
   text-decoration: none;
   opacity: 0.8;
@@ -75,7 +75,7 @@ export const Chip = styled<any, 'a'>(ButtonLink)`
 interface GraphProps {
   username: string
 }
-export const Graph = styled<GraphProps, 'div'>('div')`
+export const Graph = styled('div')<GraphProps>`
   background-image: url(${({ username }) =>
     `"https://ghchart.rshah.org/${username}"`});
 

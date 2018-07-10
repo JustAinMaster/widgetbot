@@ -13,7 +13,7 @@ interface NameProps {
   color: string
 }
 
-export const Name = styled<NameProps, 'strong'>('strong')`
+export const Name = styled('strong')<NameProps>`
   color: ${({ color }) => (color !== '#000000' ? color : null)};
   cursor: pointer;
   font-size: 16px;

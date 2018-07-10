@@ -10,7 +10,7 @@ interface Props {
   width: number
 }
 
-export const Root = styled<Props, 'div'>('div')`
+export const Root = styled('div')<Props>`
   position: relative;
   overflow: hidden;
   ${props => new Scale(props).css};

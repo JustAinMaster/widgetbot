@@ -6,7 +6,7 @@ import styled, { css } from '../elements/ThemeContext'
 interface Props {
   loading: boolean
 }
-export const Root = styled<Props, any>(Content)`
+export const Root = styled(Content)<Props>`
   padding: 18px 40px;
   text-align: center;
   user-select: none;
@@ -40,7 +40,7 @@ export const Greeting = styled('h2')`
 interface GroupProps {
   label: string
 }
-export const Group = styled<GroupProps, 'form'>('form')`
+export const Group = styled('form')<GroupProps>`
   &::before {
     display: block;
     content: ${({ label }) => JSON.stringify(label)};

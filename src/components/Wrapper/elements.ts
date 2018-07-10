@@ -6,7 +6,7 @@ interface Props {
 }
 
 // prettier-ignore
-export const Wrapper = styled<Props, 'div'>('div')`
+export const Wrapper = styled('div')<Props>`
   display: flex;
   flex-direction: column;
   height: 100%;

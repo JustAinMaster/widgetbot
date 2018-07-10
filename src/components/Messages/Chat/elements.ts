@@ -26,7 +26,7 @@ export const Typing = styled('div')``
 interface FieldProps {
   rows: number
 }
-export const Field = styled<FieldProps, 'div'>('div')`
+export const Field = styled('div')<FieldProps>`
   display: flex;
   border-radius: 5px;
   background-color: ${({ theme }) =>

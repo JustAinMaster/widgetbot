@@ -3,7 +3,7 @@ import styled from '../ThemeContext'
 interface Props {
   color: number
 }
-export const ColorPill = styled<Props, 'div'>('div')`
+export const ColorPill = styled('div')<Props>`
   width: 4px;
   border-radius: 3px 0 0 3px;
   -ms-flex-negative: 0;

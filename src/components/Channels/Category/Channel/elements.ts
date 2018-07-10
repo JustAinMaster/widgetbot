@@ -18,7 +18,7 @@ interface Props {
   order: number
 }
 
-export const Root = styled<Props, 'div'>(Channel as any)`
+export const Root = styled(Channel)<Props>`
   position: relative;
   text-decoration: none;
   user-select: none;

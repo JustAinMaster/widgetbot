@@ -36,16 +36,16 @@ const base = (inline: boolean, color: string) => css`
       `};
 `
 
-export const Mention = styled<Props, 'span'>('span')`
+export const Mention = styled('span')<Props>`
   ${({ theme, color, inline }) => base(inline, color || theme.colors.accent)};
 `
-export const Channel = styled<Props, any>(ChannelLink)`
+export const Channel = styled(ChannelLink)<Props>`
   ${({ theme, inline }) => base(inline, theme.colors.accent)};
 `
 
 interface RoleProps extends Props {
   everyone?: boolean
 }
-export const Role = styled<RoleProps, 'span'>('span')`
+export const Role = styled('span')<RoleProps>`
   ${({ theme, color, inline }) => base(inline, color || theme.colors.accent)};
 `

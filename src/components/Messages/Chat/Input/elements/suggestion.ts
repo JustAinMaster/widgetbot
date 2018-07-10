@@ -5,7 +5,7 @@ interface Props {
   selected: boolean
 }
 
-export const Suggestion = styled<Props, 'li'>('li')`
+export const Suggestion = styled('li')<Props>`
   display: flex;
   cursor: pointer;
   height: 32px;

@@ -11,7 +11,7 @@ export const Fields = styled('div')`
   margin-top: 4px;
 `
 
-export const Field = styled<Props, 'div'>('div')`
+export const Field = styled('div')<Props>`
   flex: 0;
   /* padding-top: 10px; */
   min-width: 100%;

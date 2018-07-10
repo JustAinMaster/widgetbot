@@ -24,7 +24,7 @@ const emoji = (enlarged: boolean) => css`
       `};
 `
 
-export const Emoji = styled<Props, 'img'>('img')`
+export const Emoji = styled('img')<Props>`
   ${({ enlarged }) => emoji(enlarged)};
 `
 

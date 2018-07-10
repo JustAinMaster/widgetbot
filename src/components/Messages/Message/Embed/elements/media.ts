@@ -7,14 +7,15 @@ interface ImageProps {
   width: number
 }
 
-export const Image = styled<ImageProps, any>(ExpandableImage)`
+export const Image = styled(ExpandableImage)<ImageProps>`
   display: block;
   margin: 10px 0;
   cursor: pointer;
   border-radius: 3px;
   ${props =>
     new Scale({
-      ...props,
+      height: props.height,
+      width: props.width,
       maxWidth: 400,
       maxHeight: 300
     }).css};

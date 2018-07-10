@@ -5,7 +5,7 @@ import styled, { css } from '../ThemeContext'
 interface Props {
   rich?: boolean
 }
-export const Thumbnail = styled<Props, any>(ExpandableImage)`
+export const Thumbnail = styled(ExpandableImage)<Props>`
   border-radius: 3px;
   object-fit: contain;
   flex-shrink: 0;

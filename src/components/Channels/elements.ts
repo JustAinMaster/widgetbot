@@ -5,7 +5,7 @@ interface Props {
   visible: boolean
 }
 
-export const Root = styled<Props, 'div'>('div')`
+export const Root = styled('div')<Props>`
   position: absolute;
   z-index: 9;
   background-color: ${({ theme }) =>

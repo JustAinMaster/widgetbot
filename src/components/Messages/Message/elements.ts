@@ -32,7 +32,7 @@ export const Group = styled('div')`
 interface AvatarProps {
   url: string
 }
-export const Avatar = styled<AvatarProps, 'div'>('div')`
+export const Avatar = styled('div')<AvatarProps>`
   flex-shrink: 0;
   cursor: pointer;
   background-image: url('${props => props.url}');
