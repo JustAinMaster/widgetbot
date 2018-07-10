@@ -94,12 +94,12 @@ export default connect()
           window.removeEventListener('keydown', this.listener)
         }
 
-        listener = ({ keyCode }) => {
+        listener = ({ key }) => {
           const { modal } = this.props
 
           if (modal.open) {
-            switch (keyCode) {
-              case 27:
+            switch (key) {
+              case 'Escape':
                 this.close()
             }
           }

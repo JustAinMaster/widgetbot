@@ -25,7 +25,7 @@
       "socket-io": ["src/controllers/socket-io"],
       "fluent": ["src/controllers/cerebral/fluent.ts"],
       "embed-api": ["src/controllers/embed-api"],
-      "emoji": ["src/components/Messages/Message/Markdown/elements/emoji.ts"]
+      "emoji": ["src/modules/styled-elements/Emoji/emoji.ts"]
     }
   },
   "exclude": [

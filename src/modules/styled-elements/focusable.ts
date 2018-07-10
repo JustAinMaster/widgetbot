@@ -1,6 +1,8 @@
-import { css, Theme } from 'typed-emotion'
+import { css, Interpolation, Theme } from 'typed-emotion'
 
-const focusable = ({ theme }: { theme: Theme }) => css`
+// TODO: Fix typings
+
+const focusable: Interpolation<{ theme: Theme }> = ({ theme }) => css`
   &::after {
     content: '';
     border: 2px solid ${theme.colors.accent};
@@ -18,4 +20,4 @@ const focusable = ({ theme }: { theme: Theme }) => css`
   }
 `
 
-export default focusable
+export default focusable as any

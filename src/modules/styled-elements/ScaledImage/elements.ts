@@ -1,6 +1,11 @@
 import styled from 'typed-emotion'
 
-export const Root = styled('img')`
+interface IRoot {
+  width: number
+  height: number
+}
+
+export const Root = styled('img')<IRoot>`
   width: ${({ width }) => (width ? `${width}px` : null)};
   width: ${({ height }) => (height ? `${height}px` : null)};
 `

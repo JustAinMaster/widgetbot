@@ -1,9 +1,9 @@
+import { Twemoji } from 'emoji'
 import { ThemeProvider } from 'emotion-theming'
 import { parseAllowLinks, parseEmbedTitle } from 'markdown/render'
 import * as Moment from 'moment'
 import * as React from 'react'
 
-import { Twemoji } from '../Markdown/elements'
 import { Content, Root, Title, Wrapper } from './elements'
 import { Author, AuthorIcon, AuthorName } from './elements/author'
 import { ColorPill } from './elements/colorpill'
@@ -12,6 +12,8 @@ import { Field, FieldName, Fields, FieldValue } from './elements/fields'
 import { Footer, FooterIcon, FooterText } from './elements/footer'
 import { Image } from './elements/media'
 import { Thumbnail } from './elements/thumbnail'
+
+// TODO: Refactor / cleanup
 
 const parseEmojis = text =>
   text && typeof text === 'string' ? (

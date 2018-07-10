@@ -69,7 +69,6 @@ export const Content = styled('div')`
   }
 `
 
-// prettier-ignore
 export const Close = styled('button')`
   position: absolute;
   right: 0;
@@ -77,7 +76,10 @@ export const Close = styled('button')`
   width: 30px;
   margin: 4px;
 
-  background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' ${({ theme }) => `fill='${encodeURIComponent(theme.colors.primary)}'`} viewBox='0 0 44 44'%3e%3cpath d='M38.8 0L44 5.2 5.2 44 0 38.8 38.8 0z'/%3e%3cpath d='M5.2 0L44 38.8 38.8 44 0 5.2 5.2 0z'/%3e%3c/svg%3e");
+  background: ${({ theme }) =>
+    `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' fill='${encodeURIComponent(
+      theme.colors.primary
+    )} viewBox='0 0 44 44'%3e%3cpath d='M38.8 0L44 5.2 5.2 44 0 38.8 38.8 0z'/%3e%3cpath d='M5.2 0L44 38.8 38.8 44 0 5.2 5.2 0z'/%3e%3c/svg%3e")`};
   background-size: 40%;
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -91,12 +93,11 @@ export const Close = styled('button')`
   &:hover,
   &:focus {
     background-color: ${({ theme }) =>
-      theme.colors._primary
-        .fadeOut(0.8)
-        .toString()};
+      theme.colors._primary.fadeOut(0.8).toString()};
   }
 
-  &, &::after {
+  &,
+  &::after {
     border-radius: 50%;
   }
 
