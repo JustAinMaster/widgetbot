@@ -87,7 +87,135 @@ import gql from 'graphql-tag'
 //     }
 //   `
 
+const member = gql`
+  fragment member on IMember {
+    name
+    id
+    avatar
+  }
+`
+
+const message = gql`
+  fragment message on IMessage {
+    id
+    timestamp
+    author {
+      ... on ListedMembers {
+        id
+      }
+      ... on UnlistedMembers {
+        ...member
+      }
+    }
+  }
+  ${member}
+`
+
+const textMessage = gql`
+  fragment textMessage on TextMessage {
+    content
+    embeds {
+      title
+      description
+      url
+      timestamp
+      color
+      fields {
+        value
+        name
+        inline
+      }
+      footer {
+        iconURL
+        proxyIconURL
+        text
+      }
+      thumbnail {
+        height
+        width
+        proxyURL
+        url
+      }
+      video {
+        height
+        width
+        url
+      }
+    }
+  }
+`
+
 export const server = gql`
+  query Messages($server: ID!) {
+    server(id: $server) {
+      name
+      memberCount
+      icon
+      emojis {
+        name
+        id
+      }
+      theme {
+        colors {
+          primary
+          accent
+          background
+        }
+        css
+      }
+    }
+  }
+`
+
+export const members = gql`
+  query Messages($server: ID!) {
+    server(id: $server) {
+      members {
+        ...member
+      }
+    }
+  }
+  ${member}
+`
+
+export const channels = gql`
+  query Messages($server: ID!, $channel: ID!, $withChannel: Boolean!) {
+    server(id: $server) {
+      channels {
+        name
+        category
+        id
+        permissions {
+          SEND_MESSAGES
+        }
+      }
+    }
+  }
+`
+
+export const channel = gql`
+  query Messages($server: ID!, $channel: ID!) {
+    channel(id: $channel) {
+      id
+      topic
+      messages {
+        ... on TextMessage {
+          ...message
+          ...textMessage
+        }
+        ... on JoinMessage {
+          __typename
+          ...message
+        }
+      }
+    }
+  }
+
+  ${message}
+  ${textMessage}
+`
+
+export const server_ = gql`
   query Messages($server: String!, $channel: String, $withChannel: Boolean!) {
     server(id: $server) {
       name
@@ -126,7 +254,7 @@ export const server = gql`
   }
 `
 
-export const channel = gql`
+export const channel_ = gql`
   query Messages($server: String!, $channel: String!) {
     server(id: $server) {
       channel(id: $channel) {
