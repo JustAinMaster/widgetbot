@@ -1,12 +1,13 @@
 import * as React from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
 
+import { handlers } from '.'
 import { Suggestion, Suggestions } from './elements'
 
 interface Props {
   onSelect: Function
   query: string
-  handler: any //typeof handlers[number]
+  handler: typeof handlers[number] | any
 }
 
 const MAX_SUGGESTIONS = 15
@@ -18,7 +19,7 @@ class EmojiSuggestions extends React.Component<Props> {
   }
   mouseEvent = false
 
-  static getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps(props: Props, state) {
     const { handler, query } = props
 
     if (handler) {

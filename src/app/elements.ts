@@ -26,9 +26,13 @@ export const Notifications = styled('div')`
 `
 
 export namespace GlobalStyles {
+  let injected = false
   const CSS = document.createElement('style')
 
   export function inject(theme: Theme) {
+    if (injected) return update(theme)
+    injected = true
+
     injectGlobal`
       html, body, #root {
         position: relative;
@@ -57,7 +61,7 @@ export namespace GlobalStyles {
     document.body.appendChild(CSS)
   }
 
-  export function update(theme: Theme) {
+  function update(theme: Theme) {
     CSS.innerText = theme.css
 
     injectGlobal`

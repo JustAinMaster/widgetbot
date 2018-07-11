@@ -1,8 +1,10 @@
 import './app/res/index.css'
 
 import { Container } from '@cerebral/react'
+import client from 'client'
 import { connect } from 'raven'
 import * as React from 'react'
+import { ApolloProvider } from 'react-apollo'
 import * as ReactDOM from 'react-dom'
 
 import App from './app'
@@ -12,11 +14,13 @@ import registerServiceWorker from './registerServiceWorker'
 
 // Render App
 ReactDOM.render(
-  <Container controller={controller}>
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
-  </Container>,
+  <ApolloProvider client={client}>
+    <Container controller={controller}>
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
+    </Container>
+  </ApolloProvider>,
   document.getElementById('root')
 )
 

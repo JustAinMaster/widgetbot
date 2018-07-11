@@ -1,4 +1,5 @@
 import { connect } from 'fluent'
+import { addNotification } from 'notify'
 import * as React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { fetchInvite } from 'socket-io'
@@ -12,7 +13,6 @@ import Wrapper from '../Wrapper'
 import Chat from './Chat'
 import Group from './group'
 import Message from './Message'
-import { addNotification } from 'notify'
 
 const defaultInvite = 'https://discord.gg/mpMQCuj'
 
@@ -20,7 +20,6 @@ export default connect()
   .with(({ state, signals, props }) => {
     const channel = state.channel.get()
     return {
-      server: state.server,
       loading: state.loading,
       activeChannel: state.activeChannel,
       channel,
@@ -63,7 +62,7 @@ export default connect()
         }
 
         render() {
-          const { server, channel } = this.props
+          const { channel } = this.props
 
           const header = channel && (
             <Header>
@@ -94,13 +93,13 @@ export default connect()
         }
 
         async join(event: Event) {
-          const { activeChannel, server } = this.props
+          const { activeChannel } = this.props
           const { window, document } = self.open()
 
           event.preventDefault()
 
           document.body.style.backgroundColor = '#36393F'
-          document.title = `Join "${server.name}"`
+          document.title = `Join Discord server`
 
           // Attempt to get an invite for the specified channel
           // if it fails, fallback to one on a random channel

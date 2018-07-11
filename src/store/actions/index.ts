@@ -46,8 +46,9 @@ export function select({
 
   // If the server field has an icon entry, it's cached
   if (props.server) {
-    state.server.id = props.server
-    cached = !!state.server.icon
+    state.server = props.server
+    // TODO: Fix
+    cached = false
   }
 
   // Marks a channel as selected

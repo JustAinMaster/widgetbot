@@ -13,10 +13,11 @@ export { subscribe, unsubscribe } from './subscriptions'
 
 const initiate = () => {
   // Register socket
-  socket.connect()
+  // TODO: Remove
+  // socket.connect()
   socket.on('connect', () => {
     socket.emit('register', {
-      server: controller.state.server.id,
+      server: controller.state.server,
       token: controller.state.url.token || controller.state.user.token,
       subscriptions: controller.state.subscriptions.keys()
     })

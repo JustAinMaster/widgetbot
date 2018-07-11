@@ -31,7 +31,6 @@ export interface Theme {
     background: string
   }
   css: string
-  compact: boolean
 }
 
 export interface State {
@@ -39,15 +38,10 @@ export interface State {
   // Message loading state
   loading: boolean
   // Server info
-  server: {
-    name: string
-    id: string
-    memberCount: number
-    icon: string
-  }
+  server: string
 
   // Channels that the user is subscribed to
-  subscriptions: Dictionary<boolean>
+  subscriptions: Dictionary<boolean> // TODO: Remove
 
   // Router url
   url: ParsedUrl
@@ -70,12 +64,9 @@ export interface State {
 
   // Visible UI components
   visible: { [key in Toggles]: boolean }
-  // Theme
-  theme: Theme
 
   // Modal
   modal: Modal
-
   // User
   user: User
 

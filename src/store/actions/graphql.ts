@@ -3,14 +3,15 @@ import client from 'client'
 import { BranchContext, Context } from 'fluent'
 import * as _ from 'lodash'
 import Log from 'logger'
-import * as queries from 'queries'
+import CHANNEL, { Channel } from 'queries/channel'
+import CHANNELS, { Channels } from 'queries/channels'
 import { Notification } from 'react-notification-system'
 import { subscribe } from 'socket-io'
 
-import parseUsername from '../../../components/Messages/Message/parseUsername'
-import { ChannelResponse, ServerResponse } from '../../../types/responses'
-import { Channel } from '../../types'
-import { getLast } from '../util'
+import parseUsername from '../../components/Messages/Message/parseUsername'
+import { ServerResponse } from '../../types/responses'
+import { Channel as $Channel } from '../types'
+import { getLast } from './util'
 
 const serverIssues = {
   level: 'warning',
@@ -44,7 +45,7 @@ namespace GraphQL {
     // If a channel is selected, load it's messages
     // else just load the server info
     const variables = {
-      server: state.server.id,
+      server: state.server,
       ...(loadMessages
         ? {
             channel: state.activeChannel,
@@ -59,13 +60,13 @@ namespace GraphQL {
     Log(
       'info',
       `Fetching server`,
-      state.server.id,
+      state.server,
       ...(loadMessages ? [`with messages on channel`, state.activeChannel] : [])
     )
 
     try {
-      const response = await client.query<ServerResponse>({
-        query: queries.server,
+      const response = await client.query<Channels>({
+        query: CHANNELS,
         variables
       })
 
@@ -73,8 +74,12 @@ namespace GraphQL {
         subscribe(state.activeChannel)
       }
 
-      return path.success(response.data)
+      // TODO: Fix
+      console.log(response.data)
+
+      return path.success(response.data as any)
     } catch ({ response }) {
+      // TODO: Fix error catching for apollo
       const errors =
         response && response.errors
           ? response.errors.map(error => ({
@@ -97,7 +102,7 @@ namespace GraphQL {
     props,
     path
   }: BranchContext<{
-    success: { channel: Channel }
+    success: { channel: $Channel }
     error: {
       notification: Notification[]
     }
@@ -113,15 +118,18 @@ namespace GraphQL {
     // Uncached
 
     try {
-      const { data } = await client.query<ChannelResponse>({
-        query: queries.channel,
+      const { data } = await client.query<Channel>({
+        query: CHANNEL,
         variables: {
-          server: state.server.id,
+          server: state.server,
           channel: state.activeChannel
         }
       })
 
       subscribe(state.activeChannel)
+
+      // TODO: Fix
+      console.log(data)
 
       return path.success({
         channel: {
@@ -129,7 +137,7 @@ namespace GraphQL {
           ...data.server.channel,
           messages: Dictionary(_.keyBy(data.server.channel.messages, 'id'))
         }
-      })
+      } as any)
     } catch ({ response }) {
       const errors =
         response && response.errors
@@ -151,7 +159,7 @@ namespace GraphQL {
   export function updateChannel({
     state,
     props
-  }: Context<{ channel: Channel }>) {
+  }: Context<{ channel: $Channel }>) {
     const channel = props.channel.id
     const prev = state.channels.get(channel)
 
@@ -211,23 +219,6 @@ namespace GraphQL {
       ])
 
       state.emojis.merge(emoji)
-    }
-
-    if (server.name) {
-      // Merge the server info
-      state.server = {
-        ...state.server,
-        name: server.name,
-        icon: server.icon,
-        memberCount: server.memberCount
-      }
-    }
-
-    if (server.theme) {
-      state.theme = {
-        ...state.theme,
-        ...server.theme
-      }
     }
 
     if (server.channels) {

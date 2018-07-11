@@ -10,6 +10,7 @@
     "moduleResolution": "node",
     "rootDir": "src",
     "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
       "logger": ["src/modules/logger.ts"],
@@ -19,7 +20,10 @@
       "notify": ["src/app/notify.tsx"],
       "styled-elements/*": ["src/modules/styled-elements/*"],
       "typed-emotion": ["src/controllers/emotion/index.ts"],
-      "queries": ["src/store/actions/graphql/queries.ts"],
+
+      "queries/*": ["src/queries/*"],
+      "queries": ["src/queries/index.ts"],
+
       "markdown": ["src/components/Markdown/index.ts"],
       "markdown/*": ["src/components/Markdown/*"],
       "socket-io": ["src/controllers/socket-io"],

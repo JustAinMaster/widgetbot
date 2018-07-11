@@ -1,5 +1,5 @@
 export interface Suggestion<Payload> {
-  getSuggestions(query: string): Payload[]
+  getSuggestions(query: string): Promise<Payload[]> | Payload[]
   extract(query: string, state: HTMLTextAreaElement): string | false
   toString(payload: Payload): string
 

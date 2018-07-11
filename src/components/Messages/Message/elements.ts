@@ -1,4 +1,4 @@
-import styled, { css } from './ThemeContext'
+import styled from './ThemeContext'
 
 // prettier-ignore
 export const Group = styled('div')`
@@ -37,21 +37,16 @@ export const Avatar = styled('div')<AvatarProps>`
   cursor: pointer;
   background-image: url('${props => props.url}');
   border-radius: 50%;
-  ${({ theme }) =>
-    theme.compact
-      ? css``
-      : css`
-          background-size: cover;
-          height: 40px;
-          width: 40px;
-          margin-right: 20px;
+  background-size: cover;
+  height: 40px;
+  width: 40px;
+  margin-right: 20px;
 
-          @media (max-width: 400px), (max-height: 370px) {
-            height: 35px;
-            width: 35px;
-            margin-right: 15px;
-          }
-        `}
+  @media (max-width: 400px), (max-height: 370px) {
+    height: 35px;
+    width: 35px;
+    margin-right: 15px;
+  }
 `
 
 export const Messages = styled('div')`

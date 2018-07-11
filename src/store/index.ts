@@ -10,12 +10,7 @@ import { State } from './types'
 const state: State = {
   screen: null,
   loading: true,
-  server: {
-    name: null,
-    icon: null,
-    id: null,
-    memberCount: null
-  },
+  server: null,
   subscriptions: Dictionary({}),
   visible: {
     channels: window.innerWidth > 520
@@ -37,15 +32,6 @@ const state: State = {
 
   members: Dictionary({}),
 
-  theme: {
-    colors: {
-      primary: '#fff',
-      accent: '#7289da',
-      background: '#36393E'
-    },
-    css: ``,
-    compact: false
-  },
   user: {
     avatar: null,
     id: null,
