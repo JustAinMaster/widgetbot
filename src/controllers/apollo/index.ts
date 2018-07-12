@@ -1,14 +1,32 @@
-import ApolloClient, { gql } from 'apollo-boost'
-import { persistCache } from 'apollo-cache-persist'
+import { ApolloClient } from 'apollo-client'
+import gql from 'graphql-tag'
+
+import cache from './cache'
+import link from './link'
 
 const client = new ApolloClient({
-  uri: '/api/graphql'
+  link,
+  cache
 })
 
-persistCache({
-  cache: client.cache,
-  storage: localStorage
-})
+var sub = client
+  .subscribe({
+    query: gql`
+      subscription Test {
+        message {
+          channel
+          message {
+            ... on TextMessage {
+              content
+            }
+          }
+        }
+      }
+    `
+  })
+  .subscribe(({ data }) => {
+    console.warn(data)
+  })
 
 export default client
 ;(window as any).client = client

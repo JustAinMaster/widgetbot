@@ -116,7 +116,6 @@ namespace GraphQL {
     }
 
     // Uncached
-
     try {
       const { data } = await client.query<Channel>({
         query: CHANNEL,
