@@ -32,36 +32,6 @@ export default connect()
   .toClass(
     props =>
       class extends React.PureComponent<typeof props> {
-        getContent = () => {
-          return <Loading />
-          // if (loading) {
-          //   return <Loading />
-          // }
-
-          // if (messages) {
-          //   const grouped = Group(messages)
-
-          //   return grouped.length ? (
-          //     <ScrollVisible
-          //       innerRef={this.scroll.bind(this)}
-          //       className="messages"
-          //     >
-          //       {grouped.map(group => (
-          //         <Message
-          //           messages={group}
-          //           key={group[0].id}
-          //           lastSeen={channel.lastSeenID}
-          //         />
-          //       ))}
-          //     </ScrollVisible>
-          //   ) : (
-          //     <NoMessages className="no-messages" />
-          //   )
-          // }
-
-          return null
-        }
-
         header = () => {
           const { server, channel } = this.props
           return (
@@ -100,7 +70,6 @@ export default connect()
                   return <ErrorAhoy message={error.message} />
                 }
 
-                console.log({ data })
                 let content = <Loading />
 
                 if (!loading) {
@@ -113,7 +82,7 @@ export default connect()
                     >
                       {grouped.map(group => (
                         <Message
-                          messages={group as any}
+                          messages={group}
                           key={group[0].id}
                           lastSeen={null}
                         />
@@ -133,17 +102,16 @@ export default connect()
               }}
             </MessagesQuery>
           )
-          const content = this.getContent()
 
-          return content ? (
-            <Wrapper>
-              {/*header*/}
-              {content}
-              {/*channel && channel.permissions.SEND_MESSAGES && <Chat />*/}
-            </Wrapper>
-          ) : (
-            <ErrorAhoy />
-          )
+          // return content ? (
+          //   <Wrapper>
+          //     {/*header*/}
+          //     {content}
+          //     {/*channel && channel.permissions.SEND_MESSAGES && <Chat />*/}
+          //   </Wrapper>
+          // ) : (
+          //   <ErrorAhoy />
+          // )
         }
 
         async join(event: Event) {
