@@ -1,29 +1,52 @@
 import * as React from 'react'
-import styled from 'typed-emotion'
+import styled, { css } from 'typed-emotion'
+
+const svg = css``
 
 const Root = styled('div')`
   position: relative;
   width: 100%;
   height: 100%;
-  & > *:first-child {
+  > *:first-child {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
   }
-
-  & > svg {
-    opacity: 0.08;
+  > svg {
     height: 40%;
     width: 40%;
+    opacity: 0.08;
+  }
+`
+
+const Container = styled('div')`
+  display: flex;
+  flex-direction: column;
+  height: 40%;
+  width: 40%;
+  > * {
+    width: 100%;
+    height: 20%;
+  }
+  > svg {
+    height: 100%;
+    opacity: 0.08;
   }
 `
 
 export const Wrap = function<T>(wrapper: T): T {
   const Component: any = wrapper
-  return (props => (
+  return (({ children, ...props }) => (
     <Root {...props}>
-      <Component />
+      {children ? (
+        <Container>
+          <Component />
+          {children}
+        </Container>
+      ) : (
+        <Component />
+      )}
     </Root>
   )) as any
 }

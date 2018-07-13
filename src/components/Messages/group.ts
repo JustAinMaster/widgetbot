@@ -1,11 +1,11 @@
-import Message, { messages } from '../../types/message'
+import { UMessage } from 'queries/messages'
 
 /**
  * Compares whether a message should go in a group
  */
-function compare(a: Message, b: Message) {
+function compare(a: UMessage, b: UMessage) {
   return (
-    a.type === 'GUILD_MEMBER_JOIN' ||
+    a.__typename === 'JoinMessage' ||
     // If the ID is not equal to the previous message
     a.author.id !== b.author.id ||
     // If the name is not equal to the previous message
@@ -16,22 +16,21 @@ function compare(a: Message, b: Message) {
 }
 
 /**
- * Groups messages into their array form.
+ * Groups messages into an array
  * @example
- * // Demo input
- * [{ author: 1 }, { author: 2 }, { author: 1 }, { author: 1 }]
+ * [{ id: 1 }, { id: 2 }, { id: 1 }, { id: 1 }]
  * // Output
- * [[{ author: 1 }], [{ author: 2 }], [{ author: 1 }, { author: 1 }]]
+ * [[{ id: 1 }], [{ id: 2 }], [{ id: 1 }, { id: 1 }]]
  * @param messages The messages to group
  */
-const Group = (messages: messages): messages[] => {
-  const result = []
+const Group = <Group extends UMessage[]>(messages: Group): Group[] => {
+  const result = new Array<Group>()
   let group = null
-  let previous: Message
+  let previous: UMessage
 
   messages.forEach((message, i) => {
     if (group === null || compare(previous, message)) {
-      group = result.push([]) - 1
+      group = result.push([] as Group) - 1
     }
     result[group].push(message)
     previous = message

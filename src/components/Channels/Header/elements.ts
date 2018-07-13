@@ -14,6 +14,7 @@ export const Root = styled('header')`
 export const Icon = styled('img')`
   height: 26px;
   width: 26px;
+  flex-shrink: 0;
   border-radius: 50%;
   transition: border-radius 0.6s ease;
 

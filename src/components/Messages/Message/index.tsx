@@ -3,7 +3,6 @@ import { parseText } from 'markdown/render'
 import * as React from 'react'
 import { FormattedMessage } from 'react-intl'
 
-import message from '../../../types/message'
 import Author, { Timestamp } from './Author'
 import {
   Avatar,
@@ -21,9 +20,10 @@ import Embed from './Embed'
 import { Image } from './Embed/elements/media'
 import parseUsername from './parseUsername'
 import Reaction from './Reaction'
+import { UMessage } from 'queries/messages'
 
 interface Props {
-  messages: message[]
+  messages: UMessage[]
   lastSeen: string
 }
 
@@ -35,76 +35,98 @@ class Message extends React.PureComponent<Props, any> {
 
   render() {
     const { messages, lastSeen } = this.props
-    const [message] = messages
+    const [firstMessage] = messages
 
-    if (message.type === 'GUILD_MEMBER_JOIN') {
-      const { name } = parseUsername(message.author.name)
+    // if (message.__typename === 'JoinMessage') {
+    //   const { name } = parseUsername(message.author.name)
 
-      return (
-        <Group className="message join">
-          <Messages className="content">
-            <JoinText>
-              <FormattedMessage
-                id="message.join_message"
-                values={{ name: <JoinMember>{name}</JoinMember> }}
-              />
-            </JoinText>
-            <Timestamp time={message.timestamp} />
-          </Messages>
-        </Group>
-      )
-    }
+    //   return (
+    //     <Group className="message join">
+    //       <Messages className="content">
+    //         <JoinText>
+    //           <FormattedMessage
+    //             id="message.join_message"
+    //             values={{ name: <JoinMember>{name}</JoinMember> }}
+    //           />
+    //         </JoinText>
+    //         <Timestamp time={message.timestamp} />
+    //       </Messages>
+    //     </Group>
+    //   )
+    // }
 
+    // if (message.__typename === 'TextMessage') {
     return (
       <Group className="group">
-        <Avatar url={message.author.avatar} className="avatar" />
+        {firstMessage.__typename !== 'JoinMessage' ? (
+          <Avatar url={firstMessage.author.avatar} className="avatar" />
+        ) : null}
+
         <Messages className="messages">
-          <Author author={message.author} time={message.timestamp} />
+          {firstMessage.__typename !== 'JoinMessage' ? (
+            <Author
+              author={firstMessage.author}
+              time={firstMessage.timestamp}
+            />
+          ) : null}
 
-          {messages.map((message, i) => (
-            <ThemeProvider key={message.id} theme={this.theme(message)}>
-              <Root className="message">
-                <Content className="content">
-                  {parseText(message.content)}
-                  {message.editedAt && (
-                    <Edited className="edited">{`(edited)`}</Edited>
+          {messages.map((message, i) => {
+            switch (message.__typename) {
+              case 'TextMessage':
+                return (
+                  <ThemeProvider key={message.id} theme={this.theme(message)}>
+                    <Root className="message">
+                      <Content className="content">
+                        {parseText(message.content)}
+                        {/* {message.editedAt && (
+                          <Edited className="edited">{`(edited)`}</Edited>
+                        )} */}
+                      </Content>
+
+                      {/* {message.attachment && (
+                    <Image
+                      src={message.attachment.url}
+                      height={+message.attachment.height}
+                      width={+message.attachment.width}
+                    />
                   )}
-                </Content>
 
-                {message.attachment && (
-                  <Image
-                    src={message.attachment.url}
-                    height={+message.attachment.height}
-                    width={+message.attachment.width}
-                  />
-                )}
+                  {message.embeds.map((embed, i) => (
+                    <Embed key={i} {...embed} />
+                  ))}
 
-                {message.embeds.map((embed, i) => <Embed key={i} {...embed} />)}
+                  {message.reactions && (
+                    <Reactions className="reactions">
+                      {message.reactions.map((reaction, i) => (
+                        <Reaction key={i} {...reaction} />
+                      ))}
+                    </Reactions>
+                  )} */}
+                    </Root>
+                  </ThemeProvider>
+                )
 
-                {message.reactions && (
-                  <Reactions className="reactions">
-                    {message.reactions.map((reaction, i) => (
-                      <Reaction key={i} {...reaction} />
-                    ))}
-                  </Reactions>
-                )}
+              case 'JoinMessage':
+                return (
+                  <Root className="message">
+                    <JoinText>
+                      <FormattedMessage
+                        id="message.join_message"
+                        values={{ name: <JoinMember>{name}</JoinMember> }}
+                      />
+                    </JoinText>
+                    <Timestamp time={message.timestamp} />
+                  </Root>
+                )
 
-                {// If the message is the last one seen by the user
-                message.id === lastSeen &&
-                  // And it's not at the end of the list
-                  i !== messages.length - 1 && (
-                    <Sys.Container className="system-message">
-                      <Sys.Lines>
-                        <Sys.Message>New Messages</Sys.Message>
-                      </Sys.Lines>
-                    </Sys.Container>
-                  )}
-              </Root>
-            </ThemeProvider>
-          ))}
+              default:
+                return null
+            }
+          })}
         </Messages>
       </Group>
     )
+    // }
   }
 }
 

@@ -3,14 +3,17 @@ import * as React from 'react'
 import { Error } from '..'
 import Header, { Name, Topic } from '../../Header'
 import Wrapper from '../../Wrapper'
+import { Message } from './elements'
 
-const ErrorAhoy = () => (
+const ErrorAhoy = ({ message }: { message?: string }) => (
   <Wrapper>
     <Header>
-      <Name>Error ahoy!</Name>
-      <Topic>Something went wrong. Try reloading</Topic>
+      <Name>Error</Name>
+      <Topic>Something unexpected occurred</Topic>
     </Header>
-    <Error />
+    <Error>
+      {message ? <Message length={message.length}>{message}</Message> : null}
+    </Error>
   </Wrapper>
 )
 

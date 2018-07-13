@@ -3,6 +3,7 @@ import gql from 'graphql-tag'
 import embed, { Embed } from './embed'
 
 export interface TextMessage {
+  __typename: 'TextMessage'
   content: string
   embeds: Embed[]
 }

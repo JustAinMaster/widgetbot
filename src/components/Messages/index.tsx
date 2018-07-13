@@ -14,78 +14,132 @@ import Chat from './Chat'
 import Group from './group'
 import Message from './Message'
 
+import gql from 'graphql-tag'
+import { Query } from 'react-apollo'
+import MESSAGES, { VMessages, Messages } from 'queries/messages'
+import CHANNEL, { Channel, VChannel } from 'queries/channel'
+
 const defaultInvite = 'https://discord.gg/mpMQCuj'
 
+class ChannelQuery extends Query<Channel, VChannel> {}
+class MessagesQuery extends Query<Messages, VMessages> {}
+
 export default connect()
-  .with(({ state, signals, props }) => {
-    const channel = state.channel.get()
-    return {
-      loading: state.loading,
-      activeChannel: state.activeChannel,
-      channel,
-      messages: channel && channel.messages ? channel.messages.values() : null
-    }
-  })
+  .with(({ state, signals, props }) => ({
+    server: state.server,
+    channel: state.activeChannel
+  }))
   .toClass(
     props =>
-      class Messages extends React.PureComponent<typeof props> {
+      class extends React.PureComponent<typeof props> {
         getContent = () => {
-          const { loading } = this.props
-          const { channel, messages } = this.props
+          return <Loading />
+          // if (loading) {
+          //   return <Loading />
+          // }
 
-          if (loading) {
-            return <Loading />
-          }
+          // if (messages) {
+          //   const grouped = Group(messages)
 
-          if (messages) {
-            const grouped = Group(messages)
-
-            return grouped.length ? (
-              <ScrollVisible
-                innerRef={this.scroll.bind(this)}
-                className="messages"
-              >
-                {grouped.map(group => (
-                  <Message
-                    messages={group}
-                    key={group[0].id}
-                    lastSeen={channel.lastSeenID}
-                  />
-                ))}
-              </ScrollVisible>
-            ) : (
-              <NoMessages className="no-messages" />
-            )
-          }
+          //   return grouped.length ? (
+          //     <ScrollVisible
+          //       innerRef={this.scroll.bind(this)}
+          //       className="messages"
+          //     >
+          //       {grouped.map(group => (
+          //         <Message
+          //           messages={group}
+          //           key={group[0].id}
+          //           lastSeen={channel.lastSeenID}
+          //         />
+          //       ))}
+          //     </ScrollVisible>
+          //   ) : (
+          //     <NoMessages className="no-messages" />
+          //   )
+          // }
 
           return null
         }
 
-        render() {
-          const { channel } = this.props
+        header = () => {
+          const { server, channel } = this.props
+          return (
+            <ChannelQuery query={CHANNEL} variables={{ server, channel }}>
+              {({ loading, error, data }) => {
+                const name = loading || error ? '' : data.server.channel.name
+                const topic =
+                  loading || error ? null : data.server.channel.topic
 
-          const header = channel && (
-            <Header>
-              <Stretch>
-                <Name>{channel.name}</Name>
-                {channel.topic && <Topic>{channel.topic}</Topic>}
-              </Stretch>
-              <Join
-                href={defaultInvite}
-                target="_blank"
-                onClick={this.join.bind(this)}
-              >
-                <FormattedMessage id="header.join" />
-              </Join>
-            </Header>
+                return (
+                  <Header>
+                    <Stretch>
+                      <Name>{name}</Name>
+                      {topic && <Topic>{topic}</Topic>}
+                    </Stretch>
+                    <Join
+                      href={defaultInvite}
+                      target="_blank"
+                      onClick={this.join.bind(this)}
+                    >
+                      <FormattedMessage id="header.join" />
+                    </Join>
+                  </Header>
+                )
+              }}
+            </ChannelQuery>
+          )
+        }
+
+        render() {
+          const { server, channel } = this.props
+          return (
+            <MessagesQuery query={MESSAGES} variables={{ server, channel }}>
+              {({ loading, error, data }) => {
+                if (error) {
+                  return <ErrorAhoy message={error.message} />
+                }
+
+                console.log({ data })
+                let content = <Loading />
+
+                if (!loading) {
+                  const grouped = Group(data.server.channel.messages)
+
+                  content = grouped.length ? (
+                    <ScrollVisible
+                      innerRef={this.scroll.bind(this)}
+                      className="messages"
+                    >
+                      {grouped.map(group => (
+                        <Message
+                          messages={group as any}
+                          key={group[0].id}
+                          lastSeen={null}
+                        />
+                      ))}
+                    </ScrollVisible>
+                  ) : (
+                    <NoMessages className="no-messages" />
+                  )
+                }
+
+                return (
+                  <Wrapper>
+                    <this.header />
+                    {content}
+                  </Wrapper>
+                )
+              }}
+            </MessagesQuery>
           )
           const content = this.getContent()
 
           return content ? (
             <Wrapper>
-              {header}
+              {/*header*/}
               {content}
-              {channel && channel.permissions.SEND_MESSAGES && <Chat />}
+              {/*channel && channel.permissions.SEND_MESSAGES && <Chat />*/}
             </Wrapper>
           ) : (
             <ErrorAhoy />
@@ -93,7 +147,7 @@ export default connect()
         }
 
         async join(event: Event) {
-          const { activeChannel } = this.props
+          const { channel } = this.props
           const { window, document } = self.open()
 
           event.preventDefault()
@@ -104,7 +158,7 @@ export default connect()
           // Attempt to get an invite for the specified channel
           // if it fails, fallback to one on a random channel
           try {
-            const invite = await fetchInvite(activeChannel)
+            const invite = await fetchInvite(channel)
             document.location.href = invite
           } catch (e) {
             window.close()
@@ -127,14 +181,14 @@ export default connect()
         scrollable
 
         componentWillReceiveProps(nextProps: typeof props) {
-          const { activeChannel } = this.props
-          const nextChannel = nextProps.activeChannel
+          const { channel } = this.props
+          const nextChannel = nextProps.channel
 
-          if (!activeChannel || !this.scrollable) return
+          if (!channel || !this.scrollable) return
 
-          if (nextChannel !== activeChannel) {
+          if (nextChannel !== channel) {
             // Record scroll position of the current channel
-            this.positions.set(activeChannel, this.scrollable.getScrollTop())
+            this.positions.set(channel, this.scrollable.getScrollTop())
 
             // Extract the last scroll position of the next channel
             if (this.positions.has(nextChannel)) {

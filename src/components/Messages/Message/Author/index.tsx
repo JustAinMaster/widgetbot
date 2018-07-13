@@ -2,13 +2,13 @@ import { connect } from 'fluent'
 import * as Moment from 'moment'
 import * as React from 'react'
 
-import { Author } from '../../../../types/message'
 import parseUsername from '../parseUsername'
 import { Sysadmin, Tag, Verified } from './Badges'
 import { Name, Root, Time } from './elements'
+import { Member } from 'queries/fragments/member'
 
 interface Props {
-  author: Author
+  author: Member
   time: number
 }
 
@@ -28,12 +28,12 @@ export default connect<Props>()
 
           return (
             <React.Fragment>
-              {author.type === 'bot' && <Tag className="bot">Bot</Tag>}
+              {/* {author.type === 'bot' && <Tag className="bot">Bot</Tag>}
               {author.type === 'guest' && <Tag className="guest">Guest</Tag>}
               {this.verified({ id: author.id }) ||
                 (author.type === 'sysadmin' && (
                   <Sysadmin className="sysadmin" title="Sysadmin" />
-                ))}
+                ))} */}
             </React.Fragment>
           )
         }
@@ -44,7 +44,7 @@ export default connect<Props>()
 
           return (
             <Root className="author">
-              <Name color={author.color} className="name">
+              <Name color={'green' /*TODO: author.color*/} className="name">
                 {name}
               </Name>
               {this.tags()}

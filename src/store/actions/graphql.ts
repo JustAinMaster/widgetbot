@@ -134,7 +134,9 @@ namespace GraphQL {
         channel: {
           id: state.activeChannel,
           ...data.server.channel,
-          messages: Dictionary(_.keyBy(data.server.channel.messages, 'id'))
+          messages: Dictionary(
+            {} /*_.keyBy(data.server.channel.messages, 'id')*/
+          )
         }
       } as any)
     } catch ({ response }) {
@@ -220,7 +222,7 @@ namespace GraphQL {
       state.emojis.merge(emoji)
     }
 
-    if (server.channels) {
+    if (server.channel && server.channels) {
       const channels = server.channels.map(channel => [
         channel.id,
         {
