@@ -1,4 +1,5 @@
-import { Channel, Theme } from '../store/types'
+import { Theme_server_theme } from '../app/__generated__/Theme'
+import { Channel } from '../store/types'
 import Message from './message'
 import { Permissions } from './permissions'
 
@@ -34,7 +35,7 @@ export interface ServerResponse {
     name: string
     memberCount: number
     icon: string
-    theme: Theme
+    theme: Theme_server_theme
 
     emoji?: Emoji[]
 

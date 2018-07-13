@@ -1,14 +1,15 @@
 import styled, { ThemedReactEmotionInterface } from 'react-emotion'
 
-import * as Store from '../../store/types'
+import { Theme_server_theme } from '../../app/__generated__/Theme'
 import { ParsedUrl } from '../../types/url'
 
 export * from 'react-emotion'
 
 type Color = any
 
-export interface Theme extends Store.Theme {
+export interface Theme extends Theme_server_theme {
   colors: {
+    __typename: 'Colors'
     _primary: Color
     _accent: Color
     _background: Color

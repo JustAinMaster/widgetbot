@@ -1,23 +1,7 @@
 import gql from 'graphql-tag'
 
-import message, { Message } from './fragments/message'
-import textMessage, { TextMessage } from './fragments/textMessage'
-
-export type UMessage = Message & (TextMessage | ({ __typename: 'JoinMessage' }))
-
-export interface Messages {
-  server: {
-    channel: {
-      id: string
-      messages: UMessage[]
-    }
-  }
-}
-
-export interface VMessages {
-  server: string
-  channel: string
-}
+import message from './fragments/message'
+import textMessage from './fragments/textMessage'
 
 const MESSAGES = gql`
   query Messages($server: ID!, $channel: ID!) {

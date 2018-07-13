@@ -19,7 +19,7 @@
     "eject": "react-scripts-ts eject",
     "pull": "git stash && git pull && yarn && yarn build",
     "precommit": "pretty-quick --staged",
-    "codegen": "apollo codegen:generate --target=typescript --schema=\"http://localhost:7000/api/graphql\" --queries=\"src/**/*.ts\" --outputFlat --addTypename",
+    "codegen": "apollo codegen:generate --target=typescript --schema=\"http://localhost:7000/api/graphql\" --queries=\"src/**/*.{ts,tsx}\" --addTypename",
     "doc": "typedoc --includeDeclarations --excludeExternals --externalPattern \"**/node_modules/!(@widgetbot)/**\" --ignoreCompilerErrors --out ./docs/ ./src"
   },
   "dependencies": {

@@ -1,21 +1,33 @@
 import { connect } from 'fluent'
+import gql from 'graphql-tag'
 import * as React from 'react'
 import { Query } from 'react-apollo'
 
+import { ChannelInfo, ChannelInfoVariables } from './__generated__/ChannelInfo'
 import ChannelLink from './link'
-import CHANNEL, { ChannelData, VChannel } from './query'
 
-interface Payload {
-  name: string
-}
+const CHANNEL = gql`
+  query ChannelInfo($server: ID!, $channel: ID!) {
+    server(id: $server) {
+      channel(id: $channel) {
+        name
+        id
+      }
+    }
+  }
+`
 
 interface Props {
   id: string
   className?: string
-  children: (channel: Payload) => any
+  children: (
+    channel: {
+      name: string
+    }
+  ) => any
 }
 
-class ChannelQuery extends Query<ChannelData, VChannel> {}
+class ChannelQuery extends Query<ChannelInfo, ChannelInfoVariables> {}
 
 const Channel = connect<Props>()
   .with(({ state, signals, props }) => ({

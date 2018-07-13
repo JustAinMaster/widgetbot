@@ -6,7 +6,11 @@ import * as React from 'react'
 import { Query } from 'react-apollo'
 import { Theme as ThemeContext } from 'typed-emotion'
 
-import { Theme } from '../store/types'
+import {
+  Theme,
+  Theme_server_theme,
+  ThemeVariables
+} from './__generated__/Theme'
 import { GlobalStyles } from './elements'
 
 const GET_THEME = gql`
@@ -24,17 +28,7 @@ const GET_THEME = gql`
   }
 `
 
-interface Data {
-  server: {
-    theme: Theme
-  }
-}
-
-interface Variables {
-  server: string
-}
-
-class ThemeQuery extends Query<Data, Variables> {}
+class ThemeQuery extends Query<Theme, ThemeVariables> {}
 
 const ThemeProvider = connect()
   .with(({ state, signals, props }) => ({
@@ -44,8 +38,10 @@ const ThemeProvider = connect()
   .to(({ server, url, children }) => (
     <ThemeQuery query={GET_THEME} variables={{ server }}>
       {({ loading, error, data }) => {
-        let theme: Theme = {
+        let theme: Theme_server_theme = {
+          __typename: 'Theme',
           colors: {
+            __typename: 'Colors',
             primary: '#fff',
             accent: '#7289da',
             background: '#36393E'

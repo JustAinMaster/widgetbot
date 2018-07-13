@@ -3,8 +3,8 @@ import client from 'client'
 import { BranchContext, Context } from 'fluent'
 import * as _ from 'lodash'
 import Log from 'logger'
-import CHANNEL, { Channel } from 'queries/channel'
-import CHANNELS, { Channels } from 'queries/channels'
+import CHANNEL from 'queries/channel'
+import CHANNELS from 'queries/channels'
 import { Notification } from 'react-notification-system'
 import { subscribe } from 'socket-io'
 
@@ -12,6 +12,8 @@ import parseUsername from '../../components/Messages/Message/parseUsername'
 import { ServerResponse } from '../../types/responses'
 import { Channel as $Channel } from '../types'
 import { getLast } from './util'
+import { Channels } from 'queries/__generated__/Channels'
+import { Channel } from 'queries/__generated__/Channel'
 
 const serverIssues = {
   level: 'warning',

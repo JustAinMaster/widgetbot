@@ -1,28 +1,27 @@
 import { connect } from 'fluent'
 import { addNotification } from 'notify'
+import { Channel, ChannelVariables } from 'queries/__generated__/Channel'
+import { Messages, MessagesVariables } from 'queries/__generated__/Messages'
+import CHANNEL from 'queries/channel'
+import MESSAGES from 'queries/messages'
 import * as React from 'react'
+import { Query } from 'react-apollo'
 import { FormattedMessage } from 'react-intl'
-import { fetchInvite } from 'socket-io'
 import { ScrollVisible } from 'shared/scrollable'
+import { fetchInvite } from 'socket-io'
 
 import Header, { Name, Topic } from '../Header'
 import { Join, Stretch } from '../Header/elements'
 import { Loading, NoMessages } from '../Overlays'
 import ErrorAhoy from '../Overlays/ErrorAhoy'
 import Wrapper from '../Wrapper'
-import Chat from './Chat'
 import Group from './group'
 import Message from './Message'
 
-import gql from 'graphql-tag'
-import { Query } from 'react-apollo'
-import MESSAGES, { VMessages, Messages } from 'queries/messages'
-import CHANNEL, { Channel, VChannel } from 'queries/channel'
-
 const defaultInvite = 'https://discord.gg/mpMQCuj'
 
-class ChannelQuery extends Query<Channel, VChannel> {}
-class MessagesQuery extends Query<Messages, VMessages> {}
+class ChannelQuery extends Query<Channel, ChannelVariables> {}
+class MessagesQuery extends Query<Messages, MessagesVariables> {}
 
 export default connect()
   .with(({ state, signals, props }) => ({

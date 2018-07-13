@@ -3,6 +3,7 @@ import gql from 'graphql-tag'
 import * as React from 'react'
 import { Query } from 'react-apollo'
 
+import { ServerInfo, ServerInfoVariables } from './__generated__/ServerInfo'
 import { Count, Icon, Name, Root } from './elements'
 
 const GET_INFO = gql`
@@ -14,6 +15,8 @@ const GET_INFO = gql`
     }
   }
 `
+
+class InfoQuery extends Query<ServerInfo, ServerInfoVariables> {}
 
 export default connect()
   .with(({ state, signals, props }) => ({
@@ -48,17 +51,3 @@ export default connect()
       }}
     </InfoQuery>
   ))
-
-interface Data {
-  server: {
-    name: string
-    icon: string
-    memberCount: number
-  }
-}
-
-interface Variables {
-  server: string
-}
-
-class InfoQuery extends Query<Data, Variables> {}

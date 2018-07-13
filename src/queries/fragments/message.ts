@@ -1,12 +1,6 @@
 import gql from 'graphql-tag'
 
-import member, { Member } from './member'
-
-export interface Message {
-  id: string
-  timestamp: number
-  author: Member
-}
+import member from './member'
 
 const message = gql`
   fragment message on IMessage {

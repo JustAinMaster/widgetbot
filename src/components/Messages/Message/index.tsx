@@ -20,10 +20,10 @@ import Embed from './Embed'
 import { Image } from './Embed/elements/media'
 import parseUsername from './parseUsername'
 import Reaction from './Reaction'
-import { UMessage } from 'queries/messages'
+import { Messages_server_channel_messages } from 'queries/__generated__/Messages'
 
 interface Props {
-  messages: UMessage[]
+  messages: Messages_server_channel_messages[]
   lastSeen: string
 }
 

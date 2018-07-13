@@ -1,9 +1,5 @@
 import gql from 'graphql-tag'
 
-export interface Embed {
-  // TODO: Add typings
-}
-
 const embed = gql`
   fragment embed on Embed {
     title

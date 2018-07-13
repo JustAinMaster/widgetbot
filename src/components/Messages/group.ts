@@ -1,9 +1,12 @@
-import { UMessage } from 'queries/messages'
+import { Messages_server_channel_messages } from 'queries/__generated__/Messages'
 
 /**
  * Compares whether a message should go in a group
  */
-function compare(a: UMessage, b: UMessage) {
+function compare(
+  a: Messages_server_channel_messages,
+  b: Messages_server_channel_messages
+) {
   return (
     a.__typename === 'JoinMessage' ||
     // If the ID is not equal to the previous message
@@ -23,10 +26,12 @@ function compare(a: UMessage, b: UMessage) {
  * [[{ id: 1 }], [{ id: 2 }], [{ id: 1 }, { id: 1 }]]
  * @param messages The messages to group
  */
-const Group = <Group extends UMessage[]>(messages: Group): Group[] => {
+const Group = <Group extends Messages_server_channel_messages[]>(
+  messages: Group
+): Group[] => {
   const result = new Array<Group>()
   let group = null
-  let previous: UMessage
+  let previous: Messages_server_channel_messages
 
   messages.forEach((message, i) => {
     if (group === null || compare(previous, message)) {

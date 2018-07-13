@@ -1,14 +1,14 @@
 import { connect } from 'fluent'
 import * as Moment from 'moment'
+import { member } from 'queries/fragments/__generated__/member'
 import * as React from 'react'
 
 import parseUsername from '../parseUsername'
-import { Sysadmin, Tag, Verified } from './Badges'
+import { Verified } from './Badges'
 import { Name, Root, Time } from './elements'
-import { Member } from 'queries/fragments/member'
 
 interface Props {
-  author: Member
+  author: member
   time: number
 }
 

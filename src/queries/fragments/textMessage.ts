@@ -1,12 +1,6 @@
 import gql from 'graphql-tag'
 
-import embed, { Embed } from './embed'
-
-export interface TextMessage {
-  __typename: 'TextMessage'
-  content: string
-  embeds: Embed[]
-}
+import embed from './embed'
 
 const textMessage = gql`
   fragment textMessage on TextMessage {

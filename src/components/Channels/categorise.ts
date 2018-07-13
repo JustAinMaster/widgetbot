@@ -1,11 +1,11 @@
-import { Channel } from 'queries/channels'
+import { Channels_server_channels } from 'queries/__generated__/Channels'
 
 export interface Category {
   name: string
-  channels: Channel[]
+  channels: Channels_server_channels[]
 }
 
-const categorise = (channels: Channel[]): Category[] => {
+const categorise = (channels: Channels_server_channels[]): Category[] => {
   let indexes = new Map<string, number>()
   let categorised = new Array<Category>()
 

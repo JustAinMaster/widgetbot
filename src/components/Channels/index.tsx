@@ -1,15 +1,16 @@
 import { connect } from 'fluent'
+import { Channels, ChannelsVariables } from 'queries/__generated__/Channels'
+import CHANNELS from 'queries/channels'
 import * as React from 'react'
+import { Query } from 'react-apollo'
 
+import categorise, { Category } from './categorise'
 import CCategory from './Category'
 import { Categories, Root } from './elements'
 import Header from './Header'
 import Panel from './Panel'
-import { Query } from 'react-apollo'
-import CHANNELS, { Channels, VChannels } from 'queries/channels'
-import categorise, { Category } from './categorise'
 
-class ChannelsQuery extends Query<Channels, VChannels> {}
+class ChannelsQuery extends Query<Channels, ChannelsVariables> {}
 
 export default connect()
   .with(({ state, signals, props }) => ({

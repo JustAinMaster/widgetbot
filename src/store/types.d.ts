@@ -24,15 +24,6 @@ export interface Channel {
 
 export type Toggles = 'channels'
 
-export interface Theme {
-  colors: {
-    primary: string
-    accent: string
-    background: string
-  }
-  css: string
-}
-
 export interface State {
   screen: 'choose-channel' | 'active-channel'
   // Message loading state
