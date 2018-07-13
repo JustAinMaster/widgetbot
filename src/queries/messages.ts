@@ -8,6 +8,7 @@ export type UMessage = Message & (TextMessage | ({ __typename: 'JoinMessage' }))
 export interface Messages {
   server: {
     channel: {
+      id: string
       messages: UMessage[]
     }
   }
@@ -22,6 +23,7 @@ const MESSAGES = gql`
   query Channel($server: ID!, $channel: ID!) {
     server(id: $server) {
       channel(id: $channel) {
+        id
         messages {
           ... on TextMessage {
             ...message

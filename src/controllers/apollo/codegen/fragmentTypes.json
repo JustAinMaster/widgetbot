@@ -1,0 +1,25 @@
+{
+  "__schema": {
+    "types": [
+      {
+        "kind": "UNION",
+        "name": "Message",
+        "possibleTypes": [{ "name": "TextMessage" }, { "name": "JoinMessage" }]
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "IMessage",
+        "possibleTypes": [{ "name": "TextMessage" }, { "name": "JoinMessage" }]
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "SubFilter",
+        "possibleTypes": [
+          { "name": "MessageSub" },
+          { "name": "MessageUpdateSub" },
+          { "name": "MessageDeleteSub" }
+        ]
+      }
+    ]
+  }
+}

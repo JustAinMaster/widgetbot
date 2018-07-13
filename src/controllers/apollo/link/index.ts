@@ -7,26 +7,30 @@ import { getMainDefinition } from 'apollo-utilities'
 import httpLink from './http'
 import wsLink from './websocket'
 
-const link = ApolloLink.from([
-  apolloLogger,
-  new RetryLink({
-    attempts: {
-      max: 300
-    },
-    delay: {
-      initial: 200
-    }
-  }),
-  createPersistedQueryLink(),
-  split(
-    ({ query }) => {
-      const { kind, operation } = getMainDefinition(query) as any
+const DEVELOPMENT = process.env.NODE_ENV === 'development'
 
-      return kind === 'OperationDefinition' && operation === 'subscription'
-    },
-    wsLink,
-    httpLink
-  )
-])
+const link = ApolloLink.from(
+  [
+    apolloLogger,
+    new RetryLink({
+      attempts: {
+        max: 300
+      },
+      delay: {
+        initial: 200
+      }
+    }),
+    !DEVELOPMENT && createPersistedQueryLink(),
+    split(
+      ({ query }) => {
+        const { kind, operation } = getMainDefinition(query) as any
+
+        return kind === 'OperationDefinition' && operation === 'subscription'
+      },
+      wsLink,
+      httpLink
+    )
+  ].filter(Boolean)
+)
 
 export default link
