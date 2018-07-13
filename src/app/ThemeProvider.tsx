@@ -73,7 +73,6 @@ const ThemeProvider = connect()
 
         GlobalStyles.inject(themeContext)
 
-        console.log('rendered')
         return <Provider theme={themeContext}>{children}</Provider>
       }}
     </ThemeQuery>
