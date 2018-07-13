@@ -64,7 +64,12 @@ export default connect()
         render() {
           const { server, channel } = this.props
           return (
-            <MessagesQuery query={MESSAGES} variables={{ server, channel }}>
+            <MessagesQuery
+              query={MESSAGES}
+              variables={{ server, channel }}
+              fetchPolicy="cache-and-network"
+              // pollInterval={1000}
+            >
               {({ loading, error, data }) => {
                 if (error) {
                   return <ErrorAhoy message={error.message} />
@@ -72,7 +77,7 @@ export default connect()
 
                 let content = <Loading />
 
-                if (!loading) {
+                if (!loading || (data && data.server)) {
                   const grouped = Group(data.server.channel.messages)
 
                   content = grouped.length ? (
@@ -84,6 +89,7 @@ export default connect()
                         <Message
                           messages={group}
                           key={group[0].id}
+                          // TODO: Fix
                           lastSeen={null}
                         />
                       ))}
