@@ -25,14 +25,10 @@ export const channel = {
   match: source => /^<#?([0-9]+?)>/.exec(source),
   parse: ([mention, id]) => ({ mention, id }),
   react: ({ mention, id }, recurseOutput, state) => {
-    const channel = controller.state.channels.get(id)
-
-    return channel ? (
+    return (
       <Channel key={state.key} id={id}>
-        {`#${channel.name}`}
+        {({ name }) => `#${name}`}
       </Channel>
-    ) : (
-      <Channel key={state.key}>{`#deleted-channel`}</Channel>
     )
   }
 }
