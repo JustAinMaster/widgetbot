@@ -15,7 +15,7 @@ export interface VChannel {
 }
 
 const CHANNEL = gql`
-  query Channel($server: ID!, $channel: ID!) {
+  query ChannelInfo($server: ID!, $channel: ID!) {
     server(id: $server) {
       channel(id: $channel) {
         name

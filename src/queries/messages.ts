@@ -20,7 +20,7 @@ export interface VMessages {
 }
 
 const MESSAGES = gql`
-  query Channel($server: ID!, $channel: ID!) {
+  query Messages($server: ID!, $channel: ID!) {
     server(id: $server) {
       channel(id: $channel) {
         id
