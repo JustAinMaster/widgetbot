@@ -77,7 +77,10 @@ export default connect()
 
                 let content = <Loading />
 
-                if (!loading || (data && data.server)) {
+                if (
+                  !loading ||
+                  (data && data.server && data.server.channel.id === channel)
+                ) {
                   const grouped = Group(data.server.channel.messages)
 
                   content = grouped.length ? (
