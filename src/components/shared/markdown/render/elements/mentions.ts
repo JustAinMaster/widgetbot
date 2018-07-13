@@ -1,5 +1,5 @@
 import Color from 'kolor'
-import ChannelLink from 'shared/channel'
+import ChannelLink from 'shared/Channel'
 import styled, { css } from 'typed-emotion'
 
 interface Props {

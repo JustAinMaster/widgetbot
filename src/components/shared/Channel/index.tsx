@@ -1,7 +1,7 @@
 import { connect } from 'fluent'
 import * as React from 'react'
 import { Query } from 'react-apollo'
-import CHANNEL, { ChannelData, VChannel } from './query.gql'
+import CHANNEL, { ChannelData, VChannel } from './query'
 import ChannelLink from 'shared/Channel/link'
 
 interface Payload {
