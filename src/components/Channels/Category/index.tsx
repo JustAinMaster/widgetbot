@@ -1,8 +1,8 @@
 import * as React from 'react'
 
-import { Category } from '../../../types/category'
 import Channel from './Channel'
 import { Collapse, Emoji, Expand, Name, Root, Text } from './elements'
+import { Category } from '../categorise'
 
 interface Props {
   category: Category
@@ -32,7 +32,9 @@ class ChannelCategory extends React.PureComponent<Props> {
           </Name>
         )}
 
-        {category.channels.map(({ name, id, unread }, order) => {
+        {category.channels.map(({ name, id /*unread*/ }, order) => {
+          // TODO: Implement unread
+          let unread = false
           const selected = activeChannel === id
 
           return this.state.open || selected || unread ? (
