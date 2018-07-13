@@ -41,7 +41,6 @@ class ChannelCategory extends React.PureComponent<Props> {
             <Channel
               key={id}
               {...{
-                name,
                 id,
                 order,
                 unread,

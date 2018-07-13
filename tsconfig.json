@@ -13,24 +13,24 @@
     "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
+      "typed-emotion": ["src/controllers/emotion/index.ts"],
       "logger": ["src/modules/logger.ts"],
       "raven": ["src/modules/sentry.ts"],
+      "notify": ["src/app/notify.tsx"],
+
       "locales": ["src/app/locales"],
       "locales/*": ["src/app/locales/*"],
-      "notify": ["src/app/notify.tsx"],
-      "styled-elements/*": ["src/modules/styled-elements/*"],
-      "typed-emotion": ["src/controllers/emotion/index.ts"],
+
+      "shared/*": ["src/components/shared/*"],
 
       "queries/*": ["src/queries/*"],
       "queries": ["src/queries/index.ts"],
 
-      "markdown": ["src/components/Markdown/index.ts"],
-      "markdown/*": ["src/components/Markdown/*"],
       "socket-io": ["src/controllers/socket-io"],
       "client": ["src/controllers/apollo/index.ts"],
       "fluent": ["src/controllers/cerebral/fluent.ts"],
       "embed-api": ["src/controllers/embed-api"],
-      "emoji": ["src/modules/styled-elements/Emoji/emoji.ts"]
+      "emoji": ["src/components/shared/Emoji/emoji.ts"]
     }
   },
   "exclude": [

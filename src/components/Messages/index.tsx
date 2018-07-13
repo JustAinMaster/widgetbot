@@ -3,7 +3,7 @@ import { addNotification } from 'notify'
 import * as React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { fetchInvite } from 'socket-io'
-import { ScrollVisible } from 'styled-elements/scrollable'
+import { ScrollVisible } from 'shared/scrollable'
 
 import Header, { Name, Topic } from '../Header'
 import { Join, Stretch } from '../Header/elements'

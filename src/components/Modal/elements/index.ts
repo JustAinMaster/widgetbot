@@ -1,4 +1,4 @@
-import focusable from 'styled-elements/focusable'
+import focusable from 'shared/focusable'
 
 import styled, { css } from './ThemeContext'
 

@@ -1,6 +1,6 @@
 import matchSorter from 'match-sorter'
 import * as React from 'react'
-import { Hash } from 'styled-elements/channel'
+import { Hash } from 'shared/channel'
 
 import controller from '../../../../../controllers/cerebral'
 import { Channel } from '../../../../../store/types'

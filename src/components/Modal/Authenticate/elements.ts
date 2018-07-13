@@ -1,4 +1,4 @@
-import Button from 'styled-elements/button'
+import Button from 'shared/button'
 
 import { Content } from '../elements'
 import styled, { css } from '../elements/ThemeContext'

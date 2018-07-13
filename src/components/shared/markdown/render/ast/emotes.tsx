@@ -1,4 +1,4 @@
-import { Emoji, Twemoji } from 'markdown/render/elements'
+import { Emoji, Twemoji } from 'shared/markdown/render/elements'
 import * as React from 'react'
 import SimpleMarkdown from 'simple-markdown'
 

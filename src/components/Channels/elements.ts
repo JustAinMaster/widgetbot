@@ -1,4 +1,4 @@
-import { ScrollOverlay } from 'styled-elements/scrollable'
+import { ScrollOverlay } from 'shared/scrollable'
 import styled, { css } from 'typed-emotion'
 
 interface Props {

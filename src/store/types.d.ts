@@ -1,5 +1,5 @@
 import { ComputedValue, Dictionary } from '@cerebral/fluent'
-import { Emoji } from 'styled-elements/Emoji/emojiMap'
+import { Emoji } from 'shared/Emoji/emojiMap'
 
 import { Translation } from '../app/locales'
 import { Category } from '../types/category'

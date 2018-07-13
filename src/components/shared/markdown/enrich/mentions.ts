@@ -1,4 +1,4 @@
-import controller from '../../../controllers/cerebral'
+import controller from '../../../../controllers/cerebral'
 
 const mentions = (message: string) => {
   let result = message

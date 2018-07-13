@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import matchSorter from 'match-sorter'
 import * as React from 'react'
-import { Emoji, emojis } from 'styled-elements/Emoji/emojiMap'
+import { Emoji, emojis } from 'shared/Emoji/emojiMap'
 
 import controller from '../../../../../controllers/cerebral'
 import { Description, Icon, Info, Name } from '../elements'

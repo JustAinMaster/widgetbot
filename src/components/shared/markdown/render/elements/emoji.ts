@@ -1,5 +1,5 @@
 import styled, { css } from 'typed-emotion'
-import EmojiParser from 'styled-elements/Emoji'
+import EmojiParser from 'shared/Emoji'
 
 interface Props {
   enlarged?: boolean

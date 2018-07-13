@@ -1,6 +1,6 @@
 import matchSorter from 'match-sorter'
 import * as React from 'react'
-import { Hash } from 'styled-elements/channel'
+import { Hash } from 'shared/channel'
 
 import { Description, Icon, Name } from '../elements'
 import { Suggestion } from '../types'

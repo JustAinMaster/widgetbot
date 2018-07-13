@@ -1,8 +1,8 @@
 import * as hljs from 'highlight.js'
 import * as _ from 'lodash'
-import baseRules from 'markdown/render/ast'
-import { Code, Link, Twemoji } from 'markdown/render/elements'
-import { astToString, flattenAst, recurse } from 'markdown/render/util'
+import baseRules from 'shared/markdown/render/ast'
+import { Code, Link, Twemoji } from 'shared/markdown/render/elements'
+import { astToString, flattenAst, recurse } from 'shared/markdown/render/util'
 import * as React from 'react'
 import SimpleMarkdown from 'simple-markdown'
 

@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
-import { channel, mention } from 'markdown/render/ast/mention'
-import text from 'markdown/render/ast/text'
+import { channel, mention } from 'shared/markdown/render/ast/mention'
+import text from 'shared/markdown/render/ast/text'
 import SimpleMarkdown from 'simple-markdown'
 
 import { animatedEmoji, customEmoji, emoji } from './emotes'

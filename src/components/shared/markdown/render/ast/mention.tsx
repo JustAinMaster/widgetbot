@@ -1,8 +1,7 @@
-import { Channel, Mention } from 'markdown/render/elements'
+import { Channel, Mention } from 'shared/markdown/render/elements'
 import * as React from 'react'
 import SimpleMarkdown from 'simple-markdown'
-
-import controller from '../../../../controllers/cerebral'
+import controller from '../../../../../controllers/cerebral'
 
 export const mention = {
   order: SimpleMarkdown.defaultRules.text.order,

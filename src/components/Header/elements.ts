@@ -1,5 +1,5 @@
-import Button from 'styled-elements/button'
-import { Hash } from 'styled-elements/channel'
+import Button from 'shared/button'
+import { Hash } from 'shared/channel'
 import styled from 'typed-emotion'
 
 export const Root = styled('header')`

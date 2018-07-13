@@ -1,5 +1,5 @@
-import ExpandableImage from 'styled-elements/ExpandableImage'
-import { Scale } from 'styled-elements/ScaledImage'
+import ExpandableImage from 'shared/ExpandableImage'
+import { Scale } from 'shared/ScaledImage'
 import styled from 'typed-emotion'
 
 interface ImageProps {

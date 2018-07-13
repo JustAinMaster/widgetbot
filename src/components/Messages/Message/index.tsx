@@ -1,5 +1,5 @@
 import { ThemeProvider } from 'emotion-theming'
-import { parseText } from 'markdown/render'
+import { parseText } from 'shared/markdown/render'
 import * as React from 'react'
 import { FormattedMessage } from 'react-intl'
 

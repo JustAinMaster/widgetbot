@@ -1,5 +1,5 @@
 import pipe from 'function-pipe'
-import customEmojis from 'markdown/enrich/customEmojis'
+import customEmojis from 'shared/markdown/enrich/customEmojis'
 
 import mentions from './mentions'
 

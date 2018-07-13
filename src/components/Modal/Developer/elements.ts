@@ -1,5 +1,5 @@
 import withProps from 'recompose/withProps'
-import Button from 'styled-elements/button'
+import Button from 'shared/button'
 import styled from 'typed-emotion'
 
 import { Content } from '../elements'

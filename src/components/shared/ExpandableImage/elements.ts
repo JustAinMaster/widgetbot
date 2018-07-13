@@ -1,7 +1,7 @@
 import styled from 'typed-emotion'
 
 import { Loading } from '../../../components/Overlays'
-import { Scale } from 'styled-elements/ScaledImage'
+import { Scale } from 'shared/ScaledImage'
 
 interface Props {
   maxHeight: number

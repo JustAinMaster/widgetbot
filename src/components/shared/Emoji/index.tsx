@@ -2,8 +2,8 @@ import { cx } from 'emotion'
 import * as _ from 'lodash'
 import * as React from 'react'
 import emoji from 'react-easy-emoji'
-import { Base, Emote } from 'styled-elements/Emoji/elements'
-import { iterate } from 'styled-elements/Emoji/emojiMap'
+import { Base, Emote } from 'shared/Emoji/elements'
+import { iterate } from 'shared/Emoji/emojiMap'
 
 const cache = new Map<string, string>()
 

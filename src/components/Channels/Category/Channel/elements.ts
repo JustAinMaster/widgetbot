@@ -1,4 +1,4 @@
-import Channel, { Hash } from 'styled-elements/channel'
+import Channel, { Hash } from 'shared/Channel'
 import styled, { css, keyframes } from 'typed-emotion'
 
 const fade = i => keyframes`
