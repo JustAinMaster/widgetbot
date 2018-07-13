@@ -26,7 +26,7 @@ export default connect()
       fetchPolicy="cache-first"
     >
       {({ loading, error, data }) => {
-        if (loading || !data.server) return null
+        if (loading || !data) return null
         if (error) return null
 
         const plural = data.server.memberCount !== 1

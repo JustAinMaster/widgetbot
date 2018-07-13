@@ -6,7 +6,8 @@ import link from './link'
 
 const client = new ApolloClient({
   link,
-  cache
+  cache,
+  connectToDevTools: true
 })
 
 export default client

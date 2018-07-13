@@ -43,8 +43,8 @@ const ThemeProvider = connect()
   }))
   .to(({ server, url, children }) => (
     <ThemeQuery query={GET_THEME} variables={{ server }}>
-      {({ data }) => {
-        const defaultTheme: Theme = {
+      {({ loading, error, data }) => {
+        let theme: Theme = {
           colors: {
             primary: '#fff',
             accent: '#7289da',
@@ -53,9 +53,11 @@ const ThemeProvider = connect()
           css: ``
         }
 
-        const theme = {
-          ...defaultTheme,
-          ...(data.server && data.server.theme)
+        if (!error && !loading && data.server.theme) {
+          theme = {
+            ...theme,
+            ...data.server.theme
+          }
         }
 
         const themeContext: ThemeContext = {
