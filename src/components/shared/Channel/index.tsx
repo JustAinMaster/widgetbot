@@ -1,6 +1,7 @@
 import { cx } from 'emotion'
 import { connect } from 'fluent'
 import gql from 'graphql-tag'
+import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 import { Query } from 'react-apollo'
 
@@ -16,6 +17,7 @@ const CHANNEL_INFO = gql`
     server(id: $server) {
       channel(id: $channel) {
         name
+        category
         id
       }
     }
@@ -40,15 +42,29 @@ const Channel = connect<Props>()
       {({ error, loading, data }) => {
         const success = !error && !loading && data && data.server
         const name = success ? data.server.channel.name : 'deleted-channel'
+        const category = success ? data.server.channel.category : null
 
+        console.log(category)
         return (
-          <ChannelLink id={channel} className={cx('channel-link', className)}>
-            {children({
-              __typename: 'Channel',
-              name,
-              id: channel
-            })}
-          </ChannelLink>
+          <Tooltip
+            placement="top"
+            overlay={category || ''}
+            trigger={category ? ['hover'] : []}
+          >
+            <span>
+              <ChannelLink
+                id={channel}
+                className={cx('channel-link', className)}
+              >
+                {children({
+                  __typename: 'Channel',
+                  name,
+                  id: channel,
+                  category
+                })}
+              </ChannelLink>
+            </span>
+          </Tooltip>
         )
       }}
     </Query>

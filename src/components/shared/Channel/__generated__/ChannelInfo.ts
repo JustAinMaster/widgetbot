@@ -12,6 +12,10 @@ export interface ChannelInfo_server_channel {
    */
   name: string
   /**
+   * Channel category
+   */
+  category: string | null
+  /**
    * Channel ID
    */
   id: string

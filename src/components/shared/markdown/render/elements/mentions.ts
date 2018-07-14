@@ -9,6 +9,7 @@ interface Props {
 }
 
 const base = (inline: boolean, color: string) => css`
+  text-decoration: none;
   cursor: pointer;
   font-weight: 500;
   border-radius: 30px;
