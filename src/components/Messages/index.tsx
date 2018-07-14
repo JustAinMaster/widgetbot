@@ -80,7 +80,7 @@ export default connect()
                   if (error.graphQLErrors.length) {
                     const [err] = error.graphQLErrors
                     if (err.name && err.message) {
-                      message = `${err.name} ♨️ ${err.message}`
+                      message = `${err.message} (${err.name})`
                     }
                   }
 
