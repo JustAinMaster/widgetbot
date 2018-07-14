@@ -5,6 +5,20 @@
 // GraphQL fragment: textMessage
 // ====================================================
 
+export interface textMessage_reactions {
+  __typename: 'Reaction'
+  name: string
+  count: number
+  id: string | null
+}
+
+export interface textMessage_attachment {
+  __typename: 'Attachment'
+  url: string
+  height: number
+  width: number
+}
+
 export interface textMessage_embeds_fields {
   __typename: 'EmbedField'
   value: string
@@ -57,6 +71,14 @@ export interface textMessage {
    * Time the message was edited
    */
   editedAt: any | null
+  /**
+   * Message reactions
+   */
+  reactions: textMessage_reactions[]
+  /**
+   * Message attachment
+   */
+  attachment: textMessage_attachment
   /**
    * Message embeds
    */

@@ -25,6 +25,20 @@ export interface Messages_server_channel_messages_TextMessage_author {
   avatarURL: string
 }
 
+export interface Messages_server_channel_messages_TextMessage_reactions {
+  __typename: 'Reaction'
+  name: string
+  count: number
+  id: string | null
+}
+
+export interface Messages_server_channel_messages_TextMessage_attachment {
+  __typename: 'Attachment'
+  url: string
+  height: number
+  width: number
+}
+
 export interface Messages_server_channel_messages_TextMessage_embeds_fields {
   __typename: 'EmbedField'
   value: string
@@ -89,6 +103,14 @@ export interface Messages_server_channel_messages_TextMessage {
    * Time the message was edited
    */
   editedAt: any | null
+  /**
+   * Message reactions
+   */
+  reactions: Messages_server_channel_messages_TextMessage_reactions[]
+  /**
+   * Message attachment
+   */
+  attachment: Messages_server_channel_messages_TextMessage_attachment
   /**
    * Message embeds
    */

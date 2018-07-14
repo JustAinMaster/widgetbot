@@ -15,9 +15,12 @@ import {
   JoinMember,
   JoinText,
   Messages,
+  Reactions,
   Root
 } from './elements'
+import { Image } from './Embed/elements/media'
 import parseUsername from './parseUsername'
+import Reaction from './Reaction'
 
 interface Props {
   messages: Messages_server_channel_messages[]
@@ -65,25 +68,25 @@ class Message extends React.PureComponent<Props, any> {
                         )}
                       </Content>
 
-                      {/* {message.attachment && (
-                    <Image
-                      src={message.attachment.url}
-                      height={+message.attachment.height}
-                      width={+message.attachment.width}
-                    />
-                  )}
+                      {message.attachment && (
+                        <Image
+                          src={message.attachment.url}
+                          height={+message.attachment.height}
+                          width={+message.attachment.width}
+                        />
+                      )}
 
-                  {message.embeds.map((embed, i) => (
+                      {/*{message.embeds.map((embed, i) => (
                     <Embed key={i} {...embed} />
-                  ))}
+                  ))}*/}
 
-                  {message.reactions && (
-                    <Reactions className="reactions">
-                      {message.reactions.map((reaction, i) => (
-                        <Reaction key={i} {...reaction} />
-                      ))}
-                    </Reactions>
-                  )} */}
+                      {message.reactions && (
+                        <Reactions className="reactions">
+                          {message.reactions.map((reaction, i) => (
+                            <Reaction key={i} {...reaction} />
+                          ))}
+                        </Reactions>
+                      )}
                     </Root>
                   </ThemeProvider>
                 )

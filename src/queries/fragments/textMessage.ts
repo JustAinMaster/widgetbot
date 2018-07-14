@@ -6,6 +6,16 @@ const textMessage = gql`
   fragment textMessage on TextMessage {
     content
     editedAt
+    reactions {
+      name
+      count
+      id
+    }
+    attachment {
+      url
+      height
+      width
+    }
     embeds {
       ...embed
     }
