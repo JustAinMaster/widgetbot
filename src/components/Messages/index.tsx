@@ -4,6 +4,7 @@ import { Channel, ChannelVariables } from 'queries/__generated__/Channel'
 import { Messages, MessagesVariables } from 'queries/__generated__/Messages'
 import CHANNEL from 'queries/channel'
 import MESSAGES from 'queries/messages'
+import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 import { Query } from 'react-apollo'
 import { FormattedMessage } from 'react-intl'
@@ -44,15 +45,18 @@ export default connect()
                   <Header>
                     <Stretch>
                       <Name>{name}</Name>
-                      {topic && <Topic>{topic}</Topic>}
+                      {topic && <Topic className="topic">{topic}</Topic>}
                     </Stretch>
-                    <Join
-                      href={defaultInvite}
-                      target="_blank"
-                      onClick={this.join.bind(this)}
-                    >
-                      <FormattedMessage id="header.join" />
-                    </Join>
+                    <Tooltip placement="bottom" overlay="Open in Discord app">
+                      <Join
+                        className="join"
+                        href={defaultInvite}
+                        target="_blank"
+                        onClick={this.join.bind(this)}
+                      >
+                        <FormattedMessage id="header.join" />
+                      </Join>
+                    </Tooltip>
                   </Header>
                 )
               }}

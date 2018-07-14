@@ -2,9 +2,9 @@ import { MemberLink } from 'shared/Member'
 
 import styled from './ThemeContext'
 
-// prettier-ignore
 export const Group = styled('div')`
-  border-bottom: 1px solid ${({ theme }) => theme.colors._primary.fade(0.96).string()};
+  border-bottom: 1px solid
+    ${({ theme }) => theme.colors._primary.fade(0.96).string()};
   box-sizing: border-box;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -61,6 +61,7 @@ export const Edited = styled('span')`
   line-height: 0.625rem;
   margin-left: 3px;
   opacity: 0.3;
+  cursor: pointer;
 `
 
 export const JoinText = styled('span')`

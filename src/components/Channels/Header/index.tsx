@@ -1,5 +1,6 @@
 import { connect } from 'fluent'
 import gql from 'graphql-tag'
+import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 import { Query } from 'react-apollo'
 
@@ -36,14 +37,14 @@ export default connect()
           <Root className="header">
             <Icon src={data.server.icon} className="icon" />
             <Name className="name">{data.server.name}</Name>
-            <Count
-              title={`${data.server.memberCount} ${
+            <Tooltip
+              placement="bottom"
+              overlay={`${data.server.memberCount} ${
                 plural ? 'members' : 'member'
               } in this server`}
-              className="count"
             >
-              {data.server.memberCount}
-            </Count>
+              <Count className="count">{data.server.memberCount}</Count>
+            </Tooltip>
           </Root>
         )
       }}

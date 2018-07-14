@@ -1,4 +1,5 @@
 import { connect } from 'fluent'
+import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 
 import { Developer, Developers, Root, Version } from './elements'
@@ -47,13 +48,15 @@ export default connect()
                 />
               </Developers>
 
-              <Version
-                href={`https://github.com/widgetbot-io/embed`}
-                target="_blank"
-                onClick={this.toggleAbout.bind(this)}
-              >
-                {`v${version}`}
-              </Version>
+              <Tooltip placement="top" overlay="About WidgetBot">
+                <Version
+                  href={`https://widgetbot.io`}
+                  target="_blank"
+                  onClick={this.toggleAbout.bind(this)}
+                >
+                  {`v${version}`}
+                </Version>
+              </Tooltip>
             </Root>
           )
         }
