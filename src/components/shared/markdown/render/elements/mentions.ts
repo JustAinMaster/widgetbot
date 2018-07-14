@@ -1,5 +1,6 @@
 import Color from 'color'
-import ChannelLink from 'shared/Channel'
+import $Channel from 'shared/Channel'
+import $Member from 'shared/Member'
 import styled, { css } from 'typed-emotion'
 
 interface Props {
@@ -36,10 +37,10 @@ const base = (inline: boolean, color: string) => css`
       `};
 `
 
-export const Mention = styled('span')<Props>`
+export const Mention = styled($Member)<Props>`
   ${({ theme, color, inline }) => base(inline, color || theme.colors.accent)};
 `
-export const Channel = styled(ChannelLink)<Props>`
+export const Channel = styled($Channel)<Props>`
   ${({ theme, inline }) => base(inline, theme.colors.accent)};
 `
 

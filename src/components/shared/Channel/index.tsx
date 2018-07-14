@@ -1,12 +1,17 @@
+import { cx } from 'emotion'
 import { connect } from 'fluent'
 import gql from 'graphql-tag'
 import * as React from 'react'
 import { Query } from 'react-apollo'
 
-import { ChannelInfo, ChannelInfoVariables } from './__generated__/ChannelInfo'
+import {
+  ChannelInfo,
+  ChannelInfo_server_channel,
+  ChannelInfoVariables
+} from './__generated__/ChannelInfo'
 import ChannelLink from './link'
 
-const CHANNEL = gql`
+const CHANNEL_INFO = gql`
   query ChannelInfo($server: ID!, $channel: ID!) {
     server(id: $server) {
       channel(id: $channel) {
@@ -20,11 +25,7 @@ const CHANNEL = gql`
 interface Props {
   id: string
   className?: string
-  children: (
-    channel: {
-      name: string
-    }
-  ) => any
+  children: (channel: ChannelInfo_server_channel) => any
 }
 
 const Channel = connect<Props>()
@@ -33,7 +34,7 @@ const Channel = connect<Props>()
   }))
   .to(({ server, id: channel, children, className }) => (
     <Query<ChannelInfo, ChannelInfoVariables>
-      query={CHANNEL}
+      query={CHANNEL_INFO}
       variables={{ server, channel }}
     >
       {({ error, loading, data }) => {
@@ -41,8 +42,12 @@ const Channel = connect<Props>()
         const name = success ? data.server.channel.name : 'deleted-channel'
 
         return (
-          <ChannelLink id={channel} className={className}>
-            {children({ name })}
+          <ChannelLink id={channel} className={cx('channel-link', className)}>
+            {children({
+              __typename: 'Channel',
+              name,
+              id: channel
+            })}
           </ChannelLink>
         )
       }}
