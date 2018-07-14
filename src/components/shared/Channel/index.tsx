@@ -11,8 +11,6 @@ import {
 } from './__generated__/ChannelInfo'
 import ChannelLink from './link'
 
-gql`
-|`
 const CHANNEL_INFO = gql`
   query ChannelInfo($server: ID!, $channel: ID!) {
     server(id: $server) {
