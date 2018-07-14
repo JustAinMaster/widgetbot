@@ -12,6 +12,10 @@ export interface message_author {
    */
   name: string
   /**
+   * Member's display color
+   */
+  color: string | null
+  /**
    * Member ID
    */
   id: string

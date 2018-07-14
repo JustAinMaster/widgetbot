@@ -12,6 +12,10 @@ export interface Messages_server_channel_messages_TextMessage_author {
    */
   name: string
   /**
+   * Member's display color
+   */
+  color: string | null
+  /**
    * Member ID
    */
   id: string
@@ -97,6 +101,10 @@ export interface Messages_server_channel_messages_JoinMessage_author {
    * Member's name (username + discriminator)
    */
   name: string
+  /**
+   * Member's display color
+   */
+  color: string | null
   /**
    * Member ID
    */

@@ -44,7 +44,7 @@ export default connect<Props>()
 
           return (
             <Root className="author">
-              <Name color={'green' /*TODO: author.color*/} className="name">
+              <Name color={author.color} className="name">
                 {name}
               </Name>
               {this.tags()}

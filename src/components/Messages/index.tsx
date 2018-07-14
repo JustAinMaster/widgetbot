@@ -101,12 +101,7 @@ export default connect()
                       className="messages"
                     >
                       {grouped.map(group => (
-                        <Message
-                          messages={group}
-                          key={group[0].id}
-                          // TODO: Fix
-                          lastSeen={null}
-                        />
+                        <Message messages={group} key={group[0].id} />
                       ))}
                     </ScrollVisible>
                   ) : (

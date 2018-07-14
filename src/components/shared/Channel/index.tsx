@@ -4,6 +4,7 @@ import gql from 'graphql-tag'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 import { Query } from 'react-apollo'
+import Emoji from 'shared/Emoji'
 
 import {
   ChannelInfo,
@@ -47,7 +48,7 @@ const Channel = connect<Props>()
         return (
           <Tooltip
             placement="top"
-            overlay={category || ''}
+            overlay={<Emoji>{category || ''}</Emoji>}
             mouseLeaveDelay={0}
             trigger={category ? ['hover'] : []}
           >

@@ -12,6 +12,10 @@ export interface member {
    */
   name: string
   /**
+   * Member's display color
+   */
+  color: string | null
+  /**
    * Member ID
    */
   id: string

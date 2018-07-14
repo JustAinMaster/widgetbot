@@ -21,7 +21,6 @@ import parseUsername from './parseUsername'
 
 interface Props {
   messages: Messages_server_channel_messages[]
-  lastSeen: string
 }
 
 class Message extends React.PureComponent<Props, any> {
@@ -31,7 +30,7 @@ class Message extends React.PureComponent<Props, any> {
   })
 
   render() {
-    const { messages, lastSeen } = this.props
+    const { messages } = this.props
     const [firstMessage] = messages
 
     return (

@@ -12,6 +12,10 @@ export interface Members_server_members {
    */
   name: string
   /**
+   * Member's display color
+   */
+  color: string | null
+  /**
    * Member ID
    */
   id: string
