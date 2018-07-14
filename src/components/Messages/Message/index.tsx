@@ -1,26 +1,20 @@
 import { ThemeProvider } from 'emotion-theming'
-import { parseText } from 'shared/markdown/render'
+import { Messages_server_channel_messages } from 'queries/__generated__/Messages'
 import * as React from 'react'
 import { FormattedMessage } from 'react-intl'
+import { parseText } from 'shared/markdown/render'
 
 import Author, { Timestamp } from './Author'
 import {
   Avatar,
   Content,
-  Edited,
   Group,
   JoinMember,
   JoinText,
   Messages,
-  Reactions,
-  Root,
-  Sys
+  Root
 } from './elements'
-import Embed from './Embed'
-import { Image } from './Embed/elements/media'
 import parseUsername from './parseUsername'
-import Reaction from './Reaction'
-import { Messages_server_channel_messages } from 'queries/__generated__/Messages'
 
 interface Props {
   messages: Messages_server_channel_messages[]
@@ -106,18 +100,27 @@ class Message extends React.PureComponent<Props, any> {
                   </ThemeProvider>
                 )
 
-              case 'JoinMessage':
+              case 'JoinMessage': {
+                const { name } = parseUsername(message.author.name)
+
                 return (
-                  <Root className="message">
+                  <React.Fragment key={message.id}>
                     <JoinText>
                       <FormattedMessage
                         id="message.join_message"
-                        values={{ name: <JoinMember>{name}</JoinMember> }}
+                        values={{
+                          name: (
+                            <JoinMember id={message.author.id}>
+                              {name}
+                            </JoinMember>
+                          )
+                        }}
                       />
                     </JoinText>
                     <Timestamp time={message.timestamp} />
-                  </Root>
+                  </React.Fragment>
                 )
+              }
 
               default:
                 return null

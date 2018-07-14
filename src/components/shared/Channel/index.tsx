@@ -56,5 +56,5 @@ const Channel = connect<Props>()
 
 export default Channel
 
-export { Hash } from 'shared/Channel/elements'
-export { default as ChannelLink } from 'shared/Channel/link'
+export { Hash } from './elements'
+export { default as ChannelLink } from './link'

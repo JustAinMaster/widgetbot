@@ -56,4 +56,4 @@ const Channel = connect<Props>()
 
 export default Channel
 
-export { default as MemberLink } from 'shared/Channel/link'
+export { default as MemberLink } from './link'

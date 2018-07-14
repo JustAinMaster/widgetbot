@@ -30,18 +30,19 @@ const categorise = (channels: Channels_server_channels[]): Category[] => {
       }
     } else {
       // The channel doesn't belong in a named category
-      const lastCategory = categorised[categorised.length - 1]
+      const [firstCategory] = categorised
 
-      // If the last category was unamed, then insert
+      // If the first category is unamed, then insert
       // this channel into it
-      if (lastCategory && !lastCategory.name) {
-        lastCategory.channels.push(channel)
+      if (firstCategory && !firstCategory.name) {
+        firstCategory.channels.push(channel)
       } else {
-        categorised.push(newCategory)
+        categorised.unshift(newCategory)
       }
     }
   })
 
+  console.log(categorised)
   return categorised
 }
 
