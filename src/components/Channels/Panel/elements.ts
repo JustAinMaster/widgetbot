@@ -7,14 +7,21 @@ export const Root = styled('footer')`
   padding: 10px;
   font-size: 12px;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors._primary.fadeOut(0.7).toString()};
+  color: ${({ theme }) => theme.colors._primary.fade(0.7).string()};
   user-select: none;
   z-index: 1;
 
   background-color: ${({ theme }) =>
-    theme.colors._background.darken(0.05).toString()};
+    theme.colors._background
+      .fade(0.9)
+      .darken(0.7)
+      .string()};
   box-shadow: 0px 0px 27px 15px
-    ${({ theme }) => theme.colors._background.darken(0.05).toString()};
+    ${({ theme }) =>
+      theme.colors._background
+        .fade(0.9)
+        .darken(0.7)
+        .string()};
 `
 
 export const Developers = styled('div')`

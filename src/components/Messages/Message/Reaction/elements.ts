@@ -3,8 +3,7 @@ import styled from 'typed-emotion'
 
 export const Root = styled('div')`
   display: inline-block;
-  background-color: ${({ theme }) =>
-    theme.colors._primary.fadeOut(0.96).toString()};
+  background-color: ${({ theme }) => theme.colors._primary.fade(0.96).string()};
   cursor: pointer;
   border-radius: 3px;
   margin-right: 2px;
@@ -25,7 +24,7 @@ export const Emoji = styled(Twemoji)`
 `
 
 export const Count = styled('span')`
-  color: ${({ theme }) => theme.colors._primary.fadeOut(0.7).toString()};
+  color: ${({ theme }) => theme.colors._primary.fade(0.7).string()};
   min-width: 9px;
   font-size: 0.875rem;
   font-weight: 500;

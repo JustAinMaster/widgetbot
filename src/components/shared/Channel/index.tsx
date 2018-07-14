@@ -27,14 +27,15 @@ interface Props {
   ) => any
 }
 
-class ChannelQuery extends Query<ChannelInfo, ChannelInfoVariables> {}
-
 const Channel = connect<Props>()
   .with(({ state, signals, props }) => ({
     server: state.server
   }))
   .to(({ server, id: channel, children, className }) => (
-    <ChannelQuery query={CHANNEL} variables={{ server, channel }}>
+    <Query<ChannelInfo, ChannelInfoVariables>
+      query={CHANNEL}
+      variables={{ server, channel }}
+    >
       {({ error, loading, data }) => {
         const success = !error && !loading && data && data.server
         const name = success ? data.server.channel.name : 'deleted-channel'
@@ -45,7 +46,7 @@ const Channel = connect<Props>()
           </ChannelLink>
         )
       }}
-    </ChannelQuery>
+    </Query>
   ))
 
 export default Channel

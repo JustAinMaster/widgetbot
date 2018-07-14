@@ -1,4 +1,4 @@
-import Color from 'kolor'
+import Color from 'color'
 import ChannelLink from 'shared/Channel'
 import styled, { css } from 'typed-emotion'
 
@@ -22,15 +22,15 @@ const base = (inline: boolean, color: string) => css`
     : css`
         padding: 0 6px;
         background-color: ${Color(color)
-          .fadeOut(0.9)
-          .toString()};
+          .fade(0.9)
+          .string()};
         color: ${color} !important;
         text-decoration: none !important;
 
         &:hover {
           background-color: ${Color(color)
-            .fadeOut(0.3)
-            .toString()};
+            .fade(0.3)
+            .string()};
           color: rgba(255, 255, 255, 0.95) !important;
         }
       `};

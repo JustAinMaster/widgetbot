@@ -14,9 +14,9 @@ export const Root = styled('form')`
     css`
       margin: 0;
       padding: 6px;
-      background-color: ${theme.colors._primary.fadeOut(0.9).toString()};
+      background-color: ${theme.colors._primary.fade(0.9).string()};
 
-      border-top: 1px solid ${theme.colors._primary.fadeOut(0.9).toString()};
+      border-top: 1px solid ${theme.colors._primary.fade(0.9).string()};
       box-shadow: 0 0 100px 0 rgba(0, 0, 0, 0.1);
     `};
 `
@@ -29,8 +29,7 @@ interface FieldProps {
 export const Field = styled('div')<FieldProps>`
   display: flex;
   border-radius: 5px;
-  background-color: ${({ theme }) =>
-    theme.colors._primary.fadeOut(0.9).toString()};
+  background-color: ${({ theme }) => theme.colors._primary.fade(0.9).string()};
   height: ${({ rows }) => (rows > 7 ? 7 : rows) * 20 + 22}px;
 
   ${({ theme, rows }) =>

@@ -10,8 +10,6 @@ import { Categories, Root } from './elements'
 import Header from './Header'
 import Panel from './Panel'
 
-class ChannelsQuery extends Query<Channels, ChannelsVariables> {}
-
 export default connect()
   .with(({ state, signals, props }) => ({
     server: state.server,
@@ -19,7 +17,7 @@ export default connect()
     visible: state.visible.channels
   }))
   .to(({ server, channel, visible }) => (
-    <ChannelsQuery query={CHANNELS} variables={{ server }}>
+    <Query<Channels, ChannelsVariables> query={CHANNELS} variables={{ server }}>
       {({ loading, error, data }) => {
         const categories = new Array<Category>()
         if (!loading && !error) {
@@ -43,5 +41,5 @@ export default connect()
           </Root>
         )
       }}
-    </ChannelsQuery>
+    </Query>
   ))

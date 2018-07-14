@@ -28,10 +28,10 @@ export const Code = styled('code')<Props>`
     inline
       ? css`
           padding: 0.2em;
-          color: ${theme.colors._primary.darken(0.3).toString()};
+          color: ${theme.colors._primary.darken(0.3).string()};
         `
       : css`
-          color: ${theme.colors._primary.darken(0.4).toString()} !important;
+          color: ${theme.colors._primary.darken(0.4).string()} !important;
           border: 1px solid rgba(0, 0, 0, 0.05);
           box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.1),
             0px 1px 10px 0px rgba(0, 0, 0, 0.09), 0 1px 0 rgba(0, 0, 0, 0.1),

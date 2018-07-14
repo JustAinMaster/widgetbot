@@ -17,7 +17,7 @@ export const Suggestion = styled('li')<Props>`
   ${({ selected, theme }) =>
     selected
       ? css`
-          background-color: ${theme.colors._primary.fadeOut(0.95).toString()};
+          background-color: ${theme.colors._primary.fade(0.95).string()};
         `
       : null};
 `
@@ -40,5 +40,5 @@ export const Info = styled('div')`
   margin-left: 16px;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: ${({ theme }) => theme.colors._primary.fadeOut(0.75).toString()};
+  color: ${({ theme }) => theme.colors._primary.fade(0.75).string()};
 `

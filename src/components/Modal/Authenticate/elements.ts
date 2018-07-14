@@ -70,7 +70,7 @@ export const Input = styled('input')`
   font-size: 16px;
 
   background-color: rgba(0, 0, 0, 0.1);
-  color: ${({ theme }) => theme.colors._primary.fadeOut(0.1).toString()};
+  color: ${({ theme }) => theme.colors._primary.fade(0.1).string()};
 
   &:focus,
   &:active {
@@ -84,7 +84,7 @@ export const Create = styled(Button)`
 
 export const SSO = styled('div')`
   font-size: 14px;
-  color: ${({ theme }) => theme.colors._primary.fadeOut(0.8).toString()};
+  color: ${({ theme }) => theme.colors._primary.fade(0.8).string()};
 
   text-align: left;
 `

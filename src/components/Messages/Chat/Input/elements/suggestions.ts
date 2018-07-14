@@ -10,7 +10,7 @@ export const Description = styled('div')`
   font-size: 12px;
   text-transform: uppercase;
   line-height: 16px;
-  color: ${({ theme }) => theme.colors._primary.fadeOut(0.5).toString()};
+  color: ${({ theme }) => theme.colors._primary.fade(0.5).string()};
 
   strong {
     text-transform: none;
@@ -25,7 +25,7 @@ export const Suggestions = styled(ScrollOverlay)<Props>`
   border-radius: 5px 5px 0 0;
   padding: 8px 0;
   background-color: ${({ theme }) =>
-    theme.colors._background.darken(0.05).toString()};
+    theme.colors._background.darken(0.05).string()};
   bottom: ${({ theme }) =>
     theme.url.preset === 'crate' ? `100%` : `calc(100% - 5px)`};
 

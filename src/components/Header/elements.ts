@@ -62,8 +62,8 @@ export const Topic = styled('div')`
   font-weight: 500;
   padding: 0 15px;
   border-left: 1px solid
-    ${({ theme }) => theme.colors._primary.fadeOut(0.9).toString()};
-  color: ${({ theme }) => theme.colors._primary.fadeOut(0.4).toString()};
+    ${({ theme }) => theme.colors._primary.fade(0.9).string()};
+  color: ${({ theme }) => theme.colors._primary.fade(0.4).string()};
 
   @media (max-width: 330px) {
     display: none;
@@ -73,6 +73,6 @@ export const Topic = styled('div')`
 const JoinLink = Button.withComponent('a')
 
 export const Join = styled(JoinLink)`
-  background: ${({ theme }) => theme.colors._accent.fadeOut(0.6).toString()};
+  background: ${({ theme }) => theme.colors._accent.fade(0.6).string()};
   margin-right: 20px;
 `

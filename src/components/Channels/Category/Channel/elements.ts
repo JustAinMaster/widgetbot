@@ -34,19 +34,17 @@ export const Root = styled(Channel)<Props>`
   margin: 2px 8px;
   padding: 0 8px;
   background-color: ${({ selected, theme }) =>
-    selected
-      ? `${theme.colors._primary.fadeOut(0.9)} !important`
-      : 'transparent'};
+    selected ? `${theme.colors._primary.fade(0.9)} !important` : 'transparent'};
   color: ${({ selected, unread, theme }) =>
     selected || unread
-      ? `${theme.colors._primary.fadeOut(0.1).toString()} !important`
-      : theme.colors._primary.fadeOut(0.7).toString()};
+      ? `${theme.colors._primary.fade(0.1).string()} !important`
+      : theme.colors._primary.fade(0.7).string()};
   /* animation: ${({ order }) => fade(order)} 0.5s ease; */
 
   &:hover {
     background-color: ${({ theme }) =>
-      theme.colors._primary.fadeOut(0.96).toString()};
-    color: ${({ theme }) => theme.colors._primary.fadeOut(0.3).toString()};
+      theme.colors._primary.fade(0.96).string()};
+    color: ${({ theme }) => theme.colors._primary.fade(0.3).string()};
   }
 
   ${({ unread, theme }) =>
@@ -63,7 +61,7 @@ export const Root = styled(Channel)<Props>`
 
         height: 8px;
         width: 4px;
-        background-color: ${theme.colors._primary.fadeOut(0.4).toString()};
+        background-color: ${theme.colors._primary.fade(0.4).string()};
         border-radius: 0 6px 6px 0;
       }
     `}

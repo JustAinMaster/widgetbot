@@ -93,7 +93,7 @@ export const Close = styled('button')`
   &:hover,
   &:focus {
     background-color: ${({ theme }) =>
-      theme.colors._primary.fadeOut(0.8).toString()};
+      theme.colors._primary.fade(0.8).string()};
   }
 
   &,

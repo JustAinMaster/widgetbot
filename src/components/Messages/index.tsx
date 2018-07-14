@@ -20,9 +20,6 @@ import Message from './Message'
 
 const defaultInvite = 'https://discord.gg/mpMQCuj'
 
-class ChannelQuery extends Query<Channel, ChannelVariables> {}
-class MessagesQuery extends Query<Messages, MessagesVariables> {}
-
 export default connect()
   .with(({ state, signals, props }) => ({
     server: state.server,
@@ -34,7 +31,10 @@ export default connect()
         header = () => {
           const { server, channel } = this.props
           return (
-            <ChannelQuery query={CHANNEL} variables={{ server, channel }}>
+            <Query<Channel, ChannelVariables>
+              query={CHANNEL}
+              variables={{ server, channel }}
+            >
               {({ loading, error, data }) => {
                 const name = loading || error ? '' : data.server.channel.name
                 const topic =
@@ -56,14 +56,14 @@ export default connect()
                   </Header>
                 )
               }}
-            </ChannelQuery>
+            </Query>
           )
         }
 
         render() {
           const { server, channel } = this.props
           return (
-            <MessagesQuery
+            <Query<Messages, MessagesVariables>
               query={MESSAGES}
               variables={{ server, channel }}
               fetchPolicy="cache-and-network"
@@ -108,7 +108,7 @@ export default connect()
                   </Wrapper>
                 )
               }}
-            </MessagesQuery>
+            </Query>
           )
 
           // return content ? (

@@ -9,7 +9,7 @@ export const Root = styled('div')<Props>`
   position: absolute;
   z-index: 9;
   background-color: ${({ theme }) =>
-    theme.colors._background.darken(0.036).toString()};
+    theme.colors._background.darken(0.15).string()};
   width: 200px;
   height: 100%;
   flex-shrink: 0;

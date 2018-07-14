@@ -10,7 +10,7 @@ export const Root = styled('div')`
 export const Name = styled('div')`
   height: 20px;
   display: flex;
-  color: ${({ theme }) => theme.colors._primary.fadeOut(0.6).toString()};
+  color: ${({ theme }) => theme.colors._primary.fade(0.6).string()};
   margin: 2px 8px;
   text-transform: uppercase;
   user-select: none;
@@ -18,7 +18,7 @@ export const Name = styled('div')`
   transition: color 0.1s ease;
 
   &:hover {
-    color: ${({ theme }) => theme.colors._primary.fadeOut(0.3).toString()};
+    color: ${({ theme }) => theme.colors._primary.fade(0.3).string()};
   }
 `
 

@@ -2,7 +2,7 @@ import styled from './ThemeContext'
 
 // prettier-ignore
 export const Group = styled('div')`
-  border-bottom: 1px solid ${({ theme }) => theme.colors._primary.fadeOut(0.96).toString()};
+  border-bottom: 1px solid ${({ theme }) => theme.colors._primary.fade(0.96).string()};
   box-sizing: border-box;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -66,7 +66,7 @@ export const JoinText = styled('span')`
   background-repeat: no-repeat;
   background-position: left center;
   background-size: 18px;
-  color: ${({ theme }) => theme.colors._primary.fadeOut(0.4).toString()};
+  color: ${({ theme }) => theme.colors._primary.fade(0.4).string()};
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3e%3cg fill='none' fill-rule='evenodd'%3e%3cpath d='M18 0H0v18h18z'/%3e%3cpath fill='%2343B581' d='M0 8h14.2l-3.6-3.6L12 3l6 6-6 6-1.4-1.4 3.6-3.6H0'/%3e%3c/g%3e%3c/svg%3e");
 `
 
@@ -78,7 +78,7 @@ export const JoinMember = styled('a')`
 `
 
 export const Root = styled('div')`
-  color: ${({ theme }) => theme.colors._primary.fadeOut(0.3).toString()};
+  color: ${({ theme }) => theme.colors._primary.fade(0.3).string()};
   opacity: ${({ theme }) => (theme.message.type === 'SENDING' ? 0.5 : 1)};
 
   font-size: 0.9375rem;

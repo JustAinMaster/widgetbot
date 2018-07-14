@@ -30,7 +30,7 @@ export const Ham = styled('button')<Props>`
     height: 40px;
     opacity: 0;
     transition: opacity 0.1s ease;
-    background-color: ${({ theme }) => theme.colors._primary.fadeOut(0.93).toString()};
+    background-color: ${({ theme }) => theme.colors._primary.fade(0.93).string()};
     border-radius: 50%;
   }
 

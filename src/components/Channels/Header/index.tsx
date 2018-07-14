@@ -16,14 +16,12 @@ const GET_INFO = gql`
   }
 `
 
-class InfoQuery extends Query<ServerInfo, ServerInfoVariables> {}
-
 export default connect()
   .with(({ state, signals, props }) => ({
     server: state.server
   }))
   .to(({ server }) => (
-    <InfoQuery
+    <Query<ServerInfo, ServerInfoVariables>
       query={GET_INFO}
       variables={{ server }}
       fetchPolicy="cache-first"
@@ -49,5 +47,5 @@ export default connect()
           </Root>
         )
       }}
-    </InfoQuery>
+    </Query>
   ))

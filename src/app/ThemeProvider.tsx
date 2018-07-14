@@ -1,7 +1,7 @@
+import Color from 'color'
 import { ThemeProvider as Provider } from 'emotion-theming'
 import { connect } from 'fluent'
 import gql from 'graphql-tag'
-import * as Color from 'kolor'
 import * as React from 'react'
 import { Query } from 'react-apollo'
 import { Theme as ThemeContext } from 'typed-emotion'
@@ -28,15 +28,13 @@ const GET_THEME = gql`
   }
 `
 
-class ThemeQuery extends Query<Theme, ThemeVariables> {}
-
 const ThemeProvider = connect()
   .with(({ state, signals, props }) => ({
     server: state.server,
     url: state.url
   }))
   .to(({ server, url, children }) => (
-    <ThemeQuery query={GET_THEME} variables={{ server }}>
+    <Query<Theme, ThemeVariables> query={GET_THEME} variables={{ server }}>
       {({ loading, error, data }) => {
         let theme: Theme_server_theme = {
           __typename: 'Theme',
@@ -71,7 +69,7 @@ const ThemeProvider = connect()
 
         return <Provider theme={themeContext}>{children}</Provider>
       }}
-    </ThemeQuery>
+    </Query>
   ))
 
 export default ThemeProvider
