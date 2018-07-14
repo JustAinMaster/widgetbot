@@ -6,12 +6,17 @@ injectGlobal`
     z-index: 1070;
     display: block;
     pointer-events: none;
-    margin-top: 10px;
 
     &.rc-tooltip-zoom-enter,
     &.rc-tooltip-zoom-leave {
       display: block;
     }
+  }
+
+  .rc-tooltip-inner,
+  .rc-tooltip-arrow {
+    /* margin-top: -5px; */
+    margin-bottom: -5px;
   }
 
   .rc-tooltip-inner {

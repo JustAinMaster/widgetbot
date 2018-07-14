@@ -62,6 +62,7 @@ class Message extends React.PureComponent<Props, any> {
                           <Tooltip
                             placement="top"
                             overlay={Moment(message.editedAt).calendar()}
+                            mouseLeaveDelay={0}
                           >
                             <Edited className="edited">{`(edited)`}</Edited>
                           </Tooltip>

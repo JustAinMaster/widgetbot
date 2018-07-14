@@ -1,10 +1,7 @@
+import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 import Emoji from 'shared/Emoji'
 import SimpleMarkdown from 'simple-markdown'
-
-const getEmoteURL = emote => `https://cdn.discordapp.com/emojis/${emote.id}.png`
-const getAnimEmoteURL = emote =>
-  `https://cdn.discordapp.com/emojis/${emote.id}.gif`
 
 export const emoji = {
   order: SimpleMarkdown.defaultRules.text.order,
@@ -19,34 +16,24 @@ export const emoji = {
 
 export const customEmoji = {
   order: SimpleMarkdown.defaultRules.text.order,
-  match: source => /^<:(\w+):(\d+)>/.exec(source),
-  parse: ([, name, id]) => ({
-    emojiId: id,
+  match: source => /^<(a)?:(\w+):(\d+)>/.exec(source),
+  parse: ([, animated, name, id]) => ({
+    id,
     name,
-    src: getEmoteURL({ id })
+    animated: !!animated,
+    src: `https://cdn.discordapp.com/emojis/${id}.${animated ? 'gif' : 'png'}`
   }),
-  react: node => (
-    <Emoji
-      enlarged={node.jumboable}
-      alt={`<:${node.name}:${node.emojiId}>`}
-      src={node.src}
-    />
-  )
-}
-
-export const animatedEmoji = {
-  order: SimpleMarkdown.defaultRules.text.order,
-  match: source => /^<a:(\w+):(\d+)>/.exec(source),
-  parse: ([, name, id]) => ({
-    emojiId: id,
-    name,
-    src: getAnimEmoteURL({ id })
-  }),
-  react: node => (
-    <Emoji
-      enlarged={node.jumboable}
-      alt={`<:${node.name}:${node.emojiId}>`}
-      src={node.src}
-    />
+  react: (node, recurseOutput, state) => (
+    <Tooltip
+      key={state.key}
+      placement="top"
+      overlay={`:${node.name}:`}
+      mouseEnterDelay={0.6}
+      mouseLeaveDelay={0}
+    >
+      <span>
+        <Emoji enlarged={node.jumboable} src={node.src} />
+      </span>
+    </Tooltip>
   )
 }

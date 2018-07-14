@@ -7,68 +7,8 @@ import { astToString, flattenAst, recurse } from 'shared/markdown/render/util'
 import SimpleMarkdown from 'simple-markdown'
 
 export function parseText(msg: string) {
-  const mentions = (array: [string | string[]]) =>
-    array.map(e => {
-      if (typeof e !== 'string') return e
-
-      // mentions.roles.forEach((role, i) => {
-      //   e = replace(
-      //     e,
-      //     `<@&${role.id}>`,
-      //     <Role role={role} key={role.id} color={role.color}>{`@${
-      //       role.name
-      //     }`}</Role>
-      //   )
-      // })
-
-      // let _e: string[] | string = e as string[] | string
-      // if (_e instanceof Array) {
-      //   _e.map(a => {
-      //     return typeof a === 'string'
-      //       ? a.replace(/<@&[0-9]{18}>/g, '@deleted-role')
-      //       : a
-      //   })
-      // } else {
-      //   e = e.replace(/<@&[0-9]{18}>/g, '@deleted-role')
-      // }
-
-      // if (mentions.everyone) {
-      //   e = replace(
-      //     e,
-      //     '@everyone',
-      //     <Role key={Math.random()} everyone>
-      //       {`@everyone`}
-      //     </Role>
-      //   )
-      //   e = replace(
-      //     e,
-      //     '@here',
-      //     <Role key={Math.random()} everyone>
-      //       {`@here`}
-      //     </Role>
-      //   )
-      // }
-
-      return e
-    })
-
-  function replace(string, regex, element) {
-    if (string instanceof Array) {
-      return string.map(e => replace(e, regex, element))
-    } else if (typeof string === 'string') {
-      const parts = string.split(regex)
-
-      for (var i = 1; i < parts.length; i += 2) {
-        parts.splice(i, 0, element)
-      }
-
-      return parts
-    }
-    return string
-  }
-
   try {
-    return msg ? mentions(parse(msg)) : null
+    return msg ? parse(msg) : null
   } catch (e) {
     console.error(`Failed to parse "${msg}"`, e)
     return msg
