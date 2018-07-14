@@ -49,6 +49,7 @@ const Channel = connect<Props>()
           <Tooltip
             placement="top"
             overlay={category || ''}
+            mouseLeaveDelay={0}
             trigger={category ? ['hover'] : []}
           >
             <span>
