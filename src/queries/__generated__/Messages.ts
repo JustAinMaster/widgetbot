@@ -16,9 +16,9 @@ export interface Messages_server_channel_messages_TextMessage_author {
    */
   id: string
   /**
-   * Member's avatar filename
+   * Member's avatar CDN url
    */
-  avatar: string | null
+  avatarURL: string
 }
 
 export interface Messages_server_channel_messages_TextMessage_embeds_fields {
@@ -82,6 +82,10 @@ export interface Messages_server_channel_messages_TextMessage {
    */
   content: string | null
   /**
+   * Time the message was edited
+   */
+  editedAt: any | null
+  /**
    * Message embeds
    */
   embeds: Messages_server_channel_messages_TextMessage_embeds[] | null
@@ -98,9 +102,9 @@ export interface Messages_server_channel_messages_JoinMessage_author {
    */
   id: string
   /**
-   * Member's avatar filename
+   * Member's avatar CDN url
    */
-  avatar: string | null
+  avatarURL: string
 }
 
 export interface Messages_server_channel_messages_JoinMessage {

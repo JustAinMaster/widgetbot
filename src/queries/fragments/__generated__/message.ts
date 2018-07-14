@@ -16,9 +16,9 @@ export interface message_author {
    */
   id: string
   /**
-   * Member's avatar filename
+   * Member's avatar CDN url
    */
-  avatar: string | null
+  avatarURL: string
 }
 
 export interface message {

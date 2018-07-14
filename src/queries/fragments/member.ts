@@ -4,7 +4,7 @@ const member = gql`
   fragment member on Member {
     name
     id
-    avatar
+    avatarURL
   }
 `
 

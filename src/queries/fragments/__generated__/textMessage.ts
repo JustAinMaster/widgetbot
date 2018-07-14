@@ -54,6 +54,10 @@ export interface textMessage {
    */
   content: string | null
   /**
+   * Time the message was edited
+   */
+  editedAt: any | null
+  /**
    * Message embeds
    */
   embeds: textMessage_embeds[] | null

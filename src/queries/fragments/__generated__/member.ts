@@ -16,9 +16,9 @@ export interface member {
    */
   id: string
   /**
-   * Member's avatar filename
+   * Member's avatar CDN url
    */
-  avatar: string | null
+  avatarURL: string
 }
 
 /* tslint:disable */

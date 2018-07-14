@@ -1,5 +1,5 @@
 import { connect } from 'fluent'
-import * as Moment from 'moment'
+import Moment from 'moment'
 import { member } from 'queries/fragments/__generated__/member'
 import * as React from 'react'
 

@@ -1,5 +1,3 @@
-import './app/res/index.css'
-
 import { Container } from '@cerebral/react'
 import client from 'client'
 import { connect } from 'raven'

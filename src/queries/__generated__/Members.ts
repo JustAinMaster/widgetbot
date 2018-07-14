@@ -16,9 +16,9 @@ export interface Members_server_members {
    */
   id: string
   /**
-   * Member's avatar filename
+   * Member's avatar CDN url
    */
-  avatar: string | null
+  avatarURL: string
 }
 
 export interface Members_server {

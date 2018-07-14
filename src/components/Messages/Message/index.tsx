@@ -1,5 +1,7 @@
 import { ThemeProvider } from 'emotion-theming'
+import Moment from 'moment'
 import { Messages_server_channel_messages } from 'queries/__generated__/Messages'
+import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { parseText } from 'shared/markdown/render'
@@ -8,6 +10,7 @@ import Author, { Timestamp } from './Author'
 import {
   Avatar,
   Content,
+  Edited,
   Group,
   JoinMember,
   JoinText,
@@ -31,34 +34,10 @@ class Message extends React.PureComponent<Props, any> {
     const { messages, lastSeen } = this.props
     const [firstMessage] = messages
 
-    // if (message.__typename === 'JoinMessage') {
-    //   const { name } = parseUsername(message.author.name)
-
-    //   return (
-    //     <Group className="message join">
-    //       <Messages className="content">
-    //         <JoinText>
-    //           <FormattedMessage
-    //             id="message.join_message"
-    //             values={{ name: <JoinMember>{name}</JoinMember> }}
-    //           />
-    //         </JoinText>
-    //         <Timestamp time={message.timestamp} />
-    //       </Messages>
-    //     </Group>
-    //   )
-    // }
-
-    // if (message.__typename === 'TextMessage') {
     return (
       <Group className="group">
         {firstMessage.__typename !== 'JoinMessage' ? (
-          <Avatar
-            url={`https://cdn.discordapp.com/avatars/${
-              firstMessage.author.id
-            }/${firstMessage.author.avatar}.png?size=64`}
-            className="avatar"
-          />
+          <Avatar url={firstMessage.author.avatarURL} className="avatar" />
         ) : null}
 
         <Messages className="messages">
@@ -77,9 +56,14 @@ class Message extends React.PureComponent<Props, any> {
                     <Root className="message">
                       <Content className="content">
                         {parseText(message.content)}
-                        {/* {message.editedAt && (
-                          <Edited className="edited">{`(edited)`}</Edited>
-                        )} */}
+                        {message.editedAt && (
+                          <Tooltip
+                            placement="top"
+                            overlay={Moment(message.editedAt).calendar()}
+                          >
+                            <Edited className="edited">{`(edited)`}</Edited>
+                          </Tooltip>
+                        )}
                       </Content>
 
                       {/* {message.attachment && (
