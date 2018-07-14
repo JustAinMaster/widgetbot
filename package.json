@@ -19,7 +19,9 @@
     "eject": "react-scripts-ts eject",
     "pull": "git stash && git pull && yarn && yarn build",
     "precommit": "pretty-quick --staged",
-    "codegen": "apollo codegen:generate --target=typescript --schema=\"http://localhost:7000/api/graphql\" --queries=\"src/**/*.{ts,tsx}\" --addTypename",
+    "schema": "apollo schema:download --endpoint=http://localhost:7000/api/graphql src/controllers/apollo/codegen/schema.json",
+    "codegen": "apollo codegen:generate --target=typescript --schema=\"src/controllers/apollo/codegen/schema.json\" --queries=\"src/**/*.{ts,tsx}\" --addTypename",
+    "codegen:live": "yarn codegen --schema=\"http://localhost:7000/api/graphql\"",
     "doc": "typedoc --includeDeclarations --excludeExternals --externalPattern \"**/node_modules/!(@widgetbot)/**\" --ignoreCompilerErrors --out ./docs/ ./src"
   },
   "dependencies": {
@@ -81,6 +83,7 @@
     "husky": "^0.14.3",
     "prettier": "^1.13.7",
     "pretty-quick": "^1.6.0",
+    "ts-graphql-plugin": "^1.1.2",
     "typedoc": "^0.11.1",
     "typescript": "^3.0.0-dev.20180710"
   }

@@ -32,7 +32,12 @@
       "fluent": ["src/controllers/cerebral/fluent.ts"],
       "embed-api": ["src/controllers/embed-api"],
       "emoji": ["src/components/shared/Emoji/emoji.ts"]
-    }
+    },
+    "plugins": [
+      {
+        "name": "ts-graphql-plugin"
+      }
+    ]
   },
   "exclude": [
     "node_modules",

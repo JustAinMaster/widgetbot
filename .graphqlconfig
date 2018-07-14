@@ -1,0 +1,20 @@
+{
+  "projects": {
+    "WidgetBot": {
+      "schemaPath": "schema.graphql",
+      "includes": ["**/*.{ts,tsx}"],
+      "extensions": {
+        "endpoints": {
+          "dev": {
+            "url": "http://localhost:7000/api/graphql",
+            "subscription": "http://localhost:7000/api/graphql"
+          },
+          "prod": {
+            "url": "https://widgetbot.io/api/graphql",
+            "subscription": "https://widgetbot.io/api/graphql"
+          }
+        }
+      }
+    }
+  }
+}
