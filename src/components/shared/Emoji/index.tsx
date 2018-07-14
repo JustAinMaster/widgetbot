@@ -17,6 +17,10 @@ interface Props {
 }
 
 class Emoji extends React.PureComponent<Props> {
+  static withComponent = component => ({ children, ...props }) => {
+    return React.createElement(component, props, <Emoji>{children}</Emoji>)
+  }
+
   render() {
     let text = this.getText()
     let { className, resolveNames, src } = this.props

@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Emoji from 'shared/Emoji'
 import styled, { css } from 'typed-emotion'
 
 const svg = css``
@@ -33,6 +34,17 @@ const Container = styled('div')`
     height: 100%;
     opacity: 0.08;
   }
+`
+
+export const Info = styled(Emoji.withComponent('div'))`
+  font-size: 21px;
+  font-weight: 600;
+  margin-top: 8px;
+  text-align: center;
+  user-select: none;
+  white-space: pre-line;
+
+  color: ${({ theme }) => theme.colors._primary.fade(0.9).string()};
 `
 
 export const Wrap = function<T>(wrapper: T): T {

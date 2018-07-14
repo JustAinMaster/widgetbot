@@ -13,7 +13,7 @@ import { fetchInvite } from 'socket-io'
 
 import Header, { Name, Topic } from '../Header'
 import { Join, Stretch } from '../Header/elements'
-import { Loading, NoMessages } from '../Overlays'
+import { Info, Loading, NoMessages } from '../Overlays'
 import ErrorAhoy from '../Overlays/ErrorAhoy'
 import Wrapper from '../Wrapper'
 import Group from './group'
@@ -75,7 +75,16 @@ export default connect()
             >
               {({ loading, error, data }) => {
                 if (error) {
-                  return <ErrorAhoy message={error.message} />
+                  let message = error.message
+
+                  if (error.graphQLErrors.length) {
+                    const [err] = error.graphQLErrors
+                    if (err.name && err.message) {
+                      message = `${err.name} ♨️ ${err.message}`
+                    }
+                  }
+
+                  return <ErrorAhoy message={message} />
                 }
 
                 let content = <Loading />
@@ -101,7 +110,9 @@ export default connect()
                       ))}
                     </ScrollVisible>
                   ) : (
-                    <NoMessages className="no-messages" />
+                    <NoMessages className="no-messages">
+                      <Info>No messages to be seen here</Info>
+                    </NoMessages>
                   )
                 }
 
