@@ -53,7 +53,12 @@ class Message extends React.PureComponent<Props, any> {
     return (
       <Group className="group">
         {firstMessage.__typename !== 'JoinMessage' ? (
-          <Avatar url={firstMessage.author.avatar} className="avatar" />
+          <Avatar
+            url={`https://cdn.discordapp.com/avatars/${
+              firstMessage.author.id
+            }/${firstMessage.author.avatar}.png?size=64`}
+            className="avatar"
+          />
         ) : null}
 
         <Messages className="messages">
