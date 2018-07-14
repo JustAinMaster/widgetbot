@@ -13,7 +13,6 @@ export const Edited = styled('span')`
   opacity: 0.3;
 `
 
-export { Twemoji, Emoji } from './emoji'
 export { Code } from './code'
 export { Channel, Mention, Role } from './mentions'
 export { Image } from './media'

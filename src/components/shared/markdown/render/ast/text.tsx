@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Emoji from 'shared/Emoji'
 import SimpleMarkdown from 'simple-markdown'
 
 const text = {
@@ -9,7 +10,11 @@ const text = {
       : recurseParse(content, {
           ...state,
           nested: true
-        })
+        }),
+
+  react: (node, recurseOutput, state) => (
+    <Emoji key={state.key}>{node.content}</Emoji>
+  )
 }
 
 export default text

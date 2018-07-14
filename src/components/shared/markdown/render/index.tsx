@@ -2,7 +2,7 @@ import * as hljs from 'highlight.js'
 import * as R from 'ramda'
 import * as React from 'react'
 import baseRules from 'shared/markdown/render/ast'
-import { Code, Link, Twemoji } from 'shared/markdown/render/elements'
+import { Code, Link } from 'shared/markdown/render/elements'
 import { astToString, flattenAst, recurse } from 'shared/markdown/render/util'
 import SimpleMarkdown from 'simple-markdown'
 
@@ -67,23 +67,8 @@ export function parseText(msg: string) {
     return string
   }
 
-  const emoji = input =>
-    input.map(
-      (part, i) =>
-        typeof part === 'string' ? (
-          <Twemoji
-            resolveNames
-            onlyEmojiClassName="enlarged"
-            text={part}
-            key={i * Math.random()}
-          />
-        ) : (
-          part
-        )
-    )
-
   try {
-    return msg ? emoji(mentions(parse(msg))) : null
+    return msg ? mentions(parse(msg)) : null
   } catch (e) {
     console.error(`Failed to parse "${msg}"`, e)
     return msg

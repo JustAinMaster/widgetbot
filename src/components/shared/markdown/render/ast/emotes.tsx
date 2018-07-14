@@ -1,5 +1,5 @@
-import { Emoji, Twemoji } from 'shared/markdown/render/elements'
 import * as React from 'react'
+import Emoji from 'shared/Emoji'
 import SimpleMarkdown from 'simple-markdown'
 
 const getEmoteURL = emote => `https://cdn.discordapp.com/emojis/${emote.id}.png`
@@ -11,9 +11,9 @@ export const emoji = {
   match: source => /^:([^\s:]+?):/.exec(source),
   parse: ([content]) => ({ content }),
   react: (node, recurseOutput, state) => (
-    <Twemoji resolveNames={true} key={state.key}>
+    <Emoji resolveNames={true} key={state.key}>
       {node.content}
-    </Twemoji>
+    </Emoji>
   )
 }
 
