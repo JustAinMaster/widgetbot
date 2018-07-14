@@ -55,7 +55,7 @@ class Message extends React.PureComponent<Props, any> {
               case 'TextMessage':
                 return (
                   <ThemeProvider key={message.id} theme={this.theme(message)}>
-                    <Root className="message">
+                    <Root className="message" id={message.id}>
                       <Content className="content">
                         {parseText(message.content)}
                         {message.editedAt && (

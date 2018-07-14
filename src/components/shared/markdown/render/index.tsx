@@ -102,7 +102,9 @@ function createRules(rule: { [key: string]: any }) {
           )
         }
 
-        return <Code>{recurse(node, recurseOutput, state)}</Code>
+        return (
+          <Code key={state.key}>{recurse(node, recurseOutput, state)}</Code>
+        )
       }
     }
   }
