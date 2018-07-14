@@ -41,4 +41,8 @@ export const Info = styled('div')`
   text-overflow: ellipsis;
   white-space: nowrap;
   color: ${({ theme }) => theme.colors._primary.fade(0.75).string()};
+  text-transform: lowercase;
+  &:first-letter {
+    text-transform: uppercase;
+  }
 `

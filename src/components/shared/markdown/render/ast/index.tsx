@@ -1,35 +1,32 @@
-import * as _ from 'lodash'
 import { channel, mention } from 'shared/markdown/render/ast/mention'
 import text from 'shared/markdown/render/ast/text'
-import SimpleMarkdown from 'simple-markdown'
+import { defaultRules, inlineRegex } from 'simple-markdown'
 
 import { animatedEmoji, customEmoji, emoji } from './emotes'
 
 const baseRules = {
-  ..._.pick(SimpleMarkdown.defaultRules, [
-    'newline',
-    'paragraph',
-    'escape',
-    'link',
-    'url',
-    'strong',
-    'em',
-    'u',
-    'br',
-    'inlineCode'
-  ]),
+  newline: defaultRules.newline,
+  paragraph: defaultRules.paragraph,
+  escape: defaultRules.escape,
+  link: defaultRules.link,
+  url: defaultRules.url,
+  strong: defaultRules.strong,
+  em: defaultRules.em,
+  u: defaultRules.u,
+  br: defaultRules.br,
+  inlineCode: defaultRules.inlineCode,
 
   autolink: {
-    ...SimpleMarkdown.defaultRules.autolink,
-    match: SimpleMarkdown.inlineRegex(/^<(https?:\/\/[^ >]+)>/)
+    ...defaultRules.autolink,
+    match: inlineRegex(/^<(https?:\/\/[^ >]+)>/)
   },
   emoticon: {
-    order: SimpleMarkdown.defaultRules.text.order,
+    order: defaultRules.text.order,
     match: source => /^(¯\\_\(ツ\)_\/¯)/.exec(source),
     parse: capture => ({ type: 'text', content: capture[1] })
   },
   codeBlock: {
-    order: SimpleMarkdown.defaultRules.codeBlock.order,
+    order: defaultRules.codeBlock.order,
     match: source => /^```(([A-z0-9-]+?)\n+)?\n*([^]+?)\n*```/.exec(source),
     parse: ([, , lang, content]) => ({
       lang: (lang || '').trim(),
@@ -45,9 +42,9 @@ const baseRules = {
   channel,
 
   s: {
-    order: SimpleMarkdown.defaultRules.u.order,
-    match: SimpleMarkdown.inlineRegex(/^~~([\s\S]+?)~~(?!_)/),
-    parse: SimpleMarkdown.defaultRules.u.parse
+    order: defaultRules.u.order,
+    match: inlineRegex(/^~~([\s\S]+?)~~(?!_)/),
+    parse: defaultRules.u.parse
   }
 }
 

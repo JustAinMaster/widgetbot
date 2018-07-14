@@ -1,10 +1,10 @@
 import { BranchContext, Context } from 'fluent'
 import { Locales, translations } from 'locales'
-import * as _ from 'lodash'
 import Log from 'logger'
-import enrich from 'shared/markdown/enrich'
 import { addNotification } from 'notify'
+import * as R from 'ramda'
 import { Notification } from 'react-notification-system'
+import enrich from 'shared/markdown/enrich'
 import { socket } from 'socket-io'
 
 import controller from '../../controllers/cerebral'
@@ -166,7 +166,7 @@ export function sendMessage({
   }
   const { channel } = payload
 
-  const id = _.times(20, () => _.random(9)).join('')
+  const id = R.times(() => Math.floor(Math.random() * 1000000000), 2).join('')
 
   socket.emit('sendMessage', payload, () => {
     controller.signals.deleteMessage({ channel, id })

@@ -1,8 +1,9 @@
 import { Dictionary } from '@cerebral/fluent'
 import client from 'client'
 import { BranchContext, Context } from 'fluent'
-import * as _ from 'lodash'
 import Log from 'logger'
+import { Channel } from 'queries/__generated__/Channel'
+import { Channels } from 'queries/__generated__/Channels'
 import CHANNEL from 'queries/channel'
 import CHANNELS from 'queries/channels'
 import { Notification } from 'react-notification-system'
@@ -12,8 +13,6 @@ import parseUsername from '../../components/Messages/Message/parseUsername'
 import { ServerResponse } from '../../types/responses'
 import { Channel as $Channel } from '../types'
 import { getLast } from './util'
-import { Channels } from 'queries/__generated__/Channels'
-import { Channel } from 'queries/__generated__/Channel'
 
 const serverIssues = {
   level: 'warning',
@@ -236,7 +235,7 @@ namespace GraphQL {
                 lastSeenID: getLast(server.channel.messages),
                 ...channel,
                 ...server.channel,
-                messages: Dictionary(_.keyBy(server.channel.messages, 'id'))
+                messages: Dictionary({})
               }
             : channel)
         }

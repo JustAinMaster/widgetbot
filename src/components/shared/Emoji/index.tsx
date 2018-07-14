@@ -1,5 +1,4 @@
 import { cx } from 'emotion'
-import * as _ from 'lodash'
 import * as React from 'react'
 import emoji from 'react-easy-emoji'
 import { Base, Emote } from 'shared/Emoji/elements'
@@ -82,12 +81,15 @@ class Emoji extends React.PureComponent<Props> {
       const alt = img.getAttribute('alt')
       if (alt === null) return
 
+      const escape = document.createElement('span')
+      escape.innerText = alt
+
       img.setAttribute(
         'src',
         `data:image/svg+xml;charset=UTF-8, ${encodeURIComponent(
-          `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet"><text font-size="80" dy=".35em" dx="-0.7em">${_.escape(
-            alt
-          )}</text></svg>`
+          `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet"><text font-size="80" dy=".35em" dx="-0.7em">${
+            escape.innerHTML
+          }</text></svg>`
         )}`
       )
     }

@@ -1,6 +1,6 @@
 import api from 'embed-api'
-import * as _ from 'lodash'
 import { addNotification } from 'notify'
+import * as R from 'ramda'
 import * as io from 'socket.io-client'
 
 import controller from '../cerebral'
@@ -36,7 +36,7 @@ const initiate = () => {
   socket.on('notify', addNotification)
 
   // Embed API
-  socket.on('signIn', d => api.emit('signIn', _.omit(d, 'token')))
+  socket.on('signIn', d => api.emit('signIn', R.omit(['token'], d) as any))
 
   socket.on('message', d => api.emit('message', d))
   socket.on('messageUpdate', d => api.emit('messageUpdate', d))

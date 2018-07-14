@@ -1,9 +1,9 @@
 import * as hljs from 'highlight.js'
-import * as _ from 'lodash'
+import * as R from 'ramda'
+import * as React from 'react'
 import baseRules from 'shared/markdown/render/ast'
 import { Code, Link, Twemoji } from 'shared/markdown/render/elements'
 import { astToString, flattenAst, recurse } from 'shared/markdown/render/util'
-import * as React from 'react'
 import SimpleMarkdown from 'simple-markdown'
 
 export function parseText(msg: string) {
@@ -196,13 +196,10 @@ const parse = parserFor(rulesWithoutMaskedLinks)
 export const parseAllowLinks = parserFor(createRules(baseRules))
 
 export const parseEmbedTitle = parserFor(
-  _.omit(rulesWithoutMaskedLinks, [
-    'codeBlock',
-    'br',
-    'mention',
-    'channel',
-    'roleMention'
-  ])
+  R.omit(
+    ['codeBlock', 'br', 'mention', 'channel', 'roleMention'],
+    rulesWithoutMaskedLinks
+  )
 )
 
 function jumboify(ast) {
