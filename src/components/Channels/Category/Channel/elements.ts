@@ -1,4 +1,4 @@
-import Channel, { Hash } from 'shared/Channel'
+import { ChannelLink, Hash } from 'shared/Channel'
 import styled, { css, keyframes } from 'typed-emotion'
 
 const fade = i => keyframes`
@@ -18,7 +18,7 @@ interface Props {
   order: number
 }
 
-export const Root = styled(Channel)<Props>`
+export const Root = styled(ChannelLink)<Props>`
   position: relative;
   text-decoration: none;
   user-select: none;

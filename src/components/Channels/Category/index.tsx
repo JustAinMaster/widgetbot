@@ -1,8 +1,8 @@
 import * as React from 'react'
 
+import { Category } from '../categorise'
 import Channel from './Channel'
 import { Collapse, Emoji, Expand, Name, Root, Text } from './elements'
-import { Category } from '../categorise'
 
 interface Props {
   category: Category
@@ -42,6 +42,7 @@ class ChannelCategory extends React.PureComponent<Props> {
               key={id}
               {...{
                 id,
+                name,
                 order,
                 unread,
                 selected

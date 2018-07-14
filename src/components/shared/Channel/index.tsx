@@ -44,7 +44,6 @@ const Channel = connect<Props>()
         const name = success ? data.server.channel.name : 'deleted-channel'
         const category = success ? data.server.channel.category : null
 
-        console.log(category)
         return (
           <Tooltip
             placement="top"

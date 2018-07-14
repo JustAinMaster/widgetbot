@@ -4,6 +4,7 @@ import { Hashtag, Name, Pings, Root } from './elements'
 
 interface Props {
   unread: boolean
+  name: string
   id: string
   order: number
   selected: boolean
@@ -11,15 +12,9 @@ interface Props {
 
 const Channel = (props: Props) => (
   <Root {...props} className="channel">
-    {({ name }) => (
-      <React.Fragment>
-        <Hashtag className="hash" />
-        <Name innerRef={ref => (this.name = ref)} className="name">
-          {name}
-        </Name>
-        {false && <Pings className="pings">1</Pings>}
-      </React.Fragment>
-    )}
+    <Hashtag className="hash" />
+    <Name className="name">{props.name}</Name>
+    {false && <Pings className="pings">1</Pings>}
   </Root>
 )
 
