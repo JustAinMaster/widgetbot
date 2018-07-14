@@ -32,7 +32,7 @@ const categorise = (channels: Channels_server_channels[]): Category[] => {
       // The channel doesn't belong in a named category
       const [firstCategory] = categorised
 
-      // If the first category is unamed, then insert
+      // If the first category is unnamed, then insert
       // this channel into it
       if (firstCategory && !firstCategory.name) {
         firstCategory.channels.push(channel)
