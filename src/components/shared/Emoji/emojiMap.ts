@@ -1715,6 +1715,23 @@ export const iterate = (
     })
   })
 
+export const find = (name: string) => {
+  for (const category of Object.keys(categoryMap)) {
+    const emojis = categoryMap[category]
+
+    for (const emoji of Object.keys(emojis)) {
+      const keywords: string[] = emojis[emoji]
+      if (keywords.indexOf(name) > -1) {
+        return {
+          emoji,
+          category,
+          keywords
+        }
+      }
+    }
+  }
+}
+
 iterate(emoji => emojis.push(emoji))
 
 export default categoryMap

@@ -25,17 +25,12 @@ function parserFor(rules, returnAst?) {
       input += '\n\n'
     }
 
-    let ast = parser(input, { inline, ...state })
-    ast = flattenAst(ast)
-    if (transform) {
-      ast = transform(ast)
-    }
+    const parse = R.pipe.apply(
+      this,
+      [parser, flattenAst, transform, !returnAst && renderer].filter(Boolean)
+    )
 
-    if (returnAst) {
-      return ast
-    }
-
-    return renderer(ast)
+    return parse(input, { inline, ...state })
   }
 }
 

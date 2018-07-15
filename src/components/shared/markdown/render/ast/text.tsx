@@ -12,9 +12,13 @@ const text = {
           nested: true
         }),
 
-  react: (node, recurseOutput, state) => (
-    <Emoji key={state.key}>{node.content}</Emoji>
-  )
+  react: (node, recurseOutput, state) => {
+    return (
+      <Emoji key={state.key} resolveNames>
+        {node.content}
+      </Emoji>
+    )
+  }
 }
 
 export default text

@@ -2,9 +2,7 @@ import { cx } from 'emotion'
 import * as React from 'react'
 import emoji from 'react-easy-emoji'
 import { Base, Emote } from 'shared/Emoji/elements'
-import { iterate } from 'shared/Emoji/emojiMap'
-
-const cache = new Map<string, string>()
+import { find } from 'shared/Emoji/emojiMap'
 
 interface Props {
   [key: string]: any
@@ -38,13 +36,12 @@ class Emoji extends React.PureComponent<Props> {
     }
 
     // Resolve all text representations of emojis
-    // uses a cache store to reduce
     if (resolveNames) text = this.resolve(text)
 
     const resolved = emoji(text, (code, string, key) => (
       <Emote
         innerRef={this.handleErrors.bind(this)}
-        src={`https://twitter.github.io/twemoji/2/svg/${code}.svg`}
+        src={`https://twitter.github.io/twemoji/2/svg/${code + '.svg'}`}
         alt={string}
         className={cx('emoji', className)}
         key={key}
@@ -60,18 +57,11 @@ class Emoji extends React.PureComponent<Props> {
   }
 
   resolve(text: string) {
-    if (cache.has(text)) {
-      return cache.get(text)
-    }
+    const parsed = text.replace(/:([^\s:]+?):/g, (match, name) => {
+      const result = find(name)
+      return result ? result.emoji : match
+    })
 
-    let parsed = text
-    iterate(({ keywords, emoji }) =>
-      keywords.forEach(keyword => {
-        parsed = parsed.split(`:${keyword}:`).join(emoji)
-      })
-    )
-
-    cache.set(text, parsed)
     return parsed
   }
 

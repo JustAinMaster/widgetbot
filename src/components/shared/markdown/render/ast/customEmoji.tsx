@@ -3,17 +3,6 @@ import * as React from 'react'
 import Emoji from 'shared/Emoji'
 import SimpleMarkdown from 'simple-markdown'
 
-export const emoji = {
-  order: SimpleMarkdown.defaultRules.text.order,
-  match: source => /^:([^\s:]+?):/.exec(source),
-  parse: ([content]) => ({ content }),
-  react: (node, recurseOutput, state) => (
-    <Emoji resolveNames={true} key={state.key}>
-      {node.content}
-    </Emoji>
-  )
-}
-
 export const customEmoji = {
   order: SimpleMarkdown.defaultRules.text.order,
   match: source => /^<(a)?:(\w+):(\d+)>/.exec(source),

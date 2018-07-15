@@ -2,7 +2,7 @@ import { channel, mention } from 'shared/markdown/render/ast/mention'
 import text from 'shared/markdown/render/ast/text'
 import { defaultRules, inlineRegex } from 'simple-markdown'
 
-import { customEmoji, emoji } from './emotes'
+import { customEmoji } from './customEmoji'
 
 const baseRules = {
   newline: defaultRules.newline,
@@ -33,7 +33,6 @@ const baseRules = {
       content: content || ''
     })
   },
-  emoji,
   customEmoji,
   text,
 
