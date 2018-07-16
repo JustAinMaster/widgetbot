@@ -1717,7 +1717,25 @@ export const iterate = (
     })
   })
 
-export const find = memoize((name: string) => {
+export const findFromEmoji = memoize((emoji: string) => {
+  for (const category of Object.keys(categoryMap)) {
+    const emojis = categoryMap[category]
+
+    for (const e of Object.keys(emojis)) {
+      if (e === emoji) {
+        const keywords = emojis[e]
+
+        return {
+          emoji,
+          category,
+          keywords
+        }
+      }
+    }
+  }
+})
+
+export const findFromKeyword = memoize((keyword: string) => {
   for (const category of Object.keys(categoryMap)) {
     const emojis = categoryMap[category]
 

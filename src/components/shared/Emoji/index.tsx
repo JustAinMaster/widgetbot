@@ -3,7 +3,7 @@ import memoize from 'memoizee'
 import * as React from 'react'
 import emoji from 'react-easy-emoji'
 import { Base, Emote } from 'shared/Emoji/elements'
-import { find } from 'shared/Emoji/emojiMap'
+import { findFromKeyword } from 'shared/Emoji/emojiMap'
 
 interface Props {
   [key: string]: any
@@ -59,7 +59,7 @@ class Emoji extends React.PureComponent<Props> {
 
   resolve = memoize((text: string) => {
     const parsed = text.replace(/:([^\s:]+?):/g, (match, name) => {
-      const result = find(name)
+      const result = findFromKeyword(name)
       return result ? result.emoji : match
     })
 
