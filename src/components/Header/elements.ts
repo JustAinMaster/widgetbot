@@ -1,5 +1,6 @@
 import Button from 'shared/button'
 import { Hash } from 'shared/Channel'
+import Markdown from 'shared/markdown/render'
 import styled from 'typed-emotion'
 
 export const Root = styled('header')`
@@ -54,7 +55,7 @@ export const Name = styled(Hash)`
   }
 `
 
-export const Topic = styled('div')`
+export const Topic = styled(Markdown.withComponent('div'))`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -64,6 +65,18 @@ export const Topic = styled('div')`
   border-left: 1px solid
     ${({ theme }) => theme.colors._primary.fade(0.9).string()};
   color: ${({ theme }) => theme.colors._primary.fade(0.4).string()};
+
+  * {
+    color: inherit;
+  }
+
+  a {
+    color: #1296cf;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 
   @media (max-width: 330px) {
     display: none;

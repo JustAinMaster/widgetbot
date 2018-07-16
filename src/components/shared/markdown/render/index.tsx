@@ -103,7 +103,17 @@ export const parseEmbedTitle = parserFor(
   )
 )
 
-const Markdown = ({ children }: { children: string }) =>
+const $Markdown = ({ children }: { children: string }) =>
   children ? parse(children) : null
+
+const Markdown = $Markdown as typeof $Markdown & {
+  withComponent(component: any): any
+}
+
+Markdown.withComponent = Component => ({ children, ...props }) => (
+  <Component {...props}>
+    <Markdown>{children}</Markdown>
+  </Component>
+)
 
 export default Markdown

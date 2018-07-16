@@ -41,6 +41,7 @@ const base = (inline: boolean, color: string) => css`
 export const Mention = styled($Member)<Props>`
   ${({ theme, color, inline }) => base(inline, color || theme.colors.accent)};
 `
+
 export const Channel = styled($Channel)<Props>`
   ${({ theme, inline }) => base(inline, theme.colors.accent)};
 `

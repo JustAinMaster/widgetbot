@@ -23,3 +23,15 @@ export const channel = {
     </Channel>
   )
 }
+
+export const role = {
+  order: SimpleMarkdown.defaultRules.text.order,
+  match: source => /^<@&?([0-9]+?)>/.exec(source),
+  parse: ([mention, id]) => ({ mention, id }),
+  react: ({ mention, id }, recurseOutput, state) =>
+    // TODO: Add role
+    null
+  // <Channel key={state.key} id={id}>
+  //   {({ name }) => `#${name}`}
+  // </Channel>
+}
