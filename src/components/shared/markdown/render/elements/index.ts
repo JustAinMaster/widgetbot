@@ -15,4 +15,3 @@ export const Edited = styled('span')`
 
 export { Code } from './code'
 export { Channel, Mention, Role } from './mentions'
-export { Image } from './media'

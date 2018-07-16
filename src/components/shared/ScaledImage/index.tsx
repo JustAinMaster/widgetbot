@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { css } from 'typed-emotion'
+
 import { Root } from './elements'
 
 interface Scaler {
@@ -80,7 +81,7 @@ export class Scale {
     const scale = factor ? Max[factor] / Image[factor] : 1
 
     this.scale = scale
-    this.width = Image.width * scale
-    this.height = Image.height * scale
+    this.width = Math.round(Image.width * scale)
+    this.height = Math.round(Image.height * scale)
   }
 }

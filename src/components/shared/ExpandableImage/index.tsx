@@ -1,5 +1,7 @@
 import { connect } from 'fluent'
 import * as React from 'react'
+import optimize from 'shared/ExpandableImage/optimize'
+import { Scale } from 'shared/ScaledImage'
 
 import { Image, Loader, Root } from './elements'
 
@@ -39,26 +41,21 @@ const ExpandableImage = connect<Props>()
         }
 
         render() {
-          const {
-            className,
-            height,
-            width,
-            maxHeight,
-            maxWidth,
-            src
-          } = this.props
+          const { className, src: url } = this.props
+          const scale = new Scale(this.props)
 
           return (
             <Root
               className={className || null}
               onClick={this.open.bind(this)}
-              maxHeight={maxHeight}
-              maxWidth={maxWidth}
-              height={height}
-              width={width}
+              scale={scale}
             >
               <Image
-                src={src}
+                src={optimize({
+                  width: scale.width,
+                  height: scale.height,
+                  url
+                })}
                 onLoad={() => this.setState({ type: 'loaded' })}
                 onError={() => this.setState({ type: 'error' })}
               />

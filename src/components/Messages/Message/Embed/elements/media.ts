@@ -1,5 +1,5 @@
+import withProps from 'recompose/withProps'
 import ExpandableImage from 'shared/ExpandableImage'
-import { Scale } from 'shared/ScaledImage'
 import styled from 'typed-emotion'
 
 interface ImageProps {
@@ -7,18 +7,16 @@ interface ImageProps {
   width: number
 }
 
-export const Image = styled(ExpandableImage)<ImageProps>`
+const EImage = withProps({
+  maxWidth: 400,
+  maxHeight: 300
+})(ExpandableImage as any) as typeof ExpandableImage
+
+export const Image = styled(EImage)<ImageProps>`
   display: block;
   margin: 10px 0;
   cursor: pointer;
   border-radius: 3px;
-  ${props =>
-    new Scale({
-      height: props.height,
-      width: props.width,
-      maxWidth: 400,
-      maxHeight: 300
-    }).css};
 
   @media (max-width: 700px) {
     width: 65%;
