@@ -15,7 +15,6 @@ const fonts = `'${[
 
 interface Props {
   inline?: boolean
-  language?: string
 }
 
 export const Code = styled('code')<Props>`

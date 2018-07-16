@@ -14,4 +14,5 @@ export const Edited = styled('span')`
 `
 
 export { Code } from './code'
+export { default as Highlighter } from './code/loader'
 export { Channel, Mention, Role } from './mentions'

@@ -1,9 +1,8 @@
-import * as hljs from 'highlight.js'
 import memoize from 'memoizee'
 import * as R from 'ramda'
 import * as React from 'react'
 import baseRules from 'shared/markdown/render/ast'
-import { Code, Link } from 'shared/markdown/render/elements'
+import { Code, Highlighter, Link } from 'shared/markdown/render/elements'
 import { astToString, flattenAst, recurse } from 'shared/markdown/render/util'
 import SimpleMarkdown from 'simple-markdown'
 
@@ -75,24 +74,11 @@ function createRules(rule: { [key: string]: any }) {
     },
     codeBlock: {
       ...codeBlock,
-      react(node, recurseOutput, state) {
-        const { lang, content } = node
-        if (lang && hljs.getLanguage(lang) !== null) {
-          const { language, value } = hljs.highlight(lang, content, true)
-
-          return (
-            <Code
-              key={state.key}
-              language={language}
-              dangerouslySetInnerHTML={{ __html: value }}
-            />
-          )
-        }
-
-        return (
-          <Code key={state.key}>{recurse(node, recurseOutput, state)}</Code>
-        )
-      }
+      react: (node, recurseOutput, state) => (
+        <Highlighter key={state.key} language={node.lang}>
+          {recurse(node, recurseOutput, state)}
+        </Highlighter>
+      )
     }
   }
 }
