@@ -6,7 +6,9 @@ const optimize = ({ width, height, url }) => {
   if (match) {
     const [, id1, id2, file, type] = match
 
-    return `https://media.discordapp.net/attachments/${id1}/${id2}/${file}.${type}?height=${height}&width=${width}`
+    return `https://media.discordapp.net/attachments/${id1}/${id2}/${file}.${type}?height=${height}&width=${width}${
+      type === 'png' ? '&format=webp' : ''
+    }`
   }
 
   return url
