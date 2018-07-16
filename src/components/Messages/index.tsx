@@ -8,7 +8,7 @@ import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 import { Query } from 'react-apollo'
 import { FormattedMessage } from 'react-intl'
-import { ScrollVisible } from 'shared/scrollable'
+import { AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized'
 import { fetchInvite } from 'socket-io'
 
 import Header, { Name, Topic } from '../Header'
@@ -16,6 +16,7 @@ import { Join, Stretch } from '../Header/elements'
 import { Info, Loading, NoMessages } from '../Overlays'
 import ErrorAhoy from '../Overlays/ErrorAhoy'
 import Wrapper from '../Wrapper'
+import { Scroller } from './elements'
 import Group from './group'
 import Message from './Message'
 
@@ -29,6 +30,10 @@ export default connect()
   .toClass(
     props =>
       class extends React.PureComponent<typeof props> {
+        cache = new CellMeasurerCache({
+          fixedWidth: true
+        })
+
         header = () => {
           const { server, channel } = this.props
           return (
@@ -64,6 +69,20 @@ export default connect()
           )
         }
 
+        renderRow = messages => ({ index, key, style, parent }) => {
+          return (
+            <CellMeasurer
+              key={key}
+              cache={this.cache}
+              parent={parent}
+              columnIndex={0}
+              rowIndex={index}
+            >
+              <Message style={style} messages={messages[index]} />
+            </CellMeasurer>
+          )
+        }
+
         render() {
           const { server, channel } = this.props
           return (
@@ -96,14 +115,20 @@ export default connect()
                   const grouped = Group(data.server.channel.messages)
 
                   content = grouped.length ? (
-                    <ScrollVisible
-                      innerRef={this.scroll.bind(this)}
-                      className="messages"
-                    >
-                      {grouped.map(group => (
-                        <Message messages={group} key={group[0].id} />
-                      ))}
-                    </ScrollVisible>
+                    <AutoSizer>
+                      {({ width, height }) => (
+                        <Scroller
+                          width={width}
+                          height={height - 47}
+                          deferredMeasurementCache={this.cache}
+                          rowHeight={this.cache.rowHeight}
+                          rowRenderer={this.renderRow(grouped)}
+                          rowCount={grouped.length}
+                          scrollToIndex={grouped.length - 1}
+                          overscanRowCount={3}
+                        />
+                      )}
+                    </AutoSizer>
                   ) : (
                     <NoMessages className="no-messages">
                       <Info>No messages to be seen here</Info>

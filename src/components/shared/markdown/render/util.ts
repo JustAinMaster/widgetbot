@@ -38,3 +38,30 @@ export const recurse = (node, recurseOutput, state) =>
   typeof node.content === 'string'
     ? node.content
     : recurseOutput(node.content, state)
+
+export function jumboify(ast) {
+  const nonEmojiNodes = ast.some(
+    node =>
+      node.type !== 'img' &&
+      (typeof node.content !== 'string' || node.content.trim() !== '')
+  )
+
+  if (nonEmojiNodes) return ast
+
+  const maximum = 27
+  let count = 0
+
+  ast.forEach((node, i) => {
+    node.props.key = i
+
+    if (node.type === 'img') count += 1
+
+    if (count > maximum) return false
+  })
+
+  if (count < maximum) {
+    ast.forEach(node => (node.props.className += ' jumboable'))
+  }
+
+  return ast
+}

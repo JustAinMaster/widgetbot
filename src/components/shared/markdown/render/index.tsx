@@ -1,19 +1,11 @@
 import * as hljs from 'highlight.js'
+import memoize from 'memoizee'
 import * as R from 'ramda'
 import * as React from 'react'
 import baseRules from 'shared/markdown/render/ast'
 import { Code, Link } from 'shared/markdown/render/elements'
 import { astToString, flattenAst, recurse } from 'shared/markdown/render/util'
 import SimpleMarkdown from 'simple-markdown'
-
-export function parseText(msg: string) {
-  try {
-    return msg ? parse(msg) : null
-  } catch (e) {
-    console.error(`Failed to parse "${msg}"`, e)
-    return msg
-  }
-}
 
 function parserFor(rules, returnAst?) {
   const parser = SimpleMarkdown.parserFor(rules)
@@ -112,11 +104,12 @@ const rulesWithoutMaskedLinks = createRules({
     match: () => null
   }
 })
-
-const parse = parserFor(rulesWithoutMaskedLinks)
+const parse = R.pipe(
+  parserFor,
+  memoize
+)(rulesWithoutMaskedLinks)
 
 export const parseAllowLinks = parserFor(createRules(baseRules))
-
 export const parseEmbedTitle = parserFor(
   R.omit(
     ['codeBlock', 'br', 'mention', 'channel', 'roleMention'],
@@ -124,29 +117,7 @@ export const parseEmbedTitle = parserFor(
   )
 )
 
-function jumboify(ast) {
-  const nonEmojiNodes = ast.some(
-    node =>
-      node.type !== 'img' &&
-      (typeof node.content !== 'string' || node.content.trim() !== '')
-  )
+const Markdown = ({ children }: { children: string }) =>
+  children ? parse(children) : null
 
-  if (nonEmojiNodes) return ast
-
-  const maximum = 27
-  let count = 0
-
-  ast.forEach((node, i) => {
-    node.props.key = i
-
-    if (node.type === 'img') count += 1
-
-    if (count > maximum) return false
-  })
-
-  if (count < maximum) {
-    ast.forEach(node => (node.props.className += ' jumboable'))
-  }
-
-  return ast
-}
+export default Markdown

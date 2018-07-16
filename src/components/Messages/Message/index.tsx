@@ -4,7 +4,7 @@ import { Messages_server_channel_messages } from 'queries/__generated__/Messages
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 import { FormattedMessage } from 'react-intl'
-import { parseText } from 'shared/markdown/render'
+import Markdown from 'shared/markdown/render'
 
 import Author, { Timestamp } from './Author'
 import {
@@ -24,6 +24,7 @@ import Reaction from './Reaction'
 
 interface Props {
   messages: Messages_server_channel_messages[]
+  style?
 }
 
 class Message extends React.PureComponent<Props, any> {
@@ -37,7 +38,7 @@ class Message extends React.PureComponent<Props, any> {
     const [firstMessage] = messages
 
     return (
-      <Group className="group">
+      <Group style={this.props.style} className="group">
         {firstMessage.__typename !== 'JoinMessage' ? (
           <Avatar url={firstMessage.author.avatarURL} className="avatar" />
         ) : null}
@@ -52,12 +53,12 @@ class Message extends React.PureComponent<Props, any> {
 
           {messages.map((message, i) => {
             switch (message.__typename) {
-              case 'TextMessage':
+              case 'TextMessage': {
                 return (
                   <ThemeProvider key={message.id} theme={this.theme(message)}>
                     <Root className="message" id={message.id}>
                       <Content className="content">
-                        {parseText(message.content)}
+                        <Markdown>{message.content}</Markdown>
                         {message.editedAt && (
                           <Tooltip
                             placement="top"
@@ -91,6 +92,7 @@ class Message extends React.PureComponent<Props, any> {
                     </Root>
                   </ThemeProvider>
                 )
+              }
 
               case 'JoinMessage': {
                 const { name } = parseUsername(message.author.name)

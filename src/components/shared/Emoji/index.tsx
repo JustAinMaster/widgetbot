@@ -1,4 +1,5 @@
 import { cx } from 'emotion'
+import memoize from 'memoizee'
 import * as React from 'react'
 import emoji from 'react-easy-emoji'
 import { Base, Emote } from 'shared/Emoji/elements'
@@ -56,14 +57,14 @@ class Emoji extends React.PureComponent<Props> {
     return children && !text ? children : text
   }
 
-  resolve(text: string) {
+  resolve = memoize((text: string) => {
     const parsed = text.replace(/:([^\s:]+?):/g, (match, name) => {
       const result = find(name)
       return result ? result.emoji : match
     })
 
     return parsed
-  }
+  })
 
   /**
    * Resolves emojis as text embedded inside SVG if the CDN fails to load

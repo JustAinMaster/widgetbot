@@ -1,4 +1,4 @@
-import { Scrollbars } from 'react-custom-scrollbars'
+import Scrollbars from 'react-custom-scrollbars'
 import styled from 'typed-emotion'
 
 /**
@@ -19,6 +19,7 @@ export const ScrollVisible = styled(Scrollbars)`
         &:last-child {
           margin-bottom: 15px;
           border-bottom: none;
+          outline: none;
         }
       }
     }
@@ -26,12 +27,14 @@ export const ScrollVisible = styled(Scrollbars)`
       display: none;
     }
     &:nth-child(3) {
-      background-color: rgba(0, 0, 0, 0.15);
+      background-color: ${({ theme }) =>
+        theme.colors._background.darken(0.15).string()};
       border-radius: 50px !important;
       width: 8px !important;
       & > div {
         cursor: default !important;
-        background-color: rgba(0, 0, 0, 0.3) !important;
+        background-color: ${({ theme }) =>
+          theme.colors._background.darken(0.45).string()} !important;
         border-radius: 50px !important;
         width: 14px !important;
         margin-left: -3px !important;

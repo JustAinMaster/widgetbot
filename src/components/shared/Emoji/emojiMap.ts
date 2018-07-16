@@ -1,3 +1,5 @@
+import memoize from 'memoizee'
+
 const categoryMap = {
   people: {
     '😀': ['grinning'],
@@ -1715,7 +1717,7 @@ export const iterate = (
     })
   })
 
-export const find = (name: string) => {
+export const find = memoize((name: string) => {
   for (const category of Object.keys(categoryMap)) {
     const emojis = categoryMap[category]
 
@@ -1730,8 +1732,9 @@ export const find = (name: string) => {
       }
     }
   }
-}
+})
 
+// TODO: Remove this. For the initial render time
 iterate(emoji => emojis.push(emoji))
 
 export default categoryMap

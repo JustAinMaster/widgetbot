@@ -42,7 +42,6 @@ const categorise = (channels: Channels_server_channels[]): Category[] => {
     }
   })
 
-  console.log(categorised)
   return categorised
 }
 
