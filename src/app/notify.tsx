@@ -33,7 +33,7 @@ export const addNotification = (
 }
 
 class Notify extends React.PureComponent {
-  notifications: N.System
+  private notifications: N.System
 
   render() {
     return (

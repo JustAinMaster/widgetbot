@@ -2,7 +2,8 @@ import { Server } from '@widgetbot/embed-api'
 
 import controller from '../cerebral'
 
-const api = new Server({ id: controller.state.url.api || 'default' })
+// TODO: Fix
+const api = new Server({ id: 'a' /*controller.state.url.api*/ || 'default' })
 
 api.on('sendMessage', data => {
   if (typeof data === 'string') {

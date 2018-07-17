@@ -1,15 +1,15 @@
 import * as React from 'react'
 
-import { Category } from '../categorise'
+import { ICategory } from '../categorise'
 import Channel from './Channel'
 import { Collapse, Emoji, Expand, Name, Root, Text } from './elements'
 
 interface Props {
-  category: Category
+  category: ICategory
   activeChannel: string
 }
 
-class ChannelCategory extends React.PureComponent<Props> {
+class Category extends React.PureComponent<Props> {
   state = {
     open: true
   }
@@ -54,4 +54,4 @@ class ChannelCategory extends React.PureComponent<Props> {
     )
   }
 }
-export default ChannelCategory
+export default Category

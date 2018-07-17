@@ -1,5 +1,4 @@
 import { Computed, Dictionary, Module } from '@cerebral/fluent'
-import Router from '@cerebral/router'
 import StorageModule from '@cerebral/storage'
 import { translations } from 'locales'
 
@@ -10,7 +9,7 @@ import { State } from './types'
 const state: State = {
   screen: null,
   loading: true,
-  server: null,
+  server: '299881420891881473',
   subscriptions: Dictionary({}),
   visible: {
     channels: window.innerWidth > 520
@@ -43,22 +42,22 @@ const state: State = {
   translation: translations.en
 }
 
-export const router = Router({
-  routes: [
-    {
-      path: '/channels/:server/:channel/',
-      signal: 'fetchChannel'
-    },
-    {
-      path: '/channels/:server/',
-      signal: 'fetchServer'
-    },
-    {
-      path: '/*',
-      signal: 'routeHome'
-    }
-  ]
-})
+// export const router = Router({
+//   routes: [
+//     {
+//       path: '/channels/:server/:channel/',
+//       signal: 'fetchChannel'
+//     },
+//     {
+//       path: '/channels/:server/',
+//       signal: 'fetchServer'
+//     },
+//     {
+//       path: '/*',
+//       signal: 'routeHome'
+//     }
+//   ]
+// })
 
 export const storage = StorageModule({
   target: localStorage,
@@ -72,5 +71,5 @@ export const storage = StorageModule({
 export const module = Module({
   state,
   signals,
-  modules: { router, storage }
+  modules: { /*router,*/ storage }
 })

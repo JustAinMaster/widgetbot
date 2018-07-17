@@ -1,13 +1,13 @@
 import { Channels_server_channels } from 'queries/__generated__/Channels'
 
-export interface Category {
+export interface ICategory {
   name: string
   channels: Channels_server_channels[]
 }
 
-const categorise = (channels: Channels_server_channels[]): Category[] => {
+const categorise = (channels: Channels_server_channels[]): ICategory[] => {
   let indexes = new Map<string, number>()
-  let categorised = new Array<Category>()
+  let categorised = new Array<ICategory>()
 
   channels.forEach((channel, i) => {
     const newCategory = {

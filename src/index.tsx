@@ -4,6 +4,7 @@ import { connect } from 'raven'
 import * as React from 'react'
 import { ApolloProvider } from 'react-apollo'
 import * as ReactDOM from 'react-dom'
+import { BrowserRouter } from 'react-router-dom'
 
 import App from './app'
 import ThemeProvider from './app/ThemeProvider'
@@ -13,11 +14,13 @@ import registerServiceWorker from './registerServiceWorker'
 // Render App
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <Container controller={controller}>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
-    </Container>
+    <BrowserRouter basename="/channels">
+      <Container controller={controller}>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </Container>
+    </BrowserRouter>
   </ApolloProvider>,
   document.getElementById('root')
 )

@@ -20,3 +20,4 @@ const cache = new InMemoryCache({
 persistCache({ cache, storage: localStorage })
 
 export default cache
+;(window as any).cache = cache
