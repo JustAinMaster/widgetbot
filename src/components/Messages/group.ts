@@ -1,4 +1,5 @@
 import { Messages_server_channel_messages } from 'queries/__generated__/Messages'
+import memoize from 'memoizee'
 
 /**
  * Compares whether a message should go in a group
@@ -44,4 +45,6 @@ const Group = <Group extends Messages_server_channel_messages[]>(
   return result
 }
 
-export default Group
+export default memoize(Group, {
+  normalizer: ([messages]) => JSON.stringify(messages)
+})

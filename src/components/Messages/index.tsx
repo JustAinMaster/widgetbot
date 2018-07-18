@@ -107,6 +107,7 @@ class MessagesView extends React.PureComponent<
             (data && data.server && data.server.channel.id === channel)
           ) {
             const grouped = Group(data.server.channel.messages)
+            this.cache.clearAll()
 
             content = grouped.length ? (
               <AutoSizer>
@@ -186,20 +187,20 @@ class MessagesView extends React.PureComponent<
   scrollable
 
   componentWillReceiveProps(nextProps) {
-    const { channel } = this.props.match.params
-    const nextChannel = nextProps.match.params.channel
+    const prevMatch = this.props.match.params
+    const nextMatch = nextProps.match.params
 
-    if (!channel || !this.scrollable) return
+    if (prevMatch.channel !== nextMatch.channel) {
+      if (this.scrollable) {
+        // Record scroll position of the current channel
+        this.positions.set(prevMatch.channel, this.scrollable.getScrollTop())
 
-    if (nextChannel !== channel) {
-      // Record scroll position of the current channel
-      this.positions.set(channel, this.scrollable.getScrollTop())
-
-      // Extract the last scroll position of the next channel
-      if (this.positions.has(nextChannel)) {
-        this.position = this.positions.get(nextChannel)
-      } else {
-        this.position = -1
+        // Extract the last scroll position of the next channel
+        if (this.positions.has(nextMatch.channel)) {
+          this.position = this.positions.get(nextMatch.channel)
+        } else {
+          this.position = -1
+        }
       }
     }
   }
