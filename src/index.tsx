@@ -7,7 +7,6 @@ import * as ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 
 import App from './app'
-import ThemeProvider from './app/ThemeProvider'
 import controller from './controllers/cerebral'
 import registerServiceWorker from './registerServiceWorker'
 
@@ -15,11 +14,9 @@ import registerServiceWorker from './registerServiceWorker'
 ReactDOM.render(
   <ApolloProvider client={client}>
     <Container controller={controller}>
-      <ThemeProvider>
-        <BrowserRouter basename="/channels">
-          <App />
-        </BrowserRouter>
-      </ThemeProvider>
+      <BrowserRouter basename="/channels">
+        <App />
+      </BrowserRouter>
     </Container>
   </ApolloProvider>,
   document.getElementById('root')
