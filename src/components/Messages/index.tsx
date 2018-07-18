@@ -1,4 +1,3 @@
-import { connect } from 'fluent'
 import { addNotification } from 'notify'
 import { Channel, ChannelVariables } from 'queries/__generated__/Channel'
 import { Messages, MessagesVariables } from 'queries/__generated__/Messages'
@@ -8,6 +7,7 @@ import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 import { Query } from 'react-apollo'
 import { FormattedMessage } from 'react-intl'
+import { RouteComponentProps } from 'react-router'
 import { AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized'
 import { fetchInvite } from 'socket-io'
 
@@ -19,8 +19,6 @@ import Wrapper from '../Wrapper'
 import { Scroller } from './elements'
 import Group from './group'
 import Message from './Message'
-import gql from 'graphql-tag'
-import { RouteComponentProps } from 'react-router'
 
 const defaultInvite = 'https://discord.gg/mpMQCuj'
 

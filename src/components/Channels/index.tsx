@@ -1,4 +1,3 @@
-import { connect } from 'fluent'
 import { Channels, ChannelsVariables } from 'queries/__generated__/Channels'
 import CHANNELS from 'queries/channels'
 import * as React from 'react'
@@ -11,43 +10,43 @@ import Header from './Header'
 import Panel from './Panel'
 import { Route, withRouter } from 'react-router'
 
-const Channels = () => (
+const ChannelSwitcher = () => (
   <Route path="/:server/:channel?">
-    {({ match }) => {
-      const { server, channel } = match.params
+    {({
+      match: {
+        params: { server, channel }
+      }
+    }) => (
+      <Query<Channels, ChannelsVariables>
+        query={CHANNELS}
+        variables={{ server }}
+      >
+        {({ loading, error, data }) => {
+          const categories = new Array<ICategory>()
+          if (!loading && !error) {
+            const sorted = categorise(data.server.channels)
+            categories.push(...sorted)
+          }
 
-      return (
-        <Query<Channels, ChannelsVariables>
-          query={CHANNELS}
-          variables={{ server }}
-        >
-          {({ loading, error, data }) => {
-            const categories = new Array<ICategory>()
-            if (!loading && !error) {
-              const sorted = categorise(data.server.channels)
-              categories.push(...sorted)
-            }
-
-            return (
-              <Root visible={true} className="channels">
-                <Header />
-                <Categories>
-                  {categories.map((category, i) => (
-                    <Category
-                      key={i}
-                      category={category}
-                      activeChannel={channel}
-                    />
-                  ))}
-                </Categories>
-                <Panel />
-              </Root>
-            )
-          }}
-        </Query>
-      )
-    }}
+          return (
+            <Root visible={true} className="channels">
+              <Header />
+              <Categories>
+                {categories.map((category, i) => (
+                  <Category
+                    key={i}
+                    category={category}
+                    activeChannel={channel}
+                  />
+                ))}
+              </Categories>
+              <Panel />
+            </Root>
+          )
+        }}
+      </Query>
+    )}
   </Route>
 )
 
-export default withRouter(Channels)
+export default ChannelSwitcher
