@@ -1,3 +1,4 @@
+const path = require('path')
 const fetch = require('node-fetch')
 const fs = require('fs')
 
@@ -29,11 +30,15 @@ fetch(`${API_HOST}/api/graphql`, {
       type => type.possibleTypes !== null
     )
     result.data.__schema.types = filteredData
-    fs.writeFile('./fragmentTypes.json', JSON.stringify(result.data), err => {
-      if (err) {
-        console.error('Error writing fragmentTypes file', err)
-      } else {
-        console.log('Fragment types successfully extracted!')
+    fs.writeFile(
+      path.join(__dirname, './fragmentTypes.json'),
+      JSON.stringify(result.data),
+      err => {
+        if (err) {
+          console.error('Error writing fragmentTypes file', err)
+        } else {
+          console.log('Fragment types successfully extracted!')
+        }
       }
-    })
+    )
   })

@@ -78,7 +78,7 @@ export interface textMessage {
   /**
    * Message attachment
    */
-  attachment: textMessage_attachment
+  attachment: textMessage_attachment | null
   /**
    * Message embeds
    */

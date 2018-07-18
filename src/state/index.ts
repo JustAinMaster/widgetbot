@@ -1,50 +1,23 @@
-import { withClientState } from 'apollo-link-state'
+import * as R from 'ramda'
+import { withClientState, ClientStateConfig } from 'apollo-link-state'
 
 import cache from '../controllers/apollo/cache'
+import schema from './schema.graphql'
 
-const gql = String.raw
+const resolve = (require as any).context('./', true, /.\/*[a-zA-Z]\/index$/)
+const resolvers = resolve.keys().map(resolver => resolve(resolver).default)
+
+const mergeTypeDefs = R.mergeDeepWithKey(
+  (k, l, r) => (k === 'typeDefs' ? `${l}${r}` : r)
+)
+const mergeResolvers = R.reduce(mergeTypeDefs, {}) as (
+  resolvers: ClientStateConfig[]
+) => ClientStateConfig
 
 const stateLink = withClientState({
-  defaults: {
-    router: {
-      server: '299881420891881473',
-      channel: '368427726358446110'
-    }
-  },
-  typeDefs: gql`
-    type Query {
-      activeServer: String
-      channel: Test
-    }
-
-    type Test {
-      a: String
-      b: String
-    }
-  `,
+  typeDefs: schema,
   cache,
-  resolvers: {
-    Query: {
-      channel(...args) {
-        console.log(args)
-        return {
-          id: 'a'
-        }
-      }
-    },
-    Mutation: {
-      updateNetworkStatus: (_, { isConnected }, { cache }) => {
-        const data = {
-          networkStatus: {
-            __typename: 'NetworkStatus',
-            isConnected
-          }
-        }
-        cache.writeData({ data })
-        return cache
-      }
-    }
-  }
+  ...mergeResolvers(resolvers)
 })
 
 export default stateLink

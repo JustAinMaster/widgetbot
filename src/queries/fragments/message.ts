@@ -3,7 +3,7 @@ import gql from 'graphql-tag'
 import member from './member'
 
 const message = gql`
-  fragment message on IMessage {
+  fragment message on Message {
     id
     timestamp
     author {

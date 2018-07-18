@@ -2,13 +2,8 @@
   "__schema": {
     "types": [
       {
-        "kind": "UNION",
-        "name": "Message",
-        "possibleTypes": [{ "name": "TextMessage" }, { "name": "JoinMessage" }]
-      },
-      {
         "kind": "INTERFACE",
-        "name": "IMessage",
+        "name": "Message",
         "possibleTypes": [{ "name": "TextMessage" }, { "name": "JoinMessage" }]
       },
       {

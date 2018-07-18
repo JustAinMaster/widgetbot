@@ -110,7 +110,7 @@ export interface Messages_server_channel_messages_TextMessage {
   /**
    * Message attachment
    */
-  attachment: Messages_server_channel_messages_TextMessage_attachment
+  attachment: Messages_server_channel_messages_TextMessage_attachment | null
   /**
    * Message embeds
    */
