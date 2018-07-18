@@ -39,7 +39,7 @@ const state: State = {
     type: null
   },
 
-  translation: translations.en
+  translation: translations.get('en')
 }
 
 // export const router = Router({
