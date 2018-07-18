@@ -1,5 +1,4 @@
 import { cx } from 'emotion'
-import { connect } from 'fluent'
 import gql from 'graphql-tag'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'

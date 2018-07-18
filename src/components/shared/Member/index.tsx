@@ -1,5 +1,5 @@
 import { cx } from 'emotion'
-import { connect } from 'fluent'
+import { Route } from 'react-router'
 import gql from 'graphql-tag'
 import * as React from 'react'
 import { Query } from 'react-apollo'
@@ -28,32 +28,36 @@ interface Props {
   children: (member: MemberInfo_server_member) => any
 }
 
-const Channel = connect<Props>()
-  .with(({ state, signals, props }) => ({
-    server: state.server
-  }))
-  .to(({ server, id: member, children, className }) => (
-    <Query<MemberInfo, MemberInfoVariables>
-      query={MEMBER_INFO}
-      variables={{ server, member }}
-    >
-      {({ error, loading, data }) => {
-        const success = !error && !loading && data && data.server
-        const name = success ? `@${data.server.member.name}` : `<@${member}>`
+const Member = ({ id: member, children, className }: Props) => (
+  <Route path="/:server">
+    {({
+      match: {
+        params: { server }
+      }
+    }) => (
+      <Query<MemberInfo, MemberInfoVariables>
+        query={MEMBER_INFO}
+        variables={{ server, member }}
+      >
+        {({ error, loading, data }) => {
+          const success = !error && !loading && data && data.server
+          const name = success ? `@${data.server.member.name}` : `<@${member}>`
 
-        return (
-          <MemberLink id={member} className={cx('member-link', className)}>
-            {children({
-              __typename: 'Member',
-              name,
-              id: member
-            })}
-          </MemberLink>
-        )
-      }}
-    </Query>
-  ))
+          return (
+            <MemberLink id={member} className={cx('member-link', className)}>
+              {children({
+                __typename: 'Member',
+                name,
+                id: member
+              })}
+            </MemberLink>
+          )
+        }}
+      </Query>
+    )}
+  </Route>
+)
 
-export default Channel
+export default Member
 
 export { default as MemberLink } from './link'
