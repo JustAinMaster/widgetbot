@@ -30,6 +30,11 @@ injectGlobal`
     font-weight: 500;
     max-width: 190px;
 
+    .emoji {
+      width: 15px;
+      margin-right: 2px;
+    }
+
     * {
       color: inherit;
     }
