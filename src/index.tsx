@@ -14,13 +14,13 @@ import registerServiceWorker from './registerServiceWorker'
 // Render App
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <BrowserRouter basename="/channels">
-      <Container controller={controller}>
-        <ThemeProvider>
+    <Container controller={controller}>
+      <ThemeProvider>
+        <BrowserRouter basename="/channels">
           <App />
-        </ThemeProvider>
-      </Container>
-    </BrowserRouter>
+        </BrowserRouter>
+      </ThemeProvider>
+    </Container>
   </ApolloProvider>,
   document.getElementById('root')
 )

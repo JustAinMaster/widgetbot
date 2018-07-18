@@ -12,10 +12,8 @@ import Panel from './Panel'
 import { Route, withRouter } from 'react-router'
 
 const Channels = () => (
-  <Route
-    path="/:server/:channel"
-    render={({ match }) => {
-      console.log('rendered')
+  <Route path="/:server/:channel?">
+    {({ match }) => {
       const { server, channel } = match.params
 
       return (
@@ -49,7 +47,7 @@ const Channels = () => (
         </Query>
       )
     }}
-  />
+  </Route>
 )
 
 export default withRouter(Channels)

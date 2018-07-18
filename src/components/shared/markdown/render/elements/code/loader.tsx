@@ -8,21 +8,26 @@ interface Props {
 }
 
 class Highlighter extends React.Component<Props> {
+  private mounted = true
   state = {
     highlighted: null
   }
 
+  async componentWillUnmount() {
+    this.mounted = false
+  }
+
   async componentDidMount() {
     const { children, language } = this.props
-    console.log(1, language)
     if (!language) return
 
     try {
       const hljs = await import('highlight.js')
+      if (!this.mounted) return
       if (!hljs.getLanguage(language)) return
 
       const highlighted = hljs.highlight(language, children, true).value
-      this.setState({ highlighted })
+      if (this.mounted) this.setState({ highlighted })
     } catch (e) {}
   }
 
