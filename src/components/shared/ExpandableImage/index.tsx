@@ -1,9 +1,11 @@
-import { connect } from 'fluent'
 import * as React from 'react'
 import optimize from 'shared/ExpandableImage/optimize'
 import { Scale } from 'shared/ScaledImage'
 
 import { Image, Loader, Root } from './elements'
+import { Mutation } from 'react-apollo'
+import { OPEN_MODAL } from 'queries/modal'
+import { OpenModal, OpenModalVariables } from 'queries/__generated__/OpenModal'
 
 interface Props {
   src: string
@@ -15,55 +17,40 @@ interface Props {
   maxHeight?: number
 }
 
-/**
- * Expandable image
- */
-const ExpandableImage = connect<Props>()
-  .with(({ state, signals, props }) => ({
-    toggle: signals.modal
-  }))
-  .toClass(
-    props =>
-      class ExpandableImage extends React.PureComponent<typeof props> {
-        state = {
-          type: 'loading'
-        }
+class ExpandableImage extends React.PureComponent<Props> {
+  state = {
+    type: 'loading'
+  }
 
-        open() {
-          const { src, toggle } = this.props
-          if (src) {
-            toggle({
-              open: true,
-              type: 'image',
-              data: src
-            })
-          }
-        }
+  render() {
+    const { className, src: url } = this.props
+    const scale = new Scale(this.props)
 
-        render() {
-          const { className, src: url } = this.props
-          const scale = new Scale(this.props)
-
-          return (
-            <Root
-              className={className || null}
-              onClick={this.open.bind(this)}
-              scale={scale}
-            >
-              <Image
-                src={optimize({
-                  width: scale.width,
-                  height: scale.height,
-                  url
-                })}
-                onLoad={() => this.setState({ type: 'loaded' })}
-                onError={() => this.setState({ type: 'error' })}
-              />
-              {this.state.type === 'loading' && <Loader />}
-            </Root>
-          )
-        }
-      }
-  )
+    return (
+      <Mutation<OpenModal, OpenModalVariables> mutation={OPEN_MODAL}>
+        {openModal => (
+          <Root
+            className={className || null}
+            scale={scale}
+            onClick={() =>
+              openModal({ variables: { type: 'image', data: url } })
+            }
+          >
+            <Image
+              src={optimize({
+                width: scale.width,
+                height: scale.height,
+                url
+              })}
+              onLoad={() => this.setState({ type: 'loaded' })}
+              onError={() => this.setState({ type: 'error' })}
+            />
+            {this.state.type === 'loading' && <Loader />}
+          </Root>
+        )}
+      </Mutation>
+    )
+  }
+}
 
 export default ExpandableImage

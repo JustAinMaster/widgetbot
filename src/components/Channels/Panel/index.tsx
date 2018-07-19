@@ -1,64 +1,57 @@
-import { connect } from 'fluent'
+import { Mutation } from 'react-apollo'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 
-import { Developer, Developers, Root, Version } from './elements'
+import { Root, Version } from './elements'
+import { OpenModal, OpenModalVariables } from 'queries/__generated__/OpenModal'
+import { OPEN_MODAL } from 'queries/modal'
 
 const { version } = require('../../../../package.json')
 
-export default connect()
-  .with(({ state, signals, props }) => ({
-    toggle: signals.modal
-  }))
-  .toClass(
-    props =>
-      class Panel extends React.PureComponent<typeof props> {
-        toggleDev(name: string) {
-          const { toggle } = this.props
+class Panel extends React.PureComponent {
+  // toggleDev(name: string) {
+  //   const { toggle } = this.props
 
-          toggle({
-            open: true,
-            type: 'developer',
-            data: name
-          })
-        }
+  //   toggle({
+  //     open: true,
+  //     type: 'developer',
+  //     data: name
+  //   })
+  // }
 
-        toggleAbout(event: Event) {
-          const { toggle } = this.props
-          event.preventDefault()
+  // toggleAbout(event: Event) {
+  //   const { toggle } = this.props
+  //   event.preventDefault()
 
-          toggle({
-            open: true,
-            type: 'about',
-            data: null
-          })
-        }
+  //   toggle({
+  //     open: true,
+  //     type: 'about',
+  //     data: null
+  //   })
+  // }
 
-        render() {
-          return (
-            <Root>
-              <Developers>
-                <Developer
-                  src="https://cdn.samdd.me/static/widgetbot/avatar.svg"
-                  onClick={() => this.toggleDev('samdd')}
-                />
-                <Developer
-                  src="https://voakie.com/favicon/android-icon-36x36.png"
-                  onClick={() => this.toggleDev('voakie')}
-                />
-              </Developers>
+  render() {
+    return (
+      <Mutation<OpenModal, OpenModalVariables> mutation={OPEN_MODAL}>
+        {openModal => (
+          <Root>
+            <Tooltip placement="top" overlay="About WidgetBot">
+              <Version
+                href={`https://widgetbot.io`}
+                target="_blank"
+                onClick={e => {
+                  e.preventDefault()
+                  openModal({ variables: { type: 'about', data: null } })
+                }}
+              >
+                {`v${version}`}
+              </Version>
+            </Tooltip>
+          </Root>
+        )}
+      </Mutation>
+    )
+  }
+}
 
-              <Tooltip placement="top" overlay="About WidgetBot">
-                <Version
-                  href={`https://widgetbot.io`}
-                  target="_blank"
-                  onClick={this.toggleAbout.bind(this)}
-                >
-                  {`v${version}`}
-                </Version>
-              </Tooltip>
-            </Root>
-          )
-        }
-      }
-  )
+export default Panel

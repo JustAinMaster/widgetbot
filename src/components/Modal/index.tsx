@@ -1,116 +1,87 @@
 import { ThemeProvider } from 'emotion-theming'
-import { connect } from 'fluent'
 import * as React from 'react'
+import { DataProps, graphql, Mutation } from 'react-apollo'
+import Hotkeys from 'react-hot-keys'
 
+import { ModalInfo } from './__generated__/ModalInfo'
 import About from './About'
 import Authenticate from './Authenticate'
 import { Sam, Voakie } from './Developer'
 import { Box, Close, Image, OpenImage, Root } from './elements'
+import { CLOSE_MODAL, GET_MODAL } from 'queries/modal'
+import { CloseModal } from 'queries/__generated__/CloseModal'
 
-export default connect()
-  .with(({ state, signals, props }) => ({
-    modal: state.modal,
-    toggle: signals.modal
-  }))
-  .toClass(
-    props =>
-      class Modal extends React.PureComponent<typeof props> {
-        state = {
-          open: this.props.modal.open
-        }
-        timer
+class Modal extends React.PureComponent<DataProps<ModalInfo>> {
+  state = {
+    open: false
+  }
+  timer
 
-        componentWillReceiveProps(nextProps) {
-          const { open } = nextProps.modal
-          if (open) {
-            this.setState({ open })
-          } else {
-            clearTimeout(this.timer)
-            this.timer = setTimeout(() => this.setState({ open }), 100)
-          }
-        }
+  componentWillReceiveProps(nextProps) {
+    const { open } = nextProps.data.modal
+    if (open) {
+      this.setState({ open })
+    } else {
+      clearTimeout(this.timer)
+      this.timer = setTimeout(() => this.setState({ open }), 100)
+    }
+  }
 
-        theme = theme => ({
-          ...theme,
-          modal: this.props.modal
-        })
+  theme = theme => ({
+    ...theme,
+    modal: this.props.data.modal
+  })
 
-        content = () => {
-          const { modal } = this.props
+  content = ({ complete }) => {
+    const { modal } = this.props.data
 
-          if (modal.type === 'authenticate') {
-            return <Authenticate />
-          }
+    if (modal.type === 'authenticate') {
+      return <Authenticate />
+    }
 
-          if (modal.type === 'image') {
-            return (
-              <React.Fragment>
-                <Image src={modal.data} />
-                <OpenImage
-                  href={modal.data}
-                  target="_blank"
-                  onClick={this.close.bind(this)}
-                >
-                  Open original
-                </OpenImage>
-              </React.Fragment>
-            )
-          }
+    if (modal.type === 'image') {
+      return (
+        <React.Fragment>
+          <Image src={modal.data} />
+          <OpenImage href={modal.data} target="_blank" onClick={complete}>
+            Open original
+          </OpenImage>
+        </React.Fragment>
+      )
+    }
 
-          if (modal.type === 'about') {
-            return <About />
-          }
+    if (modal.type === 'about') {
+      return <About />
+    }
 
-          if (modal.type === 'developer') {
-            return modal.data === 'voakie' ? <Voakie /> : <Sam />
-          }
+    if (modal.type === 'developer') {
+      return modal.data === 'voakie' ? <Voakie /> : <Sam />
+    }
 
-          return null
-        }
+    return null
+  }
 
-        render() {
-          return (
-            <ThemeProvider theme={this.theme.bind(this)}>
+  render() {
+    return (
+      <ThemeProvider theme={this.theme.bind(this)}>
+        <Mutation<CloseModal> mutation={CLOSE_MODAL}>
+          {close => (
+            <Hotkeys keyName="escape" onKeyDown={close}>
               <Root
-                onClick={e =>
-                  e.target === e.currentTarget ? this.close() : null
-                }
+                onClick={e => (e.target === e.currentTarget ? close() : null)}
                 className="modal"
               >
                 <Box className="box">
-                  <Close onClick={this.close.bind(this)} className="close" />
-                  {this.state.open && <this.content />}
+                  <Close onClick={() => close()} className="close" />
+                  {this.state.open && <this.content complete={close} />}
                 </Box>
               </Root>
-            </ThemeProvider>
-          )
-        }
+            </Hotkeys>
+          )}
+        </Mutation>
+      </ThemeProvider>
+    )
+  }
+}
 
-        componentDidMount() {
-          window.addEventListener('keydown', this.listener)
-        }
-
-        componentWillUnmount() {
-          window.removeEventListener('keydown', this.listener)
-        }
-
-        listener = ({ key }) => {
-          const { modal } = this.props
-
-          if (modal.open) {
-            switch (key) {
-              case 'Escape':
-                this.close()
-            }
-          }
-        }
-
-        close() {
-          const { toggle } = this.props
-
-          toggle({
-            open: false
-          })
-        }
-      }
-  )
+export default graphql(GET_MODAL)(Modal)

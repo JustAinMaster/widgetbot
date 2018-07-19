@@ -12,26 +12,38 @@ const capitalize = R.compose(
   ])
 )
 
-const gql = String.raw
-
 const modal: ClientStateConfig = {
   defaults: {
     modal: {
       open: false,
+      type: null,
+      data: null,
       __typename: 'Modal'
     }
   },
   resolvers: {
     Mutation: {
-      showModal(_, {}, { cache }) {
-        const data = { open: true, __typename: 'Modal' }
-        cache.writeData({ id: '$ROOT_QUERY.modal', data })
+      openModal(_, { type, data }, { cache }) {
+        cache.writeData({
+          id: '$ROOT_QUERY.modal',
+          data: {
+            open: true,
+            type,
+            data,
+            __typename: 'Modal'
+          }
+        })
         return null
       },
 
-      hideModal(_, __, { cache }) {
-        const data = { open: false, __typename: 'Modal' }
-        cache.writeData({ id: '$ROOT_QUERY.modal', data })
+      closeModal(_, __, { cache }) {
+        cache.writeData({
+          id: '$ROOT_QUERY.modal',
+          data: {
+            open: false,
+            __typename: 'Modal'
+          }
+        })
         return null
       }
     }

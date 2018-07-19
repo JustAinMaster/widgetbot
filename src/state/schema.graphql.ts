@@ -1,27 +1,19 @@
 const gql = String.raw
 
 const schema = gql`
-  interface Modal {
+  type Modal {
     open: Boolean!
-  }
-
-  type ImageModal implements Modal {
-    open: Boolean!
-    url: String
-  }
-
-  type SettingsModal implements Modal {
-    open: Boolean!
-    screen: String!
+    type: ID
+    data: String
   }
 
   extend type Query {
-    modal: Modal
+    modal: Modal!
   }
 
-  type Mutation {
-    hideModal: Boolean
-    showModal(type: String!, data: String): Boolean
+  extend type Mutation {
+    closeModal: Boolean
+    openModal(type: ID!, data: String): Boolean
   }
 `
 

@@ -52,7 +52,7 @@
       "name": "deprecated"
     }
   ],
-  "mutationType": null,
+  "mutationType": { "name": "Mutation" },
   "queryType": { "name": "Query" },
   "subscriptionType": { "name": "Subscription" },
   "types": [
@@ -1364,6 +1364,56 @@
       "interfaces": [],
       "kind": "OBJECT",
       "name": "Cache",
+      "possibleTypes": null
+    },
+    {
+      "description": null,
+      "enumValues": null,
+      "fields": [
+        {
+          "args": [
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "server",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "channel",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "content",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              }
+            }
+          ],
+          "deprecationReason": null,
+          "description": null,
+          "isDeprecated": false,
+          "name": "sendMessage",
+          "type": { "kind": "INTERFACE", "name": "Message", "ofType": null }
+        }
+      ],
+      "inputFields": null,
+      "interfaces": [],
+      "kind": "OBJECT",
+      "name": "Mutation",
       "possibleTypes": null
     },
     {
