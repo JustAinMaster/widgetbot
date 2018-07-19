@@ -15,10 +15,13 @@ const optimize = ({ width, height, url }) => {
 
   if (match) {
     const [, id1, id2, file, type] = match
+    const params = new URLSearchParams()
 
-    return `https://media.discordapp.net/attachments/${id1}/${id2}/${file}.${type}?height=${height}&width=${width}${
-      type === 'png' && canUseWebP() ? '&format=webp' : ''
-    }`
+    params.set('height', `${Math.round(height * devicePixelRatio)}`)
+    params.set('width', `${Math.round(width * devicePixelRatio)}`)
+    if (type === 'png' && canUseWebP()) params.set('format', 'webp')
+
+    return `https://media.discordapp.net/attachments/${id1}/${id2}/${file}.${type}?${params}`
   }
 
   return url

@@ -9,27 +9,6 @@ import { OPEN_MODAL } from 'queries/modal'
 const { version } = require('../../../../package.json')
 
 class Panel extends React.PureComponent {
-  // toggleDev(name: string) {
-  //   const { toggle } = this.props
-
-  //   toggle({
-  //     open: true,
-  //     type: 'developer',
-  //     data: name
-  //   })
-  // }
-
-  // toggleAbout(event: Event) {
-  //   const { toggle } = this.props
-  //   event.preventDefault()
-
-  //   toggle({
-  //     open: true,
-  //     type: 'about',
-  //     data: null
-  //   })
-  // }
-
   render() {
     return (
       <Mutation<OpenModal, OpenModalVariables> mutation={OPEN_MODAL}>
