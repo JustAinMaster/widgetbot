@@ -39,5 +39,6 @@ export const OpenImage = styled('a')`
 
   &:hover {
     opacity: 1;
+    text-decoration: underline;
   }
 `
