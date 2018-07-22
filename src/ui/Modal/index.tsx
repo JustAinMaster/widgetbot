@@ -1,3 +1,7 @@
+import { CLOSE_MODAL, GET_MODAL } from '@queries/modal'
+import { CloseModal } from '@queries/__generated__/CloseModal'
+
+import Markdown from '@ui/shared/markdown/render'
 import autobind from 'autobind-decorator'
 import { ThemeProvider } from 'emotion-theming'
 import * as React from 'react'
@@ -7,10 +11,7 @@ import Hotkeys from 'react-hot-keys'
 import { ModalInfo } from './__generated__/ModalInfo'
 import About from './About'
 import Authenticate from './Authenticate'
-import { Box, Close, Image, OpenImage, Root, Content } from './elements'
-import { CLOSE_MODAL, GET_MODAL } from 'queries/modal'
-import { CloseModal } from 'queries/__generated__/CloseModal'
-import Markdown from '@ui/shared/markdown/render'
+import { Box, Close, Content, Image, OpenImage, Root } from './elements'
 
 class Modal extends React.PureComponent<DataProps<ModalInfo>> {
   @autobind
@@ -30,12 +31,12 @@ class Modal extends React.PureComponent<DataProps<ModalInfo>> {
 
     if (modal.type === 'image') {
       return (
-        <React.Fragment>
+        <>
           <Image src={modal.data} />
           <OpenImage href={modal.data} target="_blank" onClick={complete}>
             Open original
           </OpenImage>
-        </React.Fragment>
+        </>
       )
     }
 

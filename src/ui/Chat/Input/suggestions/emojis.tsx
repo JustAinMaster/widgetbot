@@ -34,7 +34,7 @@ const Emojis: Suggestion<Emoji> = {
   ),
 
   suggestion: ({ category, emoji, keywords: [keyword] }) => (
-    <React.Fragment>
+    <>
       {category === 'custom' ? (
         <Icon src={`https://cdn.discordapp.com/emojis/${emoji}.png`} />
       ) : (
@@ -42,7 +42,7 @@ const Emojis: Suggestion<Emoji> = {
       )}
       <Name>{`:${keyword}:`}</Name>
       <Info>{category}</Info>
-    </React.Fragment>
+    </>
   )
 }
 

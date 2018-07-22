@@ -30,11 +30,11 @@ const Mentions: Suggestion<Member> = {
   ),
 
   suggestion: ({ name, tag, avatarURL }) => (
-    <React.Fragment>
+    <>
       <Icon src={avatarURL} />
       <Name>{name}</Name>
       <Info>{tag}</Info>
-    </React.Fragment>
+    </>
   )
 }
 

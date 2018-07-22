@@ -17,6 +17,7 @@
       "@lib/*": ["src/lib/*"],
       "@ui/*": ["src/ui/*"],
       "@views/*": ["src/views/*"],
+      "@queries/*": ["src/queries/*"],
 
       "@store": ["src/state/index"],
       "@store/*": ["src/state/*"],
@@ -26,16 +27,10 @@
       "locales": ["src/app/locales"],
       "locales/*": ["src/app/locales/*"],
 
-      "shared/*": ["src/components/shared/*"],
-
-      "queries/*": ["src/queries/*"],
-      "queries": ["src/queries/index.ts"],
-
       "socket-io": ["src/lib/socket-io"],
       "client": ["src/lib/apollo/index.ts"],
       "fluent": ["src/lib/cerebral/fluent.ts"],
-      "embed-api": ["src/lib/embed-api"],
-      "emoji": ["src/components/shared/Emoji/emoji.ts"]
+      "embed-api": ["src/lib/embed-api"]
     },
     "plugins": [
       {

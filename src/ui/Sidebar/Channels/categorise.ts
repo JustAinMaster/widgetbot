@@ -1,4 +1,4 @@
-import { Channels_server_channels } from 'queries/__generated__/Channels'
+import { Channels_server_channels } from '@queries/__generated__/Channels'
 
 export interface ICategory {
   name: string

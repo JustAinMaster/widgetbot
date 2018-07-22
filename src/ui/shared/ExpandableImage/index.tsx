@@ -1,11 +1,11 @@
-import * as React from 'react'
+import { OpenModal, OpenModalVariables } from '@queries/__generated__/OpenModal'
+import { OPEN_MODAL } from '@queries/modal'
 import optimize from '@ui/shared/ExpandableImage/optimize'
 import { Scale } from '@ui/shared/ScaledImage'
+import * as React from 'react'
+import { Mutation } from 'react-apollo'
 
 import { Image, Loader, Root } from './elements'
-import { Mutation } from 'react-apollo'
-import { OPEN_MODAL } from 'queries/modal'
-import { OpenModal, OpenModalVariables } from 'queries/__generated__/OpenModal'
 
 interface Props {
   src: string

@@ -1,6 +1,6 @@
+import { member } from '@queries/fragments/__generated__/member'
 import { connect } from 'fluent'
 import Moment from 'moment'
-import { member } from 'queries/fragments/__generated__/member'
 import * as React from 'react'
 
 import parseUsername from '../parseUsername'
@@ -27,14 +27,14 @@ export default connect<Props>()
           const { author } = this.props
 
           return (
-            <React.Fragment>
+            <>
               {/* {author.type === 'bot' && <Tag className="bot">Bot</Tag>}
               {author.type === 'guest' && <Tag className="guest">Guest</Tag>}
               {this.verified({ id: author.id }) ||
                 (author.type === 'sysadmin' && (
                   <Sysadmin className="sysadmin" title="Sysadmin" />
                 ))} */}
-            </React.Fragment>
+            </>
           )
         }
 

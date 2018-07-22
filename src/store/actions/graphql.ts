@@ -2,10 +2,8 @@ import { Dictionary } from '@cerebral/fluent'
 import parseUsername from '@ui/Message/parseUsername'
 import client from 'client'
 import { BranchContext, Context } from 'fluent'
-import { Channel } from 'queries/__generated__/Channel'
-import { Channels } from 'queries/__generated__/Channels'
-import CHANNEL from 'queries/channel'
-import CHANNELS from 'queries/channels'
+import { Channel } from '@queries/__generated__/Channel'
+import CHANNEL from '@queries/channel'
 import { Notification } from 'react-notification-system'
 import { subscribe } from 'socket-io'
 
@@ -57,20 +55,19 @@ namespace GraphQL {
           })
     }
 
+    return path.error({ notification: [] })
+
     try {
-      const response = await client.query<Channels>({
-        query: CHANNELS,
-        variables
-      })
-
-      if (loadMessages) {
-        subscribe(state.activeChannel)
-      }
-
-      // TODO: Fix
-      console.log(response.data)
-
-      return path.success(response.data as any)
+      // const response = await client.query<Channels>({
+      //   query: CHANNELS,
+      //   variables
+      // })
+      // if (loadMessages) {
+      //   subscribe(state.activeChannel)
+      // }
+      // // TODO: Fix
+      // console.log(response.data)
+      // return path.success(response.data as any)
     } catch ({ response }) {
       // TODO: Fix error catching for apollo
       const errors =

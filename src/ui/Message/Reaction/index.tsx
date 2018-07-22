@@ -1,7 +1,7 @@
-import { Messages_server_channel_messages_TextMessage_reactions } from 'queries/__generated__/Messages'
+import { Messages_server_channel_messages_TextMessage_reactions } from '@queries/__generated__/Messages'
+import { findFromEmoji } from '@ui/shared/Emoji/emojiMap'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
-import { findFromEmoji } from '@ui/shared/Emoji/emojiMap'
 
 import { Count, Emoji, Root } from './elements'
 

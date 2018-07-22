@@ -1,5 +1,5 @@
-import Channels from '@ui/Channels'
 import Modal from '@ui/Modal'
+import Sidebar from '@ui/Sidebar'
 import ChooseChannel from '@views/ChooseChannel'
 import MessagesView from '@views/Messages'
 import Notifications from 'notify'
@@ -22,7 +22,7 @@ class App extends React.PureComponent<RouteComponentProps<any>> {
         <>
           <Modal />
           <Notifications />
-          <Channels />
+          <Sidebar />
           <Switch>
             <Route path="/:server/:channel" component={MessagesView} />
             <Route component={ChooseChannel} />

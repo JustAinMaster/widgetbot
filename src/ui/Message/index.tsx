@@ -1,10 +1,10 @@
+import { Messages_server_channel_messages } from '@queries/__generated__/Messages'
+import Markdown from '@ui/shared/markdown/render'
 import { ThemeProvider } from 'emotion-theming'
 import Moment from 'moment'
-import { Messages_server_channel_messages } from 'queries/__generated__/Messages'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 import { FormattedMessage } from 'react-intl'
-import Markdown from '@ui/shared/markdown/render'
 
 import Author, { Timestamp } from './Author'
 import {

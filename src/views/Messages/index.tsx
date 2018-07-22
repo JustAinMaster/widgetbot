@@ -1,17 +1,15 @@
+import { Channel, ChannelVariables } from '@queries/__generated__/Channel'
+import { Messages, MessagesVariables } from '@queries/__generated__/Messages'
+import { OpenModal, OpenModalVariables } from '@queries/__generated__/OpenModal'
+import CHANNEL from '@queries/channel'
+import MESSAGES from '@queries/messages'
+import { OPEN_MODAL } from '@queries/modal'
 import Header, { Name, Topic } from '@ui/Header'
 import { Join, Stretch } from '@ui/Header/elements'
 import Message from '@ui/Message'
 import { Info, Loading, NoMessages } from '@ui/Overlays'
 import ErrorAhoy from '@ui/Overlays/ErrorAhoy'
 import Wrapper from '@ui/Wrapper'
-import produce from 'immer'
-import { Channel, ChannelVariables } from 'queries/__generated__/Channel'
-import { Messages, MessagesVariables } from 'queries/__generated__/Messages'
-import { NewMessages } from 'queries/__generated__/NewMessages'
-import { OpenModal, OpenModalVariables } from 'queries/__generated__/OpenModal'
-import CHANNEL from 'queries/channel'
-import MESSAGES, { MESSAGE_SUBSCRIPTION } from 'queries/messages'
-import { OPEN_MODAL } from 'queries/modal'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 import { Mutation, Query } from 'react-apollo'
@@ -172,28 +170,6 @@ class MessagesView extends React.PureComponent<
 
           return (
             <Wrapper>
-              <button
-                onClick={() => {
-                  subscribeToMore({
-                    document: MESSAGE_SUBSCRIPTION,
-                    variables: { server, channel },
-                    updateQuery: (prev, payload) =>
-                      produce(prev, (draftState: Messages) => {
-                        const {
-                          data
-                        }: {
-                          data: NewMessages
-                        } = payload.subscriptionData as any
-
-                        draftState.server.channel.messages.push(
-                          data.message.message
-                        )
-                      })
-                  })
-                }}
-              >
-                this one
-              </button>
               <this.header />
               {content}
             </Wrapper>

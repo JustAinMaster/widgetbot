@@ -1,10 +1,10 @@
-import { Mutation } from 'react-apollo'
+import { OpenModal, OpenModalVariables } from '@queries/__generated__/OpenModal'
+import { OPEN_MODAL } from '@queries/modal'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
+import { Mutation } from 'react-apollo'
 
 import { Root, Version } from './elements'
-import { OpenModal, OpenModalVariables } from 'queries/__generated__/OpenModal'
-import { OPEN_MODAL } from 'queries/modal'
 
 const { version } = require('../../../../package.json')
 
@@ -13,7 +13,7 @@ class Panel extends React.PureComponent {
     return (
       <Mutation<OpenModal, OpenModalVariables> mutation={OPEN_MODAL}>
         {openModal => (
-          <Root>
+          <Root className="panel">
             <Tooltip placement="top" overlay="About WidgetBot">
               <Version
                 href={`https://widgetbot.io`}

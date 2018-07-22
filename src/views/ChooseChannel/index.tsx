@@ -1,8 +1,8 @@
 import * as React from 'react'
 
-import { Chat } from '../../ui/Overlays'
-import Header, { Name, Topic } from '../../ui/Header'
-import Wrapper from '../../ui/Wrapper'
+import { Chat } from '@ui/Overlays'
+import Header, { Name, Topic } from '@ui/Header'
+import Wrapper from '@ui/Wrapper'
 
 const ChooseChannel = () => (
   <Wrapper>
