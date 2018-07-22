@@ -1,7 +1,7 @@
 import { Dictionary } from '@cerebral/fluent'
+import parseUsername from '@ui/Message/parseUsername'
 import client from 'client'
 import { BranchContext, Context } from 'fluent'
-import Log from 'logger'
 import { Channel } from 'queries/__generated__/Channel'
 import { Channels } from 'queries/__generated__/Channels'
 import CHANNEL from 'queries/channel'
@@ -9,7 +9,6 @@ import CHANNELS from 'queries/channels'
 import { Notification } from 'react-notification-system'
 import { subscribe } from 'socket-io'
 
-import parseUsername from '../../components/Messages/Message/parseUsername'
 import { ServerResponse } from '../../types/responses'
 import { Channel as $Channel } from '../types'
 import { getLast } from './util'
@@ -57,13 +56,6 @@ namespace GraphQL {
             withChannel: false
           })
     }
-
-    Log(
-      'info',
-      `Fetching server`,
-      state.server,
-      ...(loadMessages ? [`with messages on channel`, state.activeChannel] : [])
-    )
 
     try {
       const response = await client.query<Channels>({

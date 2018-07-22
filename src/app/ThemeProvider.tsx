@@ -4,7 +4,7 @@ import { connect } from 'fluent'
 import gql from 'graphql-tag'
 import * as React from 'react'
 import { Query } from 'react-apollo'
-import { Theme as ThemeContext } from 'typed-emotion'
+import { Theme as ThemeContext } from '@lib/emotion'
 
 import {
   Theme,

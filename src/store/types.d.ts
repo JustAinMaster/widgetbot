@@ -1,5 +1,5 @@
 import { ComputedValue, Dictionary } from '@cerebral/fluent'
-import { Emoji } from 'shared/Emoji/emojiMap'
+import { Emoji } from '@ui/shared/Emoji/emojiMap'
 
 import { Translation } from '../app/locales'
 import { Category } from '../types/category'
@@ -53,7 +53,7 @@ export interface State {
   // Returns the active channel object
   channel: ComputedValue<Channel>
 
-  // Visible UI components
+  // Visible UI ui
   visible: { [key in Toggles]: boolean }
 
   // Modal

@@ -1,7 +1,7 @@
 import * as R from 'ramda'
 import { withClientState, ClientStateConfig } from 'apollo-link-state'
 
-import cache from '../controllers/apollo/cache'
+import cache from '../lib/apollo/cache'
 import schema from './schema.graphql'
 
 const resolve = (require as any).context('./', true, /.\/*[a-zA-Z]\/index$/)

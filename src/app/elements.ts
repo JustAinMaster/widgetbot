@@ -1,7 +1,7 @@
 import './res/globalStyles.css'
 import './res/globalStyles.ts'
 
-import styled, { injectGlobal, Theme } from 'typed-emotion'
+import styled, { injectGlobal, Theme } from '@lib/emotion'
 
 export const Notifications = styled('div')`
   button {

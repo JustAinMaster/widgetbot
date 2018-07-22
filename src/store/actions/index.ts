@@ -1,14 +1,12 @@
+import enrich from '@ui/shared/markdown/enrich'
 import { BranchContext, Context } from 'fluent'
 import { Locales, translations } from 'locales'
-import Log from 'logger'
 import { addNotification } from 'notify'
 import * as R from 'ramda'
 import { Notification } from 'react-notification-system'
-import enrich from 'shared/markdown/enrich'
 import { socket } from 'socket-io'
 
-import controller from '../../controllers/cerebral'
-import generate from '../../modules/message/generate'
+import controller from '../../lib/cerebral'
 import { Reaction } from '../../types/message'
 import Modal from '../../types/modal'
 import { message } from '../../types/socket'
@@ -16,6 +14,7 @@ import { ParsedUrl, RawUrl } from '../../types/url'
 import { User } from '../../types/user'
 import { Toggles } from '../types'
 import { State } from './../types'
+import generate from './generate'
 import { getLast } from './util'
 
 /**
@@ -68,7 +67,6 @@ export function select({
     }
   }
 
-  Log('warn', `Selected`, props, cached ? `from cache` : `from network`)
   return cached ? path.cached(true) : path.uncached(true)
 }
 

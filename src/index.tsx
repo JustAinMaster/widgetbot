@@ -1,13 +1,13 @@
 import { Container } from '@cerebral/react'
+import controller from '@lib/cerebral'
+import { connect } from '@lib/sentry'
 import client from 'client'
-import { connect } from 'raven'
 import * as React from 'react'
 import { ApolloProvider } from 'react-apollo'
 import * as ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 
 import App from './app'
-import controller from './controllers/cerebral'
 import registerServiceWorker from './registerServiceWorker'
 
 // Render App

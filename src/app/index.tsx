@@ -1,19 +1,18 @@
-import { connect } from 'fluent'
+import Channels from '@ui/Channels'
+import Modal from '@ui/Modal'
+import ChooseChannel from '@views/ChooseChannel'
+import MessagesView from '@views/Messages'
 import Notifications from 'notify'
 import * as React from 'react'
 import { IntlProvider } from 'react-intl'
-
-import Channels from '../components/Channels'
-import Modal from '../components/Modal'
-import ChooseChannel from '../components/Overlays/ChooseChannel'
-import MessagesView from '../components/Messages'
 import {
-  Switch,
-  Route,
   Redirect,
-  withRouter,
-  RouteComponentProps
+  Route,
+  RouteComponentProps,
+  Switch,
+  withRouter
 } from 'react-router'
+
 import ThemeProvider from './ThemeProvider'
 
 class App extends React.PureComponent<RouteComponentProps<any>> {
