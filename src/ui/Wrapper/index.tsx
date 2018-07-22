@@ -1,23 +1,36 @@
-import { connect } from 'fluent'
+import { SidebarVisibility } from '@queries/__generated__/SidebarVisibility'
+import {
+  ToggleSidebar,
+  ToggleSidebarVariables
+} from '@queries/__generated__/ToggleSidebar'
+import { SIDEBAR_VISIBILITY, TOGGLE_SIDEBAR } from '@queries/sidebar'
 import * as React from 'react'
+import { Mutation, Query } from 'react-apollo'
 
-import { Wrapper } from './elements'
+import { Wrapper as Root } from './elements'
 
-export default connect()
-  .with(({ state, signals, props }) => ({
-    channelsOpen: state.visible.channels,
-    toggle: () => signals.toggle({ component: 'channels' })
-  }))
-  .to(({ children, channelsOpen, toggle }) => (
-    <Wrapper
-      onClick={() => {
-        if (channelsOpen && window.innerWidth < 520) {
-          toggle()
-        }
-      }}
-      squashed={channelsOpen}
-      className="wrapper"
-    >
-      {children}
-    </Wrapper>
-  ))
+const Wrapper = ({ children }) => (
+  <Query<SidebarVisibility> query={SIDEBAR_VISIBILITY}>
+    {({ data }) => (
+      <Mutation<ToggleSidebar, ToggleSidebarVariables>
+        mutation={TOGGLE_SIDEBAR}
+      >
+        {toggle => (
+          <Root
+            onClick={() => {
+              if (data.sidebar.open && window.innerWidth < 520) {
+                toggle()
+              }
+            }}
+            squashed={data.sidebar.open}
+            className="wrapper"
+          >
+            {children}
+          </Root>
+        )}
+      </Mutation>
+    )}
+  </Query>
+)
+
+export default Wrapper
