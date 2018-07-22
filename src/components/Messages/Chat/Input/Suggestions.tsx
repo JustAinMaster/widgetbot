@@ -1,3 +1,4 @@
+import autobind from 'autobind-decorator'
 import * as React from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
 
@@ -52,6 +53,7 @@ class EmojiSuggestions extends React.Component<Props> {
     this.props.onSelect(suggestions[selected])
   }
 
+  @autobind
   focus(suggestion: HTMLElement) {
     if (suggestion && !this.mouseEvent) {
       scrollIntoView(suggestion, {
@@ -73,7 +75,7 @@ class EmojiSuggestions extends React.Component<Props> {
           <Suggestion
             key={handler.toString(suggestion)}
             selected={index === selected}
-            innerRef={index === selected ? this.focus.bind(this) : null}
+            innerRef={index === selected ? this.focus : null}
             onClick={() => this.props.onSelect(suggestion)}
             onMouseOver={() => {
               this.setState({ selected: index })

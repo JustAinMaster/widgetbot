@@ -5,6 +5,7 @@ import styled from 'typed-emotion'
 
 export const Root = styled('header')`
   overflow: hidden;
+  user-select: none;
   display: flex;
   flex-shrink: 0;
   z-index: 8;
@@ -58,6 +59,7 @@ export const Name = styled(Hash)`
 export const Topic = styled(Markdown.withComponent('div'))`
   text-overflow: ellipsis;
   overflow: hidden;
+  cursor: pointer;
   white-space: nowrap;
   font-size: 14px;
   font-weight: 500;

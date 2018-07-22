@@ -10,35 +10,56 @@ interface Props {
 class Highlighter extends React.Component<Props> {
   private mounted = true
   state = {
-    highlighted: null
+    highlightedCode: null
   }
 
-  async componentWillUnmount() {
+  componentWillUnmount() {
     this.mounted = false
   }
 
-  async componentDidMount() {
-    const { children, language } = this.props
-    if (!language) return
+  componentDidMount() {
+    this.highlightCode()
+  }
 
+  componentDidUpdate(prevProps: Props) {
+    // If the text changed make sure to reset the state
+    // This way we ensure that the new text is immediately displayed.
+    if (prevProps.children !== this.props.children) {
+      this.setState({ highlightedCode: null })
+      return
+    }
+
+    // Do not call highlight.js if we already have highlighted code
+    // If the children changed highlightedCode will be null
+    if (this.state.highlightedCode) return
+
+    this.highlightCode()
+  }
+
+  async highlightCode() {
     try {
+      const language = this.props.language
+      const code = this.props.children
+
+      if (!language) return
+
       const hljs = await import('highlight.js')
-      if (!this.mounted) return
+
       if (!hljs.getLanguage(language)) return
 
-      const highlighted = hljs.highlight(language, children, true).value
-      if (this.mounted) this.setState({ highlighted })
+      const highlightedCode = hljs.highlight(language, code, true).value
+      if (this.mounted) this.setState({ highlightedCode })
     } catch (e) {}
   }
 
   render() {
-    const { children } = this.props
-    const { highlighted } = this.state
+    const { highlightedCode } = this.state
+    const initialCode = this.props.children
 
-    return highlighted ? (
-      <Code dangerouslySetInnerHTML={{ __html: highlighted }} />
+    return highlightedCode ? (
+      <Code dangerouslySetInnerHTML={{ __html: highlightedCode }} />
     ) : (
-      <Code>{children}</Code>
+      <Code>{initialCode}</Code>
     )
   }
 }

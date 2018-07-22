@@ -19,7 +19,15 @@ interface Props {
 
 class ExpandableImage extends React.PureComponent<Props> {
   state = {
-    type: 'loading'
+    type: null
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      if (this.state.type !== null) return
+
+      this.setState({ type: 'loading' })
+    }, 100)
   }
 
   render() {

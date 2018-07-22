@@ -25,4 +25,23 @@ const MESSAGES = gql`
   ${textMessage}
 `
 
+export const MESSAGE_SUBSCRIPTION = gql`
+  subscription NewMessages($server: ID!, $channel: ID!) {
+    message(filter: { server: $server, channel: $channel }) {
+      message {
+        ... on TextMessage {
+          ...message
+          ...textMessage
+        }
+        ... on JoinMessage {
+          ...message
+        }
+      }
+    }
+  }
+
+  ${message}
+  ${textMessage}
+`
+
 export default MESSAGES

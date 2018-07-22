@@ -1,3 +1,4 @@
+import autobind from 'autobind-decorator'
 import * as React from 'react'
 
 import { ICategory } from '../categorise'
@@ -14,6 +15,7 @@ class Category extends React.PureComponent<Props> {
     open: true
   }
 
+  @autobind
   toggle() {
     this.setState({ open: !this.state.open })
   }
@@ -24,7 +26,7 @@ class Category extends React.PureComponent<Props> {
     return (
       <Root className="category">
         {category.name && (
-          <Name onClick={this.toggle.bind(this)}>
+          <Name onClick={this.toggle}>
             {this.state.open ? <Collapse /> : <Expand />}
             <Text>
               <Emoji>{category.name}</Emoji>

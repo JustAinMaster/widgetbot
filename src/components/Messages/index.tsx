@@ -1,15 +1,23 @@
+import autobind from 'autobind-decorator'
 import { addNotification } from 'notify'
 import { Channel, ChannelVariables } from 'queries/__generated__/Channel'
 import { Messages, MessagesVariables } from 'queries/__generated__/Messages'
 import CHANNEL from 'queries/channel'
-import MESSAGES from 'queries/messages'
+import MESSAGES, { MESSAGE_SUBSCRIPTION } from 'queries/messages'
 import Tooltip from 'rc-tooltip'
+import produce from 'immer'
 import * as React from 'react'
-import { Query } from 'react-apollo'
+import { Query, Mutation } from 'react-apollo'
 import { FormattedMessage } from 'react-intl'
 import { RouteComponentProps } from 'react-router'
-import { AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized'
+import {
+  AutoSizer,
+  CellMeasurer,
+  CellMeasurerCache,
+  InfiniteLoader
+} from 'react-virtualized'
 import { fetchInvite } from 'socket-io'
+import { NewMessages } from 'queries/__generated__/NewMessages'
 
 import Header, { Name, Topic } from '../Header'
 import { Join, Stretch } from '../Header/elements'
@@ -19,6 +27,9 @@ import Wrapper from '../Wrapper'
 import { Scroller } from './elements'
 import Group from './group'
 import Message from './Message'
+import { OPEN_MODAL } from 'queries/modal'
+import { OpenModal } from 'queries/__generated__/OpenModal'
+import { OpenModalVariables } from '../Channels/Panel/__generated__/OpenModal'
 
 const defaultInvite = 'https://discord.gg/mpMQCuj'
 
@@ -44,14 +55,31 @@ class MessagesView extends React.PureComponent<
             <Header>
               <Stretch>
                 <Name>{name}</Name>
-                {topic && <Topic className="topic">{topic}</Topic>}
+                {topic && (
+                  <Mutation<OpenModal, OpenModalVariables>
+                    mutation={OPEN_MODAL}
+                  >
+                    {openModal => (
+                      <Topic
+                        onClick={() => {
+                          openModal({
+                            variables: { type: 'topic', data: topic }
+                          })
+                        }}
+                        className="topic"
+                      >
+                        {topic}
+                      </Topic>
+                    )}
+                  </Mutation>
+                )}
               </Stretch>
               <Tooltip placement="bottom" overlay="Open in Discord app">
                 <Join
                   className="join"
                   href={defaultInvite}
                   target="_blank"
-                  onClick={this.join.bind(this)}
+                  onClick={this.join}
                 >
                   <FormattedMessage id="header.join" />
                 </Join>
@@ -64,7 +92,7 @@ class MessagesView extends React.PureComponent<
   }
 
   renderRow = messages => ({ index, key, style, parent }) => {
-    return (
+    return messages[index] ? (
       <CellMeasurer
         key={key}
         cache={this.cache}
@@ -74,7 +102,11 @@ class MessagesView extends React.PureComponent<
       >
         <Message style={style} messages={messages[index]} />
       </CellMeasurer>
-    )
+    ) : null
+  }
+
+  isRowLoaded = messages => ({ index }) => {
+    return !!messages[index]
   }
 
   render() {
@@ -86,7 +118,7 @@ class MessagesView extends React.PureComponent<
         fetchPolicy="cache-and-network"
         // pollInterval={1000}
       >
-        {({ loading, error, data }) => {
+        {({ loading, error, data, subscribeToMore }) => {
           if (error) {
             let message = error.message
 
@@ -112,16 +144,30 @@ class MessagesView extends React.PureComponent<
             content = grouped.length ? (
               <AutoSizer>
                 {({ width, height }) => (
-                  <Scroller
-                    width={width}
-                    height={height - 47}
-                    deferredMeasurementCache={this.cache}
-                    rowHeight={this.cache.rowHeight}
-                    rowRenderer={this.renderRow(grouped)}
-                    rowCount={grouped.length}
-                    scrollToIndex={grouped.length - 1}
-                    overscanRowCount={3}
-                  />
+                  <InfiniteLoader
+                    isRowLoaded={this.isRowLoaded(grouped)}
+                    loadMoreRows={async (...args) => {
+                      console.log('called', args)
+                      return []
+                    }}
+                    rowCount={300}
+                  >
+                    {({ onRowsRendered, registerChild }) => (
+                      <Scroller
+                        width={width}
+                        height={height - 47}
+                        onRowsRendered={onRowsRendered}
+                        listRef={registerChild}
+                        deferredMeasurementCache={this.cache}
+                        rowHeight={this.cache.rowHeight}
+                        rowRenderer={this.renderRow(grouped)}
+                        rowCount={300}
+                        scrollToIndex={grouped.length - 1}
+                        scrollToAlignment="start"
+                        overscanRowCount={3}
+                      />
+                    )}
+                  </InfiniteLoader>
                 )}
               </AutoSizer>
             ) : (
@@ -133,6 +179,28 @@ class MessagesView extends React.PureComponent<
 
           return (
             <Wrapper>
+              <button
+                onClick={() => {
+                  subscribeToMore({
+                    document: MESSAGE_SUBSCRIPTION,
+                    variables: { server, channel },
+                    updateQuery: (prev, payload) =>
+                      produce(prev, (draftState: Messages) => {
+                        const {
+                          data
+                        }: {
+                          data: NewMessages
+                        } = payload.subscriptionData as any
+
+                        draftState.server.channel.messages.push(
+                          data.message.message
+                        )
+                      })
+                  })
+                }}
+              >
+                this one
+              </button>
               <this.header />
               {content}
             </Wrapper>
@@ -152,7 +220,8 @@ class MessagesView extends React.PureComponent<
     // )
   }
 
-  async join(event: Event) {
+  @autobind
+  async join(event) {
     const { channel } = this.props.match.params
     const { window, document } = self.open()
 

@@ -1,3 +1,4 @@
+import autobind from 'autobind-decorator'
 import { cx } from 'emotion'
 import memoize from 'memoizee'
 import * as React from 'react'
@@ -43,7 +44,7 @@ class Emoji extends React.PureComponent<Props> {
 
     const resolved = emoji(text, (code, string, key) => (
       <Emote
-        innerRef={this.handleErrors.bind(this)}
+        innerRef={this.handleErrors}
         src={`https://twitter.github.io/twemoji/2/svg/${code + '.svg'}`}
         alt={string}
         className={cx('emoji', className)}
@@ -71,6 +72,7 @@ class Emoji extends React.PureComponent<Props> {
   /**
    * Resolves emojis as text embedded inside SVG if the CDN fails to load
    */
+  @autobind
   handleErrors(img: HTMLImageElement) {
     if (!img) return
 

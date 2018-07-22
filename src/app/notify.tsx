@@ -1,3 +1,4 @@
+import autobind from 'autobind-decorator'
 import * as React from 'react'
 import * as N from 'react-notification-system'
 
@@ -49,9 +50,10 @@ class Notify extends React.PureComponent {
         this.addNotification(notification)
       }
     }
-    ref = this.addNotification.bind(this)
+    ref = this.addNotification
   }
 
+  @autobind
   addNotification(notification: N.Notification) {
     if (this.notifications) {
       this.notifications.addNotification({

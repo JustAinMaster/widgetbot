@@ -3,6 +3,8 @@ import memoize from 'memoizee'
 const DISCORD_CDN = /https:\/\/cdn.discordapp.com\/attachments\/(\d+)\/(\d+)\/(.+)\.(png|gif)/
 
 const canUseWebP = memoize(() => {
+  return false // Discord WebP compression is terrible
+
   const elem = document.createElement('canvas')
   if (!!(elem.getContext && elem.getContext('2d'))) {
     return elem.toDataURL('image/webp').indexOf('data:image/webp') == 0
