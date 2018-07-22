@@ -2,7 +2,6 @@ import { CLOSE_MODAL, GET_MODAL } from '@queries/modal'
 import { CloseModal } from '@queries/__generated__/CloseModal'
 
 import Markdown from '@ui/shared/markdown/render'
-import autobind from 'autobind-decorator'
 import { ThemeProvider } from 'emotion-theming'
 import * as React from 'react'
 import { DataProps, graphql, Mutation } from 'react-apollo'
@@ -14,13 +13,10 @@ import Authenticate from './Authenticate'
 import { Box, Close, Content, Image, OpenImage, Root } from './elements'
 
 class Modal extends React.PureComponent<DataProps<ModalInfo>> {
-  @autobind
-  theme(theme) {
-    return {
-      ...theme,
-      modal: this.props.data.modal
-    }
-  }
+  theme = theme => ({
+    ...theme,
+    modal: this.props.data.modal
+  })
 
   content = ({ complete }) => {
     const { modal } = this.props.data
@@ -57,7 +53,9 @@ class Modal extends React.PureComponent<DataProps<ModalInfo>> {
 
   render() {
     return (
-      <ThemeProvider theme={this.theme}>
+      // Don't remove .bind()!
+      // Passes a new reference on each render
+      <ThemeProvider theme={this.theme.bind(this)}>
         <Mutation<CloseModal> mutation={CLOSE_MODAL}>
           {close => (
             <Hotkeys keyName="escape" onKeyDown={close}>

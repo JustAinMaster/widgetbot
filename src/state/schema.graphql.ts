@@ -24,4 +24,4 @@ const schema = gql`
   }
 `
 
-export default schema
+export default schema.replace(/extend type /g, 'type ')
