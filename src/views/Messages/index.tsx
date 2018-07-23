@@ -1,3 +1,4 @@
+import produce from 'immer'
 import { Channel, ChannelVariables } from '@queries/__generated__/Channel'
 import {
   Messages,
@@ -16,7 +17,7 @@ import ErrorAhoy from '@ui/Overlays/ErrorAhoy'
 import Wrapper from '@ui/Wrapper'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
-import { Mutation, Query, ChildProps } from 'react-apollo'
+import { Mutation, Query, ChildProps, DataValue } from 'react-apollo'
 import { FormattedMessage } from 'react-intl'
 import { RouteComponentProps } from 'react-router'
 import { graphql } from 'react-apollo'
@@ -43,6 +44,10 @@ type InputProps = RouteComponentProps<{
 interface Props {
   error: ApolloError
   loading: boolean
+  ready: boolean
+
+  fetchMessages(): Promise<void>
+
   messages: Messages_server_channel_messages[]
   groupedMessages: Messages_server_channel_messages[][]
 }
@@ -62,18 +67,36 @@ const withMessages = graphql<InputProps, Messages, MessagesVariables, Props>(
       }
     },
     props({ data, ownProps }) {
-      const { channel } = ownProps.match.params
+      const { server, channel } = ownProps.match.params
 
       const messages =
         (data && data.server && data.server.channel.messages) || []
 
       return {
+        loading: data.loading,
         error: data.error,
-        // Show the messages if it's not loading or
-        // the cached data matches the currently selected server
-        loading:
-          data.loading ||
-          !(data && data.server && data.server.channel.id === channel),
+
+        ready:
+          !data.loading ||
+          (data && data.server && data.server.channel.id === channel),
+
+        async fetchMessages() {
+          const [firstMessage] = messages
+          if (!firstMessage) return
+
+          const before = firstMessage.id
+          console.log('getting before', before)
+
+          await data.fetchMore({
+            query: MESSAGES,
+            variables: { server, channel },
+            updateQuery: (prev, options) =>
+              produce(prev, draftState => {
+                console.log(prev)
+                return prev
+              })
+          })
+        },
 
         messages,
         groupedMessages: Group(messages)
@@ -111,9 +134,17 @@ class MessagesView extends React.PureComponent<
   }
 
   @autobind
+  async loadMoreRows() {
+    const { loading } = this.props
+
+    if (!loading) {
+      await this.props.fetchMessages()
+    }
+  }
+
+  @autobind
   isRowLoaded({ index }) {
-    const { groupedMessages } = this.props
-    return !!groupedMessages[index]
+    return index > 0
   }
 
   @autobind
@@ -172,9 +203,9 @@ class MessagesView extends React.PureComponent<
 
   @autobind
   view() {
-    const { loading, groupedMessages } = this.props
+    const { ready, groupedMessages } = this.props
 
-    if (loading) return <Loading />
+    if (!ready) return <Loading />
     if (!groupedMessages.length)
       return (
         <NoMessages className="no-messages">
@@ -191,10 +222,7 @@ class MessagesView extends React.PureComponent<
         {({ width, height }) => (
           <InfiniteLoader
             isRowLoaded={this.isRowLoaded}
-            loadMoreRows={async (...args) => {
-              console.log('called', args)
-              return []
-            }}
+            loadMoreRows={this.loadMoreRows}
             rowCount={groupedMessages.length}
           >
             {({ onRowsRendered, registerChild }) => (
@@ -219,7 +247,8 @@ class MessagesView extends React.PureComponent<
   }
 
   render() {
-    const { error, loading, groupedMessages } = this.props
+    console.log(this.props.loading)
+    const { error } = this.props
 
     if (error) return <ErrorAhoy message={formatError(error)} />
 
