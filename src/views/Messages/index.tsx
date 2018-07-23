@@ -1,5 +1,9 @@
 import { Channel, ChannelVariables } from '@queries/__generated__/Channel'
-import { Messages, MessagesVariables } from '@queries/__generated__/Messages'
+import {
+  Messages,
+  MessagesVariables,
+  Messages_server_channel_messages
+} from '@queries/__generated__/Messages'
 import { OpenModal, OpenModalVariables } from '@queries/__generated__/OpenModal'
 import CHANNEL from '@queries/channel'
 import MESSAGES from '@queries/messages'
@@ -12,9 +16,10 @@ import ErrorAhoy from '@ui/Overlays/ErrorAhoy'
 import Wrapper from '@ui/Wrapper'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
-import { Mutation, Query } from 'react-apollo'
+import { Mutation, Query, ChildProps } from 'react-apollo'
 import { FormattedMessage } from 'react-intl'
 import { RouteComponentProps } from 'react-router'
+import { graphql } from 'react-apollo'
 import {
   AutoSizer,
   CellMeasurer,
@@ -25,18 +30,96 @@ import {
 import { Scroller } from './elements'
 import Group from './group'
 import { formatError } from './util'
+import autobind from 'autobind-decorator'
+import { ApolloError } from 'apollo-client'
 
 const defaultInvite = 'https://discord.gg/mpMQCuj'
 
+type InputProps = RouteComponentProps<{
+  server: string
+  channel: string
+}>
+
+interface Props {
+  error: ApolloError
+  loading: boolean
+  messages: Messages_server_channel_messages[]
+  groupedMessages: Messages_server_channel_messages[][]
+}
+
+const withMessages = graphql<InputProps, Messages, MessagesVariables, Props>(
+  MESSAGES,
+  {
+    options({ match }) {
+      const { server, channel } = match.params
+
+      return {
+        fetchPolicy: 'cache-and-network',
+        variables: {
+          server,
+          channel
+        }
+      }
+    },
+    props({ data, ownProps }) {
+      const { channel } = ownProps.match.params
+
+      const messages =
+        (data && data.server && data.server.channel.messages) || []
+
+      return {
+        error: data.error,
+        // Show the messages if it's not loading or
+        // the cached data matches the currently selected server
+        loading:
+          data.loading ||
+          !(data && data.server && data.server.channel.id === channel),
+
+        messages,
+        groupedMessages: Group(messages)
+      }
+    }
+  }
+)
+
 class MessagesView extends React.PureComponent<
-  RouteComponentProps<{ server: string; channel: string }>
+  ChildProps<InputProps & Props, Messages>
 > {
+  state = {
+    scrollToIndex: -1
+  }
+
   private cache = new CellMeasurerCache({
     fixedWidth: true
   })
 
-  header = () => {
+  @autobind
+  renderRow({ index, key, style, parent }) {
+    const { groupedMessages } = this.props
+
+    return groupedMessages[index] ? (
+      <CellMeasurer
+        key={key}
+        cache={this.cache}
+        parent={parent}
+        columnIndex={0}
+        rowIndex={index}
+      >
+        <Message style={style} messages={groupedMessages[index]} />
+      </CellMeasurer>
+    ) : null
+  }
+
+  @autobind
+  isRowLoaded({ index }) {
+    const { groupedMessages } = this.props
+    return !!groupedMessages[index]
+  }
+
+  @autobind
+  header() {
     const { server, channel } = this.props.match.params
+
     return (
       <Query<Channel, ChannelVariables>
         query={CHANNEL}
@@ -87,95 +170,64 @@ class MessagesView extends React.PureComponent<
     )
   }
 
-  renderRow = messages => ({ index, key, style, parent }) => {
-    return messages[index] ? (
-      <CellMeasurer
-        key={key}
-        cache={this.cache}
-        parent={parent}
-        columnIndex={0}
-        rowIndex={index}
-      >
-        <Message style={style} messages={messages[index]} />
-      </CellMeasurer>
-    ) : null
-  }
+  @autobind
+  view() {
+    const { loading, groupedMessages } = this.props
 
-  isRowLoaded = messages => ({ index }) => {
-    return !!messages[index]
+    if (loading) return <Loading />
+    if (!groupedMessages.length)
+      return (
+        <NoMessages className="no-messages">
+          <Info>No messages to be seen here</Info>
+        </NoMessages>
+      )
+
+    // TODO: Super inefficient
+    // Clear the CellMeasurer cache on updates
+    this.cache.clearAll()
+
+    return (
+      <AutoSizer>
+        {({ width, height }) => (
+          <InfiniteLoader
+            isRowLoaded={this.isRowLoaded}
+            loadMoreRows={async (...args) => {
+              console.log('called', args)
+              return []
+            }}
+            rowCount={groupedMessages.length}
+          >
+            {({ onRowsRendered, registerChild }) => (
+              <Scroller
+                width={width}
+                height={height - 47}
+                onRowsRendered={onRowsRendered}
+                listRef={registerChild}
+                deferredMeasurementCache={this.cache}
+                rowHeight={this.cache.rowHeight}
+                rowRenderer={this.renderRow}
+                rowCount={groupedMessages.length}
+                scrollToIndex={this.state.scrollToIndex}
+                scrollToAlignment="start"
+                overscanRowCount={3}
+              />
+            )}
+          </InfiniteLoader>
+        )}
+      </AutoSizer>
+    )
   }
 
   render() {
-    const { server, channel } = this.props.match.params
+    const { error, loading, groupedMessages } = this.props
+
+    if (error) return <ErrorAhoy message={formatError(error)} />
 
     return (
-      <Query<Messages, MessagesVariables>
-        query={MESSAGES}
-        variables={{ server, channel }}
-        fetchPolicy="cache-and-network"
-      >
-        {({ loading, error, data, subscribeToMore }) => {
-          if (error) return <ErrorAhoy message={formatError(error)} />
-
-          let content = <Loading />
-
-          // Show the messages if it's not loading or
-          // the cached data matches the currently selected server
-          const showMessages =
-            !loading ||
-            (data && data.server && data.server.channel.id === channel)
-
-          if (showMessages) {
-            const grouped = Group(data.server.channel.messages)
-
-            // TODO: Super inefficient
-            // Clear the CellMeasurer cache on updates
-            this.cache.clearAll()
-
-            content = grouped.length ? (
-              <AutoSizer>
-                {({ width, height }) => (
-                  <InfiniteLoader
-                    isRowLoaded={this.isRowLoaded(grouped)}
-                    loadMoreRows={async (...args) => {
-                      console.log('called', args)
-                      return []
-                    }}
-                    rowCount={300}
-                  >
-                    {({ onRowsRendered, registerChild }) => (
-                      <Scroller
-                        width={width}
-                        height={height - 47}
-                        onRowsRendered={onRowsRendered}
-                        listRef={registerChild}
-                        deferredMeasurementCache={this.cache}
-                        rowHeight={this.cache.rowHeight}
-                        rowRenderer={this.renderRow(grouped)}
-                        rowCount={300}
-                        scrollToIndex={grouped.length - 1}
-                        scrollToAlignment="start"
-                        overscanRowCount={3}
-                      />
-                    )}
-                  </InfiniteLoader>
-                )}
-              </AutoSizer>
-            ) : (
-              <NoMessages className="no-messages">
-                <Info>No messages to be seen here</Info>
-              </NoMessages>
-            )
-          }
-
-          return (
-            <Wrapper>
-              <this.header />
-              {content}
-            </Wrapper>
-          )
-        }}
-      </Query>
+      <Wrapper>
+        <this.header />
+        <this.view />
+      </Wrapper>
     )
 
     // return content ? (
@@ -257,4 +309,4 @@ class MessagesView extends React.PureComponent<
   // }
 }
 
-export default MessagesView
+export default withMessages(MessagesView)
