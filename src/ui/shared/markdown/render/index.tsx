@@ -16,6 +16,11 @@ function parserFor(rules, returnAst?) {
     SimpleMarkdown.ruleOutput(rules, 'react')
   )
   return function(input = '', inline = true, state = {}, transform = null) {
+    if (typeof input !== 'string') {
+      console.error(`[MARKDOWN_PARSE_ERROR] Expected type 'string', got`, input)
+      input = 'MARKDOWN_PARSE_ERROR'
+    }
+
     if (!inline) {
       input += '\n\n'
     }

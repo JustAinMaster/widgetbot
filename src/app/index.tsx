@@ -1,3 +1,4 @@
+import { I18nProvider } from '@lingui/react'
 import Modal from '@ui/Modal'
 import Sidebar from '@ui/Sidebar'
 import ChooseChannel from '@views/ChooseChannel'
@@ -13,8 +14,13 @@ import {
 } from 'react-router'
 
 import ThemeProvider from './ThemeProvider'
+import i18n, { loadCatalog } from '@lib/i18n'
 
-class App extends React.PureComponent<RouteComponentProps<any>> {
+interface Props {
+  language?: string
+}
+
+class App extends React.PureComponent<RouteComponentProps<any> & Props> {
   app = () => (
     <Switch>
       <Route path="/:server">
@@ -33,13 +39,18 @@ class App extends React.PureComponent<RouteComponentProps<any>> {
     </Switch>
   )
 
+  async componentDidMount() {
+    await loadCatalog('en')
+    console.log('loaded')
+  }
+
   render() {
-    // const { locale, translation } = this.props
-    // TODO: Fix locale + translation
     return (
-      <ThemeProvider>
-        <this.app />
-      </ThemeProvider>
+      <I18nProvider language="en" i18n={i18n}>
+        <ThemeProvider>
+          <this.app />
+        </ThemeProvider>
+      </I18nProvider>
     )
   }
 }

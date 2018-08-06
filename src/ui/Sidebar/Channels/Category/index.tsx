@@ -46,7 +46,7 @@ class Category extends React.PureComponent<Props> {
                 id,
                 name,
                 order,
-                unread,
+                unread: unread || undefined,
                 selected
               }}
             />

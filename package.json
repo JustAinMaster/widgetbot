@@ -16,7 +16,7 @@
     "start": "react-app-rewired start --scripts-version react-scripts-ts",
     "build": "react-app-rewired build --scripts-version react-scripts-ts",
     "analyze": "yarn build --analyze",
-    "lingui": "cd src && lingui",
+    "lingui": "lingui",
     "test": "react-app-rewired test --env=jsdom --scripts-version react-scripts-ts",
     "eject": "react-app-rewired eject --scripts-version react-scripts-ts",
     "pull": "git stash && git pull && yarn && yarn build",
@@ -89,7 +89,8 @@
     "scroll-into-view-if-needed": "^2.2.16",
     "simple-markdown": "^0.4.1",
     "socket.io-client": "^2.1.1",
-    "subscriptions-transport-ws": "^0.9.14"
+    "subscriptions-transport-ws": "^0.9.14",
+    "typedi": "^0.8.0"
   },
   "devDependencies": {
     "@lingui/babel-preset-react": "^2.3.0",

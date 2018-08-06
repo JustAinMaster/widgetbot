@@ -4,18 +4,16 @@ import { Error } from '..'
 import Header, { Name, Topic } from '../../Header'
 import Wrapper from '../../Wrapper'
 import { Message } from './elements'
-import { Trans } from '@lingui/react'
+import { Trans, withI18n, withI18nProps } from '@lingui/react'
 
-const ErrorAhoy = ({ message }: { message?: string }) => (
+const ErrorAhoy = ({ message, i18n }: { message?: string } & withI18nProps) => (
   <Wrapper>
     <Header>
       <Name>
         <Trans id="ErrorScreen.Title">Error</Trans>
       </Name>
       <Topic>
-        <Trans id="ErrorScreen.Description">
-          Something unexpected occurred
-        </Trans>
+        {i18n.t('ErrorScreen.Description')`Something unexpected occurred`}
       </Topic>
     </Header>
     <Error>
@@ -24,4 +22,4 @@ const ErrorAhoy = ({ message }: { message?: string }) => (
   </Wrapper>
 )
 
-export default ErrorAhoy
+export default withI18n()(ErrorAhoy)
