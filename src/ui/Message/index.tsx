@@ -4,7 +4,6 @@ import { ThemeProvider } from 'emotion-theming'
 import Moment from 'moment'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
-import { FormattedMessage } from 'react-intl'
 
 import Author, { Timestamp } from './Author'
 import {
@@ -21,6 +20,7 @@ import {
 import { Image } from './Embed/elements/media'
 import parseUsername from './parseUsername'
 import Reaction from './Reaction'
+import { Trans } from '@lingui/react'
 
 interface Props {
   messages: Messages_server_channel_messages[]
@@ -65,7 +65,9 @@ class Message extends React.PureComponent<Props, any> {
                             overlay={Moment(message.editedAt).calendar()}
                             mouseLeaveDelay={0}
                           >
-                            <Edited className="edited">{`(edited)`}</Edited>
+                            <Edited className="edited">
+                              <Trans id="Message.edited">(edited)</Trans>
+                            </Edited>
                           </Tooltip>
                         )}
                       </Content>
@@ -100,16 +102,11 @@ class Message extends React.PureComponent<Props, any> {
                 return (
                   <React.Fragment key={message.id}>
                     <JoinText>
-                      <FormattedMessage
-                        id="message.join_message"
-                        values={{
-                          name: (
-                            <JoinMember id={message.author.id}>
-                              {name}
-                            </JoinMember>
-                          )
-                        }}
-                      />
+                      <JoinMember id={message.author.id}>
+                        <Trans id="Message.welcomeMessage">
+                          {`${name} has joined. Stay a while and listen!`}
+                        </Trans>
+                      </JoinMember>
                     </JoinText>
                     <Timestamp time={message.timestamp} />
                   </React.Fragment>

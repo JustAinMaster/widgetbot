@@ -37,7 +37,6 @@ class Notify extends React.PureComponent {
   private notifications: N.System
 
   render() {
-    console.log('rendering', N)
     return (
       <Notifications>
         <N ref={ref => (this.notifications = ref)} />

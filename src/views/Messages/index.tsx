@@ -19,7 +19,6 @@ import produce from 'immer'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 import { ChildProps, graphql, Mutation, Query } from 'react-apollo'
-import { FormattedMessage } from 'react-intl'
 import { RouteComponentProps } from 'react-router'
 import {
   AutoSizer,
@@ -31,6 +30,7 @@ import CHANNEL from './Channel.graphql'
 import { Scroller } from './elements'
 import Group from './group'
 import { formatError } from './util'
+import { Trans } from '@lingui/react'
 
 const defaultInvite = 'https://discord.gg/mpMQCuj'
 
@@ -189,7 +189,7 @@ class MessagesView extends React.PureComponent<
                   // TODO: Fix join button
                   // onClick={this.join}
                 >
-                  <FormattedMessage id="header.join" />
+                  <Trans id="Header.joinDiscord">Join on Discord</Trans>
                 </Join>
               </Tooltip>
             </Header>

@@ -43,12 +43,12 @@ const Commands: Suggestion<Command> = {
   ),
 
   suggestion: ({ name }) => (
-    <>
+    <React.Fragment>
       <Icon>
         <Hash />
       </Icon>
       <Name>{name}</Name>
-    </>
+    </React.Fragment>
   )
 }
 

@@ -20,14 +20,14 @@ class Author extends React.PureComponent<Props> {
     const { author } = this.props
 
     return (
-      <>
+      <React.Fragment>
         {/* {author.type === 'bot' && <Tag className="bot">Bot</Tag>}
               {author.type === 'guest' && <Tag className="guest">Guest</Tag>}
               {this.verified({ id: author.id }) ||
                 (author.type === 'sysadmin' && (
                   <Sysadmin className="sysadmin" title="Sysadmin" />
                 ))} */}
-      </>
+      </React.Fragment>
     )
   }
 

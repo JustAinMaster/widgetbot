@@ -30,13 +30,13 @@ const Channels: Suggestion<any /*Channel*/> = {
 
   // @ts-ignore
   suggestion: ({ name, category }) => (
-    <>
+    <React.Fragment>
       <Icon>
         <Hash />
       </Icon>
       <Name>{name}</Name>
       <Info>{category}</Info>
-    </>
+    </React.Fragment>
   )
 }
 

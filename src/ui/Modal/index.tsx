@@ -13,6 +13,7 @@ import { ModalInfo } from './__generated__/ModalInfo'
 import About from './About'
 import Authenticate from './Authenticate'
 import { Box, Close, Content, Image, OpenImage, Root } from './elements'
+import { Trans } from '@lingui/react'
 
 class Modal extends React.PureComponent<DataProps<ModalInfo>> {
   theme = theme => ({
@@ -29,12 +30,12 @@ class Modal extends React.PureComponent<DataProps<ModalInfo>> {
 
     if (modal.type === 'image') {
       return (
-        <>
+        <React.Fragment>
           <Image src={modal.data} />
           <OpenImage href={modal.data} target="_blank" onClick={complete}>
-            Open original
+            <Trans id="Modal.openOriginal">Open original</Trans>
           </OpenImage>
-        </>
+        </React.Fragment>
       )
     }
 

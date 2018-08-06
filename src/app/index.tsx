@@ -4,7 +4,6 @@ import ChooseChannel from '@views/ChooseChannel'
 import MessagesView from '@views/Messages'
 import Notifications from 'notify'
 import * as React from 'react'
-import { IntlProvider } from 'react-intl'
 import {
   Redirect,
   Route,
@@ -19,7 +18,7 @@ class App extends React.PureComponent<RouteComponentProps<any>> {
   app = () => (
     <Switch>
       <Route path="/:server">
-        <>
+        <React.Fragment>
           <Modal />
           <Notifications />
           <Sidebar />
@@ -27,7 +26,7 @@ class App extends React.PureComponent<RouteComponentProps<any>> {
             <Route path="/:server/:channel" component={MessagesView} />
             <Route component={ChooseChannel} />
           </Switch>
-        </>
+        </React.Fragment>
       </Route>
 
       <Redirect to="/299881420891881473" />
@@ -39,13 +38,7 @@ class App extends React.PureComponent<RouteComponentProps<any>> {
     // TODO: Fix locale + translation
     return (
       <ThemeProvider>
-        <IntlProvider
-          locale={'en'}
-          messages={{}}
-          textComponent={React.Fragment}
-        >
-          <this.app />
-        </IntlProvider>
+        <this.app />
       </ThemeProvider>
     )
   }

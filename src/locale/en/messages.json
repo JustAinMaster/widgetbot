@@ -1,0 +1,38 @@
+{
+  "ErrorScreen.Description": {
+    "translation": "",
+    "defaults": "Something unexpected occurred",
+    "origin": [["ui/Overlays/ErrorAhoy/index.tsx", 13]]
+  },
+  "ErrorScreen.Title": {
+    "translation": "",
+    "defaults": "Error",
+    "origin": [["ui/Overlays/ErrorAhoy/index.tsx", 10]]
+  },
+  "Header.joinDiscord": {
+    "translation": "",
+    "defaults": "Join on Discord",
+    "origin": [["views/Messages/index.tsx", 181]]
+  },
+  "Header.memberCount": {
+    "translation": "",
+    "defaults":
+      "{0, plural, one {# member in this server} other {# members in this server}}",
+    "origin": [["ui/Sidebar/Header/index.tsx", 18]]
+  },
+  "Message.edited": {
+    "translation": "",
+    "defaults": "(edited)",
+    "origin": [["ui/Message/index.tsx", 35]]
+  },
+  "Message.welcomeMessage": {
+    "translation": "",
+    "defaults": "{name} has joined. Stay a while and listen!",
+    "origin": [["ui/Message/index.tsx", 55]]
+  },
+  "Modal.openOriginal": {
+    "translation": "",
+    "defaults": "Open original",
+    "origin": [["ui/Modal/index.tsx", 25]]
+  }
+}

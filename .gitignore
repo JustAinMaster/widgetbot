@@ -6,6 +6,7 @@
 # testing
 /coverage
 /docs
+/src/locale/_build
 
 # production
 /build

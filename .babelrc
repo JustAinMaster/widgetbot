@@ -1,26 +1,51 @@
 {
-  "presets": ["react", "env", "stage-0", "react-optimize"],
-  "plugins": [
-    "syntax-dynamic-import",
+  "presets": [
     [
-      "emotion",
+      "env",
       {
-        "sourceMap": true,
-        "autoLabel": true,
-        "hoist": true,
-        "labelFormat": "[filename]--[local]"
+        "modules": false
       }
     ],
-    [
-      "ramda",
-      {
-        "useES": true
-      }
-    ]
+    "react",
+    "stage-0",
+    "@lingui/babel-preset-react"
   ],
+  "plugins": ["syntax-dynamic-import"],
   "env": {
     "development": {
-      "plugins": []
+      "plugins": [
+        [
+          "emotion",
+          {
+            "autoLabel": true,
+            "labelFormat": "[filename]--[local]",
+            "sourceMap": true
+          }
+        ]
+      ]
+    },
+    "production": {
+      "presets": ["react-optimize"],
+      "plugins": [
+        [
+          "ramda",
+          {
+            "useES": true
+          }
+        ],
+        [
+          "emotion",
+          {
+            "hoist": true
+          }
+        ],
+        [
+          "react-intl",
+          {
+            "messagesDir": "./build/messages/"
+          }
+        ]
+      ]
     }
   }
 }
