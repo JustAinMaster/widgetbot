@@ -1,78 +1,62 @@
-import { connect } from 'fluent'
 import * as React from 'react'
 
-import {
-  Create,
-  Discord,
-  Greeting,
-  Group,
-  Input,
-  Root,
-  SSO,
-  Title
-} from './elements'
+import { Create, Greeting, Group, Input, Root, Title } from './elements'
 
-export default connect()
-  .with(({ state, signals, props }) => ({
-    toggle: signals.modal,
-    signUp: signals.signUp,
-    singleSignOn: signals.singleSignOn
-  }))
-  .toClass(
-    props =>
-      class Authenticate extends React.PureComponent<typeof props> {
-        state = {
-          awaiting: false
-        }
-        nameField: HTMLInputElement
+class Authenticate extends React.PureComponent {
+  state = {
+    awaiting: false
+  }
+  nameField: HTMLInputElement
 
-        signUp(event: Event) {
-          event.preventDefault()
+  signUp(event: Event) {
+    event.preventDefault()
 
-          const name = this.nameField.value
+    const name = this.nameField.value
 
-          const { toggle, signUp } = this.props
-          toggle({ open: false })
+    // TODO: FIX
+    // const { toggle, signUp } = this.props
+    // toggle({ open: false })
 
-          signUp({ name })
-        }
+    // signUp({ name })
+  }
 
-        singleSignOn(event: Event) {
-          event.preventDefault()
+  singleSignOn(event: Event) {
+    event.preventDefault()
+    // TODO: FIX
+    // const { singleSignOn } = this.props
+    // singleSignOn()
 
-          const { singleSignOn } = this.props
-          singleSignOn()
+    this.setState({
+      awaiting: true
+    })
+  }
 
-          this.setState({
-            awaiting: true
-          })
-        }
-
-        render() {
-          const { awaiting } = this.state
-          return (
-            <Root loading={awaiting}>
-              <Title>Welcome!</Title>
-              <Greeting>Pick a name to start chatting</Greeting>
-              <Group label="name" onSubmit={this.signUp.bind(this)}>
-                <Input
-                  innerRef={ref => (this.nameField = ref)}
-                  autoFocus={true}
-                  spellCheck={false}
-                  minLength={2}
-                  maxLength={32}
-                  required
-                />
-                <Create variant="large">Create</Create>
-                {/*<SSO>
+  render() {
+    const { awaiting } = this.state
+    return (
+      <Root loading={awaiting}>
+        <Title>Welcome!</Title>
+        <Greeting>Pick a name to start chatting</Greeting>
+        <Group label="name" onSubmit={this.signUp.bind(this)}>
+          <Input
+            innerRef={ref => (this.nameField = ref)}
+            autoFocus={true}
+            spellCheck={false}
+            minLength={2}
+            maxLength={32}
+            required
+          />
+          <Create variant="large">Create</Create>
+          {/*<SSO>
                   Discord account?
                   <Discord onClick={this.singleSignOn.bind(this)}>
                     Log in
                   </Discord>
                 </SSO>*/}
-              </Group>
-            </Root>
-          )
-        }
-      }
-  )
+        </Group>
+      </Root>
+    )
+  }
+}
+
+export default Authenticate

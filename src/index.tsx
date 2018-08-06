@@ -1,7 +1,5 @@
-import { Container } from '@cerebral/react'
-import controller from '@lib/cerebral'
+import client from '@lib/apollo'
 import { connect } from '@lib/sentry'
-import client from 'client'
 import * as React from 'react'
 import { ApolloProvider } from 'react-apollo'
 import * as ReactDOM from 'react-dom'
@@ -13,11 +11,9 @@ import registerServiceWorker from './registerServiceWorker'
 // Render App
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <Container controller={controller}>
-      <BrowserRouter basename="/channels">
-        <App />
-      </BrowserRouter>
-    </Container>
+    <BrowserRouter basename="/channels">
+      <App />
+    </BrowserRouter>
   </ApolloProvider>,
   document.getElementById('root')
 )

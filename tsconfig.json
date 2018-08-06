@@ -27,9 +27,6 @@
       "locales": ["src/app/locales"],
       "locales/*": ["src/app/locales/*"],
 
-      "socket-io": ["src/lib/socket-io"],
-      "client": ["src/lib/apollo/index.ts"],
-      "fluent": ["src/lib/cerebral/fluent.ts"],
       "embed-api": ["src/lib/embed-api"]
     },
     "plugins": [

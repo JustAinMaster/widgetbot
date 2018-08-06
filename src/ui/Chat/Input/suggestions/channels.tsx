@@ -1,15 +1,13 @@
-import controller from '@lib/cerebral'
 import { Hash } from '@ui/shared/Channel'
 import matchSorter from 'match-sorter'
 import * as React from 'react'
 
-import { Channel } from '../../../../store/types'
 import { Description, Icon, Info, Name } from '../elements'
 import { Suggestion } from '../types'
 
-const Channels: Suggestion<Channel> = {
+const Channels: Suggestion<any /*Channel*/> = {
   getSuggestions: query =>
-    matchSorter(controller.state.channels.values(), query, {
+    matchSorter([], query, {
       keys: [
         {
           minRanking: matchSorter.rankings.STRING_CASE_ACRONYM,

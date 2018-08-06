@@ -1,4 +1,3 @@
-import controller from '@lib/cerebral'
 import { Emoji, emojis } from '@ui/shared/Emoji/emojiMap'
 import matchSorter from 'match-sorter'
 import * as React from 'react'
@@ -8,7 +7,7 @@ import { Suggestion } from '../types'
 
 const Emojis: Suggestion<Emoji> = {
   getSuggestions: query =>
-    matchSorter([...controller.state.emojis.values(), ...emojis], query, {
+    matchSorter([...emojis], query, {
       keys: [
         {
           minRanking: matchSorter.rankings.STRING_CASE_ACRONYM,
