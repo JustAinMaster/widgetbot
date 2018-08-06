@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { Channel, Mention } from '@ui/shared/markdown/render/elements'
+import * as React from 'react'
 import SimpleMarkdown from 'simple-markdown'
 
 export const mention = {

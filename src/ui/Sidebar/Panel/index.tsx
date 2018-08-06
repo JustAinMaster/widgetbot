@@ -1,5 +1,5 @@
 import { OpenModal, OpenModalVariables } from '@queries/__generated__/OpenModal'
-import { OPEN_MODAL } from '@queries/modal'
+import OPEN_MODAL from '@queries/OpenModal.graphql'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 import { Mutation } from 'react-apollo'

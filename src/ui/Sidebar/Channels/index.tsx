@@ -1,4 +1,3 @@
-import gql from 'graphql-tag'
 import React from 'react'
 import { Route } from 'react-router'
 import { Query } from 'react-apollo'
@@ -7,18 +6,7 @@ import { Channels, ChannelsVariables } from './__generated__/Channels'
 import { Root } from './elements'
 import Category from './Category'
 import categorise, { ICategory } from './categorise'
-
-const CHANNELS = gql`
-  query Channels($server: ID!) {
-    server(id: $server) {
-      channels {
-        name
-        category
-        id
-      }
-    }
-  }
-`
+import CHANNELS from './Channels.graphql'
 
 const ChannelSwitcher = () => (
   <Route path="/:server/:channel?">

@@ -1,0 +1,26 @@
+{
+  "presets": ["react", "env", "stage-0", "react-optimize"],
+  "plugins": [
+    "syntax-dynamic-import",
+    [
+      "emotion",
+      {
+        "sourceMap": true,
+        "autoLabel": true,
+        "hoist": true,
+        "labelFormat": "[filename]--[local]"
+      }
+    ],
+    [
+      "ramda",
+      {
+        "useES": true
+      }
+    ]
+  ],
+  "env": {
+    "development": {
+      "plugins": []
+    }
+  }
+}

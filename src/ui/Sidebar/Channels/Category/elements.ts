@@ -1,7 +1,6 @@
 import styled from '@lib/emotion'
 import { Twemoji } from '@ui/shared/Emoji/emoji'
-import Down from 'react-icons/lib/fa/angle-down'
-import Right from 'react-icons/lib/fa/angle-right'
+import { FaAngleDown, FaAngleRight } from 'react-icons/fa'
 
 export const Root = styled('div')`
   padding-top: 20px;
@@ -39,7 +38,7 @@ export const Emoji = styled(Twemoji)`
   margin-right: 2px !important;
 `
 
-export const Collapse = styled(Down)`
+export const Collapse = styled(FaAngleDown)`
   flex-shrink: 0;
   height: 20px;
   width: 20px;
@@ -50,4 +49,4 @@ export const Collapse = styled(Down)`
   }
 `
 
-export const Expand = Collapse.withComponent(Right)
+export const Expand = Collapse.withComponent(FaAngleRight)

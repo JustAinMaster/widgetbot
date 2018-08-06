@@ -1,5 +1,5 @@
 import { SidebarVisibility } from '@queries/__generated__/SidebarVisibility'
-import { SIDEBAR_VISIBILITY } from '@queries/sidebar'
+import SIDEBAR_VISIBILITY from '@queries/SidebarVisibility.graphql'
 import * as React from 'react'
 import { Query } from 'react-apollo'
 

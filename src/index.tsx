@@ -1,3 +1,5 @@
+import 'babel-polyfill'
+
 import client from '@lib/apollo'
 import { connect } from '@lib/sentry'
 import * as React from 'react'

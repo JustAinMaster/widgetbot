@@ -5,7 +5,6 @@ interface Props {
   onClick?: any
 }
 
-// prettier-ignore
 export const Wrapper = styled('div')<Props>`
   display: flex;
   flex-direction: column;
@@ -28,25 +27,29 @@ export const Wrapper = styled('div')<Props>`
     opacity: 0;
   }
 
-  ${({ squashed }) => squashed ? css`
-    @media (min-width: 521px) {
-      margin-left: 200px;
-      width: calc(100% - 200px);
-    }
+  ${({ squashed }) =>
+    squashed
+      ? css`
+          @media (min-width: 521px) {
+            margin-left: 200px;
+            width: calc(100% - 200px);
+          }
 
-    @media (min-width: 521px) and (max-width: 400px), (min-width: 521px) and (max-height: 340px) {
-      margin-left: 180px;
-      width: calc(100% - 180px);
-    }
+          @media (min-width: 521px) and (max-width: 400px),
+            (min-width: 521px) and (max-height: 340px) {
+            margin-left: 180px;
+            width: calc(100% - 180px);
+          }
 
-    @media (max-width: 520px) {
-      &::after {
-        pointer-events: initial;
-        opacity: 1;
-      }
-      * {
-        pointer-events: none !important;
-      }
-    }
-  ` : null};
+          @media (max-width: 520px) {
+            &::after {
+              pointer-events: initial;
+              opacity: 1;
+            }
+            * {
+              pointer-events: none !important;
+            }
+          }
+        `
+      : null};
 `

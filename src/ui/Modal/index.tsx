@@ -1,4 +1,6 @@
-import { CLOSE_MODAL, GET_MODAL } from '@queries/modal'
+import GET_MODAL from '@queries/ModalInfo.graphql'
+import CLOSE_MODAL from '@queries/CloseModal.graphql'
+
 import { CloseModal } from '@queries/__generated__/CloseModal'
 
 import Markdown from '@ui/shared/markdown/render'

@@ -3,7 +3,8 @@ import {
   ToggleSidebar,
   ToggleSidebarVariables
 } from '@queries/__generated__/ToggleSidebar'
-import { SIDEBAR_VISIBILITY, TOGGLE_SIDEBAR } from '@queries/sidebar'
+import SIDEBAR_VISIBILITY from '@queries/SidebarVisibility.graphql'
+import TOGGLE_SIDEBAR from '@queries/ToggleSidebar.graphql'
 import * as React from 'react'
 import { Mutation, Query } from 'react-apollo'
 

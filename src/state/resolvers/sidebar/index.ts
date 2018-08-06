@@ -1,6 +1,6 @@
 import { ClientStateConfig } from 'apollo-link-state'
 import { SidebarVisibility } from '@queries/__generated__/SidebarVisibility'
-import { SIDEBAR_VISIBILITY } from '@queries/sidebar'
+import SIDEBAR_VISIBILITY from '@queries/SidebarVisibility.graphql'
 
 const sidebar: ClientStateConfig = {
   defaults: {

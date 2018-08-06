@@ -4,7 +4,6 @@ interface Props {
   open: boolean
 }
 
-// prettier-ignore
 export const Ham = styled('button')<Props>`
   border: none;
   background: none;
@@ -30,38 +29,42 @@ export const Ham = styled('button')<Props>`
     height: 40px;
     opacity: 0;
     transition: opacity 0.1s ease;
-    background-color: ${({ theme }) => theme.colors._primary.fade(0.93).string()};
+    background-color: ${({ theme }) =>
+      theme.colors._primary.fade(0.93).string()};
     border-radius: 50%;
   }
 
   &:hover {
     &::before {
-      opacity: 1
+      opacity: 1;
     }
   }
 
   @media (min-width: 521px) {
-    ${({ open }) => open ? css`
-      transform: rotate(-180deg);
-      &::before {
-        top: -7px;
-        left: -9px;
-      }
-      div {
-        &::before {
-          top: -4.8px;
-          width: 15px;
-          transform: rotate(45deg);
-          right: -3px;
-        }
-        &::after {
-          top: 4.8px;
-          width: 15px;
-          transform: rotate(-45deg);
-          right: -3px;
-        }
-      }
-    ` : null}
+    ${({ open }) =>
+      open
+        ? css`
+            transform: rotate(-180deg);
+            &::before {
+              top: -7px;
+              left: -9px;
+            }
+            div {
+              &::before {
+                top: -4.8px;
+                width: 15px;
+                transform: rotate(45deg);
+                right: -3px;
+              }
+              &::after {
+                top: 4.8px;
+                width: 15px;
+                transform: rotate(-45deg);
+                right: -3px;
+              }
+            }
+          `
+        : null};
   }
 `
 

@@ -1,0 +1,12 @@
+.css-fzwm1z > div:nth-child(3) > div {
+  cursor: default !important;
+  opacity: 0;
+  -webkit-transition: opacity 0.1s ease;
+  transition: opacity 0.1s ease;
+}
+.css-fzwm1z > div:nth-child(3) > div:hover {
+  opacity: 1;
+}
+.css-fzwm1z > div:hover + div + div > div {
+  opacity: 1;
+}

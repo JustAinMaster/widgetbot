@@ -1,8 +1,9 @@
+import { ClientStateConfig, withClientState } from 'apollo-link-state'
 import * as R from 'ramda'
-import { withClientState, ClientStateConfig } from 'apollo-link-state'
-
 import cache from '../lib/apollo/cache'
-import schema from './schema.graphql'
+import $schema from './schema'
+
+const schema: string = ($schema as any).replace(/extend type /g, 'type ')
 
 const resolve = (require as any).context('./', true, /.\/*[a-zA-Z]\/index$/)
 const resolvers = resolve.keys().map(resolver => resolve(resolver).default)

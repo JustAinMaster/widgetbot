@@ -1,32 +1,16 @@
+import { Theme as ThemeContext } from '@lib/emotion'
 import Color from 'color'
 import { ThemeProvider as Provider } from 'emotion-theming'
-import gql from 'graphql-tag'
 import * as React from 'react'
 import { Query } from 'react-apollo'
-import { Theme as ThemeContext } from '@lib/emotion'
-
+import { Route } from 'react-router'
+import { GlobalStyles } from './elements'
+import GET_THEME from './Theme.graphql'
 import {
   Theme,
-  Theme_server_theme,
-  ThemeVariables
+  ThemeVariables,
+  Theme_server_theme
 } from './__generated__/Theme'
-import { GlobalStyles } from './elements'
-import { Route } from 'react-router'
-
-const GET_THEME = gql`
-  query Theme($server: ID!) {
-    server(id: $server) {
-      theme {
-        css
-        colors {
-          primary
-          accent
-          background
-        }
-      }
-    }
-  }
-`
 
 class ThemeProvider extends React.PureComponent {
   render() {

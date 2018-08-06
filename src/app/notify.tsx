@@ -1,6 +1,6 @@
 import autobind from 'autobind-decorator'
 import * as React from 'react'
-import * as N from 'react-notification-system'
+import N from 'react-notification-system'
 
 import { Notifications } from './elements'
 
@@ -37,6 +37,7 @@ class Notify extends React.PureComponent {
   private notifications: N.System
 
   render() {
+    console.log('rendering', N)
     return (
       <Notifications>
         <N ref={ref => (this.notifications = ref)} />

@@ -1,6 +1,5 @@
 import { cx } from 'emotion'
 import { Route } from 'react-router'
-import gql from 'graphql-tag'
 import * as React from 'react'
 import { Query } from 'react-apollo'
 
@@ -10,17 +9,7 @@ import {
   MemberInfoVariables
 } from './__generated__/MemberInfo'
 import MemberLink from './link'
-
-const MEMBER_INFO = gql`
-  query MemberInfo($server: ID!, $member: ID!) {
-    server(id: $server) {
-      member(id: $member) {
-        name
-        id
-      }
-    }
-  }
-`
+import MEMBER_INFO from './MemberInfo.graphql'
 
 interface Props {
   id: string

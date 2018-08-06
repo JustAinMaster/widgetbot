@@ -1,11 +1,9 @@
-import styled, { ThemedReactEmotionInterface } from 'react-emotion'
 import { Theme } from '@lib/emotion'
-
-import Modal from '../../../types/modal'
+import styled, { ThemedReactEmotionInterface } from 'react-emotion'
 
 export * from '@lib/emotion'
 
 interface Context extends Theme {
-  modal: Modal
+  modal: /* Modal */ any // TODO: Typings
 }
 export default styled as ThemedReactEmotionInterface<Context>

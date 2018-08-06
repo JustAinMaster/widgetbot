@@ -1,4 +1,3 @@
-import gql from 'graphql-tag'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 import { Query } from 'react-apollo'
@@ -6,16 +5,7 @@ import { Route } from 'react-router'
 
 import { ServerInfo, ServerInfoVariables } from './__generated__/ServerInfo'
 import { Count, Icon, Name, Root } from './elements'
-
-const GET_INFO = gql`
-  query ServerInfo($server: ID!) {
-    server(id: $server) {
-      name
-      icon
-      memberCount
-    }
-  }
-`
+import GET_INFO from './GuildInfo.graphql'
 
 const Header = () => (
   <Route path="/:server">

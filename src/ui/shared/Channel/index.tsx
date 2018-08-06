@@ -1,5 +1,4 @@
 import { cx } from 'emotion'
-import gql from 'graphql-tag'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 import { Query } from 'react-apollo'
@@ -12,18 +11,7 @@ import {
 } from './__generated__/ChannelInfo'
 import ChannelLink from './link'
 import { Route } from 'react-router'
-
-const CHANNEL_INFO = gql`
-  query ChannelInfo($server: ID!, $channel: ID!) {
-    server(id: $server) {
-      channel(id: $channel) {
-        name
-        category
-        id
-      }
-    }
-  }
-`
+import CHANNEL_INFO from './ChannelInfo.graphql'
 
 interface Props {
   id: string

@@ -1,4 +1,5 @@
-import produce from 'immer'
+import MESSAGES from '@queries/Messages.graphql'
+import OPEN_MODAL from '@queries/OpenModal.graphql'
 import { Channel, ChannelVariables } from '@queries/__generated__/Channel'
 import {
   Messages,
@@ -6,33 +7,30 @@ import {
   Messages_server_channel_messages
 } from '@queries/__generated__/Messages'
 import { OpenModal, OpenModalVariables } from '@queries/__generated__/OpenModal'
-import CHANNEL from '@queries/channel'
-import MESSAGES from '@queries/messages'
-import { OPEN_MODAL } from '@queries/modal'
 import Header, { Name, Topic } from '@ui/Header'
 import { Join, Stretch } from '@ui/Header/elements'
 import Message from '@ui/Message'
 import { Info, Loading, NoMessages } from '@ui/Overlays'
 import ErrorAhoy from '@ui/Overlays/ErrorAhoy'
 import Wrapper from '@ui/Wrapper'
+import { ApolloError } from 'apollo-client'
+import autobind from 'autobind-decorator'
+import produce from 'immer'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
-import { Mutation, Query, ChildProps, DataValue } from 'react-apollo'
+import { ChildProps, graphql, Mutation, Query } from 'react-apollo'
 import { FormattedMessage } from 'react-intl'
 import { RouteComponentProps } from 'react-router'
-import { graphql } from 'react-apollo'
 import {
   AutoSizer,
   CellMeasurer,
   CellMeasurerCache,
   InfiniteLoader
 } from 'react-virtualized'
-
+import CHANNEL from './Channel.graphql'
 import { Scroller } from './elements'
 import Group from './group'
 import { formatError } from './util'
-import autobind from 'autobind-decorator'
-import { ApolloError } from 'apollo-client'
 
 const defaultInvite = 'https://discord.gg/mpMQCuj'
 
