@@ -1,5 +1,8 @@
 import { setupI18n } from '@lingui/core'
 
+const DISABLE_WARN = console.warn
+console.warn = () => {}
+
 const i18n = setupI18n({ language: 'en' })
 
 export const loadCatalog = async (language: string) => {
@@ -12,3 +15,5 @@ export const loadCatalog = async (language: string) => {
 }
 
 export default i18n
+
+console.warn = DISABLE_WARN

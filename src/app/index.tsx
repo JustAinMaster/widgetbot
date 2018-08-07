@@ -1,3 +1,4 @@
+import { compose } from 'recompose'
 import { I18nProvider } from '@lingui/react'
 import Modal from '@ui/Modal'
 import Sidebar from '@ui/Sidebar'
@@ -15,12 +16,18 @@ import {
 
 import ThemeProvider from './ThemeProvider'
 import i18n, { loadCatalog } from '@lib/i18n'
+import { graphql, ChildProps } from 'react-apollo'
+import gql from 'graphql-tag'
+import { Locale } from './__generated__/Locale'
+import produce from 'immer'
 
-interface Props {
-  language?: string
-}
+class App extends React.PureComponent<
+  ChildProps<RouteComponentProps<any>, Locale>
+> {
+  state = {
+    catalogs: null
+  }
 
-class App extends React.PureComponent<RouteComponentProps<any> & Props> {
   app = () => (
     <Switch>
       <Route path="/:server">
@@ -40,13 +47,40 @@ class App extends React.PureComponent<RouteComponentProps<any> & Props> {
   )
 
   async componentDidMount() {
-    await loadCatalog('en')
-    console.log('loaded')
+    await this.getCatalogs()
+  }
+
+  async componentWillReceiveProps(nextProps) {
+    if (
+      nextProps.data.locale.language !== this.props.data.locale.language ||
+      nextProps.data.locale.translations !== this.props.data.locale.translations
+    ) {
+      await this.getCatalogs(nextProps)
+    }
+  }
+
+  async getCatalogs(props = this.props) {
+    const { language, translations } = props.data.locale
+    const $catalog = await loadCatalog(language)
+
+    const catalog = produce($catalog, draftState => {
+      translations.forEach(
+        ([id, translation]) => (draftState.messages[id] = translation)
+      )
+    })
+
+    this.setState({ catalogs: { [language]: catalog } })
   }
 
   render() {
+    const { language } = this.props.data.locale
+
     return (
-      <I18nProvider language="en" i18n={i18n}>
+      <I18nProvider
+        language={language}
+        i18n={i18n}
+        catalogs={this.state.catalogs || undefined}
+      >
         <ThemeProvider>
           <this.app />
         </ThemeProvider>
@@ -55,4 +89,14 @@ class App extends React.PureComponent<RouteComponentProps<any> & Props> {
   }
 }
 
-export default withRouter(App)
+export default compose(
+  withRouter,
+  graphql(gql`
+    query Locale {
+      locale @client {
+        language
+        translations
+      }
+    }
+  `)
+)(App)

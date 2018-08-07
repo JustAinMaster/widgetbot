@@ -35,6 +35,6 @@ module.exports = {
     },
     'Modal.openOriginal': 'Open original',
     'PickChannelScreen.Description': 'Pick a channel from the left',
-    'PickChannelScreen.Title': 'TT a channel'
+    'PickChannelScreen.Title': 'Select a channel'
   }
 }

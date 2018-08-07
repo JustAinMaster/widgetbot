@@ -11,11 +11,15 @@ const schema = gql`
     open: Boolean!
   }
 
+  type Locale {
+    translations: [[String!]]!
+    language: String!
+  }
+
   extend type Query {
     modal: Modal!
     sidebar: Sidebar!
-
-    locale: [[String!]]!
+    locale: Locale!
   }
 
   extend type Mutation {
@@ -24,9 +28,9 @@ const schema = gql`
 
     toggleSidebar(open: Boolean): Boolean!
 
-    setLanguage(name: String): [[String!]]!
-    setLocaleKey(key: String!, translation: String!): [[String!]]!
-    removeLocaleKey(key: String!): [[String!]]!
+    setLanguage(name: String): Boolean
+    addTranslation(id: String!, translation: String!): Boolean
+    removeTranslation(id: String!): Boolean
   }
 `
 

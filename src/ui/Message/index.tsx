@@ -104,7 +104,7 @@ class Message extends React.PureComponent<Props, any> {
                     <JoinText>
                       <JoinMember id={message.author.id}>
                         <Trans id="Message.welcomeMessage">
-                          {`${name} has joined. Stay a while and listen!`}
+                          {`${name} has joined. Stay awhile and listen!`}
                         </Trans>
                       </JoinMember>
                     </JoinText>
