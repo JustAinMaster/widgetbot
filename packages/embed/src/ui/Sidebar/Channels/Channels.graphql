@@ -1,9 +1,13 @@
-query Channels($server: ID!) {
-  server(id: $server) {
+query Channels($guild: Snowflake!) {
+  guild(id: $guild) {
     channels {
       name
-      category
       id
+      ... on TextChannel {
+        parent {
+          name
+        }
+      }
     }
   }
 }

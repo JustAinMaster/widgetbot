@@ -11,5 +11,8 @@
     "start": "tsc -w",
     "build": "tsc && cp src/**/*.d.ts dist/"
   },
-  "private": false
+  "private": false,
+  "dependencies": {
+    "post-robot": "^8.0.28"
+  }
 }

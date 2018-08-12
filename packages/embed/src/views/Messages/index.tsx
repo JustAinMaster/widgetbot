@@ -1,12 +1,12 @@
-import MESSAGES from '@queries/Messages.graphql'
+import MESSAGES from './Messages.graphql'
 import OPEN_MODAL from '@queries/OpenModal.graphql'
-import { Channel, ChannelVariables } from '@queries/__generated__/Channel'
+import { Channel, ChannelVariables } from '@generated/Channel'
 import {
   Messages,
   MessagesVariables,
-  Messages_server_channel_messages
-} from '@queries/__generated__/Messages'
-import { OpenModal, OpenModalVariables } from '@queries/__generated__/OpenModal'
+  Messages_channel_TextChannel_messages
+} from '@generated/Messages'
+import { OpenModal, OpenModalVariables } from '@generated/OpenModal'
 import Header, { Name, Topic } from '@ui/Header'
 import { Join, Stretch } from '@ui/Header/elements'
 import Message from '@ui/Message'
@@ -35,7 +35,7 @@ import { Trans } from '@lingui/react'
 const defaultInvite = 'https://discord.gg/mpMQCuj'
 
 type InputProps = RouteComponentProps<{
-  server: string
+  guild: string
   channel: string
 }>
 
@@ -46,29 +46,32 @@ interface Props {
 
   fetchMessages(): Promise<void>
 
-  messages: Messages_server_channel_messages[]
-  groupedMessages: Messages_server_channel_messages[][]
+  messages: Messages_channel_TextChannel_messages[]
+  groupedMessages: Messages_channel_TextChannel_messages[][]
 }
 
 const withMessages = graphql<InputProps, Messages, MessagesVariables, Props>(
   MESSAGES,
   {
     options({ match }) {
-      const { server, channel } = match.params
+      const { channel } = match.params
 
       return {
         fetchPolicy: 'cache-and-network',
         variables: {
-          server,
           channel
         }
       }
     },
     props({ data, ownProps }) {
-      const { server, channel } = ownProps.match.params
+      const { channel } = ownProps.match.params
 
       const messages =
-        (data && data.server && data.server.channel.messages) || []
+        (data &&
+          data.channel &&
+          data.channel.__typename === 'TextChannel' &&
+          data.channel.messages) ||
+        []
 
       return {
         loading: data.loading,
@@ -76,7 +79,7 @@ const withMessages = graphql<InputProps, Messages, MessagesVariables, Props>(
 
         ready:
           !data.loading ||
-          (data && data.server && data.server.channel.id === channel),
+          (data && data.channel && data.channel.id === channel),
 
         async fetchMessages() {
           const [firstMessage] = messages
@@ -87,7 +90,7 @@ const withMessages = graphql<InputProps, Messages, MessagesVariables, Props>(
 
           await data.fetchMore({
             query: MESSAGES,
-            variables: { server, channel },
+            variables: { channel },
             updateQuery: (prev, options) =>
               produce(prev, draftState => {
                 console.log(prev)
@@ -147,16 +150,16 @@ class MessagesView extends React.PureComponent<
 
   @autobind
   header() {
-    const { server, channel } = this.props.match.params
+    const { guild, channel } = this.props.match.params
 
     return (
-      <Query<Channel, ChannelVariables>
-        query={CHANNEL}
-        variables={{ server, channel }}
-      >
+      <Query<Channel, ChannelVariables> query={CHANNEL} variables={{ channel }}>
         {({ loading, error, data }) => {
-          const name = loading || error ? '' : data.server.channel.name
-          const topic = loading || error ? null : data.server.channel.topic
+          const name = loading || error ? '' : data.channel.name
+          const topic =
+            loading || error || data.channel.__typename !== 'TextChannel'
+              ? null
+              : data.channel.topic
 
           return (
             <Header>
@@ -245,7 +248,6 @@ class MessagesView extends React.PureComponent<
   }
 
   render() {
-    console.log(this.props.loading)
     const { error } = this.props
 
     if (error) return <ErrorAhoy message={formatError(error)} />

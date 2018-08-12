@@ -1,0 +1,12 @@
+#import "./Fragments/Message.graphql"
+
+query Messages($channel: Snowflake!) {
+  channel(id: $channel) {
+    id
+    ... on TextChannel {
+      messages {
+        ...Message
+      }
+    }
+  }
+}

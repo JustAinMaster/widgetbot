@@ -1,19 +1,18 @@
 import GET_MODAL from '@queries/ModalInfo.graphql'
 import CLOSE_MODAL from '@queries/CloseModal.graphql'
 
-import { CloseModal } from '@queries/__generated__/CloseModal'
-
 import Markdown from '@ui/shared/markdown/render'
 import { ThemeProvider } from 'emotion-theming'
 import * as React from 'react'
 import { DataProps, graphql, Mutation } from 'react-apollo'
 import Hotkeys from 'react-hot-keys'
 
-import { ModalInfo } from './__generated__/ModalInfo'
 import About from './About'
 import Authenticate from './Authenticate'
 import { Box, Close, Content, Image, OpenImage, Root } from './elements'
 import { Trans } from '@lingui/react'
+import { ModalInfo } from '@generated/ModalInfo'
+import { CloseModal } from '@generated/CloseModal'
 
 class Modal extends React.PureComponent<DataProps<ModalInfo>> {
   theme = theme => ({

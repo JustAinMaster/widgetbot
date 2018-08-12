@@ -1,4 +1,4 @@
-import { SidebarVisibility } from '@queries/__generated__/SidebarVisibility'
+import { SidebarVisibility } from '@generated/SidebarVisibility'
 import SIDEBAR_VISIBILITY from '@queries/SidebarVisibility.graphql'
 import * as React from 'react'
 import { Query } from 'react-apollo'

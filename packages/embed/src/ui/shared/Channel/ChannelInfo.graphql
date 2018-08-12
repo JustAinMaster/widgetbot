@@ -1,9 +1,11 @@
-query ChannelInfo($server: ID!, $channel: ID!) {
-  server(id: $server) {
-    channel(id: $channel) {
+query ChannelInfo($channel: Snowflake!) {
+  channel(id: $channel) {
+    ... on TextChannel {
       name
-      category
       id
+      parent {
+        name
+      }
     }
   }
 }

@@ -1,8 +1,5 @@
-import { SidebarVisibility } from '@queries/__generated__/SidebarVisibility'
-import {
-  ToggleSidebar,
-  ToggleSidebarVariables
-} from '@queries/__generated__/ToggleSidebar'
+import { SidebarVisibility } from '@generated/SidebarVisibility'
+import { ToggleSidebar, ToggleSidebarVariables } from '@generated/ToggleSidebar'
 import SIDEBAR_VISIBILITY from '@queries/SidebarVisibility.graphql'
 import TOGGLE_SIDEBAR from '@queries/ToggleSidebar.graphql'
 import * as React from 'react'

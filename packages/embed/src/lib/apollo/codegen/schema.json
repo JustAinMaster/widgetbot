@@ -125,13 +125,13 @@
           "deprecationReason": null
         },
         {
-          "name": "parentID",
+          "name": "position",
           "description": null,
           "args": [],
           "type": {
             "kind": "NON_NULL",
             "name": null,
-            "ofType": { "kind": "SCALAR", "name": "Snowflake", "ofType": null }
+            "ofType": { "kind": "SCALAR", "name": "Float", "ofType": null }
           },
           "isDeprecated": false,
           "deprecationReason": null
@@ -155,26 +155,14 @@
           "type": { "kind": "SCALAR", "name": "Float", "ofType": null },
           "isDeprecated": false,
           "deprecationReason": null
-        },
-        {
-          "name": "position",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "NON_NULL",
-            "name": null,
-            "ofType": { "kind": "SCALAR", "name": "Float", "ofType": null }
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
         }
       ],
       "inputFields": null,
       "interfaces": null,
       "enumValues": null,
       "possibleTypes": [
-        { "kind": "OBJECT", "name": "TextChannel", "ofType": null },
         { "kind": "OBJECT", "name": "CategoryChannel", "ofType": null },
+        { "kind": "OBJECT", "name": "TextChannel", "ofType": null },
         { "kind": "OBJECT", "name": "VoiceChannel", "ofType": null }
       ]
     },
@@ -194,6 +182,17 @@
       "name": "String",
       "description":
         "The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
+      "fields": null,
+      "inputFields": null,
+      "interfaces": null,
+      "enumValues": null,
+      "possibleTypes": null
+    },
+    {
+      "kind": "SCALAR",
+      "name": "Float",
+      "description":
+        "The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point). ",
       "fields": null,
       "inputFields": null,
       "interfaces": null,
@@ -426,17 +425,6 @@
       "kind": "SCALAR",
       "name": "Boolean",
       "description": "The `Boolean` scalar type represents `true` or `false`.",
-      "fields": null,
-      "inputFields": null,
-      "interfaces": null,
-      "enumValues": null,
-      "possibleTypes": null
-    },
-    {
-      "kind": "SCALAR",
-      "name": "Float",
-      "description":
-        "The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point). ",
       "fields": null,
       "inputFields": null,
       "interfaces": null,
@@ -724,7 +712,7 @@
           "deprecationReason": null
         },
         {
-          "name": "timestamp",
+          "name": "createdAt",
           "description": "Message timestamp",
           "args": [],
           "type": {
@@ -732,6 +720,14 @@
             "name": null,
             "ofType": { "kind": "SCALAR", "name": "Timestamp", "ofType": null }
           },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "editedAt",
+          "description": "Time the message was edited",
+          "args": [],
+          "type": { "kind": "SCALAR", "name": "Timestamp", "ofType": null },
           "isDeprecated": false,
           "deprecationReason": null
         }
@@ -787,6 +783,18 @@
         },
         {
           "name": "type",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "avatarURL",
           "description": null,
           "args": [],
           "type": {
@@ -2097,6 +2105,18 @@
           "deprecationReason": null
         },
         {
+          "name": "avatarURL",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
           "name": "createdAt",
           "description": null,
           "args": [],
@@ -2185,6 +2205,18 @@
         },
         {
           "name": "type",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "avatarURL",
           "description": null,
           "args": [],
           "type": {
@@ -2347,6 +2379,18 @@
           "deprecationReason": null
         },
         {
+          "name": "avatarURL",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
           "name": "createdAt",
           "description": null,
           "args": [],
@@ -2446,7 +2490,7 @@
           "deprecationReason": null
         },
         {
-          "name": "timestamp",
+          "name": "createdAt",
           "description": "Message timestamp",
           "args": [],
           "type": {
@@ -2454,6 +2498,14 @@
             "name": null,
             "ofType": { "kind": "SCALAR", "name": "Timestamp", "ofType": null }
           },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "editedAt",
+          "description": "Time the message was edited",
+          "args": [],
+          "type": { "kind": "SCALAR", "name": "Timestamp", "ofType": null },
           "isDeprecated": false,
           "deprecationReason": null
         },
@@ -2821,17 +2873,9 @@
     },
     {
       "kind": "OBJECT",
-      "name": "Reaction",
+      "name": "CustomEmoji",
       "description": null,
       "fields": [
-        {
-          "name": "id",
-          "description": null,
-          "args": [],
-          "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-          "isDeprecated": false,
-          "deprecationReason": null
-        },
         {
           "name": "name",
           "description": null,
@@ -2840,6 +2884,138 @@
             "kind": "NON_NULL",
             "name": null,
             "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "animated",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "SCALAR", "name": "Boolean", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "id",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "SCALAR", "name": "Snowflake", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "identifier",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "url",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        }
+      ],
+      "inputFields": null,
+      "interfaces": [{ "kind": "INTERFACE", "name": "Emoji", "ofType": null }],
+      "enumValues": null,
+      "possibleTypes": null
+    },
+    {
+      "kind": "INTERFACE",
+      "name": "Emoji",
+      "description": null,
+      "fields": [
+        {
+          "name": "name",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        }
+      ],
+      "inputFields": null,
+      "interfaces": null,
+      "enumValues": null,
+      "possibleTypes": [
+        { "kind": "OBJECT", "name": "CustomEmoji", "ofType": null },
+        { "kind": "OBJECT", "name": "TextEmoji", "ofType": null }
+      ]
+    },
+    {
+      "kind": "OBJECT",
+      "name": "TextEmoji",
+      "description": null,
+      "fields": [
+        {
+          "name": "name",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "utf8",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        }
+      ],
+      "inputFields": null,
+      "interfaces": [{ "kind": "INTERFACE", "name": "Emoji", "ofType": null }],
+      "enumValues": null,
+      "possibleTypes": null
+    },
+    {
+      "kind": "OBJECT",
+      "name": "Reaction",
+      "description": null,
+      "fields": [
+        {
+          "name": "emoji",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "INTERFACE", "name": "Emoji", "ofType": null }
           },
           "isDeprecated": false,
           "deprecationReason": null
@@ -2916,7 +3092,7 @@
           "deprecationReason": null
         },
         {
-          "name": "timestamp",
+          "name": "createdAt",
           "description": "Message timestamp",
           "args": [],
           "type": {
@@ -2924,6 +3100,14 @@
             "name": null,
             "ofType": { "kind": "SCALAR", "name": "Timestamp", "ofType": null }
           },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "editedAt",
+          "description": "Time the message was edited",
+          "args": [],
+          "type": { "kind": "SCALAR", "name": "Timestamp", "ofType": null },
           "isDeprecated": false,
           "deprecationReason": null
         },
@@ -2952,14 +3136,6 @@
               }
             }
           },
-          "isDeprecated": false,
-          "deprecationReason": null
-        },
-        {
-          "name": "editedAt",
-          "description": "Time the message was edited",
-          "args": [],
-          "type": { "kind": "SCALAR", "name": "Timestamp", "ofType": null },
           "isDeprecated": false,
           "deprecationReason": null
         },
@@ -3021,6 +3197,99 @@
     },
     {
       "kind": "OBJECT",
+      "name": "CategoryChannel",
+      "description": null,
+      "fields": [
+        {
+          "name": "createdAt",
+          "description": null,
+          "args": [],
+          "type": { "kind": "SCALAR", "name": "Timestamp", "ofType": null },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "id",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "SCALAR", "name": "Snowflake", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "name",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "position",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "SCALAR", "name": "Float", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "guild",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "OBJECT", "name": "Guild", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "calculatedPosition",
+          "description": null,
+          "args": [],
+          "type": { "kind": "SCALAR", "name": "Float", "ofType": null },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "children",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": {
+              "kind": "OBJECT",
+              "name": "TextChannel",
+              "ofType": null
+            }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        }
+      ],
+      "inputFields": null,
+      "interfaces": [
+        { "kind": "INTERFACE", "name": "GuildChannel", "ofType": null }
+      ],
+      "enumValues": null,
+      "possibleTypes": null
+    },
+    {
+      "kind": "OBJECT",
       "name": "TextChannel",
       "description": null,
       "fields": [
@@ -3057,13 +3326,13 @@
           "deprecationReason": null
         },
         {
-          "name": "parentID",
+          "name": "position",
           "description": null,
           "args": [],
           "type": {
             "kind": "NON_NULL",
             "name": null,
-            "ofType": { "kind": "SCALAR", "name": "Snowflake", "ofType": null }
+            "ofType": { "kind": "SCALAR", "name": "Float", "ofType": null }
           },
           "isDeprecated": false,
           "deprecationReason": null
@@ -3085,18 +3354,6 @@
           "description": null,
           "args": [],
           "type": { "kind": "SCALAR", "name": "Float", "ofType": null },
-          "isDeprecated": false,
-          "deprecationReason": null
-        },
-        {
-          "name": "position",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "NON_NULL",
-            "name": null,
-            "ofType": { "kind": "SCALAR", "name": "Float", "ofType": null }
-          },
           "isDeprecated": false,
           "deprecationReason": null
         },
@@ -3172,108 +3429,15 @@
           },
           "isDeprecated": false,
           "deprecationReason": null
-        }
-      ],
-      "inputFields": null,
-      "interfaces": [
-        { "kind": "INTERFACE", "name": "GuildChannel", "ofType": null }
-      ],
-      "enumValues": null,
-      "possibleTypes": null
-    },
-    {
-      "kind": "OBJECT",
-      "name": "CategoryChannel",
-      "description": null,
-      "fields": [
-        {
-          "name": "createdAt",
-          "description": null,
-          "args": [],
-          "type": { "kind": "SCALAR", "name": "Timestamp", "ofType": null },
-          "isDeprecated": false,
-          "deprecationReason": null
         },
         {
-          "name": "id",
+          "name": "parent",
           "description": null,
           "args": [],
           "type": {
-            "kind": "NON_NULL",
-            "name": null,
-            "ofType": { "kind": "SCALAR", "name": "Snowflake", "ofType": null }
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        },
-        {
-          "name": "name",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "NON_NULL",
-            "name": null,
-            "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        },
-        {
-          "name": "parentID",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "NON_NULL",
-            "name": null,
-            "ofType": { "kind": "SCALAR", "name": "Snowflake", "ofType": null }
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        },
-        {
-          "name": "guild",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "NON_NULL",
-            "name": null,
-            "ofType": { "kind": "OBJECT", "name": "Guild", "ofType": null }
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        },
-        {
-          "name": "calculatedPosition",
-          "description": null,
-          "args": [],
-          "type": { "kind": "SCALAR", "name": "Float", "ofType": null },
-          "isDeprecated": false,
-          "deprecationReason": null
-        },
-        {
-          "name": "position",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "NON_NULL",
-            "name": null,
-            "ofType": { "kind": "SCALAR", "name": "Float", "ofType": null }
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        },
-        {
-          "name": "children",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "NON_NULL",
-            "name": null,
-            "ofType": {
-              "kind": "OBJECT",
-              "name": "TextChannel",
-              "ofType": null
-            }
+            "kind": "OBJECT",
+            "name": "CategoryChannel",
+            "ofType": null
           },
           "isDeprecated": false,
           "deprecationReason": null
@@ -3324,13 +3488,13 @@
           "deprecationReason": null
         },
         {
-          "name": "parentID",
+          "name": "position",
           "description": null,
           "args": [],
           "type": {
             "kind": "NON_NULL",
             "name": null,
-            "ofType": { "kind": "SCALAR", "name": "Snowflake", "ofType": null }
+            "ofType": { "kind": "SCALAR", "name": "Float", "ofType": null }
           },
           "isDeprecated": false,
           "deprecationReason": null
@@ -3352,18 +3516,6 @@
           "description": null,
           "args": [],
           "type": { "kind": "SCALAR", "name": "Float", "ofType": null },
-          "isDeprecated": false,
-          "deprecationReason": null
-        },
-        {
-          "name": "position",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "NON_NULL",
-            "name": null,
-            "ofType": { "kind": "SCALAR", "name": "Float", "ofType": null }
-          },
           "isDeprecated": false,
           "deprecationReason": null
         },
@@ -3423,6 +3575,18 @@
             "kind": "NON_NULL",
             "name": null,
             "ofType": { "kind": "SCALAR", "name": "Boolean", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "parent",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "OBJECT",
+            "name": "CategoryChannel",
+            "ofType": null
           },
           "isDeprecated": false,
           "deprecationReason": null

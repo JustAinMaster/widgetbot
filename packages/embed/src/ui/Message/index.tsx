@@ -1,4 +1,4 @@
-import { Messages_server_channel_messages } from '@queries/__generated__/Messages'
+import { Messages_channel_TextChannel_messages } from '@generated/Messages'
 import Markdown from '@ui/shared/markdown/render'
 import { ThemeProvider } from 'emotion-theming'
 import Moment from 'moment'
@@ -18,14 +18,16 @@ import {
   Root
 } from './elements'
 import { Image } from './Embed/elements/media'
-import parseUsername from './parseUsername'
 import Reaction from './Reaction'
 import { Trans } from '@lingui/react'
+import Embed from './Embed'
 
 interface Props {
-  messages: Messages_server_channel_messages[]
+  messages: Messages_channel_TextChannel_messages[]
   style?
 }
+
+const DEFAULT_AVATAR = 'https://cdn.discordapp.com/embed/avatars/0.png'
 
 class Message extends React.PureComponent<Props, any> {
   theme = message => theme => ({
@@ -40,14 +42,17 @@ class Message extends React.PureComponent<Props, any> {
     return (
       <Group style={this.props.style} className="group">
         {firstMessage.__typename !== 'JoinMessage' ? (
-          <Avatar url={firstMessage.author.avatarURL} className="avatar" />
+          <Avatar
+            url={firstMessage.author.avatarURL || DEFAULT_AVATAR}
+            className="avatar"
+          />
         ) : null}
 
         <Messages className="messages">
           {firstMessage.__typename !== 'JoinMessage' ? (
             <Author
               author={firstMessage.author}
-              time={firstMessage.timestamp}
+              time={firstMessage.createdAt}
             />
           ) : null}
 
@@ -72,17 +77,20 @@ class Message extends React.PureComponent<Props, any> {
                         )}
                       </Content>
 
-                      {message.attachment && (
-                        <Image
-                          src={message.attachment.url}
-                          height={+message.attachment.height}
-                          width={+message.attachment.width}
-                        />
-                      )}
+                      {message.attachments
+                        ? message.attachments.map((attachment, i) => (
+                            <Image
+                              key={`${i}:${attachment}`}
+                              src={attachment.url}
+                              height={+attachment.height}
+                              width={+attachment.width}
+                            />
+                          ))
+                        : null}
 
-                      {/*{message.embeds.map((embed, i) => (
-                    <Embed key={i} {...embed} />
-                  ))}*/}
+                      {/* {message.embeds.map((embed, i) => (
+                        <Embed key={i} {...embed} />
+                      ))} */}
 
                       {message.reactions && (
                         <Reactions className="reactions">
@@ -97,18 +105,18 @@ class Message extends React.PureComponent<Props, any> {
               }
 
               case 'JoinMessage': {
-                const { name } = parseUsername(message.author.name)
-
                 return (
                   <React.Fragment key={message.id}>
                     <JoinText>
                       <JoinMember id={message.author.id}>
                         <Trans id="Message.welcomeMessage">
-                          {`${name} has joined. Stay awhile and listen!`}
+                          {`${
+                            message.author.username
+                          } has joined. Stay awhile and listen!`}
                         </Trans>
                       </JoinMember>
                     </JoinText>
-                    <Timestamp time={message.timestamp} />
+                    <Timestamp time={message.createdAt} />
                   </React.Fragment>
                 )
               }

@@ -1,5 +1,5 @@
-query Theme($server: ID!) {
-  server(id: $server) {
+query Theme($guild: Snowflake!) {
+  guild(id: $guild) {
     theme {
       css
       colors {

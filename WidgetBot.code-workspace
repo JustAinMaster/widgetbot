@@ -43,6 +43,6 @@
     "todo-tree.flat": true,
     "todo-tree.grouped": false,
     "todo-tree.expanded": true,
-    "typescript.tsdk": "node_modules\\typescript\\lib"
+    "typescript.tsdk": "🖥️\tserver\\node_modules\\typescript\\lib"
   }
 }

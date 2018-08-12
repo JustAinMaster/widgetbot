@@ -18,7 +18,7 @@ import ThemeProvider from './ThemeProvider'
 import i18n, { loadCatalog } from '@lib/i18n'
 import { graphql, ChildProps } from 'react-apollo'
 import gql from 'graphql-tag'
-import { Locale } from './__generated__/Locale'
+import { Locale } from '@generated/Locale'
 import produce from 'immer'
 
 class App extends React.PureComponent<
@@ -30,13 +30,13 @@ class App extends React.PureComponent<
 
   app = () => (
     <Switch>
-      <Route path="/:server">
+      <Route path="/:guild">
         <React.Fragment>
           <Modal />
           <Notifications />
           <Sidebar />
           <Switch>
-            <Route path="/:server/:channel" component={MessagesView} />
+            <Route path="/:guild/:channel" component={MessagesView} />
             <Route component={ChooseChannel} />
           </Switch>
         </React.Fragment>

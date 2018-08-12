@@ -1,8 +1,8 @@
-query Channel($server: ID!, $channel: ID!) {
-  server(id: $server) {
-    channel(id: $channel) {
-      name
-      id
+query Channel($channel: Snowflake!) {
+  channel(id: $channel) {
+    name
+    id
+    ... on TextChannel {
       topic
     }
   }

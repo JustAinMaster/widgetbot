@@ -1,0 +1,9 @@
+#import "./Fragments/Message.graphql"
+
+subscription NewMessages($guild: Snowflake!, $channel: Snowflake!) {
+  message(filter: { guild: $guild, channel: $channel }) {
+    message {
+      ...Message
+    }
+  }
+}

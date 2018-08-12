@@ -1,13 +1,12 @@
-import { member } from '@queries/fragments/__generated__/member'
+import { Author as $Author } from '@generated/Author'
 import Moment from 'moment'
 import * as React from 'react'
 
-import parseUsername from '../parseUsername'
 import { Verified } from './Badges'
 import { Name, Root, Time } from './elements'
 
 interface Props {
-  author: member
+  author: $Author
   time: number
 }
 
@@ -33,12 +32,15 @@ class Author extends React.PureComponent<Props> {
 
   render() {
     const { author, time } = this.props
-    const { name } = parseUsername(author.name)
+
+    const hexColor =
+      (author.__typename === 'GuildMember' ? author.displayHexColor : null) ||
+      '#fff'
 
     return (
       <Root className="author">
-        <Name color={author.color} className="name">
-          {name}
+        <Name color={hexColor} className="name">
+          {author.username}
         </Name>
         {this.tags()}
         <Timestamp time={time} />

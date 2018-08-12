@@ -3,18 +3,15 @@ import { Route } from 'react-router'
 import * as React from 'react'
 import { Query } from 'react-apollo'
 
-import {
-  MemberInfo,
-  MemberInfo_server_member,
-  MemberInfoVariables
-} from './__generated__/MemberInfo'
+import { MemberInfo } from '@generated/MemberInfo'
 import MemberLink from './link'
 import MEMBER_INFO from './MemberInfo.graphql'
 
+// TODO: FIx
 interface Props {
   id: string
   className?: string
-  children: (member: MemberInfo_server_member) => any
+  children: (member: any /*MemberInfo_server_member*/) => any
 }
 
 const Member = ({ id: member, children, className }: Props) => (
@@ -24,7 +21,7 @@ const Member = ({ id: member, children, className }: Props) => (
         params: { server }
       }
     }) => (
-      <Query<MemberInfo, MemberInfoVariables>
+      <Query /*<MemberInfo, MemberInfoVariables>*/
         query={MEMBER_INFO}
         variables={{ server, member }}
       >

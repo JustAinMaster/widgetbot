@@ -1,14 +1,14 @@
 import Color from 'color'
 import styled, { ThemedReactEmotionInterface } from 'react-emotion'
 
-import { Theme_server_theme } from '../../app/__generated__/Theme'
 import { ParsedUrl } from '../../types/url'
+import { Theme_guild_theme } from '@generated/Theme'
 
 export * from 'react-emotion'
 
-export interface Theme extends Theme_server_theme {
+export interface Theme extends Theme_guild_theme {
   colors: {
-    __typename: 'Colors'
+    __typename: 'ThemeColors'
     _primary: Color
     _accent: Color
     _background: Color

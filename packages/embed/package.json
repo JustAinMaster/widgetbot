@@ -20,10 +20,34 @@
     "test": "react-app-rewired test --env=jsdom --scripts-version react-scripts-ts",
     "eject": "react-app-rewired eject --scripts-version react-scripts-ts",
     "schema": "apollo schema:download --endpoint=http://localhost:7000/api/graphql src/lib/apollo/codegen/schema.json; node src/lib/apollo/codegen/update.js",
-    "codegen": "apollo codegen:generate --target=typescript --schema=\"src/lib/apollo/codegen/schema.json\" --queries=\"src/**/*.{ts,tsx}\" --clientSchema=\"src/state/schema.ts\" --addTypename",
-    "typecheck": "tsc src/ --noEmit",
+    "codegen": "rm -rf `find -type d -name __generated__`; apollo codegen:generate --target=typescript --addTypename --outputFlat src/__generated__",
     "codegen:live": "yarn codegen --schema=\"http://localhost:7000/api/graphql\"",
+    "typecheck": "tsc src/ --noEmit",
     "doc": "typedoc --includeDeclarations --excludeExternals --externalPattern \"**/node_modules/!(@widgetbot)/**\" --ignoreCompilerErrors --out ./docs/ ./src"
+  },
+  "apollo": {
+    "schemas": {
+      "publicSchema": {
+        "schema": "src/lib/apollo/codegen/schema.json",
+        "endpoint": "http://localhost:7000/api/graphql"
+      },
+      "clientSchema": {
+        "extends": "publicSchema",
+        "clientSide": true,
+        "schema": "./src/state/schema.js"
+      }
+    },
+    "queries": [
+      {
+        "schema": "clientSchema",
+        "includes": [
+          "./src/**/*.{graphql,tsx}"
+        ],
+        "excludes": [
+          "node_modules/**"
+        ]
+      }
+    ]
   },
   "dependencies": {
     "@lingui/react": "^2.3.0",

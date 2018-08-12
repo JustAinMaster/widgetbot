@@ -1,4 +1,4 @@
-import { OpenModal, OpenModalVariables } from '@queries/__generated__/OpenModal'
+import { OpenModal, OpenModalVariables } from '@generated/OpenModal'
 import OPEN_MODAL from '@queries/OpenModal.graphql'
 import optimize from '@ui/shared/ExpandableImage/optimize'
 import { Scale } from '@ui/shared/ScaledImage'

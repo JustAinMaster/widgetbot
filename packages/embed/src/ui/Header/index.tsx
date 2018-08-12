@@ -3,14 +3,11 @@ import * as React from 'react'
 import { Root } from './elements'
 import Hamburger from './Hamburger'
 
-import { SidebarVisibility } from '@queries/__generated__/SidebarVisibility'
+import { SidebarVisibility } from '@generated/SidebarVisibility'
 import SIDEBAR_VISIBILITY from '@queries/SidebarVisibility.graphql'
 import TOGGLE_SIDEBAR from '@queries/ToggleSidebar.graphql'
 import { Query, Mutation } from 'react-apollo'
-import {
-  ToggleSidebarVariables,
-  ToggleSidebar
-} from '@queries/__generated__/ToggleSidebar'
+import { ToggleSidebarVariables, ToggleSidebar } from '@generated/ToggleSidebar'
 
 const Header = ({ children }) => (
   <Query<SidebarVisibility> query={SIDEBAR_VISIBILITY}>

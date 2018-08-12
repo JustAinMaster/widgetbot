@@ -6,32 +6,25 @@ import { Query } from 'react-apollo'
 import { Route } from 'react-router'
 import { GlobalStyles } from './elements'
 import GET_THEME from './Theme.graphql'
-import {
-  Theme,
-  ThemeVariables,
-  Theme_server_theme
-} from './__generated__/Theme'
+import { Theme, ThemeVariables, Theme_guild_theme } from '@generated/Theme'
 
 class ThemeProvider extends React.PureComponent {
   render() {
     const { children } = this.props
 
     return (
-      <Route path="/:server">
+      <Route path="/:guild">
         {({
           match: {
-            params: { server }
+            params: { guild }
           }
         }) => (
-          <Query<Theme, ThemeVariables>
-            query={GET_THEME}
-            variables={{ server }}
-          >
+          <Query<Theme, ThemeVariables> query={GET_THEME} variables={{ guild }}>
             {({ loading, error, data }) => {
-              let theme: Theme_server_theme = {
+              let theme: Theme_guild_theme = {
                 __typename: 'Theme',
                 colors: {
-                  __typename: 'Colors',
+                  __typename: 'ThemeColors',
                   primary: '#fff',
                   accent: '#7289da',
                   background: '#36393E'
@@ -39,10 +32,10 @@ class ThemeProvider extends React.PureComponent {
                 css: ``
               }
 
-              if (!error && !loading && data.server.theme) {
+              if (!error && !loading && data.guild.theme) {
                 theme = {
                   ...theme,
-                  ...data.server.theme
+                  ...data.guild.theme
                 }
               }
 

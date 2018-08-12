@@ -5,8 +5,8 @@
         "kind": "INTERFACE",
         "name": "GuildChannel",
         "possibleTypes": [
-          { "name": "TextChannel" },
           { "name": "CategoryChannel" },
+          { "name": "TextChannel" },
           { "name": "VoiceChannel" }
         ]
       },
@@ -32,6 +32,11 @@
           { "name": "MessageUpdateSub" },
           { "name": "MessageDeleteSub" }
         ]
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "Emoji",
+        "possibleTypes": [{ "name": "CustomEmoji" }, { "name": "TextEmoji" }]
       }
     ]
   }

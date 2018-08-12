@@ -92,10 +92,8 @@ export const Close = styled('button')`
 
   &:hover,
   &:focus {
-    background-color: ${({ theme }) => {
-      console.log(theme)
-      return theme.colors._primary.fade(0.8).string()
-    }};
+    background-color: ${({ theme }) =>
+      theme.colors._primary.fade(0.8).string()};
   }
 
   &,

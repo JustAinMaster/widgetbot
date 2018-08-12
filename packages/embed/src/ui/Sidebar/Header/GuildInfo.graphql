@@ -1,7 +1,7 @@
-query QuildInfo($server: ID!) {
-  server(id: $server) {
+query GuildInfo($guild: Snowflake!) {
+  guild(id: $guild) {
     name
-    icon
+    iconURL
     memberCount
   }
 }

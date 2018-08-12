@@ -4,63 +4,62 @@ import * as React from 'react'
 import { Query } from 'react-apollo'
 import Emoji from '@ui/shared/Emoji'
 
-import {
-  ChannelInfo,
-  ChannelInfo_server_channel,
-  ChannelInfoVariables
-} from './__generated__/ChannelInfo'
+import { ChannelInfo, ChannelInfoVariables } from '@generated/ChannelInfo'
 import ChannelLink from './link'
-import { Route } from 'react-router'
 import CHANNEL_INFO from './ChannelInfo.graphql'
 
 interface Props {
   id: string
   className?: string
-  children: (channel: ChannelInfo_server_channel) => any
+  children: (
+    channel: {
+      name: string
+      id: string
+      category: string
+    }
+  ) => any
 }
 
 const Channel = ({ id: channel, children, className }: Props) => (
-  <Route path="/:server">
-    {({
-      match: {
-        params: { server }
-      }
-    }) => (
-      <Query<ChannelInfo, ChannelInfoVariables>
-        query={CHANNEL_INFO}
-        variables={{ server, channel }}
-      >
-        {({ error, loading, data }) => {
-          const success = !error && !loading && data && data.server
-          const name = success ? data.server.channel.name : 'deleted-channel'
-          const category = success ? data.server.channel.category : null
+  <Query<ChannelInfo, ChannelInfoVariables>
+    query={CHANNEL_INFO}
+    variables={{ channel }}
+  >
+    {({ error, loading, data }) => {
+      let name = 'deleted-channel'
+      let category: string = null
 
-          return (
-            <Tooltip
-              placement="top"
-              overlay={<Emoji>{category || ''}</Emoji>}
-              mouseLeaveDelay={0}
-              trigger={category ? ['hover'] : []}
-            >
-              <span>
-                <ChannelLink
-                  id={channel}
-                  className={cx('channel-link', className)}
-                >
-                  {children({
-                    __typename: 'Channel',
-                    name,
-                    id: channel,
-                    category
-                  })}
-                </ChannelLink>
-              </span>
-            </Tooltip>
-          )
-        }}
-      </Query>
-    )}
-  </Route>
+      if (
+        !error &&
+        !loading &&
+        data &&
+        data.channel &&
+        data.channel.__typename === 'TextChannel'
+      ) {
+        name = data.channel.name
+        category = data.channel.parent.name
+      }
+
+      return (
+        <Tooltip
+          placement="top"
+          overlay={<Emoji>{category || ''}</Emoji>}
+          mouseLeaveDelay={0}
+          trigger={category ? ['hover'] : []}
+        >
+          <span>
+            <ChannelLink id={channel} className={cx('channel-link', className)}>
+              {children({
+                name,
+                id: channel,
+                category
+              })}
+            </ChannelLink>
+          </span>
+        </Tooltip>
+      )
+    }}
+  </Query>
 )
 
 export default Channel

@@ -1,35 +1,34 @@
-import { Messages_server_channel_messages_TextMessage_reactions } from '@queries/__generated__/Messages'
-import { findFromEmoji } from '@ui/shared/Emoji/emojiMap'
+import { Messages_channel_TextChannel_messages_TextMessage_reactions } from '@generated/Messages'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 
 import { Count, Emoji, Root } from './elements'
 
-const Reaction = ({
-  name,
-  id,
-  count
-}: Messages_server_channel_messages_TextMessage_reactions) => {
-  let emojiName = name
-  if (!id) {
-    const match = findFromEmoji(name)
-    if (match) emojiName = match.keywords[0]
-  }
+type Props = Messages_channel_TextChannel_messages_TextMessage_reactions
 
-  return (
-    <Tooltip placement="top" overlay={`:${emojiName}:`} mouseEnterDelay={0.5}>
-      <span>
-        <Root className="reaction">
-          {id ? (
-            <Emoji src={`https://cdn.discordapp.com/emojis/${id}`} />
-          ) : (
-            <Emoji className="reaction-emoji">{name}</Emoji>
-          )}
-          <Count className="reaction-count">{count}</Count>
-        </Root>
-      </span>
-    </Tooltip>
-  )
+class Reaction extends React.Component<Props> {
+  render() {
+    const { emoji, count } = this.props
+
+    return (
+      <Tooltip
+        placement="top"
+        overlay={`:${emoji.name}:`}
+        mouseEnterDelay={0.5}
+      >
+        <span>
+          <Root className="reaction">
+            {emoji.__typename === 'CustomEmoji' ? (
+              <Emoji src={emoji.url} />
+            ) : (
+              <Emoji className="reaction-emoji">{emoji.utf8}</Emoji>
+            )}
+            <Count className="reaction-count">{count}</Count>
+          </Root>
+        </span>
+      </Tooltip>
+    )
+  }
 }
 
 export default Reaction

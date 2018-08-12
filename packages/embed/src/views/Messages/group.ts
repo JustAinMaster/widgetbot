@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import { Messages_server_channel_messages } from '@queries/__generated__/Messages'
+import { Messages_channel_TextChannel_messages } from '@generated/Messages'
 import memoize from 'memoizee'
 
 const compareTimestamp = (a, b) =>
@@ -9,16 +9,16 @@ const compareTimestamp = (a, b) =>
  * Compares whether a message should go in a group
  */
 const compareGroupability = (
-  a: Messages_server_channel_messages,
-  b: Messages_server_channel_messages
+  a: Messages_channel_TextChannel_messages,
+  b: Messages_channel_TextChannel_messages
 ) =>
   a.__typename === 'JoinMessage' ||
   // If the ID is not equal to the previous message
   a.author.id !== b.author.id ||
   // If the name is not equal to the previous message
-  a.author.name !== b.author.name ||
+  a.author.username !== b.author.username ||
   // If the interval between the previous message is greater than 5 mins
-  b.timestamp - a.timestamp > 5 * 60 * 1000
+  b.createdAt - a.createdAt > 5 * 60 * 1000
 
 /**
  * Groups messages into an array
@@ -28,12 +28,12 @@ const compareGroupability = (
  * [[{ id: 1 }], [{ id: 2 }], [{ id: 1 }, { id: 1 }]]
  * @param messages The messages to group
  */
-const Group = <Group extends Messages_server_channel_messages[]>(
+const Group = <Group extends Messages_channel_TextChannel_messages[]>(
   messages: Group
 ): Group[] => {
   const result = new Array<Group>()
   let group = null
-  let previous: Messages_server_channel_messages
+  let previous: Messages_channel_TextChannel_messages
 
   const sortedMessages = R.sort(compareTimestamp, messages)
 

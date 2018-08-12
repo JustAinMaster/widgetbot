@@ -1,4 +1,4 @@
-import { OpenModal, OpenModalVariables } from '@queries/__generated__/OpenModal'
+import { OpenModal, OpenModalVariables } from '@generated/OpenModal'
 import OPEN_MODAL from '@queries/OpenModal.graphql'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'

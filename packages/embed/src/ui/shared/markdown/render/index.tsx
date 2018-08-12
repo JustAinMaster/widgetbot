@@ -15,23 +15,31 @@ function parserFor(rules, returnAst?) {
   const renderer = SimpleMarkdown.reactFor(
     SimpleMarkdown.ruleOutput(rules, 'react')
   )
-  return function(input = '', inline = true, state = {}, transform = null) {
-    if (typeof input !== 'string') {
-      console.error(`[MARKDOWN_PARSE_ERROR] Expected type 'string', got`, input)
-      input = 'MARKDOWN_PARSE_ERROR'
+  return memoize(
+    (input = '', inline = true, state = {}, transform = null) => {
+      if (typeof input !== 'string') {
+        console.error(
+          `[MARKDOWN_PARSE_ERROR] Expected type 'string', got`,
+          input
+        )
+        input = 'MARKDOWN_PARSE_ERROR'
+      }
+
+      if (!inline) {
+        input += '\n\n'
+      }
+
+      const parse = R.pipe.apply(
+        this,
+        [parser, flattenAst, transform, !returnAst && renderer].filter(Boolean)
+      )
+
+      return parse(input, { inline, ...state })
+    },
+    {
+      normalizer: (...args) => JSON.stringify(args)
     }
-
-    if (!inline) {
-      input += '\n\n'
-    }
-
-    const parse = R.pipe.apply(
-      this,
-      [parser, flattenAst, transform, !returnAst && renderer].filter(Boolean)
-    )
-
-    return parse(input, { inline, ...state })
-  }
+  )
 }
 
 function createRules(rule: { [key: string]: any }) {
@@ -99,10 +107,7 @@ const rulesWithoutMaskedLinks = createRules({
     match: () => null
   }
 })
-const parse = R.pipe(
-  parserFor,
-  memoize
-)(rulesWithoutMaskedLinks)
+const parse = parserFor(rulesWithoutMaskedLinks)
 
 export const parseAllowLinks = parserFor(createRules(baseRules))
 export const parseEmbedTitle = parserFor(
@@ -112,17 +117,16 @@ export const parseEmbedTitle = parserFor(
   )
 )
 
-const $Markdown = ({ children }: { children: string }) =>
-  children ? parse(children) : null
-
-const Markdown = $Markdown as typeof $Markdown & {
-  withComponent(component: any): any
+function Markdown({ children }: { children: string }) {
+  return children ? parse(children) : null
 }
 
-Markdown.withComponent = Component => ({ children, ...props }) => (
-  <Component {...props}>
-    <Markdown>{children}</Markdown>
-  </Component>
-)
+namespace Markdown {
+  export const withComponent = Component => ({ children, ...props }) => (
+    <Component {...props}>
+      <Markdown>{children}</Markdown>
+    </Component>
+  )
+}
 
 export default Markdown

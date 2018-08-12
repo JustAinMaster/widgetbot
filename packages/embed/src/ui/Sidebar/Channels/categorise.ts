@@ -1,23 +1,27 @@
-import { Channels_server_channels } from '@queries/__generated__/Channels'
+import { Channels_guild_channels_TextChannel } from '@generated/Channels'
 
 export interface ICategory {
   name: string
-  channels: Channels_server_channels[]
+  channels: Channels_guild_channels_TextChannel[]
 }
 
-const categorise = (channels: Channels_server_channels[]): ICategory[] => {
+const categorise = (
+  channels: Channels_guild_channels_TextChannel[]
+): ICategory[] => {
   let indexes = new Map<string, number>()
   let categorised = new Array<ICategory>()
 
   channels.forEach((channel, i) => {
+    const category = channel.parent ? channel.parent.name : null
+
     const newCategory = {
-      name: channel.category,
+      name: category,
       channels: [channel]
     }
 
-    if (channel.category) {
+    if (category) {
       // The channel belongs in a named category
-      let index = indexes.get(channel.category)
+      let index = indexes.get(category)
 
       // If the category already exists
       if (typeof index === 'number') {
@@ -26,7 +30,7 @@ const categorise = (channels: Channels_server_channels[]): ICategory[] => {
       } else {
         // Create a new category
         index = categorised.push(newCategory) - 1
-        indexes.set(channel.category, index)
+        indexes.set(category, index)
       }
     } else {
       // The channel doesn't belong in a named category
