@@ -3,6 +3,7 @@ import {
   IntrospectionFragmentMatcher
 } from 'apollo-cache-inmemory'
 import { persistCache } from 'apollo-cache-persist'
+import localForage from 'localforage'
 
 import cacheRedirects from './cacheRedirects'
 import dataIdFromObject from './dataIdFromObject'
@@ -17,7 +18,7 @@ const cache = new InMemoryCache({
   cacheRedirects,
   dataIdFromObject
 })
-persistCache({ cache, storage: localStorage })
+persistCache({ cache, storage: localForage as any })
 
 export default cache
 ;(window as any).cache = cache

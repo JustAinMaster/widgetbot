@@ -22,12 +22,18 @@ class ExpandableImage extends React.PureComponent<Props> {
     type: null
   }
 
+  private mounted = true
+
   componentDidMount() {
     setTimeout(() => {
-      if (this.state.type !== null) return
+      if (!this.mounted || this.state.type !== null) return
 
       this.setState({ type: 'loading' })
     }, 100)
+  }
+
+  componentWillUnmount() {
+    this.mounted = false
   }
 
   render() {

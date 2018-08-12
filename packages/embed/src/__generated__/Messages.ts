@@ -196,4 +196,8 @@ export interface Messages {
 
 export interface MessagesVariables {
   channel: any
+  around?: any | null
+  before?: any | null
+  after?: any | null
+  limit?: number | null
 }

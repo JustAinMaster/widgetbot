@@ -14,7 +14,6 @@ import { Info, Loading, NoMessages } from '@ui/Overlays'
 import ErrorAhoy from '@ui/Overlays/ErrorAhoy'
 import Wrapper from '@ui/Wrapper'
 import { ApolloError } from 'apollo-client'
-import autobind from 'autobind-decorator'
 import produce from 'immer'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
@@ -39,7 +38,7 @@ type InputProps = RouteComponentProps<{
   channel: string
 }>
 
-interface Props {
+interface OwnProps {
   error: ApolloError
   loading: boolean
   ready: boolean
@@ -50,7 +49,7 @@ interface Props {
   groupedMessages: Messages_channel_TextChannel_messages[][]
 }
 
-const withMessages = graphql<InputProps, Messages, MessagesVariables, Props>(
+const withMessages = graphql<InputProps, Messages, MessagesVariables, OwnProps>(
   MESSAGES,
   {
     options({ match }) {
@@ -90,11 +89,13 @@ const withMessages = graphql<InputProps, Messages, MessagesVariables, Props>(
 
           await data.fetchMore({
             query: MESSAGES,
-            variables: { channel },
-            updateQuery: (prev, options) =>
+            variables: { channel, before },
+            updateQuery: (prev, { fetchMoreResult }) =>
               produce(prev, draftState => {
-                console.log(prev)
-                return prev
+                draftState.channel.messages = [
+                  ...fetchMoreResult.channel.messages,
+                  ...draftState.channel.messages
+                ]
               })
           })
         },
@@ -106,19 +107,43 @@ const withMessages = graphql<InputProps, Messages, MessagesVariables, Props>(
   }
 )
 
-class MessagesView extends React.PureComponent<
-  ChildProps<InputProps & Props, Messages>
-> {
-  state = {
+type Props = ChildProps<InputProps & OwnProps, Messages>
+
+interface State {
+  scrollToIndex: number
+}
+
+class MessagesView extends React.PureComponent<Props, State> {
+  private loadingMore = false
+  private readyToLoadMore = false
+  private width: number
+
+  private cache = new CellMeasurerCache({
+    fixedWidth: true,
+    keyMapper: this.getKey
+  })
+
+  public state = {
     scrollToIndex: -1
   }
 
-  private cache = new CellMeasurerCache({
-    fixedWidth: true
-  })
+  private getKey(rowIndex: number) {
+    const { groupedMessages, match } = this.props
+    const group = groupedMessages[rowIndex]
+    const ids = group ? group.map(m => m.id).join(':') : 'placeholder'
 
-  @autobind
-  renderRow({ index, key, style, parent }) {
+    // Given the following data points, the group should be identical
+    const identifier = [
+      match.params.guild,
+      match.params.channel,
+      ids,
+      this.width
+    ]
+
+    return identifier.join('$')
+  }
+
+  private renderRow({ index, key, style, parent }) {
     const { groupedMessages } = this.props
 
     return groupedMessages[index] ? (
@@ -126,7 +151,6 @@ class MessagesView extends React.PureComponent<
         key={key}
         cache={this.cache}
         parent={parent}
-        columnIndex={0}
         rowIndex={index}
       >
         <Message style={style} messages={groupedMessages[index]} />
@@ -134,23 +158,34 @@ class MessagesView extends React.PureComponent<
     ) : null
   }
 
-  @autobind
-  async loadMoreRows() {
-    const { loading } = this.props
+  public async loadMoreRows() {
+    if (this.loadingMore) return
 
-    if (!loading) {
-      await this.props.fetchMessages()
+    const prevMessageCount = this.props.groupedMessages.length
+    this.loadingMore = true
+    await this.props.fetchMessages()
+
+    this.loadingMore = false
+    this.cache.clearAll()
+
+    this.setState({
+      scrollToIndex: this.props.groupedMessages.length - prevMessageCount
+    })
+  }
+
+  public isRowLoaded({ index }) {
+    const loadMore = index === 0
+
+    if (loadMore) {
+      if (this.readyToLoadMore) return false
+      this.readyToLoadMore = true
     }
+
+    return true
   }
 
-  @autobind
-  isRowLoaded({ index }) {
-    return index > 0
-  }
-
-  @autobind
   header() {
-    const { guild, channel } = this.props.match.params
+    const { channel } = this.props.match.params
 
     return (
       <Query<Channel, ChannelVariables> query={CHANNEL} variables={{ channel }}>
@@ -202,7 +237,6 @@ class MessagesView extends React.PureComponent<
     )
   }
 
-  @autobind
   view() {
     const { ready, groupedMessages } = this.props
 
@@ -214,35 +248,41 @@ class MessagesView extends React.PureComponent<
         </NoMessages>
       )
 
-    // TODO: Super inefficient
-    // Clear the CellMeasurer cache on updates
-    this.cache.clearAll()
+    const count = groupedMessages.length
+
+    const { scrollToIndex } = this.state
+    const index = scrollToIndex < 0 ? count + scrollToIndex : scrollToIndex
 
     return (
       <AutoSizer>
-        {({ width, height }) => (
-          <InfiniteLoader
-            isRowLoaded={this.isRowLoaded}
-            loadMoreRows={this.loadMoreRows}
-            rowCount={groupedMessages.length}
-          >
-            {({ onRowsRendered, registerChild }) => (
-              <Scroller
-                width={width}
-                height={height - 47}
-                onRowsRendered={onRowsRendered}
-                listRef={registerChild}
-                deferredMeasurementCache={this.cache}
-                rowHeight={this.cache.rowHeight}
-                rowRenderer={this.renderRow}
-                rowCount={groupedMessages.length}
-                scrollToIndex={this.state.scrollToIndex}
-                scrollToAlignment="start"
-                overscanRowCount={3}
-              />
-            )}
-          </InfiniteLoader>
-        )}
+        {({ width, height }) => {
+          this.width = width
+
+          return (
+            <InfiniteLoader
+              isRowLoaded={this.isRowLoaded}
+              loadMoreRows={this.loadMoreRows}
+              rowCount={Infinity}
+              threshold={1}
+            >
+              {({ onRowsRendered, registerChild }) => (
+                <Scroller
+                  width={width}
+                  height={height - 47}
+                  onRowsRendered={onRowsRendered}
+                  listRef={registerChild}
+                  deferredMeasurementCache={this.cache}
+                  rowHeight={this.cache.rowHeight}
+                  rowRenderer={this.renderRow}
+                  rowCount={count + 2}
+                  scrollToIndex={index}
+                  scrollToAlignment="start"
+                  overscanRowCount={5}
+                />
+              )}
+            </InfiniteLoader>
+          )
+        }}
       </AutoSizer>
     )
   }

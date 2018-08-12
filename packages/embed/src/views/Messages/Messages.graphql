@@ -1,10 +1,16 @@
 #import "./Fragments/Message.graphql"
 
-query Messages($channel: Snowflake!) {
+query Messages(
+  $channel: Snowflake!
+  $around: Snowflake
+  $before: Snowflake
+  $after: Snowflake
+  $limit: Float
+) {
   channel(id: $channel) {
     id
     ... on TextChannel {
-      messages {
+      messages(limit: $limit, after: $after, before: $before, around: $around) {
         ...Message
       }
     }

@@ -37,7 +37,8 @@ const Channel = ({ id: channel, children, className }: Props) => (
         data.channel.__typename === 'TextChannel'
       ) {
         name = data.channel.name
-        category = data.channel.parent.name
+
+        if (data.channel.parent) category = data.channel.parent.name
       }
 
       return (

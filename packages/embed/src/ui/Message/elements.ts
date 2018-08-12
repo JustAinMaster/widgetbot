@@ -9,10 +9,7 @@ export const Group = styled('div')`
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: calc(100% - 10px - 20px);
-  margin-left: 20px;
-  margin-right: 10px;
-  padding: 20px 0 13px;
+  padding: 20px 35px 13px 20px;
   user-select: text;
   word-wrap: break-word;
 
@@ -21,13 +18,11 @@ export const Group = styled('div')`
   }
 
   @media (max-width: 500px), (max-height: 370px) {
-    padding: 12px 0 10px;
-    margin-left: 15px;
+    padding: 12px 35px 10px 15px;
   }
 
   @media (max-width: 260px) {
-    margin-left: 10px;
-    width: calc(100% - 20px);
+    padding: 12px 35px 10px 10px;
   }
 `
 
@@ -53,7 +48,6 @@ export const Avatar = styled('div')<AvatarProps>`
 
 export const Messages = styled('div')`
   flex-grow: 1;
-  margin-right: 20px;
 `
 
 export const Edited = styled('span')`
