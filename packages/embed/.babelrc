@@ -5,7 +5,7 @@
   "env": {
     "development": {},
     "production": {
-      "presets": ["react-optimize"]
+      "presets": []
     }
   }
 }
