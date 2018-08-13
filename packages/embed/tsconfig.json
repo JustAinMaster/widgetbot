@@ -18,6 +18,7 @@
       "@generated/*": ["src/__generated__/*"],
       "@store": ["src/state/index"],
       "@store/*": ["src/state/*"],
+      "@utils/*": ["src/utils/*"],
       "notify": ["src/app/notify.tsx"],
       "locales": ["src/app/locales"],
       "locales/*": ["src/app/locales/*"],

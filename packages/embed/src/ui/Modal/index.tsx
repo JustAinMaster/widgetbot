@@ -1,83 +1,50 @@
+import * as _ from 'lodash'
+import Spinner from 'react-spinkit'
+import Loadable from 'react-loadable'
 import autobind from 'autobind-decorator'
 import GET_MODAL from '@queries/ModalInfo.graphql'
 import CLOSE_MODAL from '@queries/CloseModal.graphql'
 
-import Markdown from '@ui/shared/markdown/render'
-import { ThemeProvider } from 'emotion-theming'
 import * as React from 'react'
 import { DataProps, graphql, Mutation } from 'react-apollo'
 import Hotkeys from 'react-hot-keys'
 
-import About from './About'
-import Authenticate from './Authenticate'
-import { Box, Close, Content, Image, OpenImage, Root } from './elements'
-import { Trans } from '@lingui/react'
+import { Root } from './elements'
 import { ModalInfo } from '@generated/ModalInfo'
 import { CloseModal } from '@generated/CloseModal'
 
+export interface IScreenProps extends ModalInfo {
+  close: () => void
+}
+
 @autobind
 class Modal extends React.PureComponent<DataProps<ModalInfo>> {
-  theme = theme => ({
-    ...theme,
-    modal: this.props.data.modal
-  })
-
-  content({ complete }) {
+  render() {
     const { modal } = this.props.data
 
-    if (modal.type === 'authenticate') {
-      return <Authenticate />
-    }
+    const Screen: any = Loadable({
+      loader: () => import(`./screens/${_.capitalize(modal.type)}`),
+      loading: props =>
+        props.pastDelay ? <Spinner name="ball-clip-rotate-multiple" /> : null
+    })
 
-    if (modal.type === 'image') {
-      return (
-        <React.Fragment>
-          <Image src={modal.data} />
-          <OpenImage href={modal.data} target="_blank" onClick={complete}>
-            <Trans id="Modal.openOriginal">Open original</Trans>
-          </OpenImage>
-        </React.Fragment>
-      )
-    }
-
-    if (modal.type === 'topic') {
-      return (
-        <Content>
-          <Markdown>{modal.data}</Markdown>
-        </Content>
-      )
-    }
-
-    if (modal.type === 'about') {
-      return <About />
-    }
-
-    return null
-  }
-
-  render() {
     return (
-      // Don't remove .bind()!
-      // Passes a new reference on each render
-      <ThemeProvider theme={this.theme.bind(this)}>
-        <Mutation<CloseModal> mutation={CLOSE_MODAL}>
-          {close => (
-            <Hotkeys keyName="escape" onKeyDown={close}>
-              <Root
-                onClick={e => (e.target === e.currentTarget ? close() : null)}
-                className="modal"
-              >
-                <Box className="box">
-                  <Close onClick={() => close()} className="close" />
-                  <this.content complete={close} />
-                </Box>
-              </Root>
-            </Hotkeys>
-          )}
-        </Mutation>
-      </ThemeProvider>
+      <Mutation<CloseModal> mutation={CLOSE_MODAL}>
+        {close => (
+          <Hotkeys keyName="escape" onKeyDown={close}>
+            <Root
+              onClick={e => (e.target === e.currentTarget ? close() : null)}
+              open={modal.open}
+              className="modal"
+            >
+              <Screen modal={modal} close={close} />
+            </Root>
+          </Hotkeys>
+        )}
+      </Mutation>
     )
   }
 }
 
 export default graphql(GET_MODAL)(Modal)
+export { Box, Close, Content } from './elements'

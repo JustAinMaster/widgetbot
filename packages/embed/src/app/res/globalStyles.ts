@@ -204,4 +204,11 @@ injectGlobal`
   .rc-tooltip-placement-bottomRight .rc-tooltip-arrow {
     right: 15%;
   }
+
+  button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
 `

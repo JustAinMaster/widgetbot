@@ -1,5 +1,6 @@
 import * as React from 'react'
 
+import { Box, Close } from '@ui/Modal'
 import { Create, Greeting, Group, Input, Root, Title } from './elements'
 
 class Authenticate extends React.PureComponent {
@@ -34,27 +35,30 @@ class Authenticate extends React.PureComponent {
   render() {
     const { awaiting } = this.state
     return (
-      <Root loading={awaiting}>
-        <Title>Welcome!</Title>
-        <Greeting>Pick a name to start chatting</Greeting>
-        <Group label="name" onSubmit={this.signUp.bind(this)}>
-          <Input
-            innerRef={ref => (this.nameField = ref)}
-            autoFocus={true}
-            spellCheck={false}
-            minLength={2}
-            maxLength={32}
-            required
-          />
-          <Create variant="large">Create</Create>
-          {/*<SSO>
+      <Box>
+        <Close onClick={() => close()} />
+        <Root loading={awaiting}>
+          <Title>Welcome!</Title>
+          <Greeting>Pick a name to start chatting</Greeting>
+          <Group label="name" onSubmit={this.signUp.bind(this)}>
+            <Input
+              innerRef={ref => (this.nameField = ref)}
+              autoFocus={true}
+              spellCheck={false}
+              minLength={2}
+              maxLength={32}
+              required
+            />
+            <Create variant="large">Create</Create>
+            {/*<SSO>
                   Discord account?
                   <Discord onClick={this.singleSignOn.bind(this)}>
                     Log in
                   </Discord>
                 </SSO>*/}
-        </Group>
-      </Root>
+          </Group>
+        </Root>
+      </Box>
     )
   }
 }

@@ -1,6 +1,6 @@
-import styled from './ThemeContext'
+import styled from 'react-emotion'
 
-export const Image = styled('img')`
+export const Root = styled('img')`
   background-image: linear-gradient(
       45deg,
       rgba(0, 0, 0, 0.1) 25%,

@@ -17,7 +17,7 @@ const Header = () => (
         fetchPolicy="cache-first"
       >
         {({ loading, error, data }) => {
-          if (loading || !data) return null
+          if (loading || !data || !data.guild) return null
           if (error) return null
 
           return (

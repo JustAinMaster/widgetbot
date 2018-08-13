@@ -1,7 +1,7 @@
 import Button from '@ui/shared/button'
 
-import { Content } from '../elements'
-import styled, { css } from '../elements/ThemeContext'
+import { Content } from '@ui/Modal'
+import styled, { css } from 'react-emotion'
 
 interface Props {
   loading: boolean

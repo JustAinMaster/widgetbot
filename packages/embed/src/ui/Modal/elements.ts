@@ -1,8 +1,19 @@
 import focusable from '@ui/shared/focusable'
+import styled, { css, keyframes } from 'react-emotion'
 
-import styled, { css } from './ThemeContext'
+const bounceIn = keyframes`
+  from {
+    transform: scale(0.6);
+  }
+  to {
+    transform: initial;
+  }
+`
 
-export const Root = styled('dialog')`
+interface IRoot {
+  open: boolean
+}
+export const Root = styled('dialog')<IRoot>`
   display: flex;
   position: fixed;
   justify-content: center;
@@ -20,8 +31,8 @@ export const Root = styled('dialog')`
   opacity: 0;
   transition: opacity 0.1s ease;
 
-  ${({ theme }) =>
-    theme.modal.open
+  ${({ open }) =>
+    open
       ? css`
           opacity: 1;
         `
@@ -37,14 +48,7 @@ export const Box = styled('div')`
 
   max-height: calc(100vh - 20px);
   max-width: calc(100vw - 40px);
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
-  ${({ theme }) =>
-    theme.modal.open
-      ? null
-      : css`
-          transform: scale(0.6);
-        `};
+  animation: ${bounceIn} 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
   @media (max-width: 270px), (max-height: 200px) {
     height: 100vh;
@@ -103,5 +107,3 @@ export const Close = styled('button')`
 
   ${focusable};
 `
-
-export * from './image'

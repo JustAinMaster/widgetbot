@@ -1,5 +1,6 @@
 import { ChannelLink, Hash } from '@ui/shared/Channel'
 import styled, { css, keyframes } from '@lib/emotion'
+import Item from '@ui/SelectItem'
 
 const fade = i => keyframes`
   from {
@@ -18,33 +19,17 @@ interface Props {
   order: number
 }
 
-export const Root = styled(ChannelLink)<Props>`
-  position: relative;
-  text-decoration: none;
-  user-select: none;
-  cursor: ${({ selected }) => (selected ? 'default' : 'pointer')};
-  display: flex;
-  border-radius: 3px;
-  flex-direction: row;
-  font-size: 16px;
-  font-weight: 500;
-  height: 32px;
-  line-height: 32px;
-  width: calc(100% - 16px);
-  margin: 2px 8px;
-  padding: 0 8px;
-  background-color: ${({ selected, theme }) =>
-    selected ? `${theme.colors._primary.fade(0.9)} !important` : 'transparent'};
-  color: ${({ selected, unread, theme }) =>
-    selected || unread
-      ? `${theme.colors._primary.fade(0.1).string()} !important`
-      : theme.colors._primary.fade(0.7).string()};
+const Link = Item.withComponent(ChannelLink)
+export const Root = styled(Link)<Props>`
+  color: ${({ unread, theme }) =>
+    unread && `${theme.colors._primary.fade(0.1).string()} !important`};
   /* animation: ${({ order }) => fade(order)} 0.5s ease; */
 
   &:hover {
-    background-color: ${({ theme }) =>
-      theme.colors._primary.fade(0.96).string()};
-    color: ${({ theme }) => theme.colors._primary.fade(0.3).string()};
+    background-color: ${({ selected, theme }) =>
+      !selected && theme.colors._primary.fade(0.96).string()};
+    color: ${({ theme, selected }) =>
+      !selected && theme.colors._primary.fade(0.3).string()};
   }
 
   ${({ unread, theme }) =>
@@ -65,12 +50,6 @@ export const Root = styled(ChannelLink)<Props>`
         border-radius: 0 6px 6px 0;
       }
     `}
-
-  @media (max-width: 400px), (max-height: 340px) {
-    height: 28px;
-    line-height: 28px;
-    font-size: 14px;
-  }
 `
 
 export const Hashtag = styled(Hash)`
