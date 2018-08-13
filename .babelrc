@@ -10,7 +10,6 @@
     "stage-0"
   ],
   "plugins": [
-    "autobind-class-methods",
     "syntax-dynamic-import",
     "macros",
     "preval"
