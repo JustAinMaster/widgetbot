@@ -1,5 +1,5 @@
 {
-  "extends": "../../.babelrc",
+  "extends": "../scripts/.babelrc",
   "presets": ["@lingui/babel-preset-react"],
   "plugins": [],
   "env": {
