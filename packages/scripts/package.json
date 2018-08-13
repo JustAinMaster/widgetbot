@@ -4,7 +4,6 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "precommit": "pretty-quick --staged",
     "contributors:add": "all-contributors add",
     "contributors:generate": "all-contributors generate"
   },
