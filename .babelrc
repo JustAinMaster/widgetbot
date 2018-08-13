@@ -37,7 +37,6 @@
           {
             "autoLabel": true,
             "labelFormat": "[local]",
-            "sourceMap": true,
             "hoist": true
           }
         ]
