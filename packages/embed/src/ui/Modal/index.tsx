@@ -23,7 +23,10 @@ class Modal extends React.PureComponent<DataProps<ModalInfo>> {
     const { modal } = this.props.data
 
     const Screen: any = Loadable({
-      loader: () => import(`./screens/${_.capitalize(modal.type)}`),
+      loader: () =>
+        import(/* webpackMode: "lazy", webpackChunkName: "modal-screen-[index]" */ `./screens/${_.capitalize(
+          modal.type
+        )}`),
       loading: props =>
         props.pastDelay ? <Spinner name="ball-clip-rotate-multiple" /> : null
     })
