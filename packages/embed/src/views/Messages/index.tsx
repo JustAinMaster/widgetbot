@@ -168,7 +168,9 @@ class MessagesView extends React.PureComponent<Props, State> {
     await this.props.fetchMessages()
 
     this.loadingMore = false
-    this.cache.clearAll()
+
+    // Clear the cache for the message at the top
+    this.cache.clear(2, 0)
 
     this.setState({
       scrollToIndex: this.props.groupedMessages.length - prevMessageCount
