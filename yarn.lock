@@ -977,6 +977,13 @@
     "@types/history" "*"
     "@types/react" "*"
 
+"@types/react-spinkit@^3.0.4":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@types/react-spinkit/-/react-spinkit-3.0.4.tgz#36ecaea2362f6158e9219955bbe32f92bd59e9d7"
+  integrity sha512-gLlbOJk3JdCUL7xREfHyK6lejvRNhGUEtkJzkQvm6YDJZXVuKaU5miQ4cs44x6agBKGx8JgvGRShNhKhMS45QA==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-transition-group@^2.0.13":
   version "2.0.13"
   resolved "https://registry.yarnpkg.com/@types/react-transition-group/-/react-transition-group-2.0.13.tgz#7769fb61eb71d64d087a713956f086a42c3ee171"
@@ -2152,11 +2159,6 @@ babel-plugin-add-module-exports@0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-add-module-exports/-/babel-plugin-add-module-exports-0.2.1.tgz#9ae9a1f4a8dc67f0cdec4f4aeda1e43a5ff65e25"
   integrity sha1-mumh9KjcZ/DN7E9K7aHkOl/2XiU=
-
-babel-plugin-autobind-class-methods@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-autobind-class-methods/-/babel-plugin-autobind-class-methods-5.0.1.tgz#c311bc455b285a21e362bead7d444f75c9d1d92c"
-  integrity sha1-wxG8RVsoWiHjYr6tfURPdcnR2Sw=
 
 babel-plugin-check-es2015-constants@^6.22.0:
   version "6.22.0"
@@ -8813,6 +8815,11 @@ loader-utils@^1.0.0, loader-utils@^1.0.2, loader-utils@^1.1.0:
     emojis-list "^2.0.0"
     json5 "^0.5.0"
 
+loaders.css@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/loaders.css/-/loaders.css-0.1.2.tgz#3a9fb43726c73334a38142af9d0629019b658743"
+  integrity sha1-Op+0NybHMzSjgUKvnQYpAZtlh0M=
+
 localforage@^1.7.2:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/localforage/-/localforage-1.7.2.tgz#fa4442602f806edd2bca6a54ab4e656f031f121c"
@@ -11687,6 +11694,16 @@ react-shadow@^16.3.0:
   version "16.3.0"
   resolved "https://registry.yarnpkg.com/react-shadow/-/react-shadow-16.3.0.tgz#558ccb1c9746af6206d2228e06a4e35be5895d53"
   integrity sha512-rJWaSJBvKBN2Z0T7v/aLaigpZsdsoWFyqYz8G7Ti/CzbJBQhhXXo778YKGHd9aLAng+kXm04tB/BfnPQfdfueA==
+
+react-spinkit@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-spinkit/-/react-spinkit-3.0.0.tgz#31fdaf4e18177766c57d1b1f3330290f8492a85a"
+  integrity sha1-Mf2vThgXd2bFfRsfMzApD4SSqFo=
+  dependencies:
+    classnames "^2.2.3"
+    loaders.css "^0.1.2"
+    object-assign "^4.1.0"
+    prop-types "^15.5.8"
 
 react-transform-catch-errors@1.0.2:
   version "1.0.2"
