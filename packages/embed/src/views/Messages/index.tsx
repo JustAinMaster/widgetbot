@@ -170,6 +170,7 @@ class MessagesView extends React.PureComponent<Props, State> {
     this.loadingMore = false
 
     // Clear the cache for the message at the top
+    // could be a message added into its group
     this.cache.clear(2, 0)
 
     this.setState({
