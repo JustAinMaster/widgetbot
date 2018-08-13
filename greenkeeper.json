@@ -5,6 +5,7 @@
         "package.json",
         "packages/crate-cloudflare/package.json",
         "packages/crate/package.json",
+        "packages/scripts/package.json",
         "packages/embed-api/package.json",
         "packages/embed/package.json",
         "packages/html-embed/package.json",
