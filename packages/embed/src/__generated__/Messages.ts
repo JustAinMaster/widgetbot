@@ -15,7 +15,7 @@ export interface Messages_channel_TextChannel_messages_JoinMessage_author_GuestM
   id: any
   username: string
   discriminator: string
-  avatarURL: string
+  avatarURL: string | null
 }
 
 export interface Messages_channel_TextChannel_messages_JoinMessage_author_GuildMember {
@@ -23,7 +23,7 @@ export interface Messages_channel_TextChannel_messages_JoinMessage_author_GuildM
   id: any
   username: string
   discriminator: string
-  avatarURL: string
+  avatarURL: string | null
   displayHexColor: string
 }
 
@@ -32,7 +32,7 @@ export type Messages_channel_TextChannel_messages_JoinMessage_author =
   | Messages_channel_TextChannel_messages_JoinMessage_author_GuildMember
 
 export interface Messages_channel_TextChannel_messages_JoinMessage {
-  __typename: 'JoinMessage'
+  __typename: 'JoinMessage' | 'PinnedMessage'
   /**
    * Message ID
    */
@@ -52,7 +52,7 @@ export interface Messages_channel_TextChannel_messages_TextMessage_author_GuestM
   id: any
   username: string
   discriminator: string
-  avatarURL: string
+  avatarURL: string | null
 }
 
 export interface Messages_channel_TextChannel_messages_TextMessage_author_GuildMember {
@@ -60,7 +60,7 @@ export interface Messages_channel_TextChannel_messages_TextMessage_author_GuildM
   id: any
   username: string
   discriminator: string
-  avatarURL: string
+  avatarURL: string | null
   displayHexColor: string
 }
 

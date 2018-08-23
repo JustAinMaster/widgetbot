@@ -7,6 +7,7 @@ import { Route } from 'react-router'
 import { GlobalStyles } from './elements'
 import GET_THEME from './Theme.graphql'
 import { Theme, ThemeVariables, Theme_guild_theme } from '@generated/Theme'
+import * as Constants from '@constants'
 
 class ThemeProvider extends React.PureComponent {
   render() {
@@ -25,9 +26,9 @@ class ThemeProvider extends React.PureComponent {
                 __typename: 'Theme',
                 colors: {
                   __typename: 'ThemeColors',
-                  primary: '#fff',
-                  accent: '#7289da',
-                  background: '#36393E'
+                  primary: Constants.THEME_COLOR_PRIMARY,
+                  accent: Constants.THEME_COLOR_ACCENT,
+                  background: Constants.THEME_BACKGROUND
                 },
                 css: ``
               }

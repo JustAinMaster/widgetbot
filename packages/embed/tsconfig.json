@@ -11,6 +11,8 @@
     "baseUrl": ".",
     "paths": {
       "@lib/*": ["src/lib/*"],
+      "@constants/*": ["src/constants/*"],
+      "@constants": ["src/constants/index"],
       "@ui/*": ["src/ui/*"],
       "@views/*": ["src/views/*"],
       "@queries/*": ["src/queries/*"],

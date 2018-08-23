@@ -255,7 +255,20 @@
         {
           "name": "iconURL",
           "description": null,
-          "args": [],
+          "args": [
+            {
+              "name": "format",
+              "description": null,
+              "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+              "defaultValue": null
+            },
+            {
+              "name": "size",
+              "description": null,
+              "type": { "kind": "SCALAR", "name": "Float", "ofType": null },
+              "defaultValue": null
+            }
+          ],
           "type": {
             "kind": "NON_NULL",
             "name": null,
@@ -355,7 +368,7 @@
             {
               "name": "type",
               "description": null,
-              "type": { "kind": "SCALAR", "name": "Snowflake", "ofType": null },
+              "type": { "kind": "SCALAR", "name": "String", "ofType": null },
               "defaultValue": null
             }
           ],
@@ -737,6 +750,7 @@
       "enumValues": null,
       "possibleTypes": [
         { "kind": "OBJECT", "name": "JoinMessage", "ofType": null },
+        { "kind": "OBJECT", "name": "PinnedMessage", "ofType": null },
         { "kind": "OBJECT", "name": "TextMessage", "ofType": null }
       ]
     },
@@ -797,11 +811,7 @@
           "name": "avatarURL",
           "description": null,
           "args": [],
-          "type": {
-            "kind": "NON_NULL",
-            "name": null,
-            "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
-          },
+          "type": { "kind": "SCALAR", "name": "String", "ofType": null },
           "isDeprecated": false,
           "deprecationReason": null
         },
@@ -2108,11 +2118,7 @@
           "name": "avatarURL",
           "description": null,
           "args": [],
-          "type": {
-            "kind": "NON_NULL",
-            "name": null,
-            "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
-          },
+          "type": { "kind": "SCALAR", "name": "String", "ofType": null },
           "isDeprecated": false,
           "deprecationReason": null
         },
@@ -2219,11 +2225,7 @@
           "name": "avatarURL",
           "description": null,
           "args": [],
-          "type": {
-            "kind": "NON_NULL",
-            "name": null,
-            "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
-          },
+          "type": { "kind": "SCALAR", "name": "String", "ofType": null },
           "isDeprecated": false,
           "deprecationReason": null
         },
@@ -2382,11 +2384,7 @@
           "name": "avatarURL",
           "description": null,
           "args": [],
-          "type": {
-            "kind": "NON_NULL",
-            "name": null,
-            "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
-          },
+          "type": { "kind": "SCALAR", "name": "String", "ofType": null },
           "isDeprecated": false,
           "deprecationReason": null
         },
@@ -2439,6 +2437,99 @@
     {
       "kind": "OBJECT",
       "name": "JoinMessage",
+      "description": null,
+      "fields": [
+        {
+          "name": "id",
+          "description": "Message ID",
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "SCALAR", "name": "Snowflake", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "author",
+          "description": "Message author",
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "INTERFACE", "name": "User", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "channel",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "INTERFACE", "name": "Channel", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "guild",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "OBJECT", "name": "Guild", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "createdAt",
+          "description": "Message timestamp",
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "SCALAR", "name": "Timestamp", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "editedAt",
+          "description": "Time the message was edited",
+          "args": [],
+          "type": { "kind": "SCALAR", "name": "Timestamp", "ofType": null },
+          "isDeprecated": false,
+          "deprecationReason": null
+        },
+        {
+          "name": "test",
+          "description": null,
+          "args": [],
+          "type": {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+          },
+          "isDeprecated": false,
+          "deprecationReason": null
+        }
+      ],
+      "inputFields": null,
+      "interfaces": [
+        { "kind": "INTERFACE", "name": "Message", "ofType": null }
+      ],
+      "enumValues": null,
+      "possibleTypes": null
+    },
+    {
+      "kind": "OBJECT",
+      "name": "PinnedMessage",
       "description": null,
       "fields": [
         {

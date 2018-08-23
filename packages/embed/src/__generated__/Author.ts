@@ -10,7 +10,7 @@ export interface Author_GuestMember {
   id: any
   username: string
   discriminator: string
-  avatarURL: string
+  avatarURL: string | null
 }
 
 export interface Author_GuildMember {
@@ -18,7 +18,7 @@ export interface Author_GuildMember {
   id: any
   username: string
   discriminator: string
-  avatarURL: string
+  avatarURL: string | null
   displayHexColor: string
 }
 

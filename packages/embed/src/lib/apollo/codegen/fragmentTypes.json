@@ -13,7 +13,11 @@
       {
         "kind": "INTERFACE",
         "name": "Message",
-        "possibleTypes": [{ "name": "JoinMessage" }, { "name": "TextMessage" }]
+        "possibleTypes": [
+          { "name": "JoinMessage" },
+          { "name": "PinnedMessage" },
+          { "name": "TextMessage" }
+        ]
       },
       {
         "kind": "INTERFACE",

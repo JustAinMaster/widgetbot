@@ -10,7 +10,7 @@ export interface NewMessages_message_message_JoinMessage_author_GuestMember {
   id: any
   username: string
   discriminator: string
-  avatarURL: string
+  avatarURL: string | null
 }
 
 export interface NewMessages_message_message_JoinMessage_author_GuildMember {
@@ -18,7 +18,7 @@ export interface NewMessages_message_message_JoinMessage_author_GuildMember {
   id: any
   username: string
   discriminator: string
-  avatarURL: string
+  avatarURL: string | null
   displayHexColor: string
 }
 
@@ -27,7 +27,7 @@ export type NewMessages_message_message_JoinMessage_author =
   | NewMessages_message_message_JoinMessage_author_GuildMember
 
 export interface NewMessages_message_message_JoinMessage {
-  __typename: 'JoinMessage'
+  __typename: 'JoinMessage' | 'PinnedMessage'
   /**
    * Message ID
    */
@@ -47,7 +47,7 @@ export interface NewMessages_message_message_TextMessage_author_GuestMember {
   id: any
   username: string
   discriminator: string
-  avatarURL: string
+  avatarURL: string | null
 }
 
 export interface NewMessages_message_message_TextMessage_author_GuildMember {
@@ -55,7 +55,7 @@ export interface NewMessages_message_message_TextMessage_author_GuildMember {
   id: any
   username: string
   discriminator: string
-  avatarURL: string
+  avatarURL: string | null
   displayHexColor: string
 }
 

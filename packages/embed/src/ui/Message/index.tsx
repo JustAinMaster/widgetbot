@@ -11,8 +11,8 @@ import {
   Content,
   Edited,
   Group,
-  JoinMember,
-  JoinText,
+  Member,
+  Secondary,
   Messages,
   Reactions,
   Root
@@ -41,7 +41,7 @@ class Message extends React.PureComponent<Props, any> {
 
     return (
       <Group style={this.props.style} className="group">
-        {firstMessage.__typename !== 'JoinMessage' ? (
+        {firstMessage.__typename === 'TextMessage' ? (
           <Avatar
             url={firstMessage.author.avatarURL || DEFAULT_AVATAR}
             className="avatar"
@@ -49,7 +49,7 @@ class Message extends React.PureComponent<Props, any> {
         ) : null}
 
         <Messages className="messages">
-          {firstMessage.__typename !== 'JoinMessage' ? (
+          {firstMessage.__typename === 'TextMessage' ? (
             <Author
               author={firstMessage.author}
               time={firstMessage.createdAt}
@@ -107,15 +107,30 @@ class Message extends React.PureComponent<Props, any> {
               case 'JoinMessage': {
                 return (
                   <React.Fragment key={message.id}>
-                    <JoinText>
-                      <JoinMember id={message.author.id}>
-                        <Trans id="Message.welcomeMessage">
-                          {`${
-                            message.author.username
-                          } has joined. Stay awhile and listen!`}
-                        </Trans>
-                      </JoinMember>
-                    </JoinText>
+                    <Secondary.Join>
+                      <Trans id="Message.welcomeMessage">
+                        <Member id={message.author.id}>
+                          {message.author.username}
+                        </Member>
+                        has joined. Stay a while and listen!
+                      </Trans>
+                    </Secondary.Join>
+                    <Timestamp time={message.createdAt} />
+                  </React.Fragment>
+                )
+              }
+
+              case 'PinnedMessage': {
+                return (
+                  <React.Fragment key={message.id}>
+                    <Secondary.Pinned>
+                      <Trans id="Message.pinnedMessage">
+                        <Member id={message.author.id}>
+                          {message.author.username}
+                        </Member>
+                        pinned a message to this channel.
+                      </Trans>
+                    </Secondary.Pinned>
                     <Timestamp time={message.createdAt} />
                   </React.Fragment>
                 )
