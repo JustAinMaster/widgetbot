@@ -1,6 +1,6 @@
-const path = require('path')
-const fetch = require('node-fetch')
-const fs = require('fs')
+import * as path from 'path'
+import * as fs from 'fs'
+import fetch from 'node-fetch'
 
 const API_HOST = 'http://localhost:7000'
 
@@ -31,7 +31,7 @@ fetch(`${API_HOST}/api/graphql`, {
     )
     result.data.__schema.types = filteredData
     fs.writeFile(
-      path.join(__dirname, './fragmentTypes.json'),
+      path.join(__dirname, '../fragmentTypes.json'),
       JSON.stringify(result.data),
       err => {
         if (err) {

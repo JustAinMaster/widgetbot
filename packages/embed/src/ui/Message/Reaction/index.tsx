@@ -1,4 +1,4 @@
-import { Messages_channel_TextChannel_messages_TextMessage_reactions } from '@generated/Messages'
+import { Messages_channel_TextChannel_messages_TextMessage_reactions } from '@generated'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 

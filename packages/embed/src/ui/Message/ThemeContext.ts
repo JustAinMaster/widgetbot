@@ -1,4 +1,4 @@
-import { Messages_channel_TextChannel_messages } from '@generated/Messages'
+import { Messages_channel_TextChannel_messages } from '@generated'
 import styled, { ThemedReactEmotionInterface } from 'react-emotion'
 import { Theme } from '@lib/emotion'
 

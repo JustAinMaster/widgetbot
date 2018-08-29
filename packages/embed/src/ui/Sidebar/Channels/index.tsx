@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route } from 'react-router'
 import { Query } from 'react-apollo'
-import { Channels, ChannelsVariables } from '@generated/Channels'
+import { Channels, ChannelsVariables } from '@generated'
 import { Selector } from '@ui/SelectItem'
 
 import { Root } from './elements'

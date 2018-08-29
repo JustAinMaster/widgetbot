@@ -2,13 +2,18 @@ import * as React from 'react'
 
 import { Field, Root } from './elements'
 import Input from './Input'
+import { withI18n, withI18nProps } from '@lingui/react'
+import { Query } from 'react-apollo'
+import { ChannelName, ThemeVariables, ChannelNameVariables } from '@generated'
+import GET_CHANNEL_NAME from './ChannelName.graphql'
+import { Route } from 'react-router'
 
-export let input: HTMLTextAreaElement = null
-
-class Chat extends React.PureComponent {
+class Chat extends React.PureComponent<withI18nProps> {
   state = {
     rows: 1
   }
+
+  private input: HTMLTextAreaElement
 
   onChange(value: string) {
     const rows = value.split(/\r\n|\r|\n/).length
@@ -27,10 +32,7 @@ class Chat extends React.PureComponent {
     // })
 
     // TODO: Clear the input field only when the user is signed in.
-    // Currently it's throwing an error whenever I observe the
-    // state.user object. It's probably due to the shit-ish flow
-    // that I created
-    input.value = ''
+    this.input.value = ''
   }
 
   isTyping(typing: boolean) {
@@ -40,20 +42,28 @@ class Chat extends React.PureComponent {
   }
 
   render() {
-    // const { channel } = this.props
+    const { i18n } = this.props
 
     return (
       <Root className="chat">
         <Field rows={this.state.rows} className="field">
-          <Input
-            onChange={this.onChange.bind(this)}
-            onSubmit={this.onSubmit.bind(this)}
-            innerRef={ref => (input = ref)}
-            innerProps={{
-              // TODO: FIX
-              placeholder: /*channel ? `Message #${channel.name}` :*/ null
-            }}
-          />
+          <Route path="/:guild/:channel?">
+            {({
+              match: {
+                params: { channel }
+              }
+            }) => (
+              <Query<ChannelName, ChannelNameVariables>
+                query={GET_CHANNEL_NAME}
+                variables={{ channel }}
+              >
+                {a => {
+                  console.log(a)
+                  return null
+                }}
+              </Query>
+            )}
+          </Route>
           {/* <Emoji /> */}
         </Field>
       </Root>
@@ -90,3 +100,5 @@ class Chat extends React.PureComponent {
     }
   }
 }
+
+export default withI18n()(Chat)

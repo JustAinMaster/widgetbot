@@ -2,7 +2,7 @@ import Color from 'color'
 import styled, { ThemedReactEmotionInterface } from 'react-emotion'
 
 import { ParsedUrl } from '../../types/url'
-import { Theme_guild_theme } from '@generated/Theme'
+import { Theme_guild_theme } from '@generated'
 
 export * from 'react-emotion'
 

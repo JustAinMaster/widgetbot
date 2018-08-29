@@ -6,7 +6,7 @@ import { Query } from 'react-apollo'
 import { Route } from 'react-router'
 import { GlobalStyles } from './elements'
 import GET_THEME from './Theme.graphql'
-import { Theme, ThemeVariables, Theme_guild_theme } from '@generated/Theme'
+import { Theme, ThemeVariables, Theme_guild_theme } from '@generated'
 import * as Constants from '@constants'
 
 class ThemeProvider extends React.PureComponent {

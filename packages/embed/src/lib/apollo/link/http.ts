@@ -1,16 +1,15 @@
 import { ApolloLink } from 'apollo-link'
 import { BatchHttpLink } from 'apollo-link-batch-http'
 import { onError } from 'apollo-link-error'
-import { uncrunch } from 'graphql-crunch'
 
-const CRUNCH = false
+// const CRUNCH = false
 
-const uncruncher = new ApolloLink((operation, forward) =>
-  forward(operation).map(response => {
-    response.data = uncrunch(response.data)
-    return response
-  })
-)
+// const uncruncher = new ApolloLink((operation, forward) =>
+//   forward(operation).map(response => {
+//     response.data = uncrunch(response.data)
+//     return response
+//   })
+// )
 
 const httpLink = ApolloLink.from([
   onError(({ graphQLErrors, networkError }) => {
@@ -22,9 +21,9 @@ const httpLink = ApolloLink.from([
       )
     if (networkError) console.error(`[Network error]: ${networkError}`)
   }),
-  CRUNCH && uncruncher,
+  // CRUNCH && uncruncher,
   new BatchHttpLink({
-    uri: `/api/graphql${CRUNCH ? '?crunch' : ''}`,
+    uri: `/api/graphql` /*${CRUNCH ? '?crunch' : ''}`*/,
     batchInterval: 20,
     batchMax: 2
   })

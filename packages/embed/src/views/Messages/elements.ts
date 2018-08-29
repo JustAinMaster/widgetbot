@@ -1,6 +1,7 @@
 import { ScrollVisible } from '@ui/shared/scrollable'
 import SmartList from '@ui/shared/SmartList'
 import styled from '@lib/emotion'
+import { AutoSizer } from 'react-virtualized'
 
 interface Props {
   squashed: boolean
@@ -15,3 +16,7 @@ export const Root = styled('div')<Props>`
 `
 
 export const Scroller = ScrollVisible.withComponent(SmartList)
+
+export const MessagesWrapper = styled('div')`
+  flex-grow: 1;
+`

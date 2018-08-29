@@ -1,38 +1,30 @@
 import MESSAGES from './Messages.graphql'
-import OPEN_MODAL from '@queries/OpenModal.graphql'
-import { Channel, ChannelVariables } from '@generated/Channel'
 import {
   Messages,
   MessagesVariables,
   Messages_channel_TextChannel_messages
-} from '@generated/Messages'
-import { OpenModal, OpenModalVariables } from '@generated/OpenModal'
-import Header, { Name, Topic } from '@ui/Header'
-import { Join, Stretch } from '@ui/Header/elements'
+} from '@generated'
 import Message from '@ui/Message'
 import { Info, Loading, NoMessages } from '@ui/Overlays'
 import ErrorAhoy from '@ui/Overlays/ErrorAhoy'
 import Wrapper from '@ui/Wrapper'
+import Chat from '@ui/Chat'
 import { ApolloError } from 'apollo-client'
 import autobind from 'autobind-decorator'
 import produce from 'immer'
-import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 import { ChildProps, graphql, Mutation, Query } from 'react-apollo'
 import { RouteComponentProps } from 'react-router'
 import {
-  AutoSizer,
   CellMeasurer,
   CellMeasurerCache,
-  InfiniteLoader
+  InfiniteLoader,
+  AutoSizer
 } from 'react-virtualized'
-import CHANNEL from './Channel.graphql'
-import { Scroller } from './elements'
-import Group from './group'
-import { formatError } from './util'
-import { Trans } from '@lingui/react'
+import { MessagesWrapper, Scroller } from './elements'
+import { formatError, groupMessages } from './utils'
 
-const defaultInvite = 'https://discord.gg/mpMQCuj'
+import Header from './Header'
 
 type InputProps = RouteComponentProps<{
   guild: string
@@ -102,7 +94,7 @@ const withMessages = graphql<InputProps, Messages, MessagesVariables, OwnProps>(
         },
 
         messages,
-        groupedMessages: Group(messages)
+        groupedMessages: groupMessages(messages)
       }
     }
   }
@@ -189,60 +181,7 @@ class MessagesView extends React.PureComponent<Props, State> {
     return true
   }
 
-  header() {
-    const { channel } = this.props.match.params
-
-    return (
-      <Query<Channel, ChannelVariables> query={CHANNEL} variables={{ channel }}>
-        {({ loading, error, data }) => {
-          const name = loading || error ? '' : data.channel.name
-          const topic =
-            loading || error || data.channel.__typename !== 'TextChannel'
-              ? null
-              : data.channel.topic
-
-          return (
-            <Header>
-              <Stretch>
-                <Name>{name}</Name>
-                {topic && (
-                  <Mutation<OpenModal, OpenModalVariables>
-                    mutation={OPEN_MODAL}
-                  >
-                    {openModal => (
-                      <Topic
-                        onClick={() => {
-                          openModal({
-                            variables: { type: 'topic', data: topic }
-                          })
-                        }}
-                        className="topic"
-                      >
-                        {topic}
-                      </Topic>
-                    )}
-                  </Mutation>
-                )}
-              </Stretch>
-              <Tooltip placement="bottom" overlay="Open in Discord app">
-                <Join
-                  className="join"
-                  href={defaultInvite}
-                  target="_blank"
-                  // TODO: Fix join button
-                  // onClick={this.join}
-                >
-                  <Trans id="Header.joinDiscord">Join on Discord</Trans>
-                </Join>
-              </Tooltip>
-            </Header>
-          )
-        }}
-      </Query>
-    )
-  }
-
-  view() {
+  messages() {
     const { ready, groupedMessages } = this.props
 
     if (!ready) return <Loading />
@@ -259,48 +198,52 @@ class MessagesView extends React.PureComponent<Props, State> {
     const index = scrollToIndex < 0 ? count + scrollToIndex : scrollToIndex
 
     return (
-      <AutoSizer>
-        {({ width, height }) => {
-          this.width = width
+      <MessagesWrapper className="messages">
+        <AutoSizer>
+          {({ width, height }) => {
+            this.width = width
 
-          return (
-            <InfiniteLoader
-              isRowLoaded={this.isRowLoaded}
-              loadMoreRows={this.loadMoreRows}
-              rowCount={Infinity}
-              threshold={1}
-            >
-              {({ onRowsRendered, registerChild }) => (
-                <Scroller
-                  width={width}
-                  height={height - 47}
-                  onRowsRendered={onRowsRendered}
-                  listRef={registerChild}
-                  deferredMeasurementCache={this.cache}
-                  rowHeight={this.cache.rowHeight}
-                  rowRenderer={this.renderRow}
-                  rowCount={count + 2}
-                  scrollToIndex={index}
-                  scrollToAlignment="start"
-                  overscanRowCount={5}
-                />
-              )}
-            </InfiniteLoader>
-          )
-        }}
-      </AutoSizer>
+            return (
+              <InfiniteLoader
+                isRowLoaded={this.isRowLoaded}
+                loadMoreRows={this.loadMoreRows}
+                rowCount={Infinity}
+                threshold={1}
+              >
+                {({ onRowsRendered, registerChild }) => (
+                  <Scroller
+                    width={width}
+                    height={height}
+                    onRowsRendered={onRowsRendered}
+                    listRef={registerChild}
+                    deferredMeasurementCache={this.cache}
+                    rowHeight={this.cache.rowHeight}
+                    rowRenderer={this.renderRow}
+                    rowCount={count + 2}
+                    scrollToIndex={index}
+                    scrollToAlignment="start"
+                    overscanRowCount={5}
+                  />
+                )}
+              </InfiniteLoader>
+            )
+          }}
+        </AutoSizer>
+      </MessagesWrapper>
     )
   }
 
   render() {
     const { error } = this.props
+    const { channel } = this.props.match.params
 
     if (error) return <ErrorAhoy message={formatError(error)} />
 
     return (
       <Wrapper>
-        <this.header />
-        <this.view />
+        <Header channel={channel} />
+        <this.messages />
+        <Chat />
       </Wrapper>
     )
 

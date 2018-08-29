@@ -1,4 +1,4 @@
-import { Author as $Author } from '@generated/Author'
+import { Author as $Author } from '@generated'
 import Moment from 'moment'
 import * as React from 'react'
 

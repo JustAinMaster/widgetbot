@@ -1,5 +1,4 @@
-import { Messages_channel_TextChannel_messages } from '@generated/Messages'
-import memoize from 'memoizee'
+import { Messages_channel_TextChannel_messages } from '@generated'
 
 /**
  * Compares whether a message should go in a group
@@ -24,7 +23,9 @@ const compareGroupability = (
  * [[{ id: 1 }], [{ id: 2 }], [{ id: 1 }, { id: 1 }]]
  * @param messages The messages to group
  */
-const Group = <Group extends Messages_channel_TextChannel_messages[]>(
+export const groupMessages = <
+  Group extends Messages_channel_TextChannel_messages[]
+>(
   messages: Group
 ): Group[] => {
   const result = new Array<Group>()
@@ -41,7 +42,3 @@ const Group = <Group extends Messages_channel_TextChannel_messages[]>(
 
   return result
 }
-
-export default memoize(Group, {
-  normalizer: ([messages]) => JSON.stringify(messages)
-})

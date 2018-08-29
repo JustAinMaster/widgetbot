@@ -10,8 +10,7 @@ import { DataProps, graphql, Mutation } from 'react-apollo'
 import Hotkeys from 'react-hot-keys'
 
 import { Root } from './elements'
-import { ModalInfo } from '@generated/ModalInfo'
-import { CloseModal } from '@generated/CloseModal'
+import { ModalInfo, CloseModal } from '@generated'
 
 export interface IScreenProps extends ModalInfo {
   close: () => void

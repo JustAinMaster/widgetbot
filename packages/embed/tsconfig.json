@@ -17,6 +17,7 @@
       "@views/*": ["src/views/*"],
       "@queries/*": ["src/queries/*"],
       "@services/*": ["src/services/*"],
+      "@generated": ["src/__generated__/index"],
       "@generated/*": ["src/__generated__/*"],
       "@store": ["src/state/index"],
       "@store/*": ["src/state/*"],

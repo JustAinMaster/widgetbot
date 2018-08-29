@@ -18,7 +18,7 @@ import ThemeProvider from './ThemeProvider'
 import i18n, { loadCatalog } from '@lib/i18n'
 import { graphql, ChildProps } from 'react-apollo'
 import gql from 'graphql-tag'
-import { Locale } from '@generated/Locale'
+import { Locale } from '@generated'
 import produce from 'immer'
 
 class App extends React.PureComponent<

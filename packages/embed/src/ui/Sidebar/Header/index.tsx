@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Query } from 'react-apollo'
 import { Route } from 'react-router'
 
-import { GuildInfo, GuildInfoVariables } from '@generated/GuildInfo'
+import { GuildInfo, GuildInfoVariables } from '@generated'
 import { Count, Icon, Name, Root } from './elements'
 import GET_INFO from './GuildInfo.graphql'
 import { Plural } from '@lingui/react'

@@ -4,7 +4,7 @@ import * as React from 'react'
 import { Query } from 'react-apollo'
 import Emoji from '@ui/shared/Emoji'
 
-import { ChannelInfo, ChannelInfoVariables } from '@generated/ChannelInfo'
+import { ChannelInfo, ChannelInfoVariables } from '@generated'
 import ChannelLink from './link'
 import CHANNEL_INFO from './ChannelInfo.graphql'
 

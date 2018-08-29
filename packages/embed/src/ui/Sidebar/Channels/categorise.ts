@@ -1,4 +1,4 @@
-import { Channels_guild_channels_TextChannel } from '@generated/Channels'
+import { Channels_guild_channels_TextChannel } from '@generated'
 
 export interface ICategory {
   name: string
