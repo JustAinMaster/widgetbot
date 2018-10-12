@@ -1,3 +1,6 @@
+const fs = require('fs')
+const path = require('path')
+
 module.exports = () => ({
   type: 'react-component',
   npm: {
@@ -15,7 +18,15 @@ module.exports = () => ({
     config(config) {
       config.module.rules.push({
         test: /\.tsx?$/,
-        use: ['babel-loader', 'ts-loader']
+        use: [
+          {
+            loader: 'babel-loader',
+            options: JSON.parse(
+              fs.readFileSync(path.join(__dirname, '.babelrc'), 'utf8')
+            )
+          },
+          'ts-loader'
+        ]
       })
 
       config.entry = config.entry.map(
