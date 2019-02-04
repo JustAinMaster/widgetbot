@@ -1,0 +1,10 @@
+/dist/**/*
+/data/**/*
+!/data/README.md
+!/data/config.template.yml
+
+/doc
+
+node_modules
+*.log
+.build
