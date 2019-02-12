@@ -1,5 +1,6 @@
 const chalk = require('chalk').default
 const webpack = require('webpack')
+const path = require('path')
 const { TsConfigPathsPlugin } = require('awesome-typescript-loader')
 
 const nodeExternals = require('webpack-node-externals')
@@ -18,6 +19,7 @@ module.exports = (overrides = {}) => ({
   target: 'node',
   externals: [
     nodeExternals({
+      modulesDir: path.join(__dirname, '../../../../node_modules'),
       whitelist: ['webpack/hot/poll?1000']
     })
   ],
