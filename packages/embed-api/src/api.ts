@@ -38,8 +38,6 @@ abstract class API<Events extends Object> {
 
     const listeners = this.listeners[event]
     listeners.push(callback)
-
-    console.debug(`[embed-api] on '${event}'`, callback)
   }
 }
 

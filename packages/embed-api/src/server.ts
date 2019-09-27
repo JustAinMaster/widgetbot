@@ -17,8 +17,6 @@ class Server extends API<IClient.Events> {
    * @param data Event data
    */
   public emit<T extends IServer.Event>(event: T, data: IServer.Events[T]) {
-    console.debug(`[embed-api] emit '${event}'`, data)
-
     if (!window.parent) return false
 
     const parsed = JSON.stringify({
