@@ -4,7 +4,6 @@ import * as React from 'react'
 import Category from './Category'
 import { Categories, Root } from './elements'
 import Header from './Header'
-import Panel from './Panel'
 
 export default connect()
   .with(({ state, signals, props }) => ({
@@ -32,7 +31,6 @@ export default connect()
                   />
                 ))}
               </Categories>
-              <Panel />
             </Root>
           )
         }

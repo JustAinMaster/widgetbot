@@ -73,6 +73,6 @@ export const Topic = styled.div`
 const JoinLink = Button.withComponent('a')
 
 export const Join = styled(JoinLink)`
-  background: ${({ theme }) => theme.colors._accent.fadeOut(0.6).toString()};
+  background: ${({ theme }) => theme.colors._accent.fadeOut(0).toString()};
   margin-right: 20px;
 `
